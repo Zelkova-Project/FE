@@ -1,0 +1,130 @@
+.section-container {
+ font-family: "PretendardVariable";
+ width: 1280px;
+ margin: 20px auto 0px;
+ display: flex;
+ flex-direction: column;
+ align-items: center
+}
+.main-height {
+ height: 720px;
+}
+.main-img {
+ filter: brightness(50%);
+}
+.section-img-container {
+ display: flex;
+ flex-direction: row;
+ width: 100%;
+}
+.subtit {
+ font-family: "PretendardVariable";
+
+ font-size: 32px;
+ font-weight: 600;
+}
+.section-img-container ul{
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ width: 100%;
+}
+.section-img-container ul li {
+ position: relative;
+ list-style: none;
+}
+.img-container1 {
+ background: linear-gradient(to right, #fff, #fff 5px, transparent)
+ ,url('/public/middle-section.png');
+ background-size: cover;
+ background-position: top;
+ width:582px;
+ height: 204px;
+ border-radius: 10px;
+}
+.img-container2 {
+ background: linear-gradient(to right, #fff, #fff 1px, transparent)
+ ,url('/public/middle-section2.png');
+ background-size: cover;
+ background-position: top;
+ border-radius: 10px;
+}
+.img-subtit {
+ position: absolute;
+ top:20%;
+ left:3%;
+}
+.img-subtit span {
+ font-size: 28px;
+ font-weight: 600;
+}
+.img-subtit p {
+ font-size: 16px;
+ color:#666
+}
+
+.set2-setting {
+ width:582px;
+ height: 204px;
+}
+.set3-setting {
+ width:344px;
+ height: 344px;
+}
+.set3-gap {
+ /* gap: 15px */
+}
+.set3-top {
+ top: 67% !important;
+}
+.이용안내-img1 {
+ background: linear-gradient(to right, #fff, #fff 1px, transparent)
+ ,url('/public/이용시간.png') !important; 
+}
+.이용안내-img2 {
+ background: linear-gradient(to right, #fff, #fff 1px, transparent)
+ ,url('/public/이용금액.png') !important; 
+}
+.이용안내-img3 {
+ background: linear-gradient(to right, #fff, #fff 1px, transparent)
+ ,url('/public/이용절차.png') !important; 
+}
+.시설안내-img1 {
+ background: linear-gradient(to right, #fff, #fff 1px, transparent)
+ ,url('/public/시설1.png') !important; 
+}
+.시설안내-img2 {
+ background: linear-gradient(to right, #fff, #fff 1px, transparent)
+ ,url('/public/시설2.png') !important; 
+}
+.시설안내-img3 {
+ background: linear-gradient(to right, #fff, #fff 1px, transparent)
+ ,url('/public/시설3.png') !important; 
+}
+
+.map {
+ width:1080px !important;
+ height:400px;
+ border-radius: 20px 20px 0px 0px;
+}
+.guide {
+ width: 1080px;
+ height:129px;
+ background: #FDFCF8;
+}
+.guide ul {
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+}
+.guide ul li{
+ list-style: none;
+ float: left;
+}
+.guide ul li div{
+ display: flex;
+ gap: 10px
+}
+.guide ul li div h4{
+ line-height: 10px;
+}
