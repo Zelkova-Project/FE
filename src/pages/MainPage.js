@@ -1,4 +1,5 @@
 import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 import Section from "../components/Section";
 import Kakao from "../components/Kakao";
 import "../css/main.css";
@@ -80,7 +81,7 @@ const MainPage = () => {
 
       <Section>
         <div>
-          <h5 className="subtit">이용안내</h5>
+          <h5 className="subtit">시설안내</h5>
         </div>
         <div className="section-img-container">
           <ul className="set3-gap">
@@ -115,8 +116,8 @@ const MainPage = () => {
         </div>
       </Section>
 
-      <Section>
-        <div style={{background:'#FDFCF8'}}>
+      <Section isLast={true}>
+        <div className="kakao-map-container" style={{background:'#FDFCF8'}}>
           <Kakao/>
           <div className="guide">
             <ul>
@@ -124,13 +125,13 @@ const MainPage = () => {
                 <h4>오시는 길</h4>
               </li>
               <li>
-                <div>
+                <div className="juso">
                   <h4>주소</h4>
                   <p>경기도 하남시 덕풍동로 53 (12936)</p>
                 </div>
               </li>
               <li>
-                <div>
+                <div className="tel">
                   <h4>전화번호</h4>
                   <p>031-796-0005</p>
                 </div>
@@ -139,6 +140,8 @@ const MainPage = () => {
           </div>
         </div>
       </Section>
+      
+      <Footer/>
     </div>
   );
 };

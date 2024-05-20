@@ -1,12 +1,13 @@
 .section-container {
  font-family: "PretendardVariable";
- width: 1280px;
+ width: 1080px;
  margin: 20px auto 0px;
  display: flex;
  flex-direction: column;
  align-items: center
 }
 .main-height {
+ width: 100%;
  height: 720px;
 }
 .main-img {
@@ -52,7 +53,7 @@
 .img-subtit {
  position: absolute;
  top:20%;
- left:3%;
+ left:5%;
 }
 .img-subtit span {
  font-size: 28px;
@@ -64,7 +65,7 @@
 }
 
 .set2-setting {
- width:582px;
+ width:528px;
  height: 204px;
 }
 .set3-setting {
@@ -111,11 +112,15 @@
  width: 1080px;
  height:129px;
  background: #FDFCF8;
+ border-bottom-left-radius: 20px;
+ border-bottom-right-radius: 20px;
 }
 .guide ul {
  display: flex;
  flex-direction: row;
- justify-content: space-between;
+ justify-content: space-around;
+ height: 100%;
+ align-items: center;
 }
 .guide ul li{
  list-style: none;
@@ -127,4 +132,45 @@
 }
 .guide ul li div h4{
  line-height: 10px;
+}
+.guide ul li:nth-child(1) h4{
+ font-weight: 600;
+ font-size: 24px;
+ line-height: 10px;
+}
+.guide ul li:nth-child(2) h4{
+ font-weight: 600;
+ font-size: 16px;
+ line-height: 39px;
+}
+.guide ul li:nth-child(2) p{
+ font-weight: 400;
+ font-size: 16px;
+ line-height: 40px;
+}
+.guide ul li:nth-child(3) h4{
+ font-weight: 600;
+ font-size: 16px;
+ line-height: 39px;
+}
+.guide ul li:nth-child(3) p{
+ font-weight: 400;
+ font-size: 16px;
+ line-height: 40px;
+}
+.mt-40 {
+ margin-top:50px;
+}
+.juso, .tel {
+ position: relative;
+}
+.juso:before, .tel:before {
+ content: "";
+ width: 10px;
+ height: 10px;
+ background: #82D3AC;
+ border-radius: 30px;
+ position: absolute;
+ left: -18px;
+ top: 15px;
 }
