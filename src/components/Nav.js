@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const Nav = () => {
   return (
     <div className="nav-container">
+      <div className="hr"/>
       <div className="menu-left">
         <ul className="menu-ul">
           <li style={{ padding: "15px" }}>
