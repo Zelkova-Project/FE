@@ -25,7 +25,7 @@ const MainPage = () => {
                 <span>공지사항</span>
                 <p>느티나무 복지관의 공지사항을 지금 바로 확인하세요.</p>
               </div>
-              <div className="img-container1 set2-setting">
+              <div className="img-container1 main-img1 set2-setting">
                {/* <img src="middle-section.png" alt="main-section"></img> */}
               </div>
             </li>
@@ -34,7 +34,7 @@ const MainPage = () => {
                 <span>가정통신문</span>
                 <p>화목한 느티나무 복지관의 소식을 간단하게 받아보세요.</p>
               </div>
-              <div className="img-container2 set2-setting">
+              <div className="img-container2 main-img2 set2-setting">
                {/* <img src="middle-section2.png" alt="main-section"></img> */}
               </div>
             </li>
