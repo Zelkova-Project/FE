@@ -11,7 +11,11 @@ const MainPage = () => {
       <Nav />
 
       <Section isMain={true}>
-        <img className="main-img" src="main-section.png" alt="main-section"></img>
+        <img
+          className="main-img"
+          src="main-section.png"
+          alt="main-section"
+        ></img>
       </Section>
 
       <Section>
@@ -26,7 +30,7 @@ const MainPage = () => {
                 <p>느티나무 복지관의 공지사항을 지금 바로 확인하세요.</p>
               </div>
               <div className="img-container1 main-img1 set2-setting">
-               {/* <img src="middle-section.png" alt="main-section"></img> */}
+                {/* <img src="middle-section.png" alt="main-section"></img> */}
               </div>
             </li>
             <li>
@@ -35,7 +39,7 @@ const MainPage = () => {
                 <p>화목한 느티나무 복지관의 소식을 간단하게 받아보세요.</p>
               </div>
               <div className="img-container2 main-img2 set2-setting">
-               {/* <img src="middle-section2.png" alt="main-section"></img> */}
+                {/* <img src="middle-section2.png" alt="main-section"></img> */}
               </div>
             </li>
           </ul>
@@ -54,7 +58,7 @@ const MainPage = () => {
                 <p>느티나무 복지관의 이용시간에 대해 안내드립니다.</p>
               </div>
               <div className="img-container1 set3-setting 이용안내-img1">
-               {/* <img src="middle-section.png" alt="main-section"></img> */}
+                {/* <img src="middle-section.png" alt="main-section"></img> */}
               </div>
             </li>
             <li>
@@ -63,16 +67,19 @@ const MainPage = () => {
                 <p>느티나무 복지관의 이용 금액에 대해 안내드립니다.</p>
               </div>
               <div className="img-container2 set3-setting 이용안내-img2">
-               {/* <img src="middle-section2.png" alt="main-section"></img> */}
+                {/* <img src="middle-section2.png" alt="main-section"></img> */}
               </div>
             </li>
             <li>
               <div className="img-subtit set3-top">
                 <span>이용절차&구비서류</span>
-                <p>느티나무 복지관을 이용하기 위한 절차와 구비하실 서류를 안내드립니다.</p>
+                <p>
+                  느티나무 복지관을 이용하기 위한 절차와 구비하실 서류를
+                  안내드립니다.
+                </p>
               </div>
               <div className="img-container2 set3-setting 이용안내-img3">
-               {/* <img src="middle-section2.png" alt="main-section"></img> */}
+                {/* <img src="middle-section2.png" alt="main-section"></img> */}
               </div>
             </li>
           </ul>
@@ -91,7 +98,7 @@ const MainPage = () => {
                 <p>느티나무 복지관의 이용시간에 대해 안내드립니다.</p>
               </div>
               <div className="img-container1 set3-setting 시설안내-img1">
-               {/* <img src="middle-section.png" alt="main-section"></img> */}
+                {/* <img src="middle-section.png" alt="main-section"></img> */}
               </div>
             </li>
             <li>
@@ -100,16 +107,19 @@ const MainPage = () => {
                 <p>느티나무 복지관의 이용 금액에 대해 안내드립니다.</p>
               </div>
               <div className="img-container2 set3-setting 시설안내-img2">
-               {/* <img src="middle-section2.png" alt="main-section"></img> */}
+                {/* <img src="middle-section2.png" alt="main-section"></img> */}
               </div>
             </li>
             <li>
               <div className="img-subtit set3-top">
                 <span>이용절차&구비서류</span>
-                <p>느티나무 복지관을 이용하기 위한 절차와 구비하실 서류를 안내드립니다.</p>
+                <p>
+                  느티나무 복지관을 이용하기 위한 절차와 구비하실 서류를
+                  안내드립니다.
+                </p>
               </div>
               <div className="img-container2 set3-setting 시설안내-img3">
-               {/* <img src="middle-section2.png" alt="main-section"></img> */}
+                {/* <img src="middle-section2.png" alt="main-section"></img> */}
               </div>
             </li>
           </ul>
@@ -117,8 +127,11 @@ const MainPage = () => {
       </Section>
 
       <Section isLast={true}>
-        <div className="kakao-map-container" style={{background:'#FDFCF8'}}>
-          <Kakao/>
+        <div>
+          <h5 className="subtit">오시는 길</h5>
+        </div>
+        <div className="kakao-map-container" style={{ background: "#FDFCF8" }}>
+          <Kakao />
           <div className="guide">
             <ul>
               <li>
@@ -140,8 +153,8 @@ const MainPage = () => {
           </div>
         </div>
       </Section>
-      
-      <Footer/>
+
+      <Footer />
     </div>
   );
 };

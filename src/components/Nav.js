@@ -7,9 +7,11 @@ const Nav = () => {
       <div className="hr"/>
       <div className="menu-left">
         <ul className="menu-ul">
-          <li style={{ padding: "15px" }}>
-            <img src="logo.png" alt="logo"></img>
-          </li>
+          <Link to={'/'}>
+            <li style={{ padding: "15px" }}>
+              <img src="logo.png" alt="logo"></img>
+            </li>
+          </Link>
           <Link to={'/guide'}>
             <li>기관소개</li>
           </Link>

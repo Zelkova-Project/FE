@@ -1,0 +1,24 @@
+.flexcontainer {
+ display: flex;
+ flex-direction: row;
+ gap:20px;
+}
+.flexItem{
+ width:255px;
+ height: 310px;
+
+}
+.flexItem h3{
+ color: #666;
+ font-weight: 600;
+ font-size: 20px;
+}
+.flexItem p{
+ font-weight: 400;
+ font-size: 14px;
+ color: #919191;
+}
+.flex-innercontainer {
+ display: flex;
+ flex-direction: column;
+}

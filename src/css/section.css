@@ -163,7 +163,7 @@
  line-height: 40px;
 }
 .mt-40 {
- margin-top:50px;
+ /* margin-top:90px; */
 }
 .juso, .tel {
  position: relative;
@@ -177,4 +177,8 @@
  position: absolute;
  left: -18px;
  top: 15px;
+}
+#map {
+ border-top-left-radius: 20px;
+ border-top-right-radius: 20px;
 }
