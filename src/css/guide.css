@@ -1,133 +1,140 @@
 .sub-nav {
- width: 1080px;
- height: 70px;
- background-color: #fff;
- border-radius: 30px;
- position: absolute;
- top:458px;
- left:100px;
- /* bottom:30px;
+  width: 1080px;
+  height: 70px;
+  background-color: #fff;
+  border-radius: 30px;
+  position: absolute;
+  top: 458px;
+  left: 100px;
+  /* bottom:30px;
  left:114px; */
 }
 .sub-nav ul {
- display: flex;
- justify-content: center;
- align-items: center;
- padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 .sub-nav ul li {
- list-style: none;
- font-weight: 500;
- font-size: 16px;
- width: 270px;
- height: 70px;
- display: flex;
- justify-self: center;
- align-items: center;
+  cursor: pointer;
+  position: relative;
+  list-style: none;
+  font-weight: 500;
+  font-size: 16px;
+  width: 270px;
+  height: 70px;
+  display: flex;
+  justify-self: center;
+  align-items: center;
 }
-.sub-nav ul li span{
- width: 100%;
- text-align: center;
+.sub-nav ul li span {
+  width: 100%;
+  text-align: center;
 }
-.sub-nav ul li .active:before{
- content: "";
- width: 8px;
- height: 8px;
- background: #82D3AC;
- border-radius: 30px;
- position: absolute;
- left: 92px;
- top: 30px;
+.sub-nav ul li .active:before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: #82d3ac;
+  border-radius: 30px;
+  position: absolute;
+  left: 92px;
+  top: 30px;
 }
-.guide-img-container{
- position: relative;
+.guide-img-container {
+  position: relative;
 }
 .guide-img1 {
- background: linear-gradient(to right, #fff, #fff 5px, transparent)
- ,url('/public/이용안내-이용시간.png');
- /* border-radius: 20px;
+  background: linear-gradient(to right, #fff, #fff 5px, transparent),
+    url("/public/이용안내-이용시간.png");
+  /* border-radius: 20px;
 background: linear-gradient(270deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%), url('/public/이용안내-이용시간.png'); */
 }
 .guide-img2 {
- background: linear-gradient(to right, #fff, #fff 1px, transparent)
- ,url('/public/이용안내-이용문의.png');
+  background: linear-gradient(to right, #fff, #fff 1px, transparent),
+    url("/public/이용안내-이용문의.png");
 
- /* background: linear-gradient(270deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%), url('/public/이용안내-이용문의.png'); */
+  /* background: linear-gradient(270deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%), url('/public/이용안내-이용문의.png'); */
 }
 
-.guide-table1, .guide-table2{ border-collapse : collapse; }  /*이중선 제거*/
+.guide-table1,
+.guide-table2 {
+  border-collapse: collapse;
+} /*이중선 제거*/
 .guide-table1 th {
- background: #FDFCF8;
+  background: #fdfcf8;
 }
-.guide-table1 td, .guide-table2 td {
- color:#666666;
+.guide-table1 td,
+.guide-table2 td {
+  color: #666666;
 }
-.guide-table1 th,.guide-table1 td{
+.guide-table1 th,
+.guide-table1 td {
   width: 1080px;
   height: 40px;
   text-align: center;
-  border:1px solid #F6F6F6;
+  border: 1px solid #f6f6f6;
 }
-.guide-table2 td{
- width: 1080px;
- height: 56px;
- border:1px solid #F6F6F6;
+.guide-table2 td {
+  width: 1080px;
+  height: 56px;
+  border: 1px solid #f6f6f6;
 }
 
 .guide-table-img {
- color: #666;
- font-family: Pretendard;
- font-size: 16px;
- font-style: normal;
- font-weight: 400;
- line-height: 30px; /* 150% */
- display: flex;
+  color: #666;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px; /* 150% */
+  display: flex;
 }
 
 .guide-table-img:before {
- display: block;
- content: '';
- margin-right: 10px;
- margin-left: 20px;
+  display: block;
+  content: "";
+  margin-right: 10px;
+  margin-left: 20px;
 }
 
 .guide-process-img1:before {
- width: 30px;
- height: 30px;
- background: url('/public/guide/입소의뢰.png');
+  width: 30px;
+  height: 30px;
+  background: url("/public/guide/입소의뢰.png");
 }
-.guide-td-hightlight{
- background: #FDFCF8;
+.guide-td-hightlight {
+  background: #fdfcf8;
 }
 .guide-process-img2:before {
- width: 26px;
- height: 26px;
- background: url('/public/guide/초기면접.png');
+  width: 26px;
+  height: 26px;
+  background: url("/public/guide/초기면접.png");
 }
 .guide-process-img3:before {
- width: 24px;
- height: 24px;
- background: url('/public/guide/입소판정.png');
+  width: 24px;
+  height: 24px;
+  background: url("/public/guide/입소판정.png");
 }
 .guide-process-img4:before {
- width: 27px;
- height: 27px;
- background: url('/public/guide/이용신청.png');
+  width: 27px;
+  height: 27px;
+  background: url("/public/guide/이용신청.png");
 }
 .guide-process-img5:before {
- width: 24px;
- height: 24px;
- background: url('/public/guide/이용.png');
+  width: 24px;
+  height: 24px;
+  background: url("/public/guide/이용.png");
 }
 .guide-subtit {
- color: #333;
- font-family: Pretendard;
- font-size: 32px;
- font-style: normal;
- font-weight: 600;
- line-height: normal;
+  color: #333;
+  font-family: Pretendard;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .gap {
- margin-bottom:80px;
+  margin-bottom: 80px;
 }
