@@ -8,6 +8,7 @@ const Oauth = lazy(() => import("../pages/OauthPage"))
 const Join = lazy(() => import("../pages/JoinPage"))
 const Guide = lazy(() => import("../pages/GuidePage"))
 const Notice = lazy(() => import("../pages/NoticePage"))
+const Hire = lazy(() => import("../pages/HirePage"))
 
 const root = createBrowserRouter([
  {
@@ -33,6 +34,10 @@ const root = createBrowserRouter([
  {
   path: "/notice",
   element: <Suspense fallback={Loading}><Notice/></Suspense>
+ },
+ {
+  path: "/hire",
+  element: <Suspense fallback={Loading}><Hire/></Suspense>
  },
 ])
 

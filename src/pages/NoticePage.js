@@ -30,7 +30,7 @@ const NoticePage = () => {
             <ul>
               <li>
                 <span
-                  onClick={() => setNavIdx(0)}
+                  onClick={() => activeHandler(0)}
                   className={navIdx == 0 ? "active" : ""}
                 >
                   공지사항
@@ -38,20 +38,22 @@ const NoticePage = () => {
               </li>
               <li>
                 <span
-                  onClick={() => setNavIdx(1)}
+                  onClick={() => activeHandler(1)}
                   className={navIdx == 1 ? "active" : ""}
                 >
                   가정통신문
                 </span>
               </li>
-              <li>
-                <span
-                  onClick={() => setNavIdx(2)}
-                  className={navIdx == 2 ? "active" : ""}
-                >
-                  채용안내
-                </span>
-              </li>
+              <Link to="/hire">
+                <li>
+                  <span
+                    onClick={() => activeHandler(2)}
+                    className={navIdx == 2 ? "active" : ""}
+                  >
+                    채용안내
+                  </span>
+                </li>
+              </Link>
             </ul>
           </div>
         </div>
