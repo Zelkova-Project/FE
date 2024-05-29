@@ -31,8 +31,7 @@
   width: 100%;
   text-align: center;
 }
-<<<<<<< HEAD
-.sub-nav ul li span:active {
+/* .sub-nav ul li span:active {
   color:#4C9F8B;
 }
 .sub-nav ul li .active:before {
@@ -44,8 +43,7 @@
   position: absolute;
   left: 92px;
   top: 31px;
-}
-=======
+} */
 .sub-nav ul li .active:before {
   content: "";
   width: 8px;
@@ -56,7 +54,6 @@
   left: 92px;
   top: 30px;
 }
->>>>>>> 76398b156c95c624d6be8a0c31ced33fd9886977
 .guide-img-container {
   position: relative;
 }
@@ -154,11 +151,3 @@ background: linear-gradient(270deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%), ur
 .gap {
   margin-bottom: 80px;
 }
-<<<<<<< HEAD
-
-#map {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-}
-=======
->>>>>>> 76398b156c95c624d6be8a0c31ced33fd9886977

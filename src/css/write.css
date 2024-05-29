@@ -1,0 +1,166 @@
+.write-outer-container {
+ font-family: "PretendardVariable";
+  display: flex;
+  flex-direction: column;
+}
+.write-subtit {
+ font-size: 32px;
+ font-weight: 600;
+ text-align: center;
+}
+.write-flexItem {
+ display: flex;
+ flex-direction: row;
+ width: 1080px;
+}
+.write-flexItem h3 {
+ width: 70px;
+ font-size: 16px;
+ font-weight: 500;
+ height: 15px;
+ color:#444;
+ display: flex;
+ align-items: center;
+}
+.write-flexItem input,select {
+ margin-left: 10px;
+ width: 1000px;
+ height: 40px;
+ border-radius: 8px;
+ border:1px solid #F2F2F2F2;
+ outline: none;
+ box-sizing: border-box;
+ padding: 5px;
+}
+.write-flexSub {
+ display: flex;
+ flex-direction: row;
+ 
+}
+.write-flexSub h3 {
+ width: 70px;
+ height: 15px;
+}
+.write-flexSub input, select {
+ height: 40px;
+ width: 185px;
+ border-radius: 8px;
+ border:1px solid #F2F2F2F2;
+ outline: none;
+ box-sizing: border-box;
+ padding: 5px;
+}
+.write-flexSub select {
+ color:#666;
+ font-weight: 400;
+ font-size: 14px;
+}
+
+
+.write-textArea {
+ color:#444;
+ font-weight: 500;
+ font-size: 16px;
+ display: flex;
+ flex-direction: column;
+}
+.write-textArea textarea{
+ border-radius: 8px;
+ outline: none;
+ padding: 10px;
+ resize: none;
+ width: 1080px;
+ height: 200px;
+ border: 1px solid #F2F2F2F2;
+ color:#666;
+}
+
+
+.write-file-list {
+ border: 1px solid #F2F2F2F2;
+ width: 860px;
+ height: auto;
+ border-radius: 8px;
+}
+.write-file-list ul{ 
+ padding: 10px;
+ display: flex;
+ flex-direction: column;
+ gap:10px;
+
+}
+.write-file-list ul li {
+ width: 100%;
+}
+
+.write-file-list ul li h3{  
+ border-radius: 6px;
+ margin: 0;
+ padding: 5px;
+ background: #82D3AC33;
+ width: 828px;
+}
+
+.write-file-btns {
+ display: flex;
+ flex-direction: column;
+ gap:10px;
+}
+.write-file-btns button{
+ width: 120px;
+ height: 35px;
+ border-radius: 5px;
+ font-weight: 600;
+ font-size: 14px;
+}
+
+.write-file-btns button:nth-child(1){
+ font-family: "PretendardVariable";
+ color:#fff;
+ background: #82D3AC;
+ border: none;
+}
+.write-file-btns button:nth-child(2){
+ color:#666;
+ font-family: "PretendardVariable";
+ border: 1px solid #82D3AC;
+ background: none;
+}
+
+.write-submit-btns {
+ display: flex;
+ flex-direction: row;
+ justify-content: center;
+ align-items: center;
+ gap:5px;
+}
+.write-submit-btns button{
+ width: 184px;
+ height: 40px;
+ border-radius: 5px;
+}
+.write-submit-btns button:nth-child(1), .write-submit-btns button:nth-child(2){
+ color:#666;
+ font-family: "PretendardVariable";
+ border: 1px solid #82D3AC;
+ background: none;
+}
+.write-submit-btns button:nth-child(3){
+ font-family: "PretendardVariable";
+ color:#fff;
+ background: #82D3AC;
+ border: none;
+}
+
+.ml-40 {
+ margin-left:40px;
+}
+.ml-20 {
+ margin-left:20px;
+}
+.mt-50 {
+ margin-top: 50px;
+}
+.mb-50 {
+ margin-bottom: 50px;
+}

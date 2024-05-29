@@ -7,20 +7,12 @@ const Nav = () => {
       <div className="hr" />
       <div className="menu-left">
         <ul className="menu-ul">
-<<<<<<< HEAD
           <Link to={'/'}>
-=======
-          <Link to={"/"}>
->>>>>>> 76398b156c95c624d6be8a0c31ced33fd9886977
             <li style={{ padding: "15px" }}>
               <img src="logo.png" alt="logo"></img>
             </li>
           </Link>
-<<<<<<< HEAD
-          <Link to={'/guide'}>
-=======
           <Link to={"/guide"}>
->>>>>>> 76398b156c95c624d6be8a0c31ced33fd9886977
             <li>기관소개</li>
           </Link>
           <Link to={"/notice"}>
