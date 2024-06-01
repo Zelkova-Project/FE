@@ -1,11 +1,15 @@
+.sub-nav-wrapper {
+  display: flex;
+  justify-content: center;
+}
 .sub-nav {
-  width: 1080px;
+  width: 810px;
   height: 70px;
   background-color: #fff;
   border-radius: 30px;
   position: absolute;
   top: 458px;
-  left: 100px;
+  left: 232px;
   /* bottom:30px;
  left:114px; */
 }

@@ -30,7 +30,7 @@ const NoticeBoardPage = ({handlerRouting}) => {
         </div>
 
         <div className="notice-flexitem">
-          <Table />
+          <Table handlerRouting={handlerRouting}/>
         </div>
 
         <div

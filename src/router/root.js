@@ -4,6 +4,8 @@ import { createBrowserRouter } from "react-router-dom";
 const Loading = <div>Loading...</div>
 const Main = lazy(() => import("../pages/MainPage"))
 const Login = lazy(() => import("../pages/LoginPage"))
+const NoticeDetail = lazy(() => import("../pages/NoticeDetailPage"))
+const NormalLogin = lazy(() => import("../pages/NormalLoginPage"))
 const Oauth = lazy(() => import("../pages/OauthPage"))
 const Join = lazy(() => import("../pages/JoinPage"))
 const Guide = lazy(() => import("../pages/GuidePage"))
@@ -43,6 +45,14 @@ const root = createBrowserRouter([
  {
   path: "/write",
   element: <Suspense fallback={Loading}><Write/></Suspense>
+ },
+ {
+  path: "/normalLogin",
+  element: <Suspense fallback={Loading}><NormalLogin/></Suspense>
+ },
+ {
+  path: "/noticeDetail/:id",
+  element: <Suspense fallback={Loading}><NoticeDetail/></Suspense>
  },
 ])
 

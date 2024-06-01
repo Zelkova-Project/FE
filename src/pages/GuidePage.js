@@ -13,7 +13,6 @@ const Guide = () => {
   const [activeComponent, setActiveComponent] = useState(<Guide1/>);
 
   const activeHandler = (idx) => {
-    console.log('>>> idx ', idx);
     setActiveIdx(idx);
     const comp = [<Guide1/>, <Guide2/>, <Guide3/>, <Guide4/>][idx];
     setActiveComponent(comp);

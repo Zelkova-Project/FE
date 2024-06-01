@@ -25,9 +25,9 @@ const Nav = () => {
               <a>로그인</a>
             </li>
           </Link> */}
-          <Link to={"/join"}>
+          <Link to={"/login"}>
             <li className="login">
-              <a>회원가입</a>
+              <a>로그인</a>
             </li>
           </Link>
         </ul>
