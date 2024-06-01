@@ -2,6 +2,8 @@ import "../css/nav.css";
 import { Link } from "react-router-dom";
 
 const Nav = () => {
+  let logo = require("../imgs/logo.png");
+  
   return (
     <div className="nav-container">
       <div className="hr" />
@@ -9,7 +11,7 @@ const Nav = () => {
         <ul className="menu-ul">
           <Link to={'/'}>
             <li style={{ padding: "15px" }}>
-              <img src="logo.png" alt="logo"></img>
+              <img src={logo} alt="logo"></img>
             </li>
           </Link>
           <Link to={"/guide"}>

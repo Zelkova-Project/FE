@@ -2,8 +2,8 @@ import React from "react";
 import "../css/noticeDetail.css";
 
 const NoticeDetailPage = ({ handlerRouting }) => {
-    let result = [];
-    let a =           
+  let result = [];
+  let a = (
     <div className="notail-comment-list-item">
       <div className="notail-comment-list-item-profile">
         <img src="notice/notail-comment.png"></img>
@@ -19,16 +19,15 @@ const NoticeDetailPage = ({ handlerRouting }) => {
         {/* 댓글본문 */}
         <div className="notail-comment-item-content">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-            do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi
-            ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
 
@@ -48,12 +47,12 @@ const NoticeDetailPage = ({ handlerRouting }) => {
           <p>1,234</p>
         </div>
       </div>
-      
     </div>
+  );
 
-    result.push(a);
-    result.push(a);
-    result.push(a);
+  result.push(a);
+  result.push(a);
+  result.push(a);
 
   return (
     <div className="notail-container">
@@ -170,17 +169,33 @@ const NoticeDetailPage = ({ handlerRouting }) => {
                 <p>1,234</p>
               </div>
             </div>
-
           </div>
-            {result}
+          {result}
         </div>
       </div>
 
       {/* 이전글 다음글 영역 */}
-      <div className="notail-prev-next-btn-section"></div>
+      <div className="notail-prev-next-btn-section">
+        <div className="notail-prev-btn">
+          <ul>
+            <li>10</li>
+            <li>Lorem ipsum dolor sit amet consectetur.</li>
+            <li>2000.00.00</li>
+          </ul>
+        </div>
+        <div className="notail-next-btn">
+          <ul>
+            <li>10</li>
+            <li>Lorem ipsum dolor sit amet consectetur.</li>
+            <li>2000.00.00</li>
+          </ul>
+        </div>
+      </div>
 
       {/* 목록버튼 */}
-      <div className="notail-golist-btn"></div>
+      <div className="notail-golist-btn">
+        <button>목록</button>
+      </div>
     </div>
   );
 };

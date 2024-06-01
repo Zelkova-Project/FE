@@ -3,6 +3,8 @@ import Footer from "../components/Footer";
 import Section from "../components/Section";
 
 import "../css/main.css";
+import "../css/guide.css";
+import "../css/nav.css";
 import "../css/notice.css";
 import "../fonts/font.css";
 import React, { useState } from "react";

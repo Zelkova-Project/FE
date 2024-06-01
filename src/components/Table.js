@@ -1,7 +1,7 @@
 import "../css/table.css";
 import { useNavigate } from "react-router-dom";
 
-const Table = ({handlerRouting}) => {
+const Table = ({ handlerRouting }) => {
   const navigate = useNavigate();
 
   const tableElement = [
@@ -23,8 +23,8 @@ const Table = ({handlerRouting}) => {
   ];
 
   const goDetailNotice = () => {
-    handlerRouting('detail');
-  }
+    handlerRouting("detail");
+  };
 
   const makeTableTr = () => {
     const result = [];
@@ -51,7 +51,6 @@ const Table = ({handlerRouting}) => {
         </tr>
 
         {makeTableTr()}
-
 
         {/* <tr className="common-table-tr2">
           <td>10</td>

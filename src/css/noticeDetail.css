@@ -187,3 +187,67 @@
 .notail-comment-like-count p{
     color:#A6A6A6;
 }
+
+
+/* 이전글다음글 */
+.notail-prev-next-btn-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  margin-top: 60px;
+}
+
+.notail-next-btn {
+  width: 1080px;
+  border-bottom: 1px solid #EEE;
+}
+
+.notail-prev-btn {
+  width: 1080px;
+  border-top: 1px solid #EEE;
+  border-bottom: 1px solid #EEE;
+}
+
+.notail-prev-btn ul,
+.notail-next-btn ul
+{ 
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.notail-prev-btn ul li,
+.notail-next-btn ul li
+{ 
+  padding: 10px;
+  color: #666666;
+
+}
+
+.notail-prev-btn ul li:nth-child(2),
+.notail-next-btn ul li:nth-child(2) {
+  width: 630px;
+}
+
+
+/* 목록버튼 */
+.notail-golist-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.notail-golist-btn button {
+  background: #82D3AC;
+  width:184px;
+  height:40px;
+  font-size: 16px;
+  font-weight: 600;
+  color:#FFF;
+  border-radius:8px;
+  border: none;
+}
