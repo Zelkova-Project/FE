@@ -1,29 +1,29 @@
-import "../css/table.css";
-import { useNavigate } from "react-router-dom";
+import '../css/table.css';
+import { useNavigate } from 'react-router-dom';
 
 const Table = ({ handlerRouting }) => {
   const navigate = useNavigate();
 
   const tableElement = [
     {
-      no: "10",
-      title: "Lorem ipsum dolor sit amet consectetur.",
-      data: "2000.00.00",
+      no: '10',
+      title: 'Lorem ipsum dolor sit amet consectetur.',
+      data: '2000.00.00',
     },
     {
-      no: "10",
-      title: "Lorem ipsum dolor sit amet consectetur.",
-      data: "2000.00.00",
+      no: '10',
+      title: 'Lorem ipsum dolor sit amet consectetur.',
+      data: '2000.00.00',
     },
     {
-      no: "10",
-      title: "Lorem ipsum dolor sit amet consectetur.",
-      data: "2000.00.00",
+      no: '10',
+      title: 'Lorem ipsum dolor sit amet consectetur.',
+      data: '2000.00.00',
     },
   ];
 
   const goDetailNotice = () => {
-    handlerRouting("detail");
+    handlerRouting('detail');
   };
 
   const makeTableTr = () => {
@@ -34,7 +34,7 @@ const Table = ({ handlerRouting }) => {
           <td>{tableElement[idx].no}</td>
           <td>{tableElement[idx].title}</td>
           <td>{tableElement[idx].content}</td>
-        </tr>
+        </tr>,
       );
     }
 

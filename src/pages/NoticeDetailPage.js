@@ -1,12 +1,16 @@
-import React from "react";
-import "../css/noticeDetail.css";
+import React from 'react';
+import '../css/noticeDetail.css';
 
 const NoticeDetailPage = ({ handlerRouting }) => {
+  const imgObj = {
+    comment: require('../imgs/notice/notail-comment.png'),
+    notailLike: require('../imgs/notice/notail-like.png'),
+  };
   let result = [];
   let a = (
     <div className="notail-comment-list-item">
       <div className="notail-comment-list-item-profile">
-        <img src="notice/notail-comment.png"></img>
+        <img src={imgObj.comment}></img>
       </div>
 
       {/* 댓글 중 중간 영역 */}
@@ -19,15 +23,13 @@ const NoticeDetailPage = ({ handlerRouting }) => {
         {/* 댓글본문 */}
         <div className="notail-comment-item-content">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor
+            sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </div>
 
@@ -41,7 +43,7 @@ const NoticeDetailPage = ({ handlerRouting }) => {
 
       <div className="notail-comment-like">
         <div className="notail-comment-like-icon">
-          <img src="notice/notail-like.png"></img>
+          <img src={imgObj.notailLike}></img>
         </div>
         <div className="notail-comment-like-count">
           <p>1,234</p>
@@ -75,32 +77,26 @@ const NoticeDetailPage = ({ handlerRouting }) => {
         <div className="notail-content">
           <h2>공지사항 제목</h2>
           <p>
-            Lorem ipsum dolor sit amet consectetur. Aliquam ullamcorper sit
-            euismod volutpat etiam orci. Ac ultricies sit in tincidunt sem
-            tempus ac cursus. In ut ac dolor viverra orci. Quis mattis elementum
-            ornare et pretium cras sit volutpat feugiat. Elit feugiat elementum
-            sit viverra et mauris eget in purus. Amet platea quis arcu
-            pellentesque varius viverra accumsan aliquam. Sem diam at pharetra
-            non. Enim pellentesque molestie congue ut aenean semper. Morbi cum
-            quis phasellus arcu vitae. Enim velit libero mattis massa sapien
-            penatibus sit purus molestie. Et dui sed imperdiet ullamcorper sit
-            eget sapien. Commodo felis est id enim erat hac. Augue interdum
-            nulla nisl proin vel diam. Duis volutpat vel lobortis sed sit
-            dignissim posuere justo id. Sed at lorem aenean lacus tortor. Amet
-            tristique etiam aenean neque mollis eget odio elit. Semper nisl ut
-            diam lectus. Eu varius consectetur condimentum etiam purus odio.
-            Mollis vestibulum suscipit vulputate mus non nibh. Urna auctor orci
-            gravida quam sed risus quis morbi. Vulputate diam massa enim
-            potenti. Diam auctor lorem pellentesque duis mi arcu tempor elit.
-            Volutpat tincidunt tempus vitae magna consequat enim amet. Augue
-            interdum nulla nisl proin vel diam. Duis volutpat vel lobortis sed
-            sit dignissim posuere justo id. Sed at lorem aenean lacus tortor.
-            Amet tristique etiam aenean neque mollis eget odio elit. Semper nisl
-            ut diam lectus. Eu varius consectetur condimentum etiam purus odio.
-            Mollis vestibulum suscipit vulputate mus non nibh. Urna auctor orci
-            gravida quam sed risus quis morbi. Vulputate diam massa enim
-            potenti. Diam auctor lorem pellentesque duis mi arcu tempor elit.
-            Volutpat tincidunt tempus vitae magna consequat enim amet.
+            Lorem ipsum dolor sit amet consectetur. Aliquam ullamcorper sit euismod volutpat etiam
+            orci. Ac ultricies sit in tincidunt sem tempus ac cursus. In ut ac dolor viverra orci.
+            Quis mattis elementum ornare et pretium cras sit volutpat feugiat. Elit feugiat
+            elementum sit viverra et mauris eget in purus. Amet platea quis arcu pellentesque varius
+            viverra accumsan aliquam. Sem diam at pharetra non. Enim pellentesque molestie congue ut
+            aenean semper. Morbi cum quis phasellus arcu vitae. Enim velit libero mattis massa
+            sapien penatibus sit purus molestie. Et dui sed imperdiet ullamcorper sit eget sapien.
+            Commodo felis est id enim erat hac. Augue interdum nulla nisl proin vel diam. Duis
+            volutpat vel lobortis sed sit dignissim posuere justo id. Sed at lorem aenean lacus
+            tortor. Amet tristique etiam aenean neque mollis eget odio elit. Semper nisl ut diam
+            lectus. Eu varius consectetur condimentum etiam purus odio. Mollis vestibulum suscipit
+            vulputate mus non nibh. Urna auctor orci gravida quam sed risus quis morbi. Vulputate
+            diam massa enim potenti. Diam auctor lorem pellentesque duis mi arcu tempor elit.
+            Volutpat tincidunt tempus vitae magna consequat enim amet. Augue interdum nulla nisl
+            proin vel diam. Duis volutpat vel lobortis sed sit dignissim posuere justo id. Sed at
+            lorem aenean lacus tortor. Amet tristique etiam aenean neque mollis eget odio elit.
+            Semper nisl ut diam lectus. Eu varius consectetur condimentum etiam purus odio. Mollis
+            vestibulum suscipit vulputate mus non nibh. Urna auctor orci gravida quam sed risus quis
+            morbi. Vulputate diam massa enim potenti. Diam auctor lorem pellentesque duis mi arcu
+            tempor elit. Volutpat tincidunt tempus vitae magna consequat enim amet.
           </p>
         </div>
       </div>
@@ -112,7 +108,7 @@ const NoticeDetailPage = ({ handlerRouting }) => {
         </div>
         <div className="notail-write-area">
           <div className="notail-write-profile-img">
-            <img src="notice/notail-comment.png"></img>
+            <img src={imgObj.comment}></img>
           </div>
           <div className="notail-write-comment-input">
             <input type="text" placeholder="댓글을 입력하세요"></input>
@@ -127,7 +123,7 @@ const NoticeDetailPage = ({ handlerRouting }) => {
           {/* 댓글하나 시작 */}
           <div className="notail-comment-list-item">
             <div className="notail-comment-list-item-profile">
-              <img src="notice/notail-comment.png"></img>
+              <img src={imgObj.comment}></img>
             </div>
 
             {/* 댓글 중 중간 영역 */}
@@ -140,16 +136,14 @@ const NoticeDetailPage = ({ handlerRouting }) => {
               {/* 댓글본문 */}
               <div className="notail-comment-item-content">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum
-                  dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                  minim veniam, quis nostrud exercitation ullamco laboris nisi
-                  ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum
+                  dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                  labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                  ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit
+                  amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                  dolore magna aliqua.
                 </p>
               </div>
 
@@ -163,7 +157,7 @@ const NoticeDetailPage = ({ handlerRouting }) => {
 
             <div className="notail-comment-like">
               <div className="notail-comment-like-icon">
-                <img src="notice/notail-like.png"></img>
+                <img src={imgObj.notailLike}></img>
               </div>
               <div className="notail-comment-like-count">
                 <p>1,234</p>

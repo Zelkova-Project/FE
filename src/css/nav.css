@@ -1,41 +1,40 @@
-
 .nav-container {
- font-family: "PretendardVariable";
- color:#333;
- background: #FFFFFF;
- display: flex;
- width:1280px;
- height:54px;
- margin:10px auto 0 auto;
- font-weight: 600;
- font-size: 16px;
+  font-family: 'PretendardVariable';
+  color: #333;
+  background: #ffffff;
+  display: flex;
+  width: 1280px;
+  height: 54px;
+  margin: 10px auto 0 auto;
+  font-weight: 600;
+  font-size: 16px;
 }
 .hr {
- width: 100vw;
- height: 1px;
- position: absolute;
- top:75px;
- left:0;
- border-bottom: 2px solid #F6F6F6;
+  width: 100vw;
+  height: 1px;
+  position: absolute;
+  top: 75px;
+  left: 0;
+  border-bottom: 2px solid #f6f6f6;
 }
 .menu-left {
- width: 100%;
- display: flex;
- 
+  width: 100%;
+  display: flex;
 }
 
 .menu-ul {
- width: 100%;
- list-style: none;
- position: relative;
+  width: 100%;
+  list-style: none;
+  position: relative;
 }
-.menu-ul li{ 
- float:left;
- padding: 20px
+.menu-ul li {
+  float: left;
+  padding: 20px;
+  cursor: pointer;
 }
 
 .login {
- position: absolute;
- right:30px;
- float:right !important
+  position: absolute;
+  right: 30px;
+  float: right !important;
 }

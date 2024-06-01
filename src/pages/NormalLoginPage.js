@@ -1,9 +1,9 @@
-import "../css/join.css";
-import Nav from "../components/Nav";
-import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
+import '../css/join.css';
+import Nav from '../components/Nav';
+import Footer from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
 
-import axios from "axios";
+import axios from 'axios';
 
 const NormalLoginPage = () => {
   const navigate = useNavigate();
@@ -13,9 +13,9 @@ const NormalLoginPage = () => {
   };
   // http://49.247.174.109:8080
   const goNormalLogin = async () => {
-    let res = await axios.post("http://49.247.174.109:8080/login", {
-        loginId: "eora21",
-        password: 1234
+    let res = await axios.post('/login', {
+      loginId: 'eora21',
+      password: 1234,
     });
   };
 

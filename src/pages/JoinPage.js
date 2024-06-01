@@ -1,7 +1,7 @@
-import "../css/join.css";
-import Nav from "../components/Nav";
-import Footer from "../components/Footer";
-import { useNavigate, useParams } from "react-router-dom";
+import '../css/join.css';
+import Nav from '../components/Nav';
+import Footer from '../components/Footer';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -14,14 +14,14 @@ const Join = () => {
 
   //TODO: 유효성검사
   const goJoin = () => {
-      // const fetchData = async() => {
-      //   const res = await axios.get('https://jsonplaceholder.typicode.com/news');
-      //   return res.data;
-      // }	
-          
-      // fetchData().then(res => res);
+    // const fetchData = async() => {
+    //   const res = await axios.get('https://jsonplaceholder.typicode.com/news');
+    //   return res.data;
+    // }
+
+    // fetchData().then(res => res);
     goBack();
-  }
+  };
 
   return (
     <div className="join-outer-container">
@@ -99,7 +99,9 @@ const Join = () => {
               <button className="cancel-join-btn" onClick={goBack}>
                 취소
               </button>
-              <button className="join-btn" onClick={goJoin}>완료</button>
+              <button className="join-btn" onClick={goJoin}>
+                완료
+              </button>
             </div>
           </div>
         </div>

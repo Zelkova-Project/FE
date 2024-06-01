@@ -1,5 +1,3 @@
-const HirePage = () => {
-    
-}
+const HirePage = () => {};
 
 export default HirePage;

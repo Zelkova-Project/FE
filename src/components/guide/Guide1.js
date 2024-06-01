@@ -1,4 +1,4 @@
-import Section from "../Section"
+import Section from '../Section';
 
 const Guide1 = () => {
   return (
@@ -85,37 +85,27 @@ const Guide1 = () => {
           <table className="guide-table2">
             <tr>
               <td>
-                <strong className="guide-table-img guide-process-img1">
-                  입소의뢰 및 접수
-                </strong>
+                <strong className="guide-table-img guide-process-img1">입소의뢰 및 접수</strong>
               </td>
             </tr>
             <tr>
               <td className="guide-td-hightlight">
-                <strong className="guide-table-img guide-process-img2">
-                  초기면접
-                </strong>
+                <strong className="guide-table-img guide-process-img2">초기면접</strong>
               </td>
             </tr>
             <tr>
               <td>
-                <strong className="guide-table-img guide-process-img3">
-                  입소판정
-                </strong>
+                <strong className="guide-table-img guide-process-img3">입소판정</strong>
               </td>
             </tr>
             <tr>
               <td className="guide-td-hightlight">
-                <strong className="guide-table-img guide-process-img4">
-                  이용신청
-                </strong>
+                <strong className="guide-table-img guide-process-img4">이용신청</strong>
               </td>
             </tr>
             <tr>
               <td>
-                <strong className="guide-table-img guide-process-img5">
-                  이용
-                </strong>
+                <strong className="guide-table-img guide-process-img5">이용</strong>
               </td>
             </tr>
           </table>
@@ -129,9 +119,7 @@ const Guide1 = () => {
           <table className="guide-table2">
             <tr>
               <td>
-                <strong className="guide-table-img guide-process-img5">
-                  이용신청서 (시설)
-                </strong>
+                <strong className="guide-table-img guide-process-img5">이용신청서 (시설)</strong>
               </td>
             </tr>
             <tr>

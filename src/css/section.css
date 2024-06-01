@@ -1,5 +1,5 @@
 .section-container {
-  font-family: "PretendardVariable";
+  font-family: 'PretendardVariable';
   width: 1080px;
   margin: 11px auto 0px;
   display: flex;
@@ -19,7 +19,7 @@
   width: 100%;
 }
 .subtit {
-  font-family: "PretendardVariable";
+  font-family: 'PretendardVariable';
 
   font-size: 32px;
   font-weight: 600;
@@ -48,11 +48,11 @@
 }
 .main-img1 {
   background: linear-gradient(to right, #fff, #fff 5px, transparent),
-    url("/public/middle-section.png");
+    url('/public/middle-section.png');
 }
 .main-img2 {
   background: linear-gradient(to right, #fff, #fff 1px, transparent),
-    url("/public/middle-section2.png");
+    url('/public/middle-section2.png');
 }
 .img-subtit {
   position: absolute;
@@ -83,28 +83,22 @@
   top: 67% !important;
 }
 .이용안내-img1 {
-  background: linear-gradient(to right, #fff, #fff 1px, transparent),
-    url("/public/이용시간.png") !important;
+  background: linear-gradient(to right, #fff, #fff 1px, transparent), url('/public/이용시간.png') !important;
 }
 .이용안내-img2 {
-  background: linear-gradient(to right, #fff, #fff 1px, transparent),
-    url("/public/이용금액.png") !important;
+  background: linear-gradient(to right, #fff, #fff 1px, transparent), url('/public/이용금액.png') !important;
 }
 .이용안내-img3 {
-  background: linear-gradient(to right, #fff, #fff 1px, transparent),
-    url("/public/이용절차.png") !important;
+  background: linear-gradient(to right, #fff, #fff 1px, transparent), url('/public/이용절차.png') !important;
 }
 .시설안내-img1 {
-  background: linear-gradient(to right, #fff, #fff 1px, transparent),
-    url("/public/시설1.png") !important;
+  background: linear-gradient(to right, #fff, #fff 1px, transparent), url('/public/시설1.png') !important;
 }
 .시설안내-img2 {
-  background: linear-gradient(to right, #fff, #fff 1px, transparent),
-    url("/public/시설2.png") !important;
+  background: linear-gradient(to right, #fff, #fff 1px, transparent), url('/public/시설2.png') !important;
 }
 .시설안내-img3 {
-  background: linear-gradient(to right, #fff, #fff 1px, transparent),
-    url("/public/시설3.png") !important;
+  background: linear-gradient(to right, #fff, #fff 1px, transparent), url('/public/시설3.png') !important;
 }
 
 .map {
@@ -171,7 +165,7 @@
 }
 .juso:before,
 .tel:before {
-  content: "";
+  content: '';
   width: 10px;
   height: 10px;
   background: #82d3ac;

@@ -1,6 +1,6 @@
-import "../../css/guideComponents.css";
-import Section from "../Section";
-import Kakao from "../Kakao";
+import '../../css/guideComponents.css';
+import Section from '../Section';
+import Kakao from '../Kakao';
 
 const Guide3 = () => {
   return (
@@ -10,10 +10,10 @@ const Guide3 = () => {
           <h5 className="guide-subtit">오시는 길</h5>
         </div>
       </Section>
-      
+
       <Section isLast={true}>
-        <div className="kakao-map-container" style={{background:'#FDFCF8'}}>
-          <Kakao/>
+        <div className="kakao-map-container" style={{ background: '#FDFCF8' }}>
+          <Kakao />
           <div className="guide">
             <ul>
               <li>

@@ -1,5 +1,5 @@
 .notice-subtit {
-  font-family: "PretendardVariable";
+  font-family: 'PretendardVariable';
   font-size: 32px;
   font-weight: 600;
   text-align: center;
@@ -59,10 +59,7 @@
   justify-content: center;
 }
 
-
-
 /* 버튼시작 */
-
 
 /* 공통 */
 .page-btns-container ul {
@@ -74,12 +71,11 @@
   height: 40px;
 }
 .page-btns-container {
-  gap:30px;
+  gap: 30px;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
-
 
 /* 왼쪽버튼 */
 .page-all-left ul {
@@ -87,21 +83,21 @@
 }
 .all-left-btn {
   position: absolute !important;
-  left:10px;
+  left: 10px;
 }
-.page-all-left ul li{
+.page-all-left ul li {
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #82D3AC;
+  border: 1px solid #82d3ac;
   position: relative;
 }
-.page-all-left ul li:nth-child(1){ 
+.page-all-left ul li:nth-child(1) {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }
-.page-all-left ul li:nth-child(2){ 
+.page-all-left ul li:nth-child(2) {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
@@ -111,7 +107,6 @@
   height: 30px;
 }
 
-
 /* 센터버튼 */
 .page-btns-center {
   display: flex;
@@ -120,7 +115,7 @@
 }
 .page-btns-center ul {
   padding: 0;
-  border: 1px solid #82D3AC;
+  border: 1px solid #82d3ac;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -133,11 +128,11 @@
   align-items: center;
   font-size: 16px;
   font-weight: 400;
-  color:#666;
+  color: #666;
 }
 .page-btns-center ul .active {
   color: #fff;
-  background: #82D3AC;
+  background: #82d3ac;
 }
 .dja-center {
   display: flex;
@@ -145,16 +140,13 @@
   align-items: center;
 }
 
-
-
-
 /* 오른쪽 버튼 */
 
-.page-all-right ul li:nth-child(1){ 
+.page-all-right ul li:nth-child(1) {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }
-.page-all-right ul li:nth-child(2){ 
+.page-all-right ul li:nth-child(2) {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
@@ -164,14 +156,14 @@
 }
 .all-right-btn {
   position: absolute !important;
-  left:10px;
+  left: 10px;
 }
-.page-all-right ul li{
+.page-all-right ul li {
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #82D3AC;
+  border: 1px solid #82d3ac;
   position: relative;
 }
 

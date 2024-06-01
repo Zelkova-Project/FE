@@ -1,18 +1,17 @@
-import { Link } from "react-router-dom";
-import "../css/login.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import '../css/login.css';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
   const normalLogin = () => {
     navigate(`/normalLogin`);
-  }
-  
-   let Rest_api_key = '41d2a43168a7edd9f941329667a65ef4';
-   let redirect_uri = 'http://localhost:3000/oauth';
-  let url =
-    `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
+  };
+
+  let Rest_api_key = '41d2a43168a7edd9f941329667a65ef4';
+  let redirect_uri = 'http://localhost:3000/oauth';
+  let url = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
   return (
     <div className="login-container">

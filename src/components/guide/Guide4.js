@@ -1,5 +1,3 @@
-const Guide4 = () => {
-
-}
+const Guide4 = () => {};
 
 export default Guide4;

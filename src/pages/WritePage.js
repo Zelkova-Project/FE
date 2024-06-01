@@ -1,5 +1,5 @@
-import Section from "../components/Section";
-import "../css/write.css";
+import Section from '../components/Section';
+import '../css/write.css';
 
 const WritePage = () => {
   return (
@@ -73,7 +73,6 @@ const WritePage = () => {
             <button>등록</button>
           </div>
         </div>
-        
       </div>
     </Section>
   );

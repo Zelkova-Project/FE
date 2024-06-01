@@ -1,19 +1,19 @@
 .guide2-container {
-    font-family: "PretendardVariable";
-    display: flex;
-    flex-direction: row;
-    gap:30px;
+  font-family: 'PretendardVariable';
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
 }
-.guide2-innerContainer { 
-    display: flex;
-    flex-direction: column;
+.guide2-innerContainer {
+  display: flex;
+  flex-direction: column;
 }
 .guide2-flexItem {
-    width:255px;
-    height: 310px;
+  width: 255px;
+  height: 310px;
 }
 
 #map {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
