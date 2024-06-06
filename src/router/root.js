@@ -12,6 +12,8 @@ const Guide = lazy(() => import('../pages/GuidePage'));
 const Notice = lazy(() => import('../pages/NoticePage'));
 const Hire = lazy(() => import('../pages/HirePage'));
 const Write = lazy(() => import('../pages/WritePage'));
+const Community = lazy(() => import('../pages/CommunityPage'));
+const Support = lazy(() => import('../pages/SupportPage'));
 
 const root = createBrowserRouter([
   {
@@ -91,6 +93,22 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <NoticeDetail />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/community',
+    element: (
+      <Suspense fallback={Loading}>
+        <Community />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/support',
+    element: (
+      <Suspense fallback={Loading}>
+        <Support/>
       </Suspense>
     ),
   },

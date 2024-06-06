@@ -7,7 +7,7 @@ import '../css/guide.css';
 import '../css/nav.css';
 import '../css/notice.css';
 import '../fonts/font.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import Write from './WritePage';
@@ -21,6 +21,8 @@ const NoticePage = () => {
     main: require('../imgs/notice/notice-main.png'),
   };
 
+  const noticeTitleList = ['공지사항', '가정통신문', '채용안내'];
+
   const handlerRouting = (param) => {
     if (param == 'write') {
       setActiveComp(<Write />);
@@ -29,10 +31,15 @@ const NoticePage = () => {
     }
   };
 
-  const [activeComp, setActiveComp] = useState(<NoticeBoardPage handlerRouting={handlerRouting} />);
+
+  const [activeSubtit, setActiveSubtit] = useState('공지사항');
+  const [activeComp, setActiveComp] = useState(<NoticeBoardPage activeSubtit={activeSubtit} handlerRouting={handlerRouting} />);
+  
   const [navIdx, setNavIdx] = useState(0);
   const activeHandler = (idx) => {
     setNavIdx(idx);
+    alert(activeSubtit);
+    setActiveSubtit(noticeTitleList[idx]);
   };
   const navigate = useNavigate();
 

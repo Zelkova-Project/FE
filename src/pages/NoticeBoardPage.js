@@ -1,8 +1,9 @@
 import Section from '../components/Section';
 import Table from '../components/Table';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const NoticeBoardPage = ({ handlerRouting }) => {
+const NoticeBoardPage = ({ handlerRouting, activeSubtit }) => {
+  console.log('>>> ', activeSubtit)
   const imgObj = {
     arrowRight: require('../imgs/notice/arrow-right.png'),
   };
@@ -16,7 +17,9 @@ const NoticeBoardPage = ({ handlerRouting }) => {
     <Section>
       <div className="notice-outer-container">
         <div className="notice-flexitem">
-          <h5 className="notice-subtit">공지사항</h5>
+          <h5 className="notice-subtit">
+            {activeSubtit}
+          </h5>
         </div>
 
         <div className="notice-flexitem flexCenter">
