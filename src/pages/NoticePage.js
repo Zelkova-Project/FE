@@ -7,7 +7,7 @@ import '../css/guide.css';
 import '../css/nav.css';
 import '../css/notice.css';
 import '../fonts/font.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, act } from 'react';
 import { Link } from 'react-router-dom';
 
 import Write from './WritePage';
@@ -18,17 +18,15 @@ import { useNavigate } from 'react-router-dom';
 
 const NoticePage = () => {
   const imgObj = {
-    main: require('../imgs/notice/notice-main.png'),
+    notice: require('../imgs/notice/notice-main.png'),
+    home: require('../imgs/notice/가정통신문main.png'),
+    hire: require('../imgs/notice/채용안내main.png')
   };
 
   const noticeTitleList = ['공지사항', '가정통신문', '채용안내'];
 
   const handlerRouting = (param) => {
-    if (param == 'write') {
-      setActiveComp(<Write />);
-    } else if (param == 'detail') {
-      setActiveComp(<NoticeDetailPage handlerRouting={handlerRouting} />);
-    }
+    setActiveComp(param);
   };
 
 
@@ -38,7 +36,6 @@ const NoticePage = () => {
   const [navIdx, setNavIdx] = useState(0);
   const activeHandler = (idx) => {
     setNavIdx(idx);
-    alert(activeSubtit);
     setActiveSubtit(noticeTitleList[idx]);
   };
   const navigate = useNavigate();
@@ -46,13 +43,22 @@ const NoticePage = () => {
   const goWritePage = () => {
     navigate(`/write`);
   };
+  
+  const getMainImg = () => {
+    const imgList = [imgObj.notice, imgObj.home, imgObj.hire];
+    return imgList[navIdx];
+  };
+
 
   return (
     <div className="main-container">
       <Nav />
       <Section>
         <div className="guide-img-container">
-          <img className="main-img" src={imgObj.main} alt="main-section"></img>
+          <div className='img-title'>
+            <h3>{activeSubtit}</h3>
+          </div>
+          <img className="main-img" src={getMainImg()} alt="main-section"></img>
 
           <div className="sub-nav-wrapper">
             <div className="sub-nav">
@@ -81,8 +87,16 @@ const NoticePage = () => {
         </div>
       </Section>
 
-      {activeComp}
-
+      {activeComp != 'write' && activeComp != 'detail' &&
+        <NoticeBoardPage activeSubtit={activeSubtit} handlerRouting={handlerRouting} />
+      }
+      
+      {activeComp == 'write' && 
+        <Write/>
+      }
+      {activeComp == 'detail' && 
+        <NoticeDetailPage handlerRouting={handlerRouting} />
+      }
       <Footer />
     </div>
   );

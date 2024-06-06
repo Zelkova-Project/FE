@@ -6,6 +6,7 @@ import CommunityBody from '../components/community/CommunityBody';
 import '../css/main.css';
 import '../css/notice.css';
 import '../css/community.css';
+import '../css/guide.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -24,6 +25,9 @@ const CommunityPage = () => {
 			<Nav />
 			<Section>
 				<div className="guide-img-container">
+					<div className='img-title'>
+            <h3>커뮤니티</h3>
+          </div>
 					<img className="main-img" src={imgObj.main} alt="main-section"></img>
 
 				</div>

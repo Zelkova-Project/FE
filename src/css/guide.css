@@ -81,6 +81,19 @@
 .guide-img-container {
   position: relative;
 }
+.img-title {
+  position: absolute;
+  left: 560px;
+  z-index: 999999;
+  top: 202px;
+  /* width: 500px; */
+  font-size: 40px;
+  font-weight: 700;
+  color: #FFF;
+}
+.img-title h3{
+  text-align: center;
+}
 .guide-img1 {
   background: linear-gradient(to right, #fff, #fff 5px, transparent),
     url('/public/이용안내-이용시간.png');

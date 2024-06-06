@@ -11,18 +11,22 @@ import '../css/guide.css';
 
 const SupportPage = () => {
 	const imgObj = {
-    main: require('../imgs/notice/notice-main.png'),
+    main: require('../imgs/후원자원봉사main.png'),
   };
 	const [navIdx, setNavIdx] = useState(0);
-
+	const [activeSubtit, setActiveSubtit] = useState('후원의손길');
   const activeHandler = (idx) => {
-    setNavIdx(idx);
+		setNavIdx(idx);
+		setActiveSubtit(['후원의손길', '자원봉사'][idx]);
   };
 	return (
 		<div className="main-container">
 			<Nav />
 			<Section>
 				<div className="guide-img-container">
+					<div className='img-title'>
+            <h3>{activeSubtit}</h3>
+          </div>
 					<img className="main-img" src={imgObj.main} alt="main-section"></img>
 
 					<div className="sub-nav-wrapper">
@@ -47,7 +51,7 @@ const SupportPage = () => {
 				</div>
 			</Section>
 
-			<NoticeBoardPage from='support'/>
+			<NoticeBoardPage activeSubtit={activeSubtit}/>
 
 			<Footer />
 		</div>
