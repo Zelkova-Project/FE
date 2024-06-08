@@ -4,19 +4,33 @@ import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
+import loginState from '../recoilState/recoil';
+import {useRecoilState} from 'recoil';
 
 const NormalLoginPage = () => {
+  const [login, setLogin] = useRecoilState(loginState);
   const navigate = useNavigate();
 
   const goBack = () => {
     navigate(-1);
   };
   // http://49.247.174.109:8080
+  // let url = 'http://49.247.174.109:8080';
+  const isDev = process.env.NODE_ENV == 'development';
+  let url = isDev ? '/login' : '/api/login';
+
   const goNormalLogin = async () => {
-    let res = await axios.post('/login', {
+    let { status } = await axios.post(url, {
       loginId: 'eora21',
       password: 1234,
     });
+
+    if (status == 200) {
+      navigate('/');
+      setLogin(true);
+    }
+
+
   };
 
   return (

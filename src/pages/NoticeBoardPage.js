@@ -3,7 +3,6 @@ import Table from '../components/Table';
 import React, { useState, useEffect } from 'react';
 
 const NoticeBoardPage = ({ handlerRouting, activeSubtit }) => {
-  console.log('>>> ', activeSubtit)
   const imgObj = {
     arrowRight: require('../imgs/notice/arrow-right.png'),
   };

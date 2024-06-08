@@ -54,6 +54,9 @@
   background-color: #82d3ac;
   border: none;
 }
+.notice-flexitem {
+  position: relative;
+}
 
 .flexCenter {
   display: flex;
@@ -171,4 +174,20 @@
 .page-all-right img {
   width: 30px;
   height: 30px;
+}
+
+/* 글쓰기버튼 */
+
+.page-btn-write {
+  position: absolute;
+  right: 8px;
+}
+.page-btn-write > button{
+  font-family: 'PretendardVariable';
+  border: 1px solid #82D3AC;
+  width: 120px;
+  height: 40px;
+  cursor: pointer;
+  background: #FFF;
+  border-radius: 8px;
 }

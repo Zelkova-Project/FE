@@ -8,9 +8,10 @@
   margin: 10px auto 0 auto;
   font-weight: 600;
   font-size: 16px;
+  position: relative;
 }
 .hr {
-  width: 100vw;
+  width: 100%;
   height: 1px;
   position: absolute;
   top: 75px;
@@ -20,6 +21,7 @@
 .menu-left {
   width: 100%;
   display: flex;
+  z-index: 99999;
 }
 
 .menu-ul {
@@ -31,10 +33,54 @@
   float: left;
   padding: 20px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .login {
   position: absolute;
   right: 30px;
   float: right !important;
+}
+
+
+/* 네비 호버영역 */
+.nav-hover {
+  width: 1280px;
+  height: 224px;
+  background: #FFFFFF;
+  z-index: 9999;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  padding-left: 118px;
+  padding-top: 65px;
+}
+.notice-menu {
+  margin-left: 23px;
+}
+
+.support-menu {
+  margin-left: 26px;
+}
+.menu-hover {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.menu-hover li{
+  width: 72px;
+  height: 38px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #666666;
+  font-family: 'PretendardVariable';
+  cursor: pointer;
+}
+
+.hover-icon {
+  position: absolute;
+  right: 150px;
+  top: 90px;
+  z-index: 9999;
 }

@@ -87,13 +87,17 @@ const NoticePage = () => {
         </div>
       </Section>
 
+      {/* 게시글리스트 */}
       {activeComp != 'write' && activeComp != 'detail' &&
         <NoticeBoardPage activeSubtit={activeSubtit} handlerRouting={handlerRouting} />
       }
       
+      {/* 게시글쓰기 */}
       {activeComp == 'write' && 
         <Write/>
       }
+
+      {/* 게시글상세 */}
       {activeComp == 'detail' && 
         <NoticeDetailPage handlerRouting={handlerRouting} />
       }

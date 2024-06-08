@@ -1,7 +1,27 @@
 import Section from '../components/Section';
 import '../css/write.css';
+import axios from 'axios';
 
 const WritePage = () => {
+
+  const getBoard = async () => {
+    let { status } = await axios.get('/posts/1');
+  }
+
+  const goWrite = async () => {
+    let param = {
+      category: 'BOARD',
+      visibility: 'PUBLIC',
+      title: '테스트 제목',
+      content: '테스트 내용'
+    };
+
+    let { status } = await axios.post('/posts', param);
+
+    console.log(status);
+    getBoard();
+  }
+
   return (
     <Section>
       <div className="write-outer-container">
@@ -70,7 +90,7 @@ const WritePage = () => {
           <div className="write-submit-btns">
             <button>취소</button>
             <button>삭제</button>
-            <button>등록</button>
+            <button onClick={() => goWrite()}>등록</button>
           </div>
         </div>
       </div>

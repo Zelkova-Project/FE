@@ -20,7 +20,6 @@ const CommunityBody = () => {
 		}
 
 		let dummyArr = [comInfo, comInfo, comInfo, comInfo];
-		console.log(dummyArr);
 		const result = [];
 		for (let idx in dummyArr) {
 			result.push(
@@ -36,6 +35,8 @@ const CommunityBody = () => {
 
 		return result;
 	}
+
+	
 
 	return (
 		<Section>
@@ -147,6 +148,12 @@ const CommunityBody = () => {
 								</ul>
 							</div>
 						</div>
+
+						{/* 글쓰기버튼 */}
+						<div className='page-btn-write'>
+							<button onClick={() => navigate('/write')}>글쓰기</button>
+						</div>
+
 					</div>
 				</div>
 			</div>
