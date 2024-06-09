@@ -30,7 +30,8 @@ const Nav = () => {
       navigate('/login');
     }
   }
-
+  
+  // 호버시열리는영역
   const showExtraNav = () => {
     let result = '';
     if (isHovering) {

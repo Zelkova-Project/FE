@@ -33,14 +33,14 @@ const SupportPage = () => {
 						<div className="sub-nav">
 							<ul>
 								<li>
-									<span onClick={() => activeHandler(0)} className={navIdx == 0 ? 'active' : ''}>
+									<span onClick={() => activeHandler(0)} className={navIdx == 0 ? 'active-support' : ''}>
 										후원의손길
 									</span>
 								</li>
 								<li>
 									<span
 										onClick={() => activeHandler(1)}
-										className={navIdx == 1 ? 'active-wide' : ''}
+										className={navIdx == 1 ? 'active-support' : ''}
 									>
 										자원봉사
 									</span>

@@ -3,7 +3,7 @@
   color: #333;
   background: #ffffff;
   display: flex;
-  width: 1280px;
+  max-width: 1280px;
   height: 54px;
   margin: 10px auto 0 auto;
   font-weight: 600;

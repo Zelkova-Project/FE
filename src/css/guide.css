@@ -68,6 +68,16 @@
   left: 82px;
   top: 30px;
 }
+.sub-nav ul li .active-support:before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #82d3ac;
+  border-radius: 30px;
+  position: absolute;
+  left: 86px;
+  top: 31px;
+}
 .sub-nav ul li .active2:before {
   content: '';
   width: 8px;
