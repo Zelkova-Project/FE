@@ -157,7 +157,7 @@ const LoginPage = () => {
           <ul className='options-ul'>
             <li onClick={() => navigate('/join')}>회원가입</li>
             <li>아이디 / 비밀번호 찾기</li>
-            <li>문의하기</li>
+            <li onClick={() => navigate('/chat')}>문의하기</li>
           </ul>
         </div>
 

@@ -14,6 +14,7 @@ const Hire = lazy(() => import('../pages/HirePage'));
 const Write = lazy(() => import('../pages/WritePage'));
 const Community = lazy(() => import('../pages/CommunityPage'));
 const Support = lazy(() => import('../pages/SupportPage'));
+const Chat = lazy(() => import('../pages/ChatPage'));
 
 const root = createBrowserRouter([
   {
@@ -109,6 +110,14 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <Support/>
+      </Suspense>
+    ),
+  },
+  {
+    path: '/chat',
+    element: (
+      <Suspense fallback={Loading}>
+        <Chat/>
       </Suspense>
     ),
   },

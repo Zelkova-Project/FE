@@ -3,6 +3,7 @@
   height: 258px;
   background: #f9f7f0;
   min-width: 1280px;
+  overflow: hidden;
 }
 .footer-container {
   font-family: 'PretendardVariable';
