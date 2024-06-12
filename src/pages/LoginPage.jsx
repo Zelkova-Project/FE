@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../axios/axiosInstance';
 import React, { useState } from 'react';
 import {useRecoilState} from 'recoil';
-import loginState from '../recoilState/recoil';
+import {loginState} from '../recoilState/recoil';
 
 const LoginPage = () => {
   const navigate = useNavigate();

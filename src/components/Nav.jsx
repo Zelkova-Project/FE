@@ -2,7 +2,7 @@ import '../css/nav.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-import loginState from '../recoilState/recoil';
+import {loginState} from '../recoilState/recoil';
 import {useRecoilState} from 'recoil';
 import React, { useState, useEffect } from 'react';
 

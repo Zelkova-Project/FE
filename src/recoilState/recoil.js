@@ -4,5 +4,12 @@ const loginState = atom({
   key: 'isLogin',
   default: false,
 });
+const tokenState = atom({
+  key: 'token',
+  default: '',
+});
 
-export default loginState;
+export {
+  loginState,
+  tokenState
+}
