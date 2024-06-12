@@ -1,4 +1,4 @@
-import Section from '../../components/Section';
+import Section from '../Section';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
