@@ -8,3 +8,8 @@
  "src" 
 ]
 }
+build: {
+ extractCss: {
+  ignoreOrder:true
+ }
+}
