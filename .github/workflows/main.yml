@@ -5,8 +5,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: Run pwd # 동작명
-      uses: actions/checkout@v2
       run: pwd # 실제 동작
     - name: Run ls -al
       run: ls -al
@@ -17,7 +17,6 @@ jobs:
         username: ${{ secrets.SERVER_NAME }}
         key: ${{ secrets.SSH_PEM_KEY }}
        # passphrase: ${{ secrets.SSH_PEM_PASSPHRASE }}
-     #   source: "build/*"
         strip_components: 1
         target: ${{ secrets.SERVER_PATH }}
     
