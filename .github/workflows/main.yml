@@ -6,6 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Run pwd # 동작명
-      run: rwd # 실제 동작
+      run: pwd # 실제 동작
     - name: Run ls -al
       run: ls -al
