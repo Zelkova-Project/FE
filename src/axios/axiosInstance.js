@@ -5,12 +5,23 @@ const instance = axios.create({
   timeout: 1000,
 });
 
+const getToken = () => {
+  let cookie = document.cookie;  
+  const [key, val] = cookie.split("=");
+  console.log('><>>>> val ', val);
+  return val;
+}
+
 instance.interceptors.request.use(
   (config) => {
-    // const accessToken = getToken();
+    const accessToken = getToken();
 
-    // config.headers['Content-Type'] = 'application/json';
-    // config.headers['Authorization'] = `Bearer ${accessToken}`;
+    const inValidUrl = ['/login', '/signup'];
+    const is적용할Url = !inValidUrl.includes(config.url);
+    console.log('is적용할Url > ', is적용할Url);
+    if (is적용할Url) {
+      config.headers['X-XSRF-Token'] = accessToken;
+    }
 
     return config;
   },
@@ -26,7 +37,7 @@ instance.interceptors.response.use(
       console.log('404 페이지로 넘어가야 함!');
     }
 
-    return {status: response.status, error: false, message: response.statusText};
+    return {status: response.status, error: false, message: response.statusText, data: response.data};
   },
   async (error) => {
     // if (error.response?.status === 401) {

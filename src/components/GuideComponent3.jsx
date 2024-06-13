@@ -1,5 +1,5 @@
-import Section from '../components/Section';
-import Kakao from '../components/Kakao';
+import Section from './Section';
+import Kakao from './Kakao';
 
 const guideComponent1 = () => {
   return (

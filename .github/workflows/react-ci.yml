@@ -18,10 +18,17 @@ jobs:
       #matrix:
        # node-version: [14.x, 16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+    env:
+        working-directory: /zelkova-front/FE/
     steps:
-    - name: npm run build is running
-      run: npm run build
+      - name: Echo hello world in working directory
+        run: echo "Hello world"
+        working-directory: ${{ env.working-directory }}
+
+ #   - name: npm run build is running
+  #    run: npm run build
+
+
     
     #- run: npm run build --if-present
     #- run: npm test

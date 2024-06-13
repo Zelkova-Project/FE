@@ -1,20 +1,38 @@
 import Section from '../components/Section';
 import '../css/write.css';
-import axios from 'axios';
+import axios from '../axios/axiosInstance';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const WritePage = () => {
+  const navigate = useNavigate();
+
+  const [postInfo, setPostInfo] = useState({
+    category: 'BOARD',
+    visibility: 'PUBLIC',
+    title: '테스트 제목',
+    content: '테스트 내용'
+  });
 
   const getBoard = async () => {
-    let { status } = await axios.get('/posts/1');
+    let { status, data, message } = await axios.get('/posts?page=0&size=10');
+    if (status != 200 && status != 201) {
+      alert(message);
+      return;
+    }
+    let postList = data.content;
+    console.log('postList ', postList);
+
+    navigate('/noticeDetail/1', { state: postList});
+
   }
 
   const goWrite = async () => {
-    let param = {
-      category: 'BOARD',
-      visibility: 'PUBLIC',
-      title: '테스트 제목',
-      content: '테스트 내용'
-    };
+    let param = new FormData();
+    param.append('title', postInfo.title);
+    param.append('content', postInfo.content);
+    param.append('category', 'BOARD');
+    param.append('visibility', 'PUBLIC');
 
     let { status } = await axios.post('/posts', param);
 
@@ -30,7 +48,9 @@ const WritePage = () => {
         </div>
         <div className="write-flexItem">
           <h3>제목</h3>
-          <input></input>
+          <input
+            onChange={(e) => setPostInfo({...postInfo, title: e.target.value})}
+          ></input>
         </div>
         <div className="write-flexItem">
           <div className="write-flexSub">
@@ -60,7 +80,12 @@ const WritePage = () => {
         <div className="write-flexItem mt-50">
           <div className="write-textArea">
             <h3>내용작성</h3>
-            <textarea cols="40" rows="40"></textarea>
+            <textarea
+              cols="40" rows="40"
+              onChange={(e) => setPostInfo({...postInfo, content: e.target.value})}
+            >
+
+            </textarea>
           </div>
         </div>
 
@@ -88,7 +113,7 @@ const WritePage = () => {
 
         <div className="write-flexItem dja-center mt-50 mb-50">
           <div className="write-submit-btns">
-            <button>취소</button>
+            <button onClick={() => navigate(-1)}>취소</button>
             <button>삭제</button>
             <button onClick={() => goWrite()}>등록</button>
           </div>

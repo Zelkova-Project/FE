@@ -1,7 +1,11 @@
 import React from 'react';
+import { useLocation } from 'react-router';
 import '../css/noticeDetail.css';
 
 const NoticeDetailPage = ({ handlerRouting }) => {
+  const { state } = useLocation();
+  console.log('state >>> ', state);
+
   const imgObj = {
     comment: require('../imgs/notice/notail-comment.png'),
     notailLike: require('../imgs/notice/notail-like.png'),

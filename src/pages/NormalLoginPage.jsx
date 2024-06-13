@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
-import loginState from '../recoilState/recoil';
+import {loginState} from '../recoilState/recoil';
 import {useRecoilState} from 'recoil';
 
 const NormalLoginPage = () => {
