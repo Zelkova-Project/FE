@@ -1,8 +1,11 @@
 import Section from '../components/Section';
 import Table from '../components/Table';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const NoticeBoardPage = ({ handlerRouting, activeSubtit }) => {
+  const navigate = useNavigate();
+
   const imgObj = {
     arrowRight: require('../imgs/notice/arrow-right.png'),
   };
@@ -106,6 +109,13 @@ const NoticeBoardPage = ({ handlerRouting, activeSubtit }) => {
                 </ul>
               </div>
             </div>
+
+						{/* 글쓰기버튼 */}
+						<div className='page-btn-write'>
+							<button onClick={() => navigate('/write')}>글쓰기</button>
+						</div>
+
+
           </div>
         </div>
       </div>

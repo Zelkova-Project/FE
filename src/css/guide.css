@@ -105,13 +105,13 @@
   text-align: center;
 }
 .guide-img1 {
-  background: linear-gradient(to right, #fff, #fff 5px, transparent),
+  background: linear-gradient(0deg, rgba(255, 255, 255, .6) 40%, rgba(255, 255, 255, 0) 100%),
     url('/public/이용안내-이용시간.png');
   /* border-radius: 20px;
 background: linear-gradient(270deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%), url('/public/이용안내-이용시간.png'); */
 }
 .guide-img2 {
-  background: linear-gradient(to right, #fff, #fff 1px, transparent),
+  background: linear-gradient(0deg, rgba(255, 255, 255, .6) 40%, rgba(255, 255, 255, 0) 100%),
     url('/public/이용안내-이용문의.png');
 
   /* background: linear-gradient(270deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%), url('/public/이용안내-이용문의.png'); */

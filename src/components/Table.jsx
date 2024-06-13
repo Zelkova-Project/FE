@@ -1,46 +1,52 @@
 import '../css/table.css';
 import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from '../axios/axiosInstance';
 
 const Table = ({ handlerRouting }) => {
+  const [postList, setPostList] = useState([]);
+  const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
+  
+  const tableComponent = () => {
 
-  const tableElement = [
-    {
-      no: '10',
-      title: 'Lorem ipsum dolor sit amet consectetur.',
-      data: '2000.00.00',
-    },
-    {
-      no: '10',
-      title: 'Lorem ipsum dolor sit amet consectetur.',
-      data: '2000.00.00',
-    },
-    {
-      no: '10',
-      title: 'Lorem ipsum dolor sit amet consectetur.',
-      data: '2000.00.00',
-    },
-  ];
+    const makeTableTr = () => {
+      const result = [];
+      for (let idx in postList) {
+        result.push(
+          <tr className="common-table-tr2" key={idx} onClick={() => navigate(`/noticeDetail/${postList[idx].no}`, {state: postList[idx]})}>
+            <td>{postList[idx].no}</td>
+            <td>{postList[idx].title}</td>
+            <td>{postList[idx].date_time.split('T')[0]}</td>
+          </tr>,
+        );
+      }
+  
+      return result;
+    };
 
-  const goDetailNotice = () => {
-    handlerRouting('detail');
-  };
-
-  const makeTableTr = () => {
-    const result = [];
-    for (let idx in tableElement) {
-      result.push(
-        <tr className="common-table-tr2" key={idx} onClick={goDetailNotice}>
-          <td>{tableElement[idx].no}</td>
-          <td>{tableElement[idx].title}</td>
-          <td>{tableElement[idx].content}</td>
-        </tr>,
-      );
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          let { status, data, message } = await axios.get('/posts?page=0&size=10');
+          setPostList(data.content);          
+          setLoading(false); 
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          setLoading(false); 
+        }
+      };
+  
+      fetchData(); 
+    }, []);
+  
+    if (loading) {
+      return <div>Loading...</div>;
     }
-
-    return result;
-  };
-
+  
+    return makeTableTr();
+  }
+  
   return (
     <div className="table-conatiner">
       <table className="common-table">
@@ -50,18 +56,10 @@ const Table = ({ handlerRouting }) => {
           <th>Date</th>
         </tr>
 
-        {makeTableTr()}
+        {
+          tableComponent()
+        }
 
-        {/* <tr className="common-table-tr2">
-          <td>10</td>
-          <td>Lorem ipsum dolor sit amet consectetur.</td>
-          <td>2000.00.00</td>
-        </tr>
-        <tr className="common-table-tr2">
-          <td>10</td>
-          <td>Lorem ipsum dolor sit amet consectetur.</td>
-          <td>2000.00.00</td>
-        </tr> */}
       </table>
     </div>
   );

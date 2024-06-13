@@ -28,6 +28,7 @@
   width: 100%;
   list-style: none;
   position: relative;
+  overflow: hidden;
 }
 .menu-ul li {
   float: left;
@@ -37,8 +38,6 @@
 }
 
 .login {
-  position: absolute;
-  right: 30px;
   float: right !important;
 }
 

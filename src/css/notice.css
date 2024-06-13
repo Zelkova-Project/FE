@@ -137,6 +137,7 @@
 .page-btns-center ul .active {
   color: #fff;
   background: #82d3ac;
+  border-radius: 6px;
 }
 .dja-center {
   display: flex;

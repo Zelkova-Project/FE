@@ -8,8 +8,23 @@ const tokenState = atom({
   key: 'token',
   default: '',
 });
+const subtitState = atom({
+  key: 'subtit',
+  default: '',
+});
+const navIdxState = atom({
+  key: 'navIdx',
+  default: 0,
+});
+const pageState = atom({
+  key: 'page',
+  default: 0,
+});
 
 export {
   loginState,
-  tokenState
+  tokenState,
+  subtitState,
+  pageState,
+  navIdxState
 }

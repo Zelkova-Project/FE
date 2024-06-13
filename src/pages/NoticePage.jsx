@@ -1,22 +1,29 @@
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Section from '../components/Section';
+import {subtitState, navIdxState} from '../recoilState/recoil';
+import {useRecoilState} from 'recoil';
 
 import '../css/main.css';
 import '../css/guide.css';
 import '../css/nav.css';
 import '../css/notice.css';
 import '../fonts/font.css';
-import React, { useState, useEffect, act } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import Write from './WritePage';
 import NoticeBoardPage from './NoticeBoardPage';
 import NoticeDetailPage from './NoticeDetailPage';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from '../axios/axiosInstance';
 
 const NoticePage = () => {
+  window.scrollTo(0, 0);
+
+  const { divider } = useParams();
+
   const imgObj = {
     notice: require('../imgs/notice/notice-main.png'),
     home: require('../imgs/notice/가정통신문main.png'),
@@ -29,15 +36,17 @@ const NoticePage = () => {
     setActiveComp(param);
   };
 
-
-  const [activeSubtit, setActiveSubtit] = useState('공지사항');
-  const [activeComp, setActiveComp] = useState(<NoticeBoardPage activeSubtit={activeSubtit} handlerRouting={handlerRouting} />);
-  
-  const [navIdx, setNavIdx] = useState(0);
   const activeHandler = (idx) => {
     setNavIdx(idx);
-    setActiveSubtit(noticeTitleList[idx]);
+    setSubtit(noticeTitleList[idx]);
   };
+
+  const [subtit, setSubtit] = useRecoilState(subtitState); 
+  const [navIdx, setNavIdx] = useRecoilState(navIdxState); 
+  const [activeSubtit, setActiveSubtit] = useState('공지사항');
+
+  const [activeComp, setActiveComp] = useState(<NoticeBoardPage activeSubtit={activeSubtit} handlerRouting={handlerRouting} />);  
+
   const navigate = useNavigate();
 
   const goWritePage = () => {
@@ -49,6 +58,9 @@ const NoticePage = () => {
     return imgList[navIdx];
   };
 
+  if (divider == 'write') {
+    handlerRouting(divider);
+  }
 
   return (
     <div className="main-container">
@@ -56,7 +68,7 @@ const NoticePage = () => {
       <Section>
         <div className="guide-img-container">
           <div className='img-title'>
-            <h3>{activeSubtit}</h3>
+            <h3>{subtit}</h3>
           </div>
           <img className="main-img" src={getMainImg()} alt="main-section"></img>
 
@@ -97,10 +109,6 @@ const NoticePage = () => {
         <Write/>
       }
 
-      {/* 게시글상세 */}
-      {activeComp == 'detail' && 
-        <NoticeDetailPage handlerRouting={handlerRouting} />
-      }
       <Footer />
     </div>
   );
