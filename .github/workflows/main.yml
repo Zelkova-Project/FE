@@ -6,14 +6,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    
     - name: Run pwd # 동작명
       run: pwd # 실제 동작
+
     - name: Run ls -al
       run: ls -al
-    - name: install
-      run: npm install
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: "18"
+
+    - name: Install Dependencies
+      run: 
+        npm ci
+    # - name: install
+    #   run: npm install
+
+
     - name: build
       run: npm run build
+
     - name: Run build
       uses: appleboy/scp-action@master
       with:
