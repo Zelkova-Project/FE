@@ -9,3 +9,5 @@ jobs:
       run: pwd # 실제 동작
     - name: Run ls -al
       run: ls -al
+    - name: Run build
+      run: npm run build
