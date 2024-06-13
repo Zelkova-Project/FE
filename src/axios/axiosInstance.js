@@ -1,14 +1,16 @@
 import axios from 'axios';
 
+const isDev = process.env.NODE_ENV == 'development';
+
+
 const instance = axios.create({
-  baseURL: '/',
+  baseURL: isDev ? '/' : '/api/',
   timeout: 1000,
 });
 
 const getToken = () => {
   let cookie = document.cookie;  
   const [key, val] = cookie.split("=");
-  console.log('><>>>> val ', val);
   return val;
 }
 
@@ -18,7 +20,7 @@ instance.interceptors.request.use(
 
     const inValidUrl = ['/login', '/signup'];
     const is적용할Url = !inValidUrl.includes(config.url);
-    console.log('is적용할Url > ', is적용할Url);
+
     if (is적용할Url) {
       config.headers['X-XSRF-Token'] = accessToken;
     }

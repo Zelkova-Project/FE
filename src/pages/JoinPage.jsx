@@ -53,10 +53,7 @@ const Join = () => {
         param[key] = val;
     }
 
-    const isDev = process.env.NODE_ENV == 'development';
-    let url = isDev ? '/signup' : '/api/signup';
-
-    let {status, message} = await axios.post(url, param);
+    let {status, message} = await axios.post('/signup', param);
     
 
     if (status == 200 || status == 201) {

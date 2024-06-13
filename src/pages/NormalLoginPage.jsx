@@ -16,11 +16,9 @@ const NormalLoginPage = () => {
   };
   // http://49.247.174.109:8080
   // let url = 'http://49.247.174.109:8080';
-  const isDev = process.env.NODE_ENV == 'development';
-  let url = isDev ? '/login' : '/api/login';
 
   const goNormalLogin = async () => {
-    let { status } = await axios.post(url, {
+    let { status } = await axios.post('/login', {
       loginId: 'eora21',
       password: 1234,
     });

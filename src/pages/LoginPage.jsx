@@ -45,15 +45,12 @@ const LoginPage = () => {
   const dynamicHandler = (param)  => {
     setIsNormalLogin(param);
   }
-  const isDev = process.env.NODE_ENV == 'development';
-  let loginUrl = isDev ? '/login' : '/api/login';
-
   const goNormalLogin = async () => {
     let formData = new FormData(); 
     formData.append('loginId',loginInfo.loginId); 
     formData.append('password',loginInfo.password);
 
-    let { status, message, error } = await axios.post(loginUrl, formData);
+    let { status, message, error } = await axios.post('/login', formData);
 
     if (!error) {
       navigate('/');
