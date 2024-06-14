@@ -19,5 +19,5 @@ jobs:
             pwd
             cd /zelkova-front/FE
             git pull
-            node -v
+            nvm use 20
             npm run build
