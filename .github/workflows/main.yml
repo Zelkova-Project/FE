@@ -24,9 +24,9 @@ jobs:
             pwd
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            npm --help
             cd /zelkova-front/FE
             nvm install 20
             nvm use 20
             node -v
+            npm run build
   
