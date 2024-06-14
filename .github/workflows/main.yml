@@ -16,8 +16,8 @@ jobs:
           key: ${{ secrets.REMOTE_SSH_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            whoami
             pwd
             cd /zelkova-front/FE
             git pull
+            node -v
             npm run build
