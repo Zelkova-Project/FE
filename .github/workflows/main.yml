@@ -27,6 +27,6 @@ jobs:
             cd /zelkova-front/FE
             nvm install 20
             nvm use 20
-            npm install
+            npm ci
             npm run build
   
