@@ -1,19 +1,20 @@
-import { useEffect } from 'react';
-
+import {useEffect, useState} from 'react';
+import {Map, MapMarker} from 'react-kakao-maps-sdk';
 const { kakao } = window;
 
 const Kakao = () => {
-  useEffect(() => {
-    const container = document.getElementById('map');
-    const options = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-      level: 3,
-    };
-
-    const map = new kakao.maps.Map(container, options);
-  }, []);
-
-  return <div id="map" style={{ width: '1080px', height: '400px' }}></div>;
+  const [state, setState] = useState (
+      {center: {lat : 37.547450833697894, lng : 127.20462375027948}}
+  );
+  return (
+      <>
+        <Map center={state.center} style={{width: '1000px', height: '400px'}} level={3}>
+          <MapMarker position={{lat: 37.547450833697894, lng: 127.20462375027948}} clickable={false}
+                     image={{src: '/marker.png', size: {width: 40, height: 44}}}>
+          </MapMarker>
+        </Map>
+      </>
+  )
 };
 
 export default Kakao;

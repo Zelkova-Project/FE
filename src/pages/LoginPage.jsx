@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 import '../css/login.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../axios/axiosInstance';
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {useRecoilState} from 'recoil';
 import {loginState} from '../recoilState/recoil';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [login, setLogin] = useRecoilState(loginState); 
+  const [login, setLogin] = useRecoilState(loginState);
   const [isNormalLogin, setIsNormalLogin] = useState(false);
   const [loginInfo, setLoginInfo] = useState({loginId: '', password: ''});
 
@@ -91,8 +91,8 @@ const LoginPage = () => {
             </p>
           </div>
 
-          <div className="normal-login">
-            <button className='normal-login-btn' onClick={() => dynamicHandler('goLogin')}>
+          <div className="early-login">
+            <button className='early-login-btn' onClick={() => dynamicHandler('goLogin')}>
               로그인
             </button>
           </div>
@@ -103,34 +103,28 @@ const LoginPage = () => {
         {/* 일반로그인영역시작 */}
         {isNormalLogin && 
         <>
-          <div className="login-title">
-            <h3 onClick={() => dynamicHandler(true)}>로그인</h3>
-          </div>
+          {/*<div className="login-title">*/}
+          {/*  <h3 onClick={() => dynamicHandler(true)}>로그인</h3>*/}
+          {/*</div>*/}
 
           <div className="login-form">
             <div className='login-form-id'>
-              <label for="user-id">아이디</label>
-              <input 
-                id="user-id"
-                onChange={(e) => setLoginInfo({...loginInfo, loginId: e.target.value})}
-              >
-
-              </input>
+              <input id={'user-id'} className={'user-id'} autoComplete={'off'} onChange={(e) => setLoginInfo({...loginInfo, loginId: e.target.value})} placeholder={'아이디'}/>
             </div>
 
             <div className='login-form-pw'>
               <div className='login-form-pw'>
-                <label for="user-pw">비밀번호</label>
-                <input 
-                  id="user-pw" 
-                  type='password' 
-                  onKeyDown={(e) => activeEnter(e)}
-                  onChange={(e) => setLoginInfo({...loginInfo, password: e.target.value})}
-                >
-                </input>
+                <input
+                    id="user-pw" className={'user-pw'}
+                    type='password'
+                    onKeyDown={(e) => activeEnter(e)}
+                    onChange={(e) => setLoginInfo({...loginInfo, password: e.target.value})} placeholder={'비밀번호'}/>
               </div>
             </div>
-          </div> 
+            <div className={'normal-login'}>
+              <button className='normal-login-btn' onClick={() => goNormalLogin()}>로그인</button>
+            </div>
+          </div>
         </>
         }
 

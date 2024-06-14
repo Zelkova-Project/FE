@@ -1,8 +1,15 @@
 import { atom, useRecoilState } from 'recoil';
+import {recoilPersist} from "recoil-persist";
+
+const { persistAtom } = recoilPersist({
+  key: 'member',
+  storage: localStorage,
+});
 
 const loginState = atom({
   key: 'isLogin',
   default: false,
+  effects_UNSTABLE: [persistAtom],
 });
 const tokenState = atom({
   key: 'token',
