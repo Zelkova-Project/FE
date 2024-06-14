@@ -20,4 +20,5 @@ jobs:
             cd /zelkova-front/FE
             git pull
             nvm use 20
-            npm run build
+            nvm ls
+            node -v
