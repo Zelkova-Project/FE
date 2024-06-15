@@ -28,4 +28,5 @@ jobs:
             nvm install 20
             nvm use 20
             pwd
+            npm run build
   
