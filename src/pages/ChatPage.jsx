@@ -8,7 +8,7 @@ import { Client } from '@stomp/stompjs';
 const ChatPage = () => {
 
   const connectHandler = () => {
-   let sockJs = new SockJS("/ws/chat", null, {transports: ["websocket", "xhr-streaming", "xhr-polling"]});
+   let sockJs = new SockJS("https://namu0005.or.kr/ws-zelkova", null, {transports: ["websocket", "xhr-streaming", "xhr-polling"]});
 
     
   };
