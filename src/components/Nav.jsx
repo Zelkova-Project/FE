@@ -94,6 +94,7 @@ const Nav = () => {
               {login ? '로그아웃' : '로그인' }
             </a>
           </li>
+          <li onClick={() => navigate('/chat')}>채팅테스트</li>
         </ul>
       </div>
 
