@@ -31,7 +31,7 @@ const Nav = () => {
     location.reload();
   }
 
-  
+
   // 호버시열리는영역
   const showExtraNav = () => {
     let result = '';
@@ -90,10 +90,11 @@ const Nav = () => {
           <li onClick={() => navHandler(2)}>공지사항</li>
           <li onClick={() => navHandler(3)}>후원&자원봉사</li>
           <li onClick={() => navHandler(4)}>커뮤니티</li>
-          {login ?
-              <li onClick={() => logoutHandler()} className="login"><a>로그아웃</a></li> :
-              <li onClick={() => loginHandler()} className="login"><a>로그인</a></li>
-          }
+          <li onClick={() => loginHandler()} className="login">
+            <a>
+              {login ? '로그아웃' : '로그인' }
+            </a>
+          </li>
         </ul>
       </div>
 
