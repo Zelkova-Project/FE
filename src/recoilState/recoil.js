@@ -2,7 +2,7 @@ import { atom, useRecoilState } from 'recoil';
 import {recoilPersist} from "recoil-persist";
 
 const { persistAtom } = recoilPersist({
-  key: 'member',
+  key: 'loginMember',
   storage: localStorage,
 });
 

@@ -1,4 +1,4 @@
-import '../css/join.css';
+import style from "../css/join.module.css";
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
@@ -32,42 +32,42 @@ const NormalLoginPage = () => {
   };
 
   return (
-    <div className="join-outer-container">
+    <div className={style["outer-container"]}>
       <Nav />
-      <div className="form-container">
-        <div className="form-inner-container">
-          <div className="form-title">
-            <h4 className="join-title">일반로그인</h4>
+      <div className={style["form-container"]}>
+        <div className={style["inner-container"]}>
+          <div className={style["form-title"]}>
+            <h4 className={style["join-title"]}>일반로그인</h4>
           </div>
 
-          <div className="join-form-wrapper">
+          <div className={style["join-form-wrapper"]}>
             {/* 아이템 */}
-            <div className="join-form-item">
-              <div className="join-form-subitem1">
+            <div className={style["join-form-item"]}>
+              <div className={style["join-form-subitem1"]}>
                 <p>아이디</p>
               </div>
 
-              <div className="join-form-subitem2">
+              <div className={style["join-form-subitem2"]}>
                 <input></input>
               </div>
             </div>
             {/* 아이템 */}
-            <div className="join-form-item">
-              <div className="join-form-subitem1">
+            <div className={style["join-form-item"]}>
+              <div className={style["join-form-subitem1"]}>
                 <p>비밀번호</p>
               </div>
 
-              <div className="join-form-subitem2">
+              <div className={style["join-form-subitem2"]}>
                 <input></input>
               </div>
             </div>
 
             {/* 버튼들 */}
-            <div className="join-btns-wrapper">
-              <button className="cancel-join-btn" onClick={goBack}>
+            <div className={style["join-btns-wrapper"]}>
+              <button className={style["cancel-join-btn"]} onClick={goBack}>
                 취소
               </button>
-              <button className="join-btn" onClick={goNormalLogin}>
+              <button className={style["join-btn"]} onClick={goNormalLogin}>
                 로그인
               </button>
             </div>

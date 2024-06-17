@@ -44,6 +44,7 @@
     ]
   },
   "proxy": "http://49.247.174.109:8080",
+
   "devDependencies": {
     "prettier": "^3.3.0"
   }
