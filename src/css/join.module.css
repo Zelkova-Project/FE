@@ -117,9 +117,29 @@
   display: flex;
   gap: 40px;
 }
-.regex-message {
+.id-fail-message {
   font-size: 14px;
   color: #FF8888;
+  position: absolute;
+  transform: translate(5px,50px);
+}
+.id-success-message {
+  font-size: 14px;
+  color: #7CA9ED;
+  position: absolute;
+  transform: translate(5px,50px);
+}
+.pw-fail-message {
+  font-size: 14px;
+  color: #FF8888;
+  position: absolute;
+  transform: translate(5px,50px);
+}
+.pw-success-message {
+  font-size: 14px;
+  color: #7CA9ED;
+  position: absolute;
+  transform: translate(5px,50px);
 }
 .join-form-select {
   cursor: default;
@@ -248,4 +268,14 @@
 }
 .margin-top50 {
   margin-top: 50px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox  */
+input[type='number'] {
+  -moz-appearance: textfield;
 }
