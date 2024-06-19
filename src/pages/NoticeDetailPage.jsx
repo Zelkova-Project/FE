@@ -102,7 +102,6 @@ const NoticeDetailPage = () => {
     const fetchData = async () => {
       try {
         let { status, data, message } = await axios.get('/posts/' + id);
-        console.log('>>> post_info_response ', data.post_info_response);
         setPostDetail(data.post_info_response);          
         
         setLoading(false); 
@@ -165,7 +164,7 @@ const NoticeDetailPage = () => {
                 <h3>{postDetail && postDetail.title}</h3>
               </li>
               <li>
-                <h3>{postDetail && postDetail.date_time.split('T')[0]}</h3>
+                <h3>{postDetail && postDetail?.date_time && postDetail?.date_time.split('T')[0]}</h3>
               </li>
             </ul>
           </div>

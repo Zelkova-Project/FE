@@ -1,18 +1,21 @@
 import Section from '../Section';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { userInfoState } from '../../recoilState/recoil';
+import {useRecoilState} from 'recoil';
 
 const CommunityBody = () => {
 	const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
 	const imgObj = {
 		arrowRight: require('../../imgs/notice/arrow-right.png'),
 		communityImg1: require('../../imgs/community/community-example1.png'),
 	};
 	const [activeIdx, setActiveIdx] = useState(1);
+	const isAdmin = userInfo.loginId == 'admin';
 
 	const makeCommunityGrid = () => {
-		console.log('test');
 		let comInfo = {
 			img: imgObj.communityImg1,
 			title: '타이틀',
@@ -23,7 +26,7 @@ const CommunityBody = () => {
 		const result = [];
 		for (let idx in dummyArr) {
 			result.push(
-				<div className='flex-item' key={idx}>
+				<div className='flex-item' key={idx} onClick={() => navigate(`/noticeDetail/${1}`)}>
 					<img src={dummyArr[idx].img}></img>
 					<h3>{dummyArr[idx].title}</h3>
 					<p>
@@ -150,9 +153,11 @@ const CommunityBody = () => {
 						</div>
 
 						{/* 글쓰기버튼 */}
-						<div className='page-btn-write'>
-							<button onClick={() => navigate('/write')}>글쓰기</button>
-						</div>
+						{ isAdmin &&
+							<div className='page-btn-write'>
+								<button onClick={() => navigate('/write')}>글쓰기</button>
+							</div>
+						}
 
 					</div>
 				</div>

@@ -27,11 +27,16 @@ const pageState = atom({
   key: 'page',
   default: 0,
 });
+const userInfoState = atom({
+  key: 'user',
+  default: {},
+});
 
 export {
   loginState,
   tokenState,
   subtitState,
   pageState,
-  navIdxState
+  navIdxState,
+  userInfoState
 }

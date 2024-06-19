@@ -45,23 +45,23 @@ const Guide = () => {
 
           <div className="sub-nav">
             <ul>
-              <li>
-                <span onClick={() => activeHandler(0)} className={activeIdx == 0 ? 'active2' : ''}>
+              <li onClick={() => activeHandler(0)} className={activeIdx == 0 ? 'active2' : ''}>
+                <span>
                   이용안내
                 </span>
               </li>
-              <li>
-                <span onClick={() => activeHandler(1)} className={activeIdx == 1 ? 'active2' : ''}>
+              <li onClick={() => activeHandler(1)} className={activeIdx == 1 ? 'active2' : ''}>
+                <span>
                   시설안내
                 </span>
               </li>
-              <li>
-                <span onClick={() => activeHandler(2)} className={activeIdx == 2 ? 'active2' : ''}>
+              <li onClick={() => activeHandler(2)} className={activeIdx == 2 ? 'active2' : ''}>
+                <span>
                   오시는길
                 </span>
               </li>
-              <li>
-                <span onClick={() => activeHandler(3)} className={activeIdx == 3 ? 'active2' : ''}>
+              <li onClick={() => activeHandler(3)} className={activeIdx == 3 ? 'active2' : ''}>
+                <span>
                   조직도
                 </span>
               </li>

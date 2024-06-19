@@ -36,11 +36,6 @@ const NoticePage = () => {
     setActiveComp(param);
   };
 
-  const activeHandler = (idx) => {
-    setNavIdx(idx);
-    setSubtit(noticeTitleList[idx]);
-  };
-
   const [subtit, setSubtit] = useRecoilState(subtitState); 
   const [navIdx, setNavIdx] = useRecoilState(navIdxState); 
   const [activeSubtit, setActiveSubtit] = useState('공지사항');
@@ -49,6 +44,13 @@ const NoticePage = () => {
 
   const navigate = useNavigate();
 
+  const activeHandler = (idx) => {
+    setNavIdx(idx);
+    setActiveSubtit(noticeTitleList[idx]);
+    setSubtit(activeSubtit);
+    setActiveComp('');
+  };
+  
   const goWritePage = () => {
     navigate(`/write`);
   };
@@ -68,30 +70,30 @@ const NoticePage = () => {
       <Section>
         <div className="guide-img-container">
           <div className='img-title'>
-            <h3>{subtit}</h3>
+            <h3>{activeSubtit}</h3>
           </div>
           <img className="main-img" src={getMainImg()} alt="main-section"></img>
 
           <div className="sub-nav-wrapper">
             <div className="sub-nav">
               <ul>
-                <li>
-                  <span onClick={() => activeHandler(0)} className={navIdx == 0 ? 'active' : ''}>
-                    공지사항
-                  </span>
+                <li
+                  onClick={() => activeHandler(0)}
+                  className={navIdx == 0 ? 'active' : ''}
+                >
+                  <span>공지사항</span>
                 </li>
-                <li>
-                  <span
-                    onClick={() => activeHandler(1)}
-                    className={navIdx == 1 ? 'active-wide' : ''}
-                  >
-                    가정통신문
-                  </span>
+                <li
+                  onClick={() => activeHandler(1)}
+                  className={navIdx == 1 ? 'active-wide' : ''}
+                >
+                  <span>가정통신문</span>
                 </li>
-                <li>
-                  <span onClick={() => activeHandler(2)} className={navIdx == 2 ? 'active' : ''}>
-                    채용안내
-                  </span>
+                <li
+                  onClick={() => activeHandler(2)}
+                  className={navIdx == 2 ? 'active' : ''}
+                >
+                  <span>채용안내</span>
                 </li>
               </ul>
             </div>

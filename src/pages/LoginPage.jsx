@@ -4,11 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../axios/axiosInstance';
 import React, {useRef, useState} from 'react';
 import {useRecoilState} from 'recoil';
-import {loginState} from '../recoilState/recoil';
+import {loginState, userInfoState} from '../recoilState/recoil';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useRecoilState(loginState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [isNormalLogin, setIsNormalLogin] = useState(false);
   const [loginInfo, setLoginInfo] = useState({loginId: '', password: ''});
 
@@ -55,6 +56,7 @@ const LoginPage = () => {
     if (!error) {
       navigate('/');
       setLogin(true);
+      setUserInfo(loginInfo);
     } else {
       let [key, val] = Object.entries(message)[0];
       let msgMap = {

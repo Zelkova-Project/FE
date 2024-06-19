@@ -105,7 +105,7 @@ const WritePage = () => {
       <Section>
         <div className="write-outer-container">
           <div className="write-flexitem">
-            <h5 className="write-subtit">공지사항 등록 및 수정</h5>
+            <h5 className="write-subtit">{ subtit } 등록 및 수정</h5>
           </div>
           <div className="write-flexItem">
             <h3>제목</h3>

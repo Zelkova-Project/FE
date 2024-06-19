@@ -4,6 +4,9 @@ import Section from '../components/Section';
 import React, { useState } from 'react';
 import NoticeBoardPage from './NoticeBoardPage';
 
+import {subtitState} from '../recoilState/recoil';
+import {useRecoilState} from 'recoil';
+
 import '../css/main.css';
 import '../css/nav.css';
 import '../css/notice.css';
@@ -15,35 +18,37 @@ const SupportPage = () => {
   };
 	const [navIdx, setNavIdx] = useState(0);
 	const [activeSubtit, setActiveSubtit] = useState('후원의손길');
+
+	const [subtit, setSubtit] = useRecoilState(subtitState); 
+	setSubtit('후원의손길');
+
   const activeHandler = (idx) => {
 		setNavIdx(idx);
 		setActiveSubtit(['후원의손길', '자원봉사'][idx]);
-  };
+		setSubtit(activeSubtit);
+	};
+	
 	return (
 		<div className="main-container">
 			<Nav />
 			<Section>
 				<div className="guide-img-container">
-					<div className='img-title'>
-            <h3>{activeSubtit}</h3>
+					<div className='img-title for-support'>
+            <h3>후원&자원봉사</h3>
           </div>
 					<img className="main-img" src={imgObj.main} alt="main-section"></img>
 
 					<div className="sub-nav-wrapper">
 						<div className="sub-nav">
 							<ul>
-								<li>
-									<span onClick={() => activeHandler(0)} className={navIdx == 0 ? 'active-support' : ''}>
-										후원의손길
-									</span>
+								<li onClick={() => activeHandler(0)} className={navIdx == 0 ? 'active-support' : ''}>
+									<span>후원의손길</span>
 								</li>
-								<li>
-									<span
-										onClick={() => activeHandler(1)}
-										className={navIdx == 1 ? 'active-support' : ''}
-									>
-										자원봉사
-									</span>
+								<li
+									onClick={() => activeHandler(1)}
+									className={navIdx == 1 ? 'active-support' : ''}
+								>
+									<span>자원봉사</span>
 								</li>
 							</ul>
 						</div>
