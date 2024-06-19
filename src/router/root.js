@@ -15,7 +15,7 @@ const Write = lazy(() => import('../pages/WritePage'));
 const Community = lazy(() => import('../pages/CommunityPage'));
 const Support = lazy(() => import('../pages/SupportPage'));
 const Chat = lazy(() => import('../pages/ChatPage'));
-const IdFind = lazy(() => import('../pages/IdFindPage'));
+const MemberFind = lazy(() => import('../pages/MemberFindPage'));
 
 const root = createBrowserRouter([
   {
@@ -123,10 +123,10 @@ const root = createBrowserRouter([
     ),
   },
   {
-    path: '/idFind',
+    path: '/MemberFind',
     element: (
       <Suspense fallback={Loading}>
-        <IdFind/>
+        <MemberFind/>
       </Suspense>
     ),
   },

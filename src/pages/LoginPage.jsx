@@ -72,9 +72,6 @@ const LoginPage = () => {
       goNormalLogin();
     }
   }
-  const goIdFind = () => {
-    navigate('/idFind');
-  }
   return (
     <div className="login-container">
       <div className="login-wrapper">
@@ -149,7 +146,7 @@ const LoginPage = () => {
         <div className='login-options'>
           <ul className='options-ul'>
             <li onClick={() => navigate('/join')}>회원가입</li>
-            <li onClick={goIdFind}>아이디 / 비밀번호 찾기</li>
+            <li onClick={() => navigate('/MemberFind')}>아이디 / 비밀번호 찾기</li>
             <li onClick={() => navigate('/chat')}>문의하기</li>
           </ul>
         </div>

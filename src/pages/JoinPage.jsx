@@ -315,8 +315,8 @@ const Join = () => {
 
               <div className={style['join-options']}>
                 <ul className={style['options-ul']}>
-                  <li onClick={() => navigate('/join')}>회원가입</li>
-                  <li>아이디 / 비밀번호 찾기</li>
+                  <li>회원가입</li>
+                  <li onClick={() => navigate('/MemberFind')}>아이디 / 비밀번호 찾기</li>
                   <li onClick={() => navigate('/chat')}>문의하기</li>
                 </ul>
               </div>
