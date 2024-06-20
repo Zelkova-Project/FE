@@ -1,0 +1,149 @@
+.container {
+    width: 80%;
+    border: 1px solid black;
+    margin: 30px auto 0 auto;
+}
+.main-img {
+    width: 100%;
+    position: relative;
+}
+.wrap {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 30px 30px 0 0;
+    z-index: 1;
+    transform: translateY(-200px);
+    padding: 60px 0;
+}
+.profile-info {
+    padding: 0 60px;
+}
+.profile-info label {
+    display: flex;
+    align-items: center;
+}
+.profile-my-img {
+    border-radius: 100%;
+    border: 1px solid black;
+    width: 120px;
+    height: 120px;
+}
+.profile-name {
+    margin-left: 20px;
+}
+.profile-name .name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.profile-name .protect {
+    color: #737373;
+    font-size: 14px;
+}
+.profile-name .intro {
+    color: #737373;
+    font-size: 14px;
+}
+.profile-follow {
+    margin-left: auto;
+}
+.profile-follow label{
+    display: flex;
+}
+.follow {
+    display: inline-block;
+    margin-right: 30px;
+}
+.follow span:nth-child(1) {
+    font-size: 18px;
+    font-weight: bold;
+}
+.follow span:nth-child(2) {
+    display: block;
+    font-size: 14px;
+    padding-left: 3px;
+}
+.follower {
+    display: inline-block;
+}
+.follower span:nth-child(1) {
+    font-size: 18px;
+    font-weight: bold;
+}
+.follower span:nth-child(2) {
+    display: block;
+    font-size: 14px;
+    padding-left: 3px;
+}
+.follow-btn {
+    width: 85px;
+    height: 35px;
+    background-color: #82D3AC;
+    border: none;
+    color: #ffffff;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-left: 45px;
+}
+.profile-board {
+    margin-top: 70px;
+    padding: 0 60px;
+}
+.profile-board label{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.profile-board-img {
+    border-radius: 100%;
+    border: 1px solid black;
+    width: 48px;
+    height: 48px;
+}
+.profile-board-name .name {
+    margin-left: 10px;
+    font-weight: bold;
+}
+.profile-board-list-img {
+    margin: 0 auto;
+}
+.profile-board-img-report {
+    position: absolute;
+    right: 100px;
+}
+.report-open {
+    position: absolute;
+    right: 100px;
+    transform: translateY(40px);
+    background-color: #ffffff;
+    cursor: pointer;
+    text-align: left;
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+.report-open span{
+    font-size: 14px;
+}
+
+.profile-board-list-img img{
+    width: 100%;
+    height: 400px;
+    border-radius: 10px;
+}
+.profile-board-icon {
+    margin-top: 10px;
+
+}
+.profile-board-content {
+    margin-top: 20px;
+    font-size: 14px;
+
+}
+.profile-board-date {
+    color: #A6A6A6;
+    font-size: 12px;
+    margin-top: 20px;
+}
