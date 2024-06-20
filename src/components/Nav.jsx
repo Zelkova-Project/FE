@@ -25,9 +25,15 @@ const Nav = () => {
     console.log('loginHandler')
       navigate('/login');
   }
+
+  const deleteCookie = (cookieKey) => {
+    document.cookie = cookieKey + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  }
+
   const logoutHandler = () => {
     console.log('logoutHandler')
     localStorage.removeItem('loginMember')
+    deleteCookie('X-XSRF-Token');
     location.reload();
   }
 

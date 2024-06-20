@@ -243,6 +243,7 @@
  font-size: 14px;
  border: none;
  margin-left: 5px;
+ cursor: pointer;
 }
 
 ::-webkit-scrollbar {
