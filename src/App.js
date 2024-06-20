@@ -5,7 +5,7 @@ import root from './router/root';
 function App() {
   return (
     <RecoilRoot>
-      <RouterProvider router={root} />;
+      <RouterProvider router={root} />
     </RecoilRoot>
   )
 }

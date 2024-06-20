@@ -94,6 +94,7 @@ const Nav = () => {
               <li onClick={() => logoutHandler()} className="login"><a>로그아웃</a></li> :
               <li onClick={() => loginHandler()} className="login"><a>로그인</a></li>
           }
+          <li className={'login'} onClick={() => navigate('/Profile')}>임시프로필</li>
           <li onClick={() => navigate('/chat')}>채팅테스트</li>
       </ul>
     </div>

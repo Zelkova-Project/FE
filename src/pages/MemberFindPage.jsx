@@ -22,8 +22,14 @@ const MemberFindPage = () => {
     const [pwSelected, setPwSelected] = useState(false); // 비밀번호 찾기 - 통신사 메뉴창
     const [pwSelectVal, setPwSelectVal] = useState(''); // 비밀번호 찾기 - 통신사 값
     const [pwIdFailMessage, setPwIdFailMessage ] = useState(''); // 비밀번호 찾기 - 아이디 빈칸시
+    const [pwVerifyMessage, setPwVerifyMessage ] = useState(''); // 아이디 찾기 - 인증번호 발송 메세지
+    const [pwFailVerifyMessage, setPwFailVerifyMessage ] = useState(''); // 비밀번호 찾기 - 인증번호 전송버튼 오류시
+    const [pwFailVerifyNumMessage, setPwFailVerifyNumMessage ] = useState(''); // 비밀번호 찾기 - 인증번호 확인 오류시
+    const [pwVerifyBtn, setPwVerifyBtn ] = useState(false); // 비밀번호 찾기 - 인증번호 전송버튼 클릭체크
+    const [pwVerifyNumBtn, setPwVerifyNumBtn ] = useState(false); // 비밀번호 찾기 - 인증번호 확인 클릭체크
 
-    const [idFindModalOpen, setIdFindModalOpen] = useState(false); // 아이디찾기 모달
+    const [idFindModalOpen, setIdFindModalOpen] = useState(false); // 아이디 찾기 모달
+    const [pwFindModalOpen, setPwFindModalOpen] = useState(false); // 비밀번호 찾기 모달
 
     const [idFindInfo, setIdFindInfo] = useState({
         name : '',
@@ -121,6 +127,7 @@ const MemberFindPage = () => {
         */
 
     }
+
     const goIdFind = () => {
         if(idFindInfo.name === '') {
             document.getElementById('id-name').focus();
@@ -143,6 +150,7 @@ const MemberFindPage = () => {
     }
     const modalClose = () => {
         setIdFindModalOpen(false)
+        setPwFindModalOpen(false)
     }
     const modalLogin = () => {
         navigate('/login')
@@ -153,6 +161,33 @@ const MemberFindPage = () => {
         setPwSelectVal(index)
         setPwSelected(!pwSelected)
         setPwFindInfo({...pwFindInfo, agency: index.value});
+
+    }
+    const pwVerifyTransmissionBtn = () => {
+        if(pwFindInfo.phone === ''){
+            setPwFailVerifyMessage('가입된 전화번호가 아닙니다. 다시 입력해 주세요.')
+            setPwVerifyMessage(null);
+            return false;
+        }else {
+            setPwVerifyMessage('인증번호가 오지 않나요?');
+            setPwFailVerifyMessage(null);
+            setPwVerifyBtn(true)
+        }
+    }
+    const pwVerifyConfirmBtn = () => {
+        if(pwFindInfo.verify === ''){ // 인증번호칸이 빈칸일 경우 + 인증번호가 틀릴시
+            setPwFailVerifyNumMessage('인증번호가 맞지 않습니다. 다시 입력해 주세요.')
+            return false;
+        }else{
+            setPwFailVerifyNumMessage(null)
+            setPwFailVerifyMessage(null);
+            setPwVerifyNumBtn(true)
+        }
+        // 인증번호가 맞을지
+        /*setIdFailVerifyNumMessage(null)
+        setIdFailVerifyMessage(null);
+        setIdVerifyNumBtn(true)
+        */
 
     }
     const goPwFind = () => {
@@ -175,6 +210,12 @@ const MemberFindPage = () => {
         if(pwFindInfo.agency === '') {
             document.getElementById('pw-agency').focus();
             return false;
+        }
+        if(pwVerifyBtn === false || pwVerifyNumBtn === false) {
+            setPwFailVerifyNumMessage('인증번호가 맞지 않습니다. 다시 입력해 주세요.')
+            return false;
+        }else if(pwVerifyBtn === true && pwVerifyNumBtn === true){
+            setPwFindModalOpen(true)
         }
     }
     return(
@@ -267,18 +308,24 @@ const MemberFindPage = () => {
                         <div className={style['sub-title']}>가입하신 아이디, 전화번호를 입력해주세요.</div>
                         <div className={style['find-item']}>
                             <div className={style['find-sub-item']}>
-                                <input type={'text'} placeholder={'아이디'} autoComplete={'off'} id={'pw-id'} value={pwFindInfo.id} onChange={e => setPwFindInfo({...pwFindInfo, id: e.target.value})}/>
+                                <input type={'text'} placeholder={'아이디'} autoComplete={'off'} id={'pw-id'}
+                                       value={pwFindInfo.id}
+                                       onChange={e => setPwFindInfo({...pwFindInfo, id: e.target.value})}/>
                             </div>
                             <span className={style['fail-message']}>{pwIdFailMessage}</span>
                         </div>
                         <div className={style['find-item']}>
                             <div className={style['find-sub-item']}>
-                                <input type={'text'} placeholder={'이름'} id={'pw-name'} autoComplete={'off'} className={style['find-name']} value={pwFindInfo.name} onChange={e => setPwFindInfo({...pwFindInfo, name: e.target.value})}/>
+                                <input type={'text'} placeholder={'이름'} id={'pw-name'} autoComplete={'off'}
+                                       className={style['find-name']} value={pwFindInfo.name}
+                                       onChange={e => setPwFindInfo({...pwFindInfo, name: e.target.value})}/>
                             </div>
                         </div>
                         <div className={style['find-item']}>
                             <div className={style['find-sub-item']}>
-                                <input type={'number'} placeholder={'생년월일(YYYYMMDD)'} id={'pw-birth'} autoComplete={'off'} value={pwFindInfo.birth} onChange={(e) => pwBirthLengthChk(e)} maxLength={8}/>
+                                <input type={'number'} placeholder={'생년월일(YYYYMMDD)'} id={'pw-birth'}
+                                       autoComplete={'off'} value={pwFindInfo.birth}
+                                       onChange={(e) => pwBirthLengthChk(e)} maxLength={8}/>
                             </div>
                         </div>
                         <div className={style["find-item"]}>
@@ -297,41 +344,65 @@ const MemberFindPage = () => {
                                     <ul className={style['find-option']}>
                                         <li className={style['option']} onClick={() => pwSelectValue('SKT')}>SKT</li>
                                         <li className={style['option']} onClick={() => pwSelectValue('KT')}>KT</li>
-                                        <li className={style['option']} onClick={() => pwSelectValue('LG U+')}>LG U+</li>
-                                        <li className={style['option']} onClick={() => pwSelectValue('SKT 알뜰폰')}>SKT 알뜰폰</li>
-                                        <li className={style['option']} onClick={() => pwSelectValue('KT 알뜰폰')}>KT 알뜰폰</li>
-                                        <li className={style['option']} onClick={() => pwSelectValue('LG U+ 알뜰폰')}>LG U+ 알뜰폰</li>
+                                        <li className={style['option']} onClick={() => pwSelectValue('LG U+')}>LG U+
+                                        </li>
+                                        <li className={style['option']} onClick={() => pwSelectValue('SKT 알뜰폰')}>SKT
+                                            알뜰폰
+                                        </li>
+                                        <li className={style['option']} onClick={() => pwSelectValue('KT 알뜰폰')}>KT 알뜰폰
+                                        </li>
+                                        <li className={style['option']} onClick={() => pwSelectValue('LG U+ 알뜰폰')}>LG U+
+                                            알뜰폰
+                                        </li>
                                     </ul> : null
                                 }
                             </div>
                         </div>
                         <div className={style['find-item1']}>
                             <div className={style['find-sub-item2']}>
-                                <input type={'text'} placeholder={'전화번호 입력'} autoComplete={'off'} value={pwFindInfo.phone} onChange={e => setPwFindInfo({...pwFindInfo, phone: e.target.value})}/>
-                                <button className={style['find-button']}>인증번호 전송</button>
+                                <input type={'text'} placeholder={'전화번호 입력'} autoComplete={'off'}
+                                       value={pwFindInfo.phone}
+                                       onChange={e => setPwFindInfo({...pwFindInfo, phone: e.target.value})}/>
+                                <button className={style['find-button']} onClick={pwVerifyTransmissionBtn}>인증번호 전송
+                                </button>
                             </div>
                         </div>
                         <div className={style['find-item1']}>
                             <div className={style['find-sub-item2']}>
-                                <input type={'number'} placeholder={'인증번호 4자리 입력'} autoComplete={'off'} onChange={(e) => pwVerifyLengthChk(e)} maxLength={4}
+                                <input type={'number'} placeholder={'인증번호 4자리 입력'} autoComplete={'off'}
+                                       onChange={(e) => pwVerifyLengthChk(e)} maxLength={4}
                                        value={pwFindInfo.verify}/>
-                                <button className={style['find-button']}>확인</button>
+                                <button className={style['find-button']} onClick={pwVerifyConfirmBtn}>확인</button>
                             </div>
                         </div>
                     </div>
+                    <span className={style['id-verify-message']}>{pwVerifyMessage}</span>
+                    <span className={style['id-fail-verify-message']}>{pwFailVerifyMessage}</span>
+                    <span className={style['id-fail-verify-num-message']}>{pwFailVerifyNumMessage}</span>
                     <div className={style["find-btn-wrap"]}>
                         <button className={style["find-btn"]} onClick={goPwFind}>확인</button>
                     </div>
+                    <Modal isOpen={pwFindModalOpen} ariaHideApp={false} style={idModalStyle}>
+                        <div className={style['modal-wrap']}>
+                            <div className={style['modal-title']}>비밀번호 찾기</div>
+                            <div className={style['modal-text1']}>성한결 님의 비밀번호는 </div>
+                            <div className={style['modal-text2']}><span>test11</span> 입니다.</div>
+                            <div className={style['modal-button-wrap']}>
+                                <button className={style['modal-close']} onClick={modalClose}>닫기</button>
+                                <button className={style['modal-login']} onClick={modalLogin}>로그인</button>
+                            </div>
+                        </div>
+                    </Modal>
                 </div>
             }
 
-                <div className={style['other-find-form']}>
-                    <div className={style["other-find"]}>
-                        <p>다른 방법으로 로그인</p>
-                    </div>
+            <div className={style['other-find-form']}>
+                <div className={style["other-find"]}>
+                    <p>다른 방법으로 로그인</p>
+                </div>
 
-                    <div className={style["social-find"]}>
-                        <div>
+                <div className={style["social-find"]}>
+                <div>
                             <img src={imgObj.kakaoLoginIcon}/>
                         </div>
                         <div>
