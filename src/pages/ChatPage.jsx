@@ -93,30 +93,33 @@ const ChatPage = () => {
     setChatClient(client); // local 전역으로 사용
   };
 
-
+  // textarea에 엔터클릭이벤트 안됨 
+  // 전송 버튼 클릭하여 전송 해야됨
   const sendMessage = (e) => {
     console.log('>>> 메세지전송시작');
     console.log('>>> 클라이언트 : ', chatClient);
     console.log('>>> 연결유무 : ', isConnected);
     console.log('>>> 전송URL : ', URL);
 
-    let testParam = {
+    
+    let chatParam = {
       chatroom_id: null,
-      receiver_id: 'admin',
-      message: "메시지 내용입니다."
+      receiver_id: 1,
+      message: message // useState로 관리함. textArea에 넣은 메세지 전송됨
     }
 
     if (chatClient && isConnected) {
       chatClient.publish({
-        destination: MSG_URL,
-        body: JSON.stringify(testParam),
+        destination: MSG_URL, // 렌더링시작지점에 상수선언됨
+        body: JSON.stringify(chatParam),
       });
 
       console.log('>>> 보낸메세지 : ', message);
-      setMessage('');
+      setMessage(''); // 보내고 비워줌
     }
   };
 
+  // rendering 시작 후 실행
   useEffect(() => {
     console.log('>>> 토큰 : ', getToken());
 
