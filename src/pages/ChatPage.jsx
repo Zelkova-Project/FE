@@ -50,6 +50,7 @@ const ChatPage = () => {
   };
 
   const URL = '/zelkova/user/queue/message';
+  const MSG_URL = '/zelkova/message';
 
   const connectHandler = () => {
     const client = new StompJs.Client({
@@ -99,10 +100,16 @@ const ChatPage = () => {
     console.log('>>> 연결유무 : ', isConnected);
     console.log('>>> 전송URL : ', URL);
 
+    let testParam = {
+      chatroom_id: null,
+      receiver_id: 'admin',
+      message: "메시지 내용입니다."
+    }
+
     if (chatClient && isConnected) {
       chatClient.publish({
-        destination: URL,
-        body: JSON.stringify({ text: message }),
+        destination: MSG_URL,
+        body: JSON.stringify(testParam),
       });
 
       console.log('>>> 보낸메세지 : ', message);
