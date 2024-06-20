@@ -1,16 +1,67 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-import Stomp from '@stomp/stompjs';
-import { Client } from '@stomp/stompjs';
-
-// import SockJS from 'sockjs-client';
+import * as SockJS from 'sockjs-client';
+import * as StompJs from '@stomp/stompjs';
+import { v4 as uuidv4 } from 'uuid';
 
 const ChatPage = () => {
+  const getToken = () => {
+    let cookie = document.cookie;  
+    const [key, val] = cookie.split("=");
+    return val;
+  }
+
+  const generateRandomString = (csrfToken) => {
+    const randomUUID = uuidv4();
+    let secretString = '';
+
+    for (let i = 0; i < csrfToken.length; i++) {
+      const targetChar = csrfToken.charCodeAt(i);
+      const randomChar = randomUUID.charCodeAt(i);
+      const xorChar = targetChar ^ randomChar;
+      secretString += String.fromCharCode(xorChar);
+    }
+
+    return randomUUID + secretString;
+  };
+
+  const headers = {
+    'X-XSRF-TOKEN': btoa(generateRandomString(getToken()))
+  };
+
+  console.log('getToken >>> ', getToken());
 
   const connectHandler = () => {
-   let sockJs = new SockJS("/ws-zelkova", null, {transports: ["websocket", "xhr-streaming", "xhr-polling"]});
+    const client = new StompJs.Client({
+      debug: function (str) {
+        console.log(str);
+      },
+      reconnectDelay: 500000,
+      heartbeatIncoming: 400000,
+      heartbeatOutgoing: 400000,
+    });
 
+    client.connectHeaders = headers;
     
+    client.webSocketFactory = function () {
+      return new SockJS('/ws-zelkova');
+    };
+    
+    client.onConnect = function (frame) {
+      client.subscribe(
+        '/zelkova/user/queue/message',
+        (message) => {
+          console.log('message ::: ', message);
+        }
+      );
+    }
+    
+    client.onStompError = function (frame) {
+      console.log('Broker reported error: ' + frame.headers['message']);
+      console.log('Additional details: ' + frame.body);
+    };
+    
+    client.activate();
   };
 
   useEffect(() => {

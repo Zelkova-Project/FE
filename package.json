@@ -16,6 +16,7 @@
     "react-scripts": "5.0.1",
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
+    "uuid": "^10.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -44,8 +45,11 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://49.247.174.109:8080",
   "devDependencies": {
     "prettier": "^3.3.0"
+  },
+  "options": {
+    "allowedHosts": ["localhost", ".localhost"],
+    "proxy": "http://49.247.174.109:8080"
   }
 }
