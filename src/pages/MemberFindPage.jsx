@@ -54,7 +54,7 @@ const MemberFindPage = () => {
         select : require('../imgs/join/select.png'),
     };
 
-    // 리뷰쓰기 Modal 스타일
+    // 리뷰쓰기 Modal1 스타일
     const idModalStyle = {
         overlay: {
             backgroundColor: "rgba(0,0,0,0.2)",
@@ -231,7 +231,7 @@ const MemberFindPage = () => {
                     <div className={style['find-form']}>
                         <div className={style['sub-title']}>가입하신 전화번호를 입력해주세요.</div>
                         <div className={style['find-item']}>
-                            <div className={style['find-sub-item1']}>
+                            <div className={style['find-sub-item']}>
                                 <input type={'text'} placeholder={'이름'} id={'id-name'} autoComplete={'off'} value={idFindInfo.name} onChange={e => setIdFindInfo({...idFindInfo, name: e.target.value})}/>
                             </div>
                         </div>

@@ -21,7 +21,7 @@
 .menu-left {
   width: 100%;
   display: flex;
-  z-index: 99999;
+  z-index: 100;
 }
 
 .menu-ul {
@@ -47,7 +47,7 @@
   width: 1280px;
   height: 224px;
   background: #FFFFFF;
-  z-index: 9999;
+  z-index: 99;
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -81,5 +81,5 @@
   position: absolute;
   right: 150px;
   top: 90px;
-  z-index: 9999;
+  z-index: 99;
 }
