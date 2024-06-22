@@ -5,15 +5,15 @@ import '../css/write.css';
 import axios from '../axios/axiosInstance';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {subtitState, navIdxState} from '../recoilState/recoil';
-import {useRecoilState} from 'recoil';
+import { subtitState, navIdxState } from '../recoilState/recoil';
+import { useRecoilState } from 'recoil';
 
 const WritePage = () => {
   window.scrollTo(0, 0);
 
   const navigate = useNavigate();
-  const [subtit, setSubtit] = useRecoilState(subtitState); 
-  const [navIdx, setNavIdx] = useRecoilState(navIdxState); 
+  const [subtit, setSubtit] = useRecoilState(subtitState);
+  const [navIdx, setNavIdx] = useRecoilState(navIdxState);
 
   const [postInfo, setPostInfo] = useState({
     category: 'BOARD',
@@ -25,7 +25,7 @@ const WritePage = () => {
   const imgObj = {
     notice: require('../imgs/notice/notice-main.png'),
     home: require('../imgs/notice/가정통신문main.png'),
-    hire: require('../imgs/notice/채용안내main.png')
+    hire: require('../imgs/notice/채용안내main.png'),
   };
 
   const getMainImg = () => {
@@ -105,7 +105,7 @@ const WritePage = () => {
       <Section>
         <div className="write-outer-container">
           <div className="write-flexitem">
-            <h5 className="write-subtit">{ subtit } 등록 및 수정</h5>
+            <h5 className="write-subtit">{subtit} 등록 및 수정</h5>
           </div>
           <div className="write-flexItem">
             <h3>제목</h3>

@@ -141,8 +141,8 @@
   align-items: center;
 }
 .login-form-id input,
-.login-form-pw input{
-  border: 1px solid #F2F2F2;
+.login-form-pw input {
+  border: 1px solid #f2f2f2;
   width: 240px;
   height: 36px;
   font-family: 'PretendardVariable';
@@ -152,7 +152,7 @@
   color: rgba(0, 0, 0, 0.7);
 }
 .login-form-id input::placeholder,
-.login-form-pw input::placeholder{
+.login-form-pw input::placeholder {
   color: rgba(128, 128, 128, 0.6);
 }
 .normal-login {

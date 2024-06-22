@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import Section from '../components/Section';
 import Nav from '../components/Nav';
 import { atom, useRecoilState } from 'recoil';
-import {subtitState, navIdxState} from '../recoilState/recoil';
+import { subtitState, navIdxState } from '../recoilState/recoil';
 import '../css/main.css';
 import '../css/guide.css';
 import '../css/nav.css';
@@ -16,12 +16,12 @@ import { useNavigate } from 'react-router-dom';
 
 const NoticeDetailPage = () => {
   const navigate = useNavigate();
-  const {id} = useParams();
+  const { id } = useParams();
 
   // state, hooks 영역
   const { state } = useLocation();
-  const [subtit, setSubtit] = useRecoilState(subtitState); 
-  const [navIdx, setNavIdx] = useRecoilState(navIdxState); 
+  const [subtit, setSubtit] = useRecoilState(subtitState);
+  const [navIdx, setNavIdx] = useRecoilState(navIdxState);
 
   const activeHandler = (idx) => {
     setNavIdx(idx);
@@ -33,7 +33,7 @@ const NoticeDetailPage = () => {
     notailLike: require('../imgs/notice/notail-like.png'),
     notice: require('../imgs/notice/notice-main.png'),
     home: require('../imgs/notice/가정통신문main.png'),
-    hire: require('../imgs/notice/채용안내main.png')
+    hire: require('../imgs/notice/채용안내main.png'),
   };
 
   const getMainImg = () => {
@@ -91,32 +91,31 @@ const NoticeDetailPage = () => {
   result.push(댓글);
   result.push(댓글);
   result.push(댓글);
-  
+
   // state, hooks 영역끝
 
   const [postDetail, setPostDetail] = useState({});
-  const [loading, setLoading] = useState(true); 
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         let { status, data, message } = await axios.get('/posts/' + id);
-        setPostDetail(data.post_info_response);          
-        
-        setLoading(false); 
+        setPostDetail(data.post_info_response);
+
+        setLoading(false);
       } catch (error) {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
-    fetchData(); 
+    fetchData();
   }, []);
 
   if (loading) {
     return <div>Loading...</div>;
   }
-  
+
   return (
     <div className="main-container">
       <Nav />
@@ -164,7 +163,9 @@ const NoticeDetailPage = () => {
                 <h3>{postDetail && postDetail.title}</h3>
               </li>
               <li>
-                <h3>{postDetail && postDetail?.date_time && postDetail?.date_time.split('T')[0]}</h3>
+                <h3>
+                  {postDetail && postDetail?.date_time && postDetail?.date_time.split('T')[0]}
+                </h3>
               </li>
             </ul>
           </div>
@@ -174,9 +175,7 @@ const NoticeDetailPage = () => {
         <div className="notail-content-section">
           <div className="notail-content">
             <h2>{postDetail && postDetail.title}</h2>
-            <p>
-              {postDetail && postDetail.content}
-            </p>
+            <p>{postDetail && postDetail.content}</p>
           </div>
         </div>
 

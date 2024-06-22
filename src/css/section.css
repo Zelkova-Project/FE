@@ -48,7 +48,7 @@
   border-radius: 10px;
 }
 .main-img1 {
-  background: linear-gradient(0deg, rgba(255, 255, 255, .6) 0%, rgba(255, 255, 255, 0) 70%),
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
     url('/public/middle-section.png');
 }
 .main-img2 {
@@ -85,28 +85,28 @@
 }
 
 .이용안내-img1 {
-  background: linear-gradient(0deg, rgba(255, 255, 255, .6) 0%, rgba(255, 255, 255, 0) 70%),
-   url('/public/이용시간.png') !important;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
+    url('/public/이용시간.png') !important;
 }
 .이용안내-img2 {
-  background: linear-gradient(0deg, rgba(255, 255, 255, .6) 0%, rgba(255, 255, 255, 0) 70%),
-  url('/public/이용금액.png') !important;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
+    url('/public/이용금액.png') !important;
 }
 .이용안내-img3 {
-  background: linear-gradient(0deg, rgba(255, 255, 255, .6) 0%, rgba(255, 255, 255, 0) 70%),
-  url('/public/이용절차.png') !important;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
+    url('/public/이용절차.png') !important;
 }
 .시설안내-img1 {
-  background: linear-gradient(0deg, rgba(255, 255, 255, .6) 0%, rgba(255, 255, 255, 0) 70%),
-  url('/public/시설1.png') !important;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
+    url('/public/시설1.png') !important;
 }
 .시설안내-img2 {
-  background: linear-gradient(0deg, rgba(255, 255, 255, .6) 0%, rgba(255, 255, 255, 0) 70%),
-  url('/public/시설2.png') !important;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
+    url('/public/시설2.png') !important;
 }
 .시설안내-img3 {
-  background: linear-gradient(0deg, rgba(255, 255, 255, .6) 0%, rgba(255, 255, 255, 0) 70%),
-  url('/public/시설3.png') !important;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
+    url('/public/시설3.png') !important;
 }
 
 .map {

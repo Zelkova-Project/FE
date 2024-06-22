@@ -1,87 +1,86 @@
 .container {
-    width: 80%;
-    margin: 30px auto 0 auto;
+  width: 80%;
+  margin: 30px auto 0 auto;
 }
 .main-img {
-    width: 100%;
-    position: relative;
+  width: 100%;
+  position: relative;
 }
 .wrap {
-    width: 100%;
-    background-color: #ffffff;
-    border-radius: 30px 30px 0 0;
-    z-index: 1;
-    transform: translateY(-250px);
-    padding-top: 60px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 30px 30px 0 0;
+  z-index: 1;
+  transform: translateY(-250px);
+  padding-top: 60px;
 }
 .profile-info-wrap {
-    padding: 0 60px;
-
+  padding: 0 60px;
 }
 .profile-info-wrap label {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .profile-my-img {
-    border-radius: 100%;
-    border: 1px solid black;
-    width: 120px;
-    height: 120px;
+  border-radius: 100%;
+  border: 1px solid black;
+  width: 120px;
+  height: 120px;
 }
 .profile-info-title {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 .profile-info-title .name {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 .profile-info-title .protect {
-    color: #737373;
-    font-size: 14px;
+  color: #737373;
+  font-size: 14px;
 }
 .profile-info-title .intro {
-    color: #737373;
-    font-size: 14px;
+  color: #737373;
+  font-size: 14px;
 }
 .profile-info-input {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 .profile-info-name span {
-    font-weight: bold;
-    font-size: 18px;
+  font-weight: bold;
+  font-size: 18px;
 }
 .profile-info-name input {
-    font-family: inherit;
-    border-radius: 8px;
-    border: 1px solid #f2f2f2;
-    width: 180px;
-    height: 40px;
-    transition: border 0.4s;
-    padding: 1px 2px 1px 10px;
-    color: #666666;
-    margin-left: 50px;
+  font-family: inherit;
+  border-radius: 8px;
+  border: 1px solid #f2f2f2;
+  width: 180px;
+  height: 40px;
+  transition: border 0.4s;
+  padding: 1px 2px 1px 10px;
+  color: #666666;
+  margin-left: 50px;
 }
 .profile-info-name input:focus {
-    outline: none;
-    border: 1px solid #82D3AC;
+  outline: none;
+  border: 1px solid #82d3ac;
 }
 .profile-info-family span {
-    font-weight: bold;
-    font-size: 18px;
+  font-weight: bold;
+  font-size: 18px;
 }
 .profile-info-family input {
-    font-family: inherit;
-    border-radius: 8px;
-    border: 1px solid #f2f2f2;
-    width: 180px;
-    height: 40px;
-    transition: border 0.4s;
-    padding: 1px 2px 1px 10px;
-    color: #666666;
-    margin-left: 50px;
+  font-family: inherit;
+  border-radius: 8px;
+  border: 1px solid #f2f2f2;
+  width: 180px;
+  height: 40px;
+  transition: border 0.4s;
+  padding: 1px 2px 1px 10px;
+  color: #666666;
+  margin-left: 50px;
 }
 .profile-info-family input:focus {
-    outline: none;
-    border: 1px solid #82D3AC;
+  outline: none;
+  border: 1px solid #82d3ac;
 }

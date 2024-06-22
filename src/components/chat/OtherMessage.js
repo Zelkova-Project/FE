@@ -1,10 +1,9 @@
 import '../../css/chat/chat.css';
 
-
 const OtherMessage = () => {
- const imgObj = {
-  profile: require('../../imgs/notice/notail-comment.png'),
-};
+  const imgObj = {
+    profile: require('../../imgs/notice/notail-comment.png'),
+  };
 
   return (
     <div className="chatting-other-msg-card">

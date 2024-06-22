@@ -2,17 +2,16 @@ import axios from 'axios';
 
 const isDev = process.env.NODE_ENV == 'development';
 
-
 const instance = axios.create({
   baseURL: isDev ? '/' : '/api/',
   timeout: 1000,
 });
 
 const getToken = () => {
-  let cookie = document.cookie;  
-  const [key, val] = cookie.split("=");
+  let cookie = document.cookie;
+  const [key, val] = cookie.split('=');
   return val;
-}
+};
 
 instance.interceptors.request.use(
   (config) => {
@@ -30,7 +29,7 @@ instance.interceptors.request.use(
   (error) => {
     console.log(error);
     return Promise.reject(error);
-  }
+  },
 );
 
 instance.interceptors.response.use(
@@ -39,28 +38,33 @@ instance.interceptors.response.use(
       console.log('404 페이지로 넘어가야 함!');
     }
 
-    return {status: response.status, error: false, message: response.statusText, data: response.data};
+    return {
+      status: response.status,
+      error: false,
+      message: response.statusText,
+      data: response.data,
+    };
   },
   async (error) => {
     // if (error.response?.status === 401) {
-      // if (isTokenExpired()) await tokenRefresh();
+    // if (isTokenExpired()) await tokenRefresh();
 
-      // const accessToken = getToken();
+    // const accessToken = getToken();
 
-      // error.config.headers = {
-      //   'Content-Type': 'application/json',
-      //   Authorization: `Bearer ${accessToken}`,
-      // };
+    // error.config.headers = {
+    //   'Content-Type': 'application/json',
+    //   Authorization: `Bearer ${accessToken}`,
+    // };
 
     //   const response = await axios.request(error.config);
     //   return response;
     // }
     // throw new Error('error가 떴음 ', error);
-    const {response} = error;
+    const { response } = error;
     console.error('error ', error);
 
-    return {status: 404, error: error, message: response.data};
-  }
+    return { status: 404, error: error, message: response.data };
+  },
 );
 
 export default instance;

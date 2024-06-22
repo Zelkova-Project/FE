@@ -19,9 +19,7 @@ const NoticeBoardPage = ({ handlerRouting, activeSubtit }) => {
     <Section>
       <div className="notice-outer-container">
         <div className="notice-flexitem">
-          <h5 className="notice-subtit">
-            {activeSubtit}
-          </h5>
+          <h5 className="notice-subtit">{activeSubtit}</h5>
         </div>
 
         <div className="notice-flexitem flexCenter">
@@ -110,12 +108,10 @@ const NoticeBoardPage = ({ handlerRouting, activeSubtit }) => {
               </div>
             </div>
 
-						{/* 글쓰기버튼 */}
-						<div className='page-btn-write'>
-							<button onClick={() => navigate('/write')}>글쓰기</button>
-						</div>
-
-
+            {/* 글쓰기버튼 */}
+            <div className="page-btn-write">
+              <button onClick={() => navigate('/write')}>글쓰기</button>
+            </div>
           </div>
         </div>
       </div>

@@ -119,27 +119,27 @@
 }
 .id-fail-message {
   font-size: 14px;
-  color: #FF8888;
+  color: #ff8888;
   position: absolute;
-  transform: translate(5px,50px);
+  transform: translate(5px, 50px);
 }
 .id-success-message {
   font-size: 14px;
-  color: #7CA9ED;
+  color: #7ca9ed;
   position: absolute;
-  transform: translate(5px,50px);
+  transform: translate(5px, 50px);
 }
 .pw-fail-message {
   font-size: 14px;
-  color: #FF8888;
+  color: #ff8888;
   position: absolute;
-  transform: translate(5px,50px);
+  transform: translate(5px, 50px);
 }
 .pw-success-message {
   font-size: 14px;
-  color: #7CA9ED;
+  color: #7ca9ed;
   position: absolute;
-  transform: translate(5px,50px);
+  transform: translate(5px, 50px);
 }
 .join-form-select {
   cursor: default;
@@ -167,7 +167,7 @@
 .option:hover {
   background-color: #4ebba0;
   border-radius: 8px;
-  color: #ffffff
+  color: #ffffff;
 }
 .join-check {
   width: 140px;
@@ -181,7 +181,6 @@
   font-family: inherit;
   cursor: pointer;
   margin-left: 10px;
-
 }
 .join-btns-wrapper {
   margin-top: 50px;
@@ -260,8 +259,6 @@
   cursor: pointer;
   list-style: none;
 }
-
-
 
 .margin-top30 {
   margin-top: 30px;

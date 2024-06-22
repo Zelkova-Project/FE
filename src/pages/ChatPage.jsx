@@ -25,10 +25,10 @@ const ChatPage = () => {
   };
 
   const getToken = () => {
-    let cookie = document.cookie;  
-    const [key, val] = cookie.split("=");
+    let cookie = document.cookie;
+    const [key, val] = cookie.split('=');
     return val;
-  }
+  };
 
   // TODO: csrfToken 없을 때 방어코드 추가
   const generateRandomString = (csrfToken) => {
@@ -46,7 +46,7 @@ const ChatPage = () => {
   };
 
   const headers = {
-    'X-XSRF-TOKEN': btoa(generateRandomString(getToken()))
+    'X-XSRF-TOKEN': btoa(generateRandomString(getToken())),
   };
 
   const URL = '/zelkova/user/queue/message';
@@ -63,37 +63,34 @@ const ChatPage = () => {
     });
 
     client.connectHeaders = headers;
-    
+
     client.webSocketFactory = function () {
       return new SockJS('/ws-zelkova');
     };
-    
+
     client.onConnect = function (frame) {
-      client.subscribe(
-        URL,
-        (message) => {
-          console.log('메세지 >>> ', message);
-        }
-      );
+      client.subscribe(URL, (message) => {
+        console.log('메세지 >>> ', message);
+      });
       setIsConnected(true);
-    }
-    
+    };
+
     client.onDisconnect = () => {
       console.log('>>> 연결해제 ');
       setIsConnected(false);
-    }
+    };
 
     client.onStompError = function (frame) {
       console.log('Broker reported error: ' + frame.headers['message']);
       console.log('Additional details: ' + frame.body);
     };
-    
+
     client.activate();
 
     setChatClient(client); // local 전역으로 사용
   };
 
-  // textarea에 엔터클릭이벤트 안됨 
+  // textarea에 엔터클릭이벤트 안됨
   // 전송 버튼 클릭하여 전송 해야됨
   const sendMessage = (e) => {
     console.log('>>> 메세지전송시작');
@@ -101,12 +98,11 @@ const ChatPage = () => {
     console.log('>>> 연결유무 : ', isConnected);
     console.log('>>> 전송URL : ', URL);
 
-    
     let chatParam = {
       chatroom_id: null,
       receiver_id: 1,
-      message: message // useState로 관리함. textArea에 넣은 메세지 전송됨
-    }
+      message: message, // useState로 관리함. textArea에 넣은 메세지 전송됨
+    };
 
     if (chatClient && isConnected) {
       chatClient.publish({
@@ -133,7 +129,6 @@ const ChatPage = () => {
       }
     };
   }, []);
-
 
   return (
     <div className="main-container">
@@ -190,8 +185,8 @@ const ChatPage = () => {
                 <img src={imgObj.more}></img>
               </div>
             </div>
-              
-            <div className='chatting-msg-container-wrapper'>
+
+            <div className="chatting-msg-container-wrapper">
               {/* <OtherMessage/>
               <MyMessage/>
               <OtherMessage/>
@@ -202,22 +197,19 @@ const ChatPage = () => {
               <OtherMessage/>
               <OtherMessage/> */}
             </div>
-            <div className='chatting-msg-send-container'>
-              <div className='chatting-msg-send-content'>
-                <textarea 
-                  placeholder='내용을 입력해주세요'
+            <div className="chatting-msg-send-container">
+              <div className="chatting-msg-send-content">
+                <textarea
+                  placeholder="내용을 입력해주세요"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                >
-
-                </textarea>
+                ></textarea>
                 <img src={imgObj.chatCopy} />
               </div>
-              <div className='chatting-msg-send-btn'>
+              <div className="chatting-msg-send-btn">
                 <button onClick={(e) => sendMessage(e)}>전송</button>
               </div>
             </div>
-
           </div>
         </div>
       </Section>

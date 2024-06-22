@@ -1,9 +1,9 @@
 import '../../css/chat/chat.css';
 
 const MemberCard = () => {
- const imgObj = {
-		profile: require('../../imgs/notice/notail-comment.png'),
-	};
+  const imgObj = {
+    profile: require('../../imgs/notice/notail-comment.png'),
+  };
 
   return (
     <div className="chatting-list-member-card">
@@ -22,6 +22,5 @@ const MemberCard = () => {
     </div>
   );
 };
-
 
 export default MemberCard;

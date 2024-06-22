@@ -43,37 +43,41 @@ const Guide1 = () => {
         </div>
         <div className="section-img-container">
           <table className="guide-table1">
-            <tr>
-              <th scope="col" colspan="2">
-                이용시간
-              </th>
-              <th scope="col">이용료</th>
-            </tr>
-            <tr>
-              <td>주간</td>
-              <td>오전 9:00 ~ 오후 18:00</td>
-              <td>15,000원</td>
-            </tr>
-            <tr>
-              <td>토요일</td>
-              <td>오전 9:00 ~ 오후 18:00</td>
-              <td>15,000원</td>
-            </tr>
-            <tr>
-              <td>1일</td>
-              <td>24시간</td>
-              <td>15,000원</td>
-            </tr>
-            <tr>
-              <td>1개월</td>
-              <td>주간 및 야간</td>
-              <td>15,000원</td>
-            </tr>
-            <tr>
-              <td>1개월(거주)</td>
-              <td>월-금 오전 09:00 ~ 오후 18:00</td>
-              <td>15,000원</td>
-            </tr>
+            <thead>
+              <tr>
+                <th scope="col" colSpan="2">
+                  이용시간
+                </th>
+                <th scope="col">이용료</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>주간</td>
+                <td>오전 9:00 ~ 오후 18:00</td>
+                <td>15,000원</td>
+              </tr>
+              <tr>
+                <td>토요일</td>
+                <td>오전 9:00 ~ 오후 18:00</td>
+                <td>15,000원</td>
+              </tr>
+              <tr>
+                <td>1일</td>
+                <td>24시간</td>
+                <td>15,000원</td>
+              </tr>
+              <tr>
+                <td>1개월</td>
+                <td>주간 및 야간</td>
+                <td>15,000원</td>
+              </tr>
+              <tr>
+                <td>1개월(거주)</td>
+                <td>월-금 오전 09:00 ~ 오후 18:00</td>
+                <td>15,000원</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </Section>
@@ -83,31 +87,33 @@ const Guide1 = () => {
         </div>
         <div className="section-img-container">
           <table className="guide-table2">
-            <tr>
-              <td>
-                <strong className="guide-table-img guide-process-img1">입소의뢰 및 접수</strong>
-              </td>
-            </tr>
-            <tr>
-              <td className="guide-td-hightlight">
-                <strong className="guide-table-img guide-process-img2">초기면접</strong>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong className="guide-table-img guide-process-img3">입소판정</strong>
-              </td>
-            </tr>
-            <tr>
-              <td className="guide-td-hightlight">
-                <strong className="guide-table-img guide-process-img4">이용신청</strong>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong className="guide-table-img guide-process-img5">이용</strong>
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>
+                  <strong className="guide-table-img guide-process-img1">입소의뢰 및 접수</strong>
+                </td>
+              </tr>
+              <tr>
+                <td className="guide-td-hightlight">
+                  <strong className="guide-table-img guide-process-img2">초기면접</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong className="guide-table-img guide-process-img3">입소판정</strong>
+                </td>
+              </tr>
+              <tr>
+                <td className="guide-td-hightlight">
+                  <strong className="guide-table-img guide-process-img4">이용신청</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong className="guide-table-img guide-process-img5">이용</strong>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </Section>
@@ -117,25 +123,27 @@ const Guide1 = () => {
         </div>
         <div className="section-img-container">
           <table className="guide-table2">
-            <tr>
-              <td>
-                <strong className="guide-table-img guide-process-img5">이용신청서 (시설)</strong>
-              </td>
-            </tr>
-            <tr>
-              <td className="guide-td-hightlight">
-                <strong className="guide-table-img guide-process-img5">
-                  주민등록등본 1통, 장애인등록증 또는 카드 사본 1통
-                </strong>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong className="guide-table-img guide-process-img5">
-                  기초생활수급권증명서(해당자) 사본 1통
-                </strong>
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>
+                  <strong className="guide-table-img guide-process-img5">이용신청서 (시설)</strong>
+                </td>
+              </tr>
+              <tr>
+                <td className="guide-td-hightlight">
+                  <strong className="guide-table-img guide-process-img5">
+                    주민등록등본 1통, 장애인등록증 또는 카드 사본 1통
+                  </strong>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong className="guide-table-img guide-process-img5">
+                    기초생활수급권증명서(해당자) 사본 1통
+                  </strong>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </Section>
