@@ -1,5 +1,5 @@
 import { atom, useRecoilState } from 'recoil';
-import {recoilPersist} from "recoil-persist";
+import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist({
   key: 'loginMember',
@@ -32,11 +32,20 @@ const userInfoState = atom({
   default: {},
 });
 
+const activeInfoState = atom({
+  key: 'active',
+  default: {
+    activePage: 'guide',
+    activeIdx: 0,
+  },
+});
+
 export {
   loginState,
   tokenState,
   subtitState,
   pageState,
   navIdxState,
-  userInfoState
-}
+  userInfoState,
+  activeInfoState,
+};
