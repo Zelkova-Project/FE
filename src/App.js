@@ -7,7 +7,7 @@ function App() {
     <RecoilRoot>
       <RouterProvider router={root} />
     </RecoilRoot>
-  )
+  );
 }
 
 export default App;
