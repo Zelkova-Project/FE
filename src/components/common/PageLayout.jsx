@@ -26,7 +26,7 @@ const PageLayout = ({ pageName, bodySlot }) => {
 
   let useTitleList = subTitle[activeInfo.activePage]; // 부모에서 사용하는 subtitle 리스트
 
-  const settingActiveInfo = idx => {
+  const settingActiveInfo = (idx) => {
     setActiveInfo({ ...activeInfo, activeIdx: idx });
   };
 
@@ -51,6 +51,13 @@ const PageLayout = ({ pageName, bodySlot }) => {
     return result;
   };
 
+  useEffect(() => {
+    setActiveInfo({
+      activePage: pageName,
+      activeIdx: 0,
+    });
+  }, []);
+
   // 공통: 리코일의 activeIdx 변경감지하여 subtitle 변경
   useEffect(() => {
     const changeRecoil = () => {
@@ -67,7 +74,7 @@ const PageLayout = ({ pageName, bodySlot }) => {
 
     return () => {
       // recoil의 activeInfo 새로고침하기
-      setActiveInfo({ activePage: 'guide', activeIdx: 0 });
+      setActiveInfo({ ...activeInfo, activeIdx: 0 });
     };
   }, [activeInfo.activeIdx, activeInfo.activePage, pageName]);
 

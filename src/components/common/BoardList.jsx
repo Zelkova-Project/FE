@@ -10,7 +10,6 @@ import { useRecoilValue } from 'recoil';
 import subTitMap from '../common/data/subtitData';
 
 const BoardList = ({ boardList }) => {
-  console.log('test >>> ');
   const activeInfo = useRecoilValue(activeInfoState);
   const navigate = useNavigate();
 

@@ -30,6 +30,7 @@ const BoardPage = () => {
     return () => {
       setBoardName('');
       setActiveInfo({
+        ...activeInfo,
         activeIdx: 0,
       });
     };
