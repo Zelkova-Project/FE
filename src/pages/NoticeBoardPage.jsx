@@ -11,7 +11,7 @@ const NoticeBoardPage = ({ handlerRouting, activeSubtit }) => {
   };
 
   const [activeIdx, setActiveIdx] = useState(1);
-  const activeHandler = (idx) => {
+  const activeHandler = idx => {
     setActiveIdx(idx);
   };
 

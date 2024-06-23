@@ -85,7 +85,7 @@ const ProfilePage = () => {
     setBoardReport(false);
     setReportCheckModal(false);
   };
-  const reportChoice = (e) => {
+  const reportChoice = e => {
     if (
       e.target.value === '비방 및 욕설' ||
       e.target.value === '증오심 표현' ||
@@ -263,7 +263,7 @@ const ProfilePage = () => {
                     <input
                       type="radio"
                       value={'비방 및 욕설'}
-                      onChange={(e) => reportChoice(e)}
+                      onChange={e => reportChoice(e)}
                       checked={reportCategory === '비방 및 욕설'}
                     />
                   </span>
@@ -273,7 +273,7 @@ const ProfilePage = () => {
                   <input
                     type="radio"
                     value={'증오심 표현'}
-                    onChange={(e) => reportChoice(e)}
+                    onChange={e => reportChoice(e)}
                     checked={reportCategory === '증오심 표현'}
                   />
                 </label>
@@ -282,7 +282,7 @@ const ProfilePage = () => {
                   <input
                     type="radio"
                     value={'성적 수치심을 일으키는 표현'}
-                    onChange={(e) => reportChoice(e)}
+                    onChange={e => reportChoice(e)}
                     checked={reportCategory === '성적 수치심을 일으키는 표현'}
                   />
                 </label>
@@ -290,7 +290,7 @@ const ProfilePage = () => {
                 <textarea
                   className={style['text-textarea']}
                   value={reportCategoryText}
-                  onChange={(e) => reportChoice(e)}
+                  onChange={e => reportChoice(e)}
                 ></textarea>
               </div>
 

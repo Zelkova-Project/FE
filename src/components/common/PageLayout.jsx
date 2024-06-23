@@ -26,7 +26,7 @@ const PageLayout = ({ pageName, bodySlot }) => {
 
   let useTitleList = subTitle[activeInfo.activePage]; // 부모에서 사용하는 subtitle 리스트
 
-  const settingActiveInfo = (idx) => {
+  const settingActiveInfo = idx => {
     setActiveInfo({ ...activeInfo, activeIdx: idx });
   };
 

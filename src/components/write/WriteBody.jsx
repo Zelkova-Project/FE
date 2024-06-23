@@ -28,7 +28,7 @@ const WriteBody = () => {
     content: '테스트 내용',
   });
 
-  const getDate = (date) => {
+  const getDate = date => {
     let year = date.getFullYear() + '';
     let month = date.getMonth() + 1 + '';
 
@@ -88,7 +88,7 @@ const WriteBody = () => {
           </div>
           <div className="write-flexItem">
             <h3>제목</h3>
-            <input onChange={(e) => setPostInfo({ ...postInfo, title: e.target.value })}></input>
+            <input onChange={e => setPostInfo({ ...postInfo, title: e.target.value })}></input>
           </div>
           <div className="write-flexItem">
             <div className="write-flexSub">
@@ -124,7 +124,7 @@ const WriteBody = () => {
                 onChange={(e) => setPostInfo({ ...postInfo, content: e.target.value })}
               ></textarea> */}
               <ReactQuill
-                style={{ width: '1280px', height: '1000px', border:'1px solid blac' }}
+                style={{ width: '1280px', height: '1000px', border: '1px solid blac' }}
                 value={value}
                 onChange={setValue}
                 theme={'bubble'}

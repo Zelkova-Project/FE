@@ -23,7 +23,7 @@ const NoticeDetailPage = () => {
   const [subtit, setSubtit] = useRecoilState(subtitState);
   const [navIdx, setNavIdx] = useRecoilState(navIdxState);
 
-  const activeHandler = (idx) => {
+  const activeHandler = idx => {
     setNavIdx(idx);
     setSubtit(noticeTitleList[idx]);
   };

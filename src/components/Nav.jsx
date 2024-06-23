@@ -24,7 +24,7 @@ const Nav = () => {
     '/login',
   ];
 
-  const navHandler = (idx) => {
+  const navHandler = idx => {
     navigate(navigator[idx]);
   };
 
@@ -33,7 +33,7 @@ const Nav = () => {
     navigate('/login');
   };
 
-  const deleteCookie = (cookieKey) => {
+  const deleteCookie = cookieKey => {
     document.cookie = cookieKey + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   };
 

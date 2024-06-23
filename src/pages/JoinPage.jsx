@@ -93,12 +93,12 @@ const Join = () => {
       // alert(message);
     }
   };
-  const selectValue = (index) => {
+  const selectValue = index => {
     setSelectVal(index);
     setSelected(!selected);
     setJoinInfo({ ...joinInfo, agency: index });
   };
-  const joinIdCheck = (e) => {
+  const joinIdCheck = e => {
     const idRegex = /^[a-zA-Z](?=.*\d)[a-zA-Z0-9]{6,}$/;
     if (e.target.value === '') {
       setIdFailMessage('아이디를 입력해주세요.');
@@ -113,7 +113,7 @@ const Join = () => {
     }
   };
   const idCheck = () => {};
-  const joinPwCheck = (e) => {
+  const joinPwCheck = e => {
     // const pwRegex =  /^[a-zA-Z0-9](?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{6,}$/
     const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z0-9@$!%*#?&]{6,}$/;
     if (!pwRegex.test(e.target.value)) {
@@ -124,7 +124,7 @@ const Join = () => {
       setPwSuccessMessage(null);
     }
   };
-  const joinPwReCheck = (e) => {
+  const joinPwReCheck = e => {
     if (e.target.value !== joinInfo.password) {
       setPwFailMessage('비밀번호 확인이 일치하지 않습니다.');
       setPwSuccessMessage(null);
@@ -133,7 +133,7 @@ const Join = () => {
       setPwSuccessMessage('사용가능한 비밀번호 입니다.');
     }
   };
-  const joinBirthCheck = (e) => {
+  const joinBirthCheck = e => {
     // 입력 값이 8자를 초과하지 않도록 제한
     if (e.target.value.length <= 8) {
       setJoinInfo({ ...joinInfo, birth: e.target.value });
@@ -155,7 +155,7 @@ const Join = () => {
                 <input
                   value={joinInfo.login_id}
                   placeholder={'아이디'}
-                  onChange={(e) => {
+                  onChange={e => {
                     // setJoinInfo({...joinInfo, login_id: e.target.value});
                     joinIdCheck(e);
                     setJoinInfo({ ...joinInfo, login_id: e.target.value });
@@ -177,7 +177,7 @@ const Join = () => {
                   value={joinInfo.password}
                   placeholder={'비밀번호'}
                   type="password"
-                  onChange={(e) => {
+                  onChange={e => {
                     joinPwCheck(e);
                     setJoinInfo({ ...joinInfo, password: e.target.value });
                   }}
@@ -192,7 +192,7 @@ const Join = () => {
                   value={joinInfo.password_check}
                   placeholder={'비밀번호 확인'}
                   type="password"
-                  onChange={(e) => {
+                  onChange={e => {
                     joinPwReCheck(e);
                     setJoinInfo({ ...joinInfo, password_check: e.target.value });
                   }}
@@ -207,7 +207,7 @@ const Join = () => {
                 <input
                   value={joinInfo.name}
                   placeholder={'이름'}
-                  onChange={(e) => setJoinInfo({ ...joinInfo, name: e.target.value })}
+                  onChange={e => setJoinInfo({ ...joinInfo, name: e.target.value })}
                 />
               </div>
             </div>
@@ -302,14 +302,14 @@ const Join = () => {
                   value={joinInfo.email1}
                   type="email"
                   placeholder={'이메일 (선택사항)'}
-                  onChange={(e) => setJoinInfo({ ...joinInfo, email1: e.target.value })}
+                  onChange={e => setJoinInfo({ ...joinInfo, email1: e.target.value })}
                 />{' '}
                 @{' '}
                 <input
                   value={joinInfo.email2}
                   type="email"
                   placeholder={'이메일 (선택사항)'}
-                  onChange={(e) => setJoinInfo({ ...joinInfo, email2: e.target.value })}
+                  onChange={e => setJoinInfo({ ...joinInfo, email2: e.target.value })}
                 />
               </div>
             </div>
