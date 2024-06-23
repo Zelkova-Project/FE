@@ -14,7 +14,7 @@ const getToken = () => {
 };
 
 instance.interceptors.request.use(
-  config => {
+  (config) => {
     const accessToken = getToken();
 
     const inValidUrl = ['/login', '/signup'];
@@ -26,14 +26,14 @@ instance.interceptors.request.use(
 
     return config;
   },
-  error => {
+  (error) => {
     console.log(error);
     return Promise.reject(error);
   },
 );
 
 instance.interceptors.response.use(
-  response => {
+  (response) => {
     if (response.status === 404) {
       console.log('404 페이지로 넘어가야 함!');
     }
@@ -45,7 +45,7 @@ instance.interceptors.response.use(
       data: response.data,
     };
   },
-  async error => {
+  async (error) => {
     // if (error.response?.status === 401) {
     // if (isTokenExpired()) await tokenRefresh();
 

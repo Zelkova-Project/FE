@@ -42,7 +42,7 @@ const LoginPage = () => {
     kakaoLoginIcon: require('../imgs/login/카카오로그인아이콘.png'),
   };
 
-  const dynamicHandler = param => {
+  const dynamicHandler = (param) => {
     setIsNormalLogin(param);
   };
   const goNormalLogin = async () => {
@@ -66,7 +66,7 @@ const LoginPage = () => {
       alert(msgMap[val]);
     }
   };
-  const activeEnter = e => {
+  const activeEnter = (e) => {
     if (e.key == 'Enter') {
       goNormalLogin();
     }
@@ -111,7 +111,7 @@ const LoginPage = () => {
                   id={'user-id'}
                   className={'user-id'}
                   autoComplete={'off'}
-                  onChange={e => setLoginInfo({ ...loginInfo, loginId: e.target.value })}
+                  onChange={(e) => setLoginInfo({ ...loginInfo, loginId: e.target.value })}
                   placeholder={'아이디'}
                 />
               </div>
@@ -122,8 +122,8 @@ const LoginPage = () => {
                     id="user-pw"
                     className={'user-pw'}
                     type="password"
-                    onKeyDown={e => activeEnter(e)}
-                    onChange={e => setLoginInfo({ ...loginInfo, password: e.target.value })}
+                    onKeyDown={(e) => activeEnter(e)}
+                    onChange={(e) => setLoginInfo({ ...loginInfo, password: e.target.value })}
                     placeholder={'비밀번호'}
                   />
                 </div>

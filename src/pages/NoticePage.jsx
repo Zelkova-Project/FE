@@ -32,7 +32,7 @@ const NoticePage = () => {
 
   const noticeTitleList = ['공지사항', '가정통신문', '채용안내'];
 
-  const handlerRouting = param => {
+  const handlerRouting = (param) => {
     setActiveComp(param);
   };
 
@@ -46,7 +46,7 @@ const NoticePage = () => {
 
   const navigate = useNavigate();
 
-  const activeHandler = idx => {
+  const activeHandler = (idx) => {
     setNavIdx(idx);
     setActiveSubtit(noticeTitleList[idx]);
     setSubtit(activeSubtit);

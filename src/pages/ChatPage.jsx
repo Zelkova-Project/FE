@@ -31,7 +31,7 @@ const ChatPage = () => {
   };
 
   // TODO: csrfToken 없을 때 방어코드 추가
-  const generateRandomString = csrfToken => {
+  const generateRandomString = (csrfToken) => {
     const randomUUID = uuidv4();
     let secretString = '';
 
@@ -69,7 +69,7 @@ const ChatPage = () => {
     };
 
     client.onConnect = function (frame) {
-      client.subscribe(URL, message => {
+      client.subscribe(URL, (message) => {
         console.log('메세지 >>> ', message);
       });
       setIsConnected(true);
@@ -92,7 +92,7 @@ const ChatPage = () => {
 
   // textarea에 엔터클릭이벤트 안됨
   // 전송 버튼 클릭하여 전송 해야됨
-  const sendMessage = e => {
+  const sendMessage = (e) => {
     console.log('>>> 메세지전송시작');
     console.log('>>> 클라이언트 : ', chatClient);
     console.log('>>> 연결유무 : ', isConnected);
@@ -202,12 +202,12 @@ const ChatPage = () => {
                 <textarea
                   placeholder="내용을 입력해주세요"
                   value={message}
-                  onChange={e => setMessage(e.target.value)}
+                  onChange={(e) => setMessage(e.target.value)}
                 ></textarea>
                 <img src={imgObj.chatCopy} />
               </div>
               <div className="chatting-msg-send-btn">
-                <button onClick={e => sendMessage(e)}>전송</button>
+                <button onClick={(e) => sendMessage(e)}>전송</button>
               </div>
             </div>
           </div>

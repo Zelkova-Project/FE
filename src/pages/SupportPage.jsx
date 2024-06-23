@@ -22,7 +22,7 @@ const SupportPage = () => {
   const [subtit, setSubtit] = useRecoilState(subtitState);
   setSubtit('후원의손길');
 
-  const activeHandler = idx => {
+  const activeHandler = (idx) => {
     setNavIdx(idx);
     setActiveSubtit(['후원의손길', '자원봉사'][idx]);
     setSubtit(activeSubtit);

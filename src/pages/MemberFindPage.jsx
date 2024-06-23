@@ -73,30 +73,30 @@ const MemberFindPage = () => {
     },
   };
 
-  const idSelectValue = index => {
+  const idSelectValue = (index) => {
     setIdSelectVal(index);
     setIdSelected(!idSelected);
     setIdFindInfo({ ...idFindInfo, agency: index.value });
   };
-  const birthLengthChk = e => {
+  const birthLengthChk = (e) => {
     // 아이디 찾기 - 생일 8자리제한
     if (e.target.value.length <= 8) {
       setIdFindInfo({ ...idFindInfo, birth: e.target.value });
     }
   };
-  const pwBirthLengthChk = e => {
+  const pwBirthLengthChk = (e) => {
     // 비밀번호 찾기 - 생일 8자리제한
     if (e.target.value.length <= 8) {
       setPwFindInfo({ ...pwFindInfo, birth: e.target.value });
     }
   };
-  const idVerifyLengthChk = e => {
+  const idVerifyLengthChk = (e) => {
     // 아이디 찾기 - 인증번호 4자리제한
     if (e.target.value.length <= 4) {
       setIdFindInfo({ ...idFindInfo, verify: e.target.value });
     }
   };
-  const pwVerifyLengthChk = e => {
+  const pwVerifyLengthChk = (e) => {
     // 비밀번호 찾기 - 인증번호 8자리제한
     if (e.target.value.length <= 4) {
       setPwFindInfo({ ...pwFindInfo, verify: e.target.value });
@@ -158,7 +158,7 @@ const MemberFindPage = () => {
     navigate('/login');
   };
 
-  const pwSelectValue = index => {
+  const pwSelectValue = (index) => {
     setPwSelectVal(index);
     setPwSelected(!pwSelected);
     setPwFindInfo({ ...pwFindInfo, agency: index.value });
@@ -239,7 +239,7 @@ const MemberFindPage = () => {
                   id={'id-name'}
                   autoComplete={'off'}
                   value={idFindInfo.name}
-                  onChange={e => setIdFindInfo({ ...idFindInfo, name: e.target.value })}
+                  onChange={(e) => setIdFindInfo({ ...idFindInfo, name: e.target.value })}
                 />
               </div>
             </div>
@@ -251,7 +251,7 @@ const MemberFindPage = () => {
                   id={'id-birth'}
                   autoComplete={'off'}
                   value={idFindInfo.birth}
-                  onChange={e => birthLengthChk(e)}
+                  onChange={(e) => birthLengthChk(e)}
                   maxLength={8}
                 />
               </div>
@@ -308,7 +308,7 @@ const MemberFindPage = () => {
                   placeholder={'전화번호 입력'}
                   autoComplete={'off'}
                   value={idFindInfo.phone}
-                  onChange={e => setIdFindInfo({ ...idFindInfo, phone: e.target.value })}
+                  onChange={(e) => setIdFindInfo({ ...idFindInfo, phone: e.target.value })}
                 />
                 <button className={style['find-button']} onClick={idVerifyTransmissionBtn}>
                   인증번호 전송
@@ -321,7 +321,7 @@ const MemberFindPage = () => {
                   type={'number'}
                   placeholder={'인증번호 4자리 입력'}
                   autoComplete={'off'}
-                  onChange={e => idVerifyLengthChk(e)}
+                  onChange={(e) => idVerifyLengthChk(e)}
                   maxLength={4}
                   value={idFindInfo.verify}
                 />
@@ -377,7 +377,7 @@ const MemberFindPage = () => {
                   autoComplete={'off'}
                   id={'pw-id'}
                   value={pwFindInfo.id}
-                  onChange={e => setPwFindInfo({ ...pwFindInfo, id: e.target.value })}
+                  onChange={(e) => setPwFindInfo({ ...pwFindInfo, id: e.target.value })}
                 />
               </div>
               <span className={style['fail-message']}>{pwIdFailMessage}</span>
@@ -391,7 +391,7 @@ const MemberFindPage = () => {
                   autoComplete={'off'}
                   className={style['find-name']}
                   value={pwFindInfo.name}
-                  onChange={e => setPwFindInfo({ ...pwFindInfo, name: e.target.value })}
+                  onChange={(e) => setPwFindInfo({ ...pwFindInfo, name: e.target.value })}
                 />
               </div>
             </div>
@@ -403,7 +403,7 @@ const MemberFindPage = () => {
                   id={'pw-birth'}
                   autoComplete={'off'}
                   value={pwFindInfo.birth}
-                  onChange={e => pwBirthLengthChk(e)}
+                  onChange={(e) => pwBirthLengthChk(e)}
                   maxLength={8}
                 />
               </div>
@@ -460,7 +460,7 @@ const MemberFindPage = () => {
                   placeholder={'전화번호 입력'}
                   autoComplete={'off'}
                   value={pwFindInfo.phone}
-                  onChange={e => setPwFindInfo({ ...pwFindInfo, phone: e.target.value })}
+                  onChange={(e) => setPwFindInfo({ ...pwFindInfo, phone: e.target.value })}
                 />
                 <button className={style['find-button']} onClick={pwVerifyTransmissionBtn}>
                   인증번호 전송
@@ -473,7 +473,7 @@ const MemberFindPage = () => {
                   type={'number'}
                   placeholder={'인증번호 4자리 입력'}
                   autoComplete={'off'}
-                  onChange={e => pwVerifyLengthChk(e)}
+                  onChange={(e) => pwVerifyLengthChk(e)}
                   maxLength={4}
                   value={pwFindInfo.verify}
                 />

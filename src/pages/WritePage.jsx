@@ -40,7 +40,7 @@ const WritePage = () => {
 
   const noticeTitleList = ['공지사항', '가정통신문', '채용안내'];
 
-  const activeHandler = idx => {
+  const activeHandler = (idx) => {
     setNavIdx(idx);
     setSubtit(noticeTitleList[idx]);
   };
