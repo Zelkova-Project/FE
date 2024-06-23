@@ -15,7 +15,14 @@ const Nav = () => {
   let logo = require('../imgs/logo.png');
   let hoverImg = require('../imgs/nav/nav-hover.png');
   // test
-  const navigator = ['/', '/guide', '/notice', '/support', '/community', '/login'];
+  const navigator = [
+    '/',
+    '/guide',
+    '/board/notice',
+    '/board/support',
+    '/board/community',
+    '/login',
+  ];
 
   const navHandler = (idx) => {
     navigate(navigator[idx]);

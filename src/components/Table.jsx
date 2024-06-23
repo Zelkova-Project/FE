@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from '../axios/axiosInstance';
 
-const Table = ({ handlerRouting }) => {
+const Table = () => {
   const [postList, setPostList] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -13,15 +13,19 @@ const Table = ({ handlerRouting }) => {
       const result = [];
       for (let idx in postList) {
         result.push(
-          <tr
-            className="common-table-tr2"
-            key={idx}
-            onClick={() => navigate(`/noticeDetail/${postList[idx].no}`, { state: postList[idx] })}
-          >
-            <td>{postList[idx].no}</td>
-            <td>{postList[idx].title}</td>
-            <td>{postList[idx].date_time.split('T')[0]}</td>
-          </tr>,
+          <tbody>
+            <tr
+              className="common-table-tr2"
+              key={idx}
+              onClick={() =>
+                navigate(`/noticeDetail/${postList[idx].no}`, { state: postList[idx] })
+              }
+            >
+              <td>{postList[idx].no}</td>
+              <td>{postList[idx].title}</td>
+              <td>{postList[idx].date_time.split('T')[0]}</td>
+            </tr>
+          </tbody>,
         );
       }
 
@@ -53,12 +57,13 @@ const Table = ({ handlerRouting }) => {
   return (
     <div className="table-conatiner">
       <table className="common-table">
-        <tr className="common-table-tr1">
-          <th>No</th>
-          <th>Title</th>
-          <th>Date</th>
-        </tr>
-
+        <thead>
+          <tr className="common-table-tr1" key={'head'}>
+            <th key={'no'}>No</th>
+            <th key={'title'}>Title</th>
+            <th key={'date'}>Date</th>
+          </tr>
+        </thead>
         {tableComponent()}
       </table>
     </div>

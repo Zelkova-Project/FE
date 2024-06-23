@@ -44,37 +44,39 @@ const guideComponent1 = () => {
         </div>
         <div className="section-img-container">
           <table className="guide-table1">
-            <tr>
-              <th scope="col" colspan="2">
-                이용시간
-              </th>
-              <th scope="col">이용료</th>
-            </tr>
-            <tr>
-              <td>주간</td>
-              <td>오전 9:00 ~ 오후 18:00</td>
-              <td>15,000원</td>
-            </tr>
-            <tr>
-              <td>토요일</td>
-              <td>오전 9:00 ~ 오후 18:00</td>
-              <td>15,000원</td>
-            </tr>
-            <tr>
-              <td>1일</td>
-              <td>24시간</td>
-              <td>15,000원</td>
-            </tr>
-            <tr>
-              <td>1개월</td>
-              <td>주간 및 야간</td>
-              <td>15,000원</td>
-            </tr>
-            <tr>
-              <td>1개월(거주)</td>
-              <td>월-금 오전 09:00 ~ 오후 18:00</td>
-              <td>15,000원</td>
-            </tr>
+            <tbody>
+              <tr>
+                <th scope="col" colspan="2">
+                  이용시간
+                </th>
+                <th scope="col">이용료</th>
+              </tr>
+              <tr>
+                <td>주간</td>
+                <td>오전 9:00 ~ 오후 18:00</td>
+                <td>15,000원</td>
+              </tr>
+              <tr>
+                <td>토요일</td>
+                <td>오전 9:00 ~ 오후 18:00</td>
+                <td>15,000원</td>
+              </tr>
+              <tr>
+                <td>1일</td>
+                <td>24시간</td>
+                <td>15,000원</td>
+              </tr>
+              <tr>
+                <td>1개월</td>
+                <td>주간 및 야간</td>
+                <td>15,000원</td>
+              </tr>
+              <tr>
+                <td>1개월(거주)</td>
+                <td>월-금 오전 09:00 ~ 오후 18:00</td>
+                <td>15,000원</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </Section>
