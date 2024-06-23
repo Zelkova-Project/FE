@@ -23,12 +23,9 @@ const Guide = () => {
 
   useEffect(() => {
     setSlot(comp[activeInfo.activeIdx]);
-
   }, [activeInfo.activeIdx]);
 
-  return (
-    <PageLayout pageName={'guide'} imgObj={imgObj} bodySlot={ slot }/>
-  );
+  return <PageLayout pageName={'guide'} imgObj={imgObj} bodySlot={slot} />;
 };
 
 export default Guide;
