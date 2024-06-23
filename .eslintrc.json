@@ -1,5 +1,17 @@
 {
-    "rules": {
-      "eqeqeq": "off"
-    }
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true // '< error 로 인해 jsx라는 내용 설정 추가'
+    },
+    "ecmaVersion": 12, // import 에러로 인해 추가함.
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-const-assign": "off",
+    "react/prop-types": "off"
   }
+}
