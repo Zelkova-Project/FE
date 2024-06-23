@@ -2,7 +2,7 @@ import axios from '../../axios/axiosInstance';
 
 import ReactQuill from 'react-quill';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { activeInfoState } from '../../recoilState/recoil';
@@ -19,7 +19,34 @@ const WriteBody = () => {
 
   const [subtit, setSubtit] = useState('');
   const [writeInfo, setWriteInfo] = useState({});
+
+  // quil 시작
   const [value, setValue] = useState('1234');
+
+  const modules = {
+    toolbar: {
+      container: [['image'], [{ header: [1, 2, 3, 4, 5, false] }], ['bold', 'underline']],
+    },
+  };
+
+  const imageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          console.log('이미지 >>> ', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+  };
+  // quil 끝
 
   const [postInfo, setPostInfo] = useState({
     category: 'BOARD',
@@ -124,10 +151,14 @@ const WriteBody = () => {
                 onChange={(e) => setPostInfo({ ...postInfo, content: e.target.value })}
               ></textarea> */}
               <ReactQuill
-                style={{ width: '1280px', height: '1000px', border: '1px solid blac' }}
-                value={value}
+                style={{
+                  width: '1080px',
+                  height: '400px',
+                  border: '1px solid #F2F2F2',
+                  borderRadius: '8px',
+                }}
                 onChange={setValue}
-                theme={'bubble'}
+                modules={modules}
               />
             </div>
           </div>
@@ -150,7 +181,7 @@ const WriteBody = () => {
 
             <div className="write-file-btns ml-20">
               <button>파일 삭제</button>
-              <button>파일 추가</button>
+              <button onClick={() => imageHandler()}>파일1 추가</button>
             </div>
           </div>
 
