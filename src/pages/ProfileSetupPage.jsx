@@ -4,8 +4,8 @@ import style from '../css/profileSetup.module.css';
 import React, { useEffect, useState } from 'react';
 
 const ProfileSetupPage = () => {
-  console.log('test')
-  console.log("test")
+  console.log('test');
+  console.log('test');
   return (
     <div>
       <Nav />
