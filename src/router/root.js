@@ -17,7 +17,7 @@ const Support = lazy(() => import('../pages/SupportPage'));
 const Chat = lazy(() => import('../pages/ChatPage'));
 const MemberFind = lazy(() => import('../pages/MemberFindPage'));
 const Profile = lazy(() => import('../pages/ProfilePage'));
-const ProfileInfo = lazy(() => import('../pages/ProfileInfoPage'));
+const ProfileSetup = lazy(() => import('../pages/ProfileSetupPage'));
 const Board = lazy(() => import('../components/common/BoardPage'));
 
 const root = createBrowserRouter([
@@ -142,10 +142,10 @@ const root = createBrowserRouter([
     ),
   },
   {
-    path: '/ProfileInfo',
+    path: '/ProfileSetup',
     element: (
       <Suspense fallback={Loading}>
-        <ProfileInfo />
+        <ProfileSetup />
       </Suspense>
     ),
   },
