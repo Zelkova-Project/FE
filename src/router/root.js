@@ -19,6 +19,7 @@ const MemberFind = lazy(() => import('../pages/MemberFindPage'));
 const Profile = lazy(() => import('../pages/ProfilePage'));
 const ProfileSetup = lazy(() => import('../pages/ProfileSetupPage'));
 const Board = lazy(() => import('../components/common/BoardPage'));
+const LatterWrite = lazy(() => import('../pages/LatterWritePage'));
 
 const root = createBrowserRouter([
   {
@@ -154,6 +155,14 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <Board />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/LatterWrite',
+    element: (
+      <Suspense fallback={Loading}>
+        <LatterWrite />
       </Suspense>
     ),
   },

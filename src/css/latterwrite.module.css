@@ -1,0 +1,247 @@
+.container {
+  font-family: 'PretendardVariable';
+  display: flex;
+  flex-direction: column;
+}
+.write-item {
+  display: flex;
+  flex-direction: row;
+  width: 1080px;
+}
+.write-item label {
+  display: flex;
+  align-items: center;
+}
+.write-tit {
+  font-size: 32px;
+  font-weight: 600;
+  text-align: center;
+}
+.write-item h3 {
+  width: 70px;
+  font-size: 16px;
+  font-weight: 500;
+  height: 15px;
+  color: #444;
+  display: flex;
+  align-items: center;
+}
+.write-item input {
+  margin-left: 10px;
+  width: 1000px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #f2f2f2f2;
+  outline: none;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.write-item input:focus {
+  outline: none;
+  border: 1px solid #82d3ac;
+}
+.activity-select {
+  cursor: default;
+}
+.activity-select-img {
+  position: absolute;
+  transform: translate(230px, 9px);
+}
+.activity-option {
+  font-family: inherit;
+  font-weight: 300;
+  font-size: 16px;
+  width: 174px;
+  /*transition: border 0.4s;*/
+  position: absolute;
+  background-color: #ffffff;
+  padding: 4px 6px;
+  border: 1px solid #f2f2f2;
+  border-radius: 8px;
+  margin-top: 5px;
+  text-align: left;
+  z-index: 1;
+  transform: translate(78px,40px);
+}
+.option {
+  padding: 7px 5px;
+  cursor: default;
+  list-style: none;
+}
+.option:hover {
+  background-color: #82d3ac;
+  border-radius: 8px;
+  color: #ffffff;
+}
+.write-txt {
+  display: flex;
+  flex-direction: row;
+}
+.write-item:nth-child(6) h3 {
+  margin-top: 0;
+}
+.write-txt h3 {
+  width: 70px;
+  height: 15px;
+}
+.write-txt input {
+  height: 40px;
+  width: 185px;
+  border-radius: 8px;
+  border: 1px solid #f2f2f2f2;
+  outline: none;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.write-txt input:focus {
+  outline: none;
+  border: 1px solid #82d3ac;
+}
+.write-textArea {
+  color: #444;
+  font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.write-textArea h3 {
+  font-size: 16px;
+  font-weight: 500;
+  height: 15px;
+  color: #444;
+}
+.write-textArea textarea {
+  border-radius: 8px;
+  outline: none;
+  padding: 10px;
+  resize: none;
+  width: 1080px;
+  height: 200px;
+  border: 1px solid #f2f2f2f2;
+  color: #666;
+}
+
+.write-file-list {
+  border: 1px solid #f2f2f2f2;
+  width: 860px;
+  height: auto;
+  border-radius: 8px;
+}
+.write-file-list ul {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+}
+.write-file-list ul li {
+  width: 100%;
+  list-style: none;
+}
+
+.write-file-list ul li h3 {
+  border-radius: 6px;
+  margin: 0;
+  padding: 5px;
+  background: #82d3ac33;
+  width: 828px;
+}
+.write-file {
+  position: absolute;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0, 0, 0, 0);
+}
+.file-name {
+  width: 118px;
+  height: 33px;
+  border-radius: 10px;
+  border: 1px solid #82d3ac;
+  background-color: #ffffff;
+  cursor: pointer;
+  line-height: 32px;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+}
+.write-file-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.write-file-btn button {
+  width: 120px;
+  height: 35px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.write-file-btn button:nth-child(1) {
+  font-family: 'PretendardVariable';
+  color: #fff;
+  background: #82d3ac;
+  border: none;
+  cursor: pointer;
+}
+.write-file-btn button:nth-child(2) {
+  color: #666;
+  font-family: 'PretendardVariable';
+  border: 1px solid #82d3ac;
+  background: none;
+}
+
+.write-submit-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.write-submit-btn button {
+  width: 184px;
+  height: 40px;
+  border-radius: 10px;
+}
+.write-submit-btn button:nth-child(1),
+.write-submit-btn button:nth-child(2) {
+  color: #666;
+  font-family: 'PretendardVariable';
+  border: 1px solid #82d3ac;
+  background: none;
+}
+.write-submit-btn button:nth-child(3) {
+  font-family: 'PretendardVariable';
+  color: #fff;
+  background: #82d3ac;
+  border: none;
+}
+
+.ml-40 {
+  margin-left: 40px;
+}
+.ml-10 {
+  margin-left: 10px;
+}
+.ml-20 {
+  margin-left: 20px;
+}
+.mt-50 {
+  margin-top: 50px;
+}
+.mt-90 {
+  margin-top: 90px;
+}
+.mb-50 {
+}
+.write-submit-btn button {
+  cursor: pointer;
+}
+.write-btn-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0;
+}
