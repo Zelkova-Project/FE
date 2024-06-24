@@ -4,6 +4,8 @@ import style from '../css/profileSetup.module.css';
 import React, { useEffect, useState } from 'react';
 
 const ProfileSetupPage = () => {
+  console.log('test')
+  console.log("test")
   return (
     <div>
       <Nav />
@@ -14,7 +16,7 @@ const ProfileSetupPage = () => {
             <label>
               <div className={style['profile-my-img']}>
                 <div className={style['profile-setup']}>
-                  <img src={'setup.png'} alt={'설정'}/>
+                  <img src={'setup.png'} alt={'설정'} />
                 </div>
               </div>
               <div className={style['profile-info-title']}>
@@ -30,28 +32,26 @@ const ProfileSetupPage = () => {
                   <input type={'text'} />
                 </span>
                 <span className={style['profile-info-email']}>
-                    <span>이메일</span>
-                    <input type={'text'} />
+                  <span>이메일</span>
+                  <input type={'text'} />
                 </span>
               </div>
               <div>
                 <span className={style['profile-info-family']}>
-                    <span>보호가족</span>
-                    <input type={'text'} />
+                  <span>보호가족</span>
+                  <input type={'text'} />
                 </span>
                 <span className={style['profile-info-address']}>
-                    <span>주소</span>
-                    <input type={'text'} />
+                  <span>주소</span>
+                  <input type={'text'} />
                 </span>
               </div>
               <div>
                 <span className={style['profile-info-activity']}>
-                    <span>활동 공개</span>
-                    <input type={'text'} />
+                  <span>활동 공개</span>
+                  <input type={'text'} />
                 </span>
               </div>
-
-
             </div>
           </div>
         </div>
