@@ -8,10 +8,10 @@ import React, { useEffect, useState } from 'react';
 
 const MemberFindPage = () => {
   const navigate = useNavigate();
+  const [findSelect, setFindSelect] = useState(false); // false : 아이디 찾기, true : 비밀번호 찾기
 
   const [idSelected, setIdSelected] = useState(false); //아이디 찾기 - 통신사 메뉴창
   const [idSelectVal, setIdSelectVal] = useState(''); // 아이디 찾기 - 통신사 값
-  const [findSelect, setFindSelect] = useState(false); // false : 아이디 찾기, true : 비밀번호 찾기
   const [idVerifyMessage, setIdVerifyMessage] = useState(''); // 아이디 찾기 - 인증번호 발송 메세지
   const [idFailVerifyMessage, setIdFailVerifyMessage] = useState(''); // 아이디 찾기 - 인증번호 전송버튼 오류시
   const [idFailVerifyNumMessage, setIdFailVerifyNumMessage] = useState(''); // 아이디 찾기 - 인증번호 확인 오류시
@@ -21,7 +21,7 @@ const MemberFindPage = () => {
   const [pwSelected, setPwSelected] = useState(false); // 비밀번호 찾기 - 통신사 메뉴창
   const [pwSelectVal, setPwSelectVal] = useState(''); // 비밀번호 찾기 - 통신사 값
   const [pwIdFailMessage, setPwIdFailMessage] = useState(''); // 비밀번호 찾기 - 아이디 빈칸시
-  const [pwVerifyMessage, setPwVerifyMessage] = useState(''); // 아이디 찾기 - 인증번호 발송 메세지
+  const [pwVerifyMessage, setPwVerifyMessage] = useState(''); // 비밀번호 찾기 - 인증번호 발송 메세지
   const [pwFailVerifyMessage, setPwFailVerifyMessage] = useState(''); // 비밀번호 찾기 - 인증번호 전송버튼 오류시
   const [pwFailVerifyNumMessage, setPwFailVerifyNumMessage] = useState(''); // 비밀번호 찾기 - 인증번호 확인 오류시
   const [pwVerifyBtn, setPwVerifyBtn] = useState(false); // 비밀번호 찾기 - 인증번호 전송버튼 클릭체크
@@ -190,7 +190,7 @@ const MemberFindPage = () => {
         setIdVerifyNumBtn(true)
         */
   };
-  const goPwFind = () => {
+  const goPwFind = async () => {
     if (pwFindInfo.id === '') {
       setPwIdFailMessage('가입된 아이디가 아닙니다. 다시 입력해 주세요.');
       document.getElementById('pw-id').focus();

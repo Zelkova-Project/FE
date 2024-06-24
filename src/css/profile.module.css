@@ -23,14 +23,18 @@
 }
 .profile-my-img {
   border-radius: 100%;
-  border: 1px solid black;
   width: 120px;
   height: 120px;
+}
+.default-profile-img {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
 }
 .profile-setup {
   width: 36px;
   height: 36px;
-  border: 1px solid black;
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -39,7 +43,7 @@
   cursor: pointer;
   background-color: #82d3ac;
 }
-.profile-my-img img {
+.profile-setup img {
   width: 30px;
   height: 30px;
 }

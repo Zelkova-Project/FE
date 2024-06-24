@@ -2,10 +2,22 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import style from '../css/profileSetup.module.css';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileSetupPage = () => {
-  console.log('test');
-  console.log('test');
+  const navigate = useNavigate();
+
+  const [activitySelected, setActivitySelected] = useState(false); // 활동공개 창
+  const [activitySelectVal, setActivitySelectVal] = useState('공개'); // 활동공개 값
+
+  const imgObj = {
+    select: require('../imgs/join/select.png'),
+  };
+
+  const activitySelectValue = (index) => {
+    setActivitySelectVal(index);
+    setActivitySelected(!activitySelected);
+  };
   return (
     <div>
       <Nav />
@@ -13,8 +25,21 @@ const ProfileSetupPage = () => {
         <img className={style['main-img']} src={'main-section.png'} alt="main-section"></img>
         <div className={style['wrap']}>
           <div className={style['profile-info-wrap']}>
+            <input
+              id={'profile-update'}
+              className={style['profile-update']}
+              type={'file'}
+              accept={'image/*'}
+            />
+            <label htmlFor={'profile-update'} />
             <label>
               <div className={style['profile-my-img']}>
+                <img
+                  className={style['default-profile-img']}
+                  src={'default-profile-img.png'}
+                  alt={'프로필 사진 변경'}
+                  title={'프로필 사진 변경'}
+                />
                 <div className={style['profile-setup']}>
                   <img src={'setup.png'} alt={'설정'} />
                 </div>
@@ -26,7 +51,7 @@ const ProfileSetupPage = () => {
               </div>
             </label>
             <div className={style['profile-info-input']}>
-              <div>
+              <div className={style['profile-info-item1']}>
                 <span className={style['profile-info-name']}>
                   <span>이름</span>
                   <input type={'text'} />
@@ -36,7 +61,7 @@ const ProfileSetupPage = () => {
                   <input type={'text'} />
                 </span>
               </div>
-              <div>
+              <div className={style['profile-info-item1']}>
                 <span className={style['profile-info-family']}>
                   <span>보호가족</span>
                   <input type={'text'} />
@@ -47,11 +72,52 @@ const ProfileSetupPage = () => {
                 </span>
               </div>
               <div>
-                <span className={style['profile-info-activity']}>
+                <div className={style['profile-info-activity']}>
                   <span>활동 공개</span>
-                  <input type={'text'} />
-                </span>
+                  <input
+                    type={'text'}
+                    placeholder={'공개'}
+                    value={activitySelectVal}
+                    autoComplete={'off'}
+                    className={style['activity-select']}
+                    onClick={() => {
+                      setActivitySelected(!activitySelected);
+                    }}
+                  ></input>
+                  <img
+                    src={imgObj.select}
+                    alt={'select'}
+                    className={style['activity-select-img']}
+                    onClick={() => {
+                      setActivitySelected(!activitySelected);
+                    }}
+                  />
+                  {activitySelected ? (
+                    <ul className={style['activity-option']}>
+                      <li className={style['option']} onClick={() => activitySelectValue('공개')}>
+                        공개
+                      </li>
+                      <li className={style['option']} onClick={() => activitySelectValue('비공개')}>
+                        비공개
+                      </li>
+                    </ul>
+                  ) : null}
+                </div>
               </div>
+              <div className={style['profile-info-item1']}>
+                <div className={style['profile-info-introduce']}>
+                  <span>소개글 작성</span>
+                  <div>
+                    <textarea className={style['introduce']}></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={style['profile-btn']}>
+              <button className={style['profile-cancel']} onClick={() => navigate(-1)}>
+                취소
+              </button>
+              <button className={style['profile-register']}>등록</button>
             </div>
           </div>
         </div>

@@ -23,14 +23,28 @@
 }
 .profile-my-img {
   border-radius: 100%;
-  border: 1px solid black;
   width: 120px;
   height: 120px;
+}
+.profile-update {
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+  /*clip: rect(0, 0, 0, 0);*/
+  width: 120px;
+  height: 120px;
+  /*background-color: red;*/
+  z-index: -1;
+}
+.default-profile-img {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  border-radius: 100%;
 }
 .profile-setup {
   width: 36px;
   height: 36px;
-  border: 1px solid black;
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -38,7 +52,7 @@
   transform: translate(80px, 80px);
   background-color: #82d3ac;
 }
-.profile-my-img img {
+.profile-setup img {
   width: 30px;
   height: 30px;
 }
@@ -61,6 +75,10 @@
 .profile-info-input {
   margin-top: 40px;
 }
+.profile-info-item1 {
+  width: 70%;
+  margin: 10px 0;
+}
 .profile-info-name span {
   font-weight: bold;
   font-size: 18px;
@@ -69,16 +87,19 @@
   font-family: inherit;
   border-radius: 8px;
   border: 1px solid #f2f2f2;
-  width: 180px;
+  width: 200px;
   height: 40px;
   transition: border 0.4s;
   padding: 1px 2px 1px 10px;
   color: #666666;
-  margin-left: 50px;
+  margin-left: 70px;
 }
 .profile-info-name input:focus {
   outline: none;
   border: 1px solid #82d3ac;
+}
+.profile-info-email {
+  float: right;
 }
 .profile-info-email span {
   font-weight: bold;
@@ -88,12 +109,12 @@
   font-family: inherit;
   border-radius: 8px;
   border: 1px solid #f2f2f2;
-  width: 180px;
+  width: 200px;
   height: 40px;
   transition: border 0.4s;
   padding: 1px 2px 1px 10px;
   color: #666666;
-  margin-left: 50px;
+  margin-left: 30px;
 }
 .profile-info-email input:focus {
   outline: none;
@@ -107,31 +128,35 @@
   font-family: inherit;
   border-radius: 8px;
   border: 1px solid #f2f2f2;
-  width: 180px;
+  width: 200px;
   height: 40px;
   transition: border 0.4s;
   padding: 1px 2px 1px 10px;
   color: #666666;
-  margin-left: 50px;
+  margin-left: 35px;
 }
 .profile-info-family input:focus {
   outline: none;
   border: 1px solid #82d3ac;
 }
+.profile-info-address {
+  float: right;
+}
 .profile-info-address span {
   font-weight: bold;
   font-size: 18px;
+  padding-right: 18px;
 }
 .profile-info-address input {
   font-family: inherit;
   border-radius: 8px;
   border: 1px solid #f2f2f2;
-  width: 180px;
+  width: 200px;
   height: 40px;
   transition: border 0.4s;
   padding: 1px 2px 1px 10px;
   color: #666666;
-  margin-left: 50px;
+  margin-left: 30px;
 }
 .profile-info-address input:focus {
   outline: none;
@@ -145,14 +170,93 @@
   font-family: inherit;
   border-radius: 8px;
   border: 1px solid #f2f2f2;
-  width: 180px;
+  width: 200px;
   height: 40px;
   transition: border 0.4s;
   padding: 1px 2px 1px 10px;
   color: #666666;
-  margin-left: 50px;
+  margin-left: 30px;
 }
 .profile-info-activity input:focus {
   outline: none;
   border: 1px solid #82d3ac;
+}
+.activity-select {
+  cursor: default;
+}
+.activity-select-img {
+  position: absolute;
+  transform: translate(-35px, 9px);
+}
+.activity-option {
+  font-family: inherit;
+  font-weight: 300;
+  font-size: 16px;
+  width: 200px;
+  /*transition: border 0.4s;*/
+  position: absolute;
+  background-color: #ffffff;
+  padding: 4px 6px;
+  border: 1px solid #f2f2f2;
+  border-radius: 8px;
+  margin-top: 5px;
+  text-align: left;
+  z-index: 1;
+  transform: translateX(105px);
+}
+.option {
+  padding: 7px 5px;
+  cursor: default;
+}
+.option:hover {
+  background-color: #82d3ac;
+  border-radius: 8px;
+  color: #ffffff;
+}
+.profile-info-introduce {
+  margin-top: 30px;
+}
+.profile-info-introduce span {
+  font-weight: bold;
+  font-size: 18px;
+}
+.profile-info-introduce textarea {
+  font-family: inherit;
+  border-radius: 8px;
+  border: 1px solid #f2f2f2;
+  width: 900px;
+  height: 120px;
+  transition: border 0.4s;
+  padding: 10px;
+  color: #666666;
+  resize: none;
+  margin-top: 10px;
+}
+.profile-info-introduce textarea:focus {
+  outline: none;
+  border: 1px solid #82d3ac;
+}
+.profile-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 140px;
+}
+.profile-cancel {
+  width: 180px;
+  height: 40px;
+  margin-right: 2px;
+  border-radius: 10px;
+  border: 1px solid #82d3ac;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+.profile-register {
+  width: 180px;
+  height: 40px;
+  margin-left: 2px;
+  border-radius: 10px;
+  background-color: #82d3ac;
+  border: 1px solid #82d3ac;
+  color: #ffffff;
+  cursor: pointer;
 }

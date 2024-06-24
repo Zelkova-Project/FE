@@ -102,6 +102,7 @@ const Nav = () => {
           <li onClick={() => navHandler(2)}>공지사항</li>
           <li onClick={() => navHandler(3)}>후원&자원봉사</li>
           <li onClick={() => navHandler(4)}>커뮤니티</li>
+          <li onClick={() => navigate('/chat')}>채팅테스트</li>
           {login ? (
             <li onClick={() => logoutHandler()} className="login">
               <a>로그아웃</a>
@@ -111,10 +112,16 @@ const Nav = () => {
               <a>로그인</a>
             </li>
           )}
-          <li className={'login'} onClick={() => navigate('/Profile')}>
-            임시프로필
+          <li className={'profile'} onClick={() => navigate('/Profile')}>
+            <label>
+              <span>
+                <span className={'profile-txt'}>성한결</span>님
+              </span>
+              <div className={'profile-img'}>
+                <img src={'default-profile-img.png'} alt={'프로필사진'} />
+              </div>
+            </label>
           </li>
-          <li onClick={() => navigate('/chat')}>채팅테스트</li>
         </ul>
       </div>
 

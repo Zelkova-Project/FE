@@ -82,3 +82,27 @@
   top: 90px;
   z-index: 99;
 }
+
+.profile {
+  float: right !important;
+  padding: 9px !important;
+  cursor: pointer;
+}
+.profile label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.profile-txt {
+  font-weight: bold;
+  margin-right: 5px;
+}
+.profile-img {
+  margin-left: 10px;
+  line-height: 5px;
+}
+.profile-img img {
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+}

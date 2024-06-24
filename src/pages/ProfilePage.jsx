@@ -125,6 +125,11 @@ const ProfilePage = () => {
           <div className={style['profile-info']}>
             <label>
               <div className={style['profile-my-img']}>
+                <img
+                  className={style['default-profile-img']}
+                  src={'default-profile-img.png'}
+                  alt={'프로필사진'}
+                />
                 <div className={style['profile-setup']}>
                   <img src={'setup.png'} alt={'설정'} onClick={() => navigate('/ProfileSetup')} />
                 </div>
@@ -156,6 +161,7 @@ const ProfilePage = () => {
                 </button>
               )}
             </div>
+            <div onClick={() => navigate('/LatterWrite')}>후기작성</div>
           </div>
           {/*profile-info*/}
           <div className={style['profile-board']}>
