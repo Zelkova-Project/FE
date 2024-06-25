@@ -56,9 +56,9 @@ const MemberFindPage = () => {
   let url = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
   // 카카오 로그인
-  const kakaoLogin = ()=>{
-    window.location.href = url
-  }
+  const kakaoLogin = () => {
+    window.location.href = url;
+  };
   // 리뷰쓰기 Modal1 스타일
   const idModalStyle = {
     overlay: {
@@ -524,10 +524,10 @@ const MemberFindPage = () => {
 
         <div className={style['social-find']}>
           <div>
-            <img src={imgObj.kakaoLoginIcon} onClick={kakaoLogin} alt={'카카오 로그인'}/>
+            <img src={imgObj.kakaoLoginIcon} onClick={kakaoLogin} alt={'카카오 로그인'} />
           </div>
           <div>
-            <img src={imgObj.googleLogin} alt={'구글 로그인'}/>
+            <img src={imgObj.googleLogin} alt={'구글 로그인'} />
           </div>
         </div>
 

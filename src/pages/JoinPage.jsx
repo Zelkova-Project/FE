@@ -37,8 +37,19 @@ const Join = () => {
     googleLogin: require('../imgs/login/구글로그인.png'),
     kakaoLogin: require('../imgs/login/카카오로그인.png'),
     kakaoLoginIcon: require('../imgs/login/카카오로그인아이콘.png'),
-    select: require('../imgs/join/select.png'),
+    // select: require('/select.png'),
   };
+  let Rest_api_key = '41d2a43168a7edd9f941329667a65ef4';
+  let redirect_uri = 'http://localhost:3000/oauth';
+  let url = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
+
+  // 카카오 로그인
+  const kakaoLogin = () => {
+    window.location.href = url;
+    const code = new URL(window.location.href).searchParams.get('code');
+    console.log('code : ', code);
+  };
+
   const goBack = () => {
     navigate(-1);
   };
@@ -139,6 +150,7 @@ const Join = () => {
       setJoinInfo({ ...joinInfo, birth: e.target.value });
     }
   };
+
   return (
     <div className={style['outer-container']}>
       <Nav />
@@ -243,7 +255,7 @@ const Join = () => {
                   }}
                 ></input>
                 <img
-                  src={imgObj.select}
+                  src={'/select.png'}
                   alt={'select'}
                   className={style['join-form-select-img']}
                   onClick={() => {
@@ -341,10 +353,10 @@ const Join = () => {
 
               <div className={style['social-join']}>
                 <div>
-                  <img src={imgObj.kakaoLoginIcon} />
+                  <img src={imgObj.kakaoLoginIcon} onClick={kakaoLogin} alt={'카카오 로그인'} />
                 </div>
                 <div>
-                  <img src={imgObj.googleLogin} />
+                  <img src={imgObj.googleLogin} alt={'구글 로그인'} />
                 </div>
               </div>
 

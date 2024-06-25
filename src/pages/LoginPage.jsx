@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import '../css/login.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../axios/axiosInstance';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { loginState, userInfoState } from '../recoilState/recoil';
 
@@ -31,11 +31,14 @@ const LoginPage = () => {
   const normalLogin = () => {
     navigate(`/normalLogin`);
   };
-
   let Rest_api_key = '41d2a43168a7edd9f941329667a65ef4';
   let redirect_uri = 'http://localhost:3000/oauth';
   let url = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
+  // 카카오 로그인
+  const kakaoLogin = () => {
+    window.location.href = url;
+  };
   const imgObj = {
     googleLogin: require('../imgs/login/구글로그인.png'),
     kakaoLogin: require('../imgs/login/카카오로그인.png'),
@@ -71,6 +74,7 @@ const LoginPage = () => {
       goNormalLogin();
     }
   };
+
   return (
     <div className="login-container">
       <div className="login-wrapper">
@@ -145,10 +149,10 @@ const LoginPage = () => {
 
         <div className="social-login">
           <div className="">
-            <img src={imgObj.kakaoLoginIcon} />
+            <img src={imgObj.kakaoLoginIcon} onClick={kakaoLogin} alt={'카카오 로그인'} />
           </div>
           <div className="">
-            <img src={imgObj.googleLogin} />
+            <img src={imgObj.googleLogin} alt={'구글 로그인'} />
           </div>
         </div>
 

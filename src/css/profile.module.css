@@ -387,7 +387,7 @@
   border-radius: 100%;
 }
 .report-modal-cause-text input[type='radio']:checked {
-  background-color: #4C9F8B;
+  background-color: #4c9f8b;
   border: 3px solid white;
   box-shadow: 0 0 0 1.6px #f2f2f2;
 }

@@ -11,13 +11,13 @@ const ProfileSetupPage = () => {
   const [activitySelectVal, setActivitySelectVal] = useState('공개'); // 활동공개 값
   const [fileImgSelected, setFileImgSelected] = useState(null); // 프로필 이미지 변경
 
-
   const activitySelectValue = (index) => {
     setActivitySelectVal(index);
     setActivitySelected(!activitySelected);
   };
-  const fileImg = (event) => { // 프로필 이미지 변경
-    const fileInput = event.target.files[0]
+  const fileImg = (event) => {
+    // 프로필 이미지 변경
+    const fileInput = event.target.files[0];
     if (fileInput) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -25,7 +25,7 @@ const ProfileSetupPage = () => {
       };
       reader.readAsDataURL(fileInput);
     }
-  }
+  };
   return (
     <div>
       <Nav />
@@ -37,28 +37,32 @@ const ProfileSetupPage = () => {
               id={'profile-update'}
               className={style['profile-update']}
               type={'file'}
-              accept={'image/*'} onChange={(e) => fileImg(e)}
+              accept={'image/*'}
+              onChange={(e) => fileImg(e)}
             />
-            <label htmlFor={'profile-update'} className={style['profile-img-btn']}/>
+            <label htmlFor={'profile-update'} className={style['profile-img-btn']} />
             <label>
               <div className={style['profile-my-img']}>
-                  {fileImgSelected === null ?
-                      <img
-                          className={style['default-profile-img']}
-                          src={'/default-profile-img.png'}
-                          alt={'프로필 사진 변경'}
-                          title={'프로필 사진 변경'}
-                      /> : <img
-                          className={style['default-profile-img']}
-                          src={fileImgSelected}
-                          alt={'프로필 사진'}
-                          title={'프로필 사진'} />
-                  }
-                    <div className={style['profile-setup']}>
-                <img src={'setup.png'} alt={'설정'}/>
+                {fileImgSelected === null ? (
+                  <img
+                    className={style['default-profile-img']}
+                    src={'/default-profile-img.png'}
+                    alt={'프로필 사진 변경'}
+                    title={'프로필 사진 변경'}
+                  />
+                ) : (
+                  <img
+                    className={style['default-profile-img']}
+                    src={fileImgSelected}
+                    alt={'프로필 사진'}
+                    title={'프로필 사진'}
+                  />
+                )}
+                <div className={style['profile-setup']}>
+                  <img src={'setup.png'} alt={'설정'} />
+                </div>
               </div>
-          </div>
-          <div className={style['profile-info-title']}>
+              <div className={style['profile-info-title']}>
                 <div className={style['name']}>성한결</div>
                 <div className={style['protect']}>성혜리 보호자</div>
                 <span className={style['intro']}>자기소개 메세지</span>
