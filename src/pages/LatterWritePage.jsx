@@ -32,9 +32,6 @@ const LatterWrite = () => {
     });
     console.log('writerFileName : ', writerFileName);
   }, []);
-  const imgObj = {
-    select: require('../imgs/join/select.png'),
-  };
   const activitySelectValue = (index) => {
     setActivitySelectVal(index);
     setActivitySelected(!activitySelected);
@@ -88,7 +85,7 @@ const LatterWrite = () => {
                   }}
                 />
                 <img
-                  src={imgObj.select}
+                  src={'/select.png'}
                   alt={'select'}
                   className={style['activity-select-img']}
                   onClick={() => {

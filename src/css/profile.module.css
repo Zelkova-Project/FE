@@ -1,5 +1,5 @@
 .container {
-  width: 80%;
+  width: 1080px;
   margin: 30px auto 0 auto;
 }
 .main-img {
@@ -7,7 +7,6 @@
   position: relative;
 }
 .wrap {
-  width: 100%;
   background-color: #ffffff;
   border-radius: 30px 30px 0 0;
   z-index: 1;
@@ -378,6 +377,21 @@
   display: flex;
   margin-bottom: 25px;
 }
+.report-modal-cause-text input[type='radio'] {
+  -webkit-appearance: none; /*웹킷 브라우저에서 기본 스타일 제거*/
+  -moz-appearance: none; /*모질라 브라우저에서 기본 스타일 제거*/
+  appearance: none; /*기본 브라우저에서 기본 스타일 제거*/
+  width: 18px;
+  height: 18px;
+  border: 1px solid #f2f2f2;
+  border-radius: 100%;
+}
+.report-modal-cause-text input[type='radio']:checked {
+  background-color: #4C9F8B;
+  border: 3px solid white;
+  box-shadow: 0 0 0 1.6px #f2f2f2;
+}
+
 .report-modal-cause-text .text {
   color: #333333;
 }

@@ -192,6 +192,11 @@
   cursor: pointer;
 }
 .other-find-form {
+  width: 370px;
+  align-items: center;
+  justify-content: center;
+  margin: 100px auto 0 auto;
+  text-align: center;
 }
 .other-find p {
   font-weight: 400;
@@ -203,14 +208,14 @@
   margin: 0 5px 3px 0;
   content: '';
   display: inline-block;
-  width: 130px;
+  width: 120px;
   height: 1px;
   background: #f2f2f2;
 }
 .other-find p:after {
   content: '';
   display: inline-block;
-  width: 130px;
+  width: 120px;
   height: 1px;
   background: #f2f2f2;
   margin: 0 0 3px 5px;

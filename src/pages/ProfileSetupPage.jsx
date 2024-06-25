@@ -9,15 +9,23 @@ const ProfileSetupPage = () => {
 
   const [activitySelected, setActivitySelected] = useState(false); // 활동공개 창
   const [activitySelectVal, setActivitySelectVal] = useState('공개'); // 활동공개 값
+  const [fileImgSelected, setFileImgSelected] = useState(null); // 프로필 이미지 변경
 
-  const imgObj = {
-    select: require('../imgs/join/select.png'),
-  };
 
   const activitySelectValue = (index) => {
     setActivitySelectVal(index);
     setActivitySelected(!activitySelected);
   };
+  const fileImg = (event) => { // 프로필 이미지 변경
+    const fileInput = event.target.files[0]
+    if (fileInput) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFileImgSelected(e.target.result);
+      };
+      reader.readAsDataURL(fileInput);
+    }
+  }
   return (
     <div>
       <Nav />
@@ -29,22 +37,28 @@ const ProfileSetupPage = () => {
               id={'profile-update'}
               className={style['profile-update']}
               type={'file'}
-              accept={'image/*'}
+              accept={'image/*'} onChange={(e) => fileImg(e)}
             />
-            <label htmlFor={'profile-update'} />
+            <label htmlFor={'profile-update'} className={style['profile-img-btn']}/>
             <label>
               <div className={style['profile-my-img']}>
-                <img
-                  className={style['default-profile-img']}
-                  src={'default-profile-img.png'}
-                  alt={'프로필 사진 변경'}
-                  title={'프로필 사진 변경'}
-                />
-                <div className={style['profile-setup']}>
-                  <img src={'setup.png'} alt={'설정'} />
-                </div>
+                  {fileImgSelected === null ?
+                      <img
+                          className={style['default-profile-img']}
+                          src={'/default-profile-img.png'}
+                          alt={'프로필 사진 변경'}
+                          title={'프로필 사진 변경'}
+                      /> : <img
+                          className={style['default-profile-img']}
+                          src={fileImgSelected}
+                          alt={'프로필 사진'}
+                          title={'프로필 사진'} />
+                  }
+                    <div className={style['profile-setup']}>
+                <img src={'setup.png'} alt={'설정'}/>
               </div>
-              <div className={style['profile-info-title']}>
+          </div>
+          <div className={style['profile-info-title']}>
                 <div className={style['name']}>성한결</div>
                 <div className={style['protect']}>성혜리 보호자</div>
                 <span className={style['intro']}>자기소개 메세지</span>
@@ -85,7 +99,7 @@ const ProfileSetupPage = () => {
                     }}
                   ></input>
                   <img
-                    src={imgObj.select}
+                    src={'/select.png'}
                     alt={'select'}
                     className={style['activity-select-img']}
                     onClick={() => {

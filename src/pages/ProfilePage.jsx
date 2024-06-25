@@ -127,7 +127,7 @@ const ProfilePage = () => {
               <div className={style['profile-my-img']}>
                 <img
                   className={style['default-profile-img']}
-                  src={'default-profile-img.png'}
+                  src={'/default-profile-img.png'}
                   alt={'프로필사진'}
                 />
                 <div className={style['profile-setup']}>

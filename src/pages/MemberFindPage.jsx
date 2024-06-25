@@ -50,9 +50,15 @@ const MemberFindPage = () => {
     googleLogin: require('../imgs/login/구글로그인.png'),
     kakaoLogin: require('../imgs/login/카카오로그인.png'),
     kakaoLoginIcon: require('../imgs/login/카카오로그인아이콘.png'),
-    select: require('../imgs/join/select.png'),
   };
+  let Rest_api_key = '41d2a43168a7edd9f941329667a65ef4';
+  let redirect_uri = 'http://localhost:3000/oauth';
+  let url = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
+  // 카카오 로그인
+  const kakaoLogin = ()=>{
+    window.location.href = url
+  }
   // 리뷰쓰기 Modal1 스타일
   const idModalStyle = {
     overlay: {
@@ -270,7 +276,7 @@ const MemberFindPage = () => {
                   }}
                 ></input>
                 <img
-                  src={imgObj.select}
+                  src={'/select.png'}
                   alt={'select'}
                   className={style['find-select-img']}
                   onClick={() => {
@@ -422,7 +428,7 @@ const MemberFindPage = () => {
                   }}
                 ></input>
                 <img
-                  src={imgObj.select}
+                  src={'/select.png'}
                   alt={'select'}
                   className={style['find-select-img']}
                   onClick={() => {
@@ -518,10 +524,10 @@ const MemberFindPage = () => {
 
         <div className={style['social-find']}>
           <div>
-            <img src={imgObj.kakaoLoginIcon} />
+            <img src={imgObj.kakaoLoginIcon} onClick={kakaoLogin} alt={'카카오 로그인'}/>
           </div>
           <div>
-            <img src={imgObj.googleLogin} />
+            <img src={imgObj.googleLogin} alt={'구글 로그인'}/>
           </div>
         </div>
 

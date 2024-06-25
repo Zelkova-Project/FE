@@ -45,7 +45,7 @@
 }
 .activity-select-img {
   position: absolute;
-  transform: translate(230px, 9px);
+  transform: translate(230px, 0px);
 }
 .activity-option {
   font-family: inherit;
@@ -61,7 +61,7 @@
   margin-top: 5px;
   text-align: left;
   z-index: 1;
-  transform: translate(78px, 40px);
+  transform: translate(78px, 70px);
 }
 .option {
   padding: 7px 5px;
