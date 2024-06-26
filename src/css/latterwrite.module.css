@@ -60,13 +60,12 @@
   border-radius: 8px;
   margin-top: 5px;
   text-align: left;
-  z-index: 1;
-  transform: translate(78px, 70px);
+  z-index: 100;
+  transform: translate(78px, 60px);
 }
 .option {
   padding: 7px 5px;
   cursor: default;
-  list-style: none;
 }
 .option:hover {
   background-color: #82d3ac;
@@ -76,6 +75,9 @@
 .write-txt {
   display: flex;
   flex-direction: row;
+}
+.activity-txt {
+  align-items: center;
 }
 .write-item:nth-child(6) h3 {
   margin-top: 0;

@@ -10,8 +10,8 @@ const LatterWrite = () => {
   const navigate = useNavigate();
 
   const [writeDateInfo, setWriteDateInfo] = useState({}); // 작성일, 수정일 날짜
-  const [activitySelected, setActivitySelected] = useState(false); // 활동공개 창
-  const [activitySelectVal, setActivitySelectVal] = useState('공개'); // 활동공개 값
+  const [writeActivitySelected, setWriteActivitySelected] = useState(false); // 활동공개 창
+  const [writeActivitySelectVal, setWriteActivitySelectVal] = useState('공개'); // 활동공개 값
   const [writerFileName, setWriterFileName] = useState(''); // 활동공개 값
 
   const getDate = (date) => {
@@ -34,8 +34,8 @@ const LatterWrite = () => {
     console.log('writerFileName : ', writerFileName);
   }, []);
   const activitySelectValue = (index) => {
-    setActivitySelectVal(index);
-    setActivitySelected(!activitySelected);
+    setWriteActivitySelectVal(index);
+    setWriteActivitySelected(!writeActivitySelected);
   };
   const onWriteFileName = (e) => {
     const originFileName = e.target.value;
@@ -72,17 +72,16 @@ const LatterWrite = () => {
           </div>
 
           <div className={style['write-item']}>
-            <div className={style['write-txt']}>
-              <label>
+              <div className={[style['write-txt'], style['activity-txt']].join(' ')}>
                 <h3>게시 여부</h3>
                 <input
                   type={'text'}
                   placeholder={'공개'}
-                  value={activitySelectVal}
+                  value={writeActivitySelectVal}
                   autoComplete={'off'}
                   className={style['activity-select']}
                   onClick={() => {
-                    setActivitySelected(!activitySelected);
+                    setWriteActivitySelected(!writeActivitySelected);
                   }}
                 />
                 <img
@@ -90,10 +89,10 @@ const LatterWrite = () => {
                   alt={'select'}
                   className={style['activity-select-img']}
                   onClick={() => {
-                    setActivitySelected(!activitySelected);
+                    setWriteActivitySelected(!writeActivitySelected);
                   }}
                 />
-                {activitySelected ? (
+                {writeActivitySelected ? (
                   <ul className={style['activity-option']}>
                     <li className={style['option']} onClick={() => activitySelectValue('공개')}>
                       공개
@@ -103,7 +102,6 @@ const LatterWrite = () => {
                     </li>
                   </ul>
                 ) : null}
-              </label>
             </div>
             <div className={[style['write-txt'], style['ml-40']].join(' ')}>
               <label>
