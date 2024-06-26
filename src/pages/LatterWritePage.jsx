@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import style from '../css/latterwrite.module.css';
 import Section from '../components/Section';
+import Footer from '../components/Footer';
 
 const LatterWrite = () => {
   const navigate = useNavigate();
@@ -163,6 +164,7 @@ const LatterWrite = () => {
         </div>
       </Section>
       {/* 글쓰기영역끝 */}
+      <Footer />
     </>
   );
 };
