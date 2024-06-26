@@ -12,6 +12,8 @@ const ProfilePage = () => {
   const [reportCheckModal, setReportCheckModal] = useState(false); // 신고하기 모달
   const [reportCauseModal, setReportCauseModal] = useState(false); // 신고사유 모달
   const [reportFinishModal, setReportFinishModal] = useState(false); // 신고완료 모달
+  const [followModal, setFollowModal] = useState(false); // 팔로우 모달
+  const [followerModal, setFollowerModal] = useState(false); // 팔로워 모달
   const [reportCategory, setReportCategory] = useState('');
   const [reportCategoryText, setReportCategoryText] = useState('');
 
@@ -26,6 +28,42 @@ const ProfilePage = () => {
   const reportBtn = () => {
     setBoardReport(!boardReport);
   };
+
+  const followModalStyle = {
+    overlay: {
+      backgroundColor: 'rgba(0,0,0,0.2)',
+      zIndex: '100',
+    },
+    content: {
+      width: '380px',
+      height: '560px',
+      margin: 'auto',
+      WebkitOverflowScrolling: 'touch',
+      background: '#fff',
+      borderRadius: '20px',
+      outline: 'none',
+      padding: '25px 30px 15px 30px',
+      overflow: 'auto',
+    },
+  };
+  const followerModalStyle = {
+    overlay: {
+      backgroundColor: 'rgba(0,0,0,0.2)',
+      zIndex: '100',
+    },
+    content: {
+      width: '380px',
+      height: '560px',
+      margin: 'auto',
+      WebkitOverflowScrolling: 'touch',
+      background: '#fff',
+      borderRadius: '20px',
+      outline: 'none',
+      padding: '25px 30px 15px 30px',
+      overflow: 'auto',
+    },
+  };
+
   const reportCheckModalStyle = {
     overlay: {
       backgroundColor: 'rgba(0,0,0,0.2)',
@@ -116,6 +154,18 @@ const ProfilePage = () => {
   const Follow = () => {
     setFollow(!follow);
   };
+  const followCancel = () => {
+    setFollowModal(false);
+  };
+  const followRegster = () => {
+    setFollowModal(false);
+  };
+  const followerCancel = () => {
+    setFollowerModal(false);
+  };
+  const followerRegster = () => {
+    setFollowerModal(false);
+  };
   return (
     <div>
       <Nav />
@@ -140,11 +190,11 @@ const ProfilePage = () => {
                 <span className={style['intro']}>자기소개 메세지</span>
               </div>
               <div className={style['profile-follow']}>
-                <span className={style['follow']}>
+                <span className={style['follow']} onClick={() => setFollowModal(true)}>
                   <span>1,234</span>
                   <span>팔로우</span>
                 </span>
-                <span className={style['follower']}>
+                <span className={style['follower']} onClick={() => setFollowerModal(true)}>
                   <span>1,234</span>
                   <span>팔로워</span>
                 </span>
@@ -162,6 +212,128 @@ const ProfilePage = () => {
               )}
             </div>
           </div>
+          <Modal isOpen={followModal} ariaHideApp={false} style={followModalStyle}>
+            <div className={style['follow-modal-wrap']}>
+              <div className={style['follow-modal-title']}>
+                <span className={style['title']}>팔로우 리스트</span>
+                <span className={style['close']}>
+                  <img src={'/close.png'} alt={'닫기'} onClick={followCancel} />
+                </span>
+              </div>
+              <div className={style['follow-modal-text']}>
+                <label>
+                  <img src={'/search.png'} alt={'찾기'} />
+                  <input type={'text'} placeholder={'이름을 입력하세요.'} />
+                </label>
+              </div>
+            </div>
+            <div className={style['follow-modal-list']}>
+              <div className={style['list']}>
+                <label>
+                  <div className={style['profile']}></div>
+                  <span className={style['name']}>성한결</span>
+                  <button className={style['button']}>팔로우</button>
+                </label>
+              </div>
+              <div className={style['list']}>
+                <label>
+                  <div className={style['profile']}></div>
+                  <span className={style['name']}>성한결</span>
+                  <button className={style['button']}>채팅</button>
+                </label>
+              </div>
+              <div className={style['list']}>
+                <label>
+                  <div className={style['profile']}></div>
+                  <span className={style['name']}>성한결</span>
+                  <button className={style['button']}>팔로우</button>
+                </label>
+              </div>
+              <div className={style['list']}>
+                <label>
+                  <div className={style['profile']}></div>
+                  <span className={style['name']}>성한결</span>
+                  <button className={style['button']}>채팅</button>
+                </label>
+              </div>
+              <div className={style['list']}>
+                <label>
+                  <div className={style['profile']}></div>
+                  <span className={style['name']}>성한결</span>
+                  <button className={style['button']}>팔로우</button>
+                </label>
+              </div>
+              <div className={style['list']}>
+                <label>
+                  <div className={style['profile']}></div>
+                  <span className={style['name']}>성한결</span>
+                  <button className={style['button']}>채팅</button>
+                </label>
+              </div>
+              <div className={style['list']}>
+                <label>
+                  <div className={style['profile']}></div>
+                  <span className={style['name']}>성한결</span>
+                  <button className={style['button']}>팔로우</button>
+                </label>
+              </div>
+              <div className={style['list']}>
+                <label>
+                  <div className={style['profile']}></div>
+                  <span className={style['name']}>성한결</span>
+                  <button className={style['button']}>채팅</button>
+                </label>
+              </div>
+            </div>
+            <div className={style['follow-modal-button-wrap']}>
+              <button className={style['follow-modal-close']} onClick={followCancel}>
+                취소
+              </button>
+              <button className={style['follow-modal-report']} onClick={followRegster}>
+                만들기
+              </button>
+            </div>
+          </Modal>
+          <Modal isOpen={followerModal} ariaHideApp={false} style={followerModalStyle}>
+            <div className={style['follower-modal-wrap']}>
+              <div className={style['follower-modal-title']}>
+                <span className={style['title']}>팔로우 리스트</span>
+                <span className={style['close']}>
+                  <img src={'/close.png'} alt={'닫기'} onClick={followerCancel} />
+                </span>
+              </div>
+              <div className={style['follower-modal-text']}>
+                <label>
+                  <img src={'/search.png'} alt={'찾기'} />
+                  <input type={'text'} placeholder={'이름을 입력하세요.'} />
+                </label>
+              </div>
+            </div>
+            <div className={style['follower-modal-list']}>
+              <div className={style['list']}>
+                <label>
+                  <div className={style['profile']}></div>
+                  <span className={style['name']}>성한결</span>
+                  <button className={style['button']}>팔로우</button>
+                </label>
+              </div>
+              <div className={style['list']}>
+                <label>
+                  <div className={style['profile']}></div>
+                  <span className={style['name']}>성한결</span>
+                  <button className={style['button']}>채팅</button>
+                </label>
+              </div>
+            </div>
+            <div className={style['follower-modal-button-wrap']}>
+              <button className={style['follower-modal-close']} onClick={followerCancel}>
+                취소
+              </button>
+              <button className={style['follower-modal-report']} onClick={followerRegster}>
+                만들기
+              </button>
+            </div>
+          </Modal>
           {/*profile-info*/}
           <div className={style['profile-board']}>
             <label>
@@ -258,7 +430,7 @@ const ProfilePage = () => {
               <div className={style['report-modal-cause-title']}>
                 <span className={style['title']}>신고 사유</span>
                 <span className={style['close']}>
-                  <img src={'close.png'} alt={'닫기'} onClick={goReportCauseCancel} />
+                  <img src={'/close.png'} alt={'닫기'} onClick={goReportCauseCancel} />
                 </span>
               </div>
               <div className={style['report-modal-cause-text']}>

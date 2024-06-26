@@ -70,6 +70,7 @@
 .follow {
   display: inline-block;
   margin-right: 30px;
+  cursor: pointer;
 }
 .follow span:nth-child(1) {
   font-size: 18px;
@@ -82,6 +83,7 @@
 }
 .follower {
   display: inline-block;
+  cursor: pointer;
 }
 .follower span:nth-child(1) {
   font-size: 18px;
@@ -477,4 +479,225 @@
   border: 1px solid #82d3ac;
   background-color: #ffffff;
   cursor: pointer;
+}
+/*------------------ 팔로우 모달 ------------------*/
+.follow-modal-wrap {
+  text-align: center;
+  font-family: 'PretendardVariable';
+}
+.follow-modal-title {
+  display: flex;
+  justify-content: space-between;
+}
+.follow-modal-title .title {
+  font-weight: bold;
+  left: 0;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+.follow-modal-title img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+.follow-modal-text {
+  display: flex;
+  justify-content: space-between;
+  transform: translateX(-30px);
+}
+.follow-modal-text label {
+  display: flex;
+  align-items: center;
+}
+.follow-modal-text label img {
+  transform: translateX(40px);
+}
+.follow-modal-text input {
+  font-family: inherit;
+  font-size: 16px;
+  border-radius: 20px;
+  border: 1px solid #f2f2f2;
+  /* border-color: #F2F2F2; */
+  width: 325px;
+  height: 36px;
+  transition: border 0.4s;
+  padding: 1px 2px 1px 50px;
+  margin-right: 5px;
+}
+.follow-modal-text input::placeholder {
+  color: rgba(128, 128, 128, 0.6);
+}
+
+.follow-modal-text input:focus {
+  outline: none;
+  border: 1px solid #4ebba0;
+}
+.follow-modal-list {
+  padding: 20px 0;
+  overflow-y: scroll;
+  height: 40vh;
+}
+.follow-modal-list .list {
+  margin-bottom: 10px;
+}
+.follow-modal-list label {
+  display: flex;
+  align-items: center;
+}
+.follow-modal-list .profile {
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 100%;
+}
+.follow-modal-list .name {
+  margin-left: 15px;
+  color: #333333;
+}
+.follow-modal-list .button {
+  width: 80px;
+  height: 35px;
+  margin-right: 2px;
+  border-radius: 10px;
+  border: 1px solid #82d3ac;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-weight: 600;
+  color: #333333;
+  margin-left: auto;
+}
+.follow-modal-button-wrap {
+  text-align: right;
+  margin-top: 50px;
+}
+.follow-modal-close {
+  width: 90px;
+  height: 40px;
+  margin-right: 2px;
+  border-radius: 10px;
+  border: 1px solid #82d3ac;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+}
+.follow-modal-report {
+  width: 90px;
+  height: 40px;
+  margin-left: 2px;
+  border-radius: 10px;
+  background-color: #82d3ac;
+  border: 1px solid #82d3ac;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+}
+.follower-modal-wrap {
+  text-align: center;
+  font-family: 'PretendardVariable';
+}
+.follower-modal-title {
+  display: flex;
+  justify-content: space-between;
+}
+.follower-modal-title .title {
+  font-weight: bold;
+  left: 0;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+.follower-modal-title img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+.follower-modal-text {
+  display: flex;
+  justify-content: space-between;
+  transform: translateX(-30px);
+}
+.follower-modal-text label {
+  display: flex;
+  align-items: center;
+}
+.follower-modal-text label img {
+  transform: translateX(40px);
+}
+.follower-modal-text input {
+  font-family: inherit;
+  font-size: 16px;
+  border-radius: 20px;
+  border: 1px solid #f2f2f2;
+  /* border-color: #F2F2F2; */
+  width: 325px;
+  height: 36px;
+  transition: border 0.4s;
+  padding: 1px 2px 1px 50px;
+  margin-right: 5px;
+}
+.follower-modal-text input::placeholder {
+  color: rgba(128, 128, 128, 0.6);
+}
+
+.follower-modal-text input:focus {
+  outline: none;
+  border: 1px solid #4ebba0;
+}
+.follower-modal-list {
+  padding: 20px 0;
+  overflow-y: scroll;
+  height: 40vh;
+}
+.follower-modal-list .list {
+  margin-bottom: 10px;
+}
+.follower-modal-list label {
+  display: flex;
+  align-items: center;
+}
+.follower-modal-list .profile {
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 100%;
+}
+.follower-modal-list .name {
+  margin-left: 15px;
+  color: #333333;
+}
+.follower-modal-list .button {
+  width: 80px;
+  height: 35px;
+  margin-right: 2px;
+  border-radius: 10px;
+  border: 1px solid #82d3ac;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-weight: 600;
+  color: #333333;
+  margin-left: auto;
+}
+.follower-modal-button-wrap {
+  text-align: right;
+  margin-top: 50px;
+}
+.follower-modal-close {
+  width: 90px;
+  height: 40px;
+  margin-right: 2px;
+  border-radius: 10px;
+  border: 1px solid #82d3ac;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+}
+.follower-modal-report {
+  width: 90px;
+  height: 40px;
+  margin-left: 2px;
+  border-radius: 10px;
+  background-color: #82d3ac;
+  border: 1px solid #82d3ac;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
 }
