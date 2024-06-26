@@ -81,6 +81,8 @@ const Nav = () => {
             <div className="login-menu">
               <ul className={'menu-hover'}>
                 <li onClick={() => logoutHandler()}>로그아웃</li>
+                <li onClick={() => navigate('/LatterWrite')}>후기작성</li>
+
               </ul>
             </div>
           ) : null}
@@ -101,34 +103,34 @@ const Nav = () => {
       onMouseOut={() => setIsHovering(false)}
     >
       <div className="hr" />
-        <ul className="menu-ul">
-          <li style={{ padding: '15px' }} onClick={() => navHandler(0)}>
-            <img src={logo} alt="logo"></img>
+      <ul className="menu-ul">
+        <li style={{ padding: '15px' }} onClick={() => navHandler(0)}>
+          <img src={logo} alt="logo"></img>
+        </li>
+        <li onClick={() => navHandler(1)}>기관소개</li>
+        <li onClick={() => navHandler(2)}>공지사항</li>
+        <li onClick={() => navHandler(3)}>후원&자원봉사</li>
+        <li onClick={() => navHandler(4)}>커뮤니티</li>
+        <li onClick={() => navigate('/chat')}>채팅테스트</li>
+      </ul>
+      <ul className={'menu-login'}>
+        {!login ? (
+          <li className={'li-login'} onClick={() => navHandler(5)}>
+            <a>로그인</a>
           </li>
-          <li onClick={() => navHandler(1)}>기관소개</li>
-          <li onClick={() => navHandler(2)}>공지사항</li>
-          <li onClick={() => navHandler(3)}>후원&자원봉사</li>
-          <li onClick={() => navHandler(4)}>커뮤니티</li>
-          <li onClick={() => navigate('/chat')}>채팅테스트</li>
-        </ul>
-        <ul className={'menu-login'}>
-          {!login ?
-            <li className={'li-login'} onClick={() => navHandler(5)}>
-              <a>로그인</a>
-            </li>
-           :
-            <li className={'profile'} onClick={() => navigate('/Profile')}>
-              <label>
-                <span>
-                  <span className={'profile-txt'}>성한결</span>님
-                </span>
-                <div className={'profile-img'}>
-                  <img src={'/default-profile-img.png'} alt={'프로필 사진'} />
-                </div>
-              </label>
-            </li>
-          }
-        </ul>
+        ) : (
+          <li className={'profile'} onClick={() => navigate('/Profile')}>
+            <label>
+              <span>
+                <span className={'profile-txt'}>성한결</span>님
+              </span>
+              <div className={'profile-img'}>
+                <img src={'/default-profile-img.png'} alt={'프로필 사진'} />
+              </div>
+            </label>
+          </li>
+        )}
+      </ul>
 
       {showExtraNav()}
     </div>

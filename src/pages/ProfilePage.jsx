@@ -161,7 +161,6 @@ const ProfilePage = () => {
                 </button>
               )}
             </div>
-            <div onClick={() => navigate('/LatterWrite')}>후기작성</div>
           </div>
           {/*profile-info*/}
           <div className={style['profile-board']}>
