@@ -76,6 +76,14 @@ const Nav = () => {
               <li>자원봉사</li>
             </ul>
           </div>
+          {/* 로그인 호버 메뉴 */}
+          {login ? (
+            <div className="login-menu">
+              <ul className={'menu-hover'}>
+                <li onClick={() => logoutHandler()}>로그아웃</li>
+              </ul>
+            </div>
+          ) : null}
 
           <div className="hover-icon">
             <img src={hoverImg}></img>
@@ -93,7 +101,6 @@ const Nav = () => {
       onMouseOut={() => setIsHovering(false)}
     >
       <div className="hr" />
-      <div className="menu-left">
         <ul className="menu-ul">
           <li style={{ padding: '15px' }} onClick={() => navHandler(0)}>
             <img src={logo} alt="logo"></img>
@@ -103,27 +110,25 @@ const Nav = () => {
           <li onClick={() => navHandler(3)}>후원&자원봉사</li>
           <li onClick={() => navHandler(4)}>커뮤니티</li>
           <li onClick={() => navigate('/chat')}>채팅테스트</li>
-          {login ? (
-            <li onClick={() => logoutHandler()} className="login">
-              <a>로그아웃</a>
-            </li>
-          ) : (
-            <li onClick={() => loginHandler()} className="login">
+        </ul>
+        <ul className={'menu-login'}>
+          {!login ?
+            <li className={'li-login'} onClick={() => navHandler(5)}>
               <a>로그인</a>
             </li>
-          )}
-          <li className={'profile'} onClick={() => navigate('/Profile')}>
-            <label>
-              <span>
-                <span className={'profile-txt'}>성한결</span>님
-              </span>
-              <div className={'profile-img'}>
-                <img src={'default-profile-img.png'} alt={'프로필사진'} />
-              </div>
-            </label>
-          </li>
+           :
+            <li className={'profile'} onClick={() => navigate('/Profile')}>
+              <label>
+                <span>
+                  <span className={'profile-txt'}>성한결</span>님
+                </span>
+                <div className={'profile-img'}>
+                  <img src={'/default-profile-img.png'} alt={'프로필 사진'} />
+                </div>
+              </label>
+            </li>
+          }
         </ul>
-      </div>
 
       {showExtraNav()}
     </div>

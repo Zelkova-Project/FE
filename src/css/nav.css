@@ -2,13 +2,15 @@
   font-family: 'PretendardVariable';
   color: #333;
   background: #ffffff;
+  width: 100%;
+  min-width: 880px;
   display: flex;
-  max-width: 1280px;
-  height: 54px;
-  margin: 10px auto 0 auto;
+  height: 74px;
+  margin-top: 10px;
   font-weight: 600;
   font-size: 16px;
   position: relative;
+  z-index: 99;
 }
 .hr {
   width: 100%;
@@ -18,40 +20,47 @@
   left: 0;
   border-bottom: 2px solid #f6f6f6;
 }
-.menu-left {
-  width: 100%;
-  display: flex;
-  z-index: 100;
-}
 
 .menu-ul {
-  width: 100%;
-  list-style: none;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  margin: 0;
+  padding-left: 0;
+  z-index: 100;
+  transform: translateX(60px);
 }
 .menu-ul li {
-  float: left;
   padding: 20px;
   cursor: pointer;
   font-size: 16px;
 }
-
-.login {
-  float: right !important;
+.menu-login {
+  display: flex;
+  margin-left: auto;
+  margin-right: 90px;
+  padding-left: 0;
+  z-index: 100;
+}
+.li-login {
+  margin-top: 10px;
+}
+.menu-login li {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 /* 네비 호버영역 */
 .nav-hover {
-  width: 1280px;
+  width: 100%;
   height: 224px;
   background: #ffffff;
-  z-index: 99;
   position: absolute;
   display: flex;
   flex-direction: row;
-  padding-left: 118px;
-  padding-top: 65px;
+  padding-left: 138px;
+  padding-top: 15px;
+  transform: translateY(60px);
+  z-index: 100;
 }
 .notice-menu {
   margin-left: 23px;
@@ -59,6 +68,10 @@
 
 .support-menu {
   margin-left: 26px;
+}
+.login-menu {
+  margin-left: auto;
+  transform: translateX(-250px);
 }
 .menu-hover {
   display: flex;
@@ -78,15 +91,13 @@
 
 .hover-icon {
   position: absolute;
-  right: 150px;
+  right: 250px;
   top: 90px;
   z-index: 99;
 }
-
 .profile {
-  float: right !important;
-  padding: 9px !important;
   cursor: pointer;
+  font-size: 16px;
 }
 .profile label {
   cursor: pointer;
