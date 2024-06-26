@@ -49,8 +49,10 @@ const ChatPage = () => {
     'X-XSRF-TOKEN': btoa(generateRandomString(getToken())),
   };
 
-  const URL = '/zelkova/user/queue/message';
-  const MSG_URL = '/zelkova/message';
+  const apiPrefix = process.env.NODE_ENV == 'development' ? '' : '/api';
+
+  const URL = apiPrefix + '/zelkova/user/queue/message';
+  const MSG_URL = apiPrefix + '/zelkova/message';
 
   const connectHandler = () => {
     const client = new StompJs.Client({

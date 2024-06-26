@@ -2,13 +2,16 @@ import { Link } from 'react-router-dom';
 import '../css/login.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../axios/axiosInstance';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { loginState, userInfoState } from '../recoilState/recoil';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useRecoilState(loginState);
+
+  const intervalId = useRef();
+
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [isNormalLogin, setIsNormalLogin] = useState(false);
   const [loginInfo, setLoginInfo] = useState({ loginId: '', password: '' });
@@ -31,14 +34,41 @@ const LoginPage = () => {
   const normalLogin = () => {
     navigate(`/normalLogin`);
   };
-  let Rest_api_key = '41d2a43168a7edd9f941329667a65ef4';
-  let redirect_uri = 'http://localhost:3000/oauth';
-  let url = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
   // 카카오 로그인
-  const kakaoLogin = () => {
-    window.location.href = url;
+  const kakaoLogin = async () => {
+    const width = 500; // 팝업의 가로 길이: 500
+    const height = 400; // 팝업의 세로 길이 : 500
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
+
+    let _kakaowindow = window.open('/api/oauth2/authorization/kakao',
+      "kakako-",
+      `width=${width},height=${height},left=${left},top=${top}`
+    );
+
+    intervalId.current = setInterval(() => {
+      if (!_kakaowindow?.document) return;
+
+      const childcookie = _kakaowindow.document.cookie;
+      const parentcookie = document.cookie;
+      
+      const [_key1, val1] = childcookie.split('=');
+      const [_key2, val2] = parentcookie.split('=');
+
+      if (val1 == val2) {
+        navigate('/');
+        _kakaowindow.close();
+      }
+      
+    }, 4000);
   };
+
+  useEffect(() => {
+    return () => clearInterval(intervalId.current);
+
+  })
+
   const imgObj = {
     googleLogin: require('../imgs/login/구글로그인.png'),
     kakaoLogin: require('../imgs/login/카카오로그인.png'),
@@ -149,7 +179,7 @@ const LoginPage = () => {
 
         <div className="social-login">
           <div className="">
-            <img src={imgObj.kakaoLoginIcon} onClick={kakaoLogin} alt={'카카오 로그인'} />
+            <img src={imgObj.kakaoLoginIcon} onClick={() => kakaoLogin()} alt={'카카오 로그인'} />
           </div>
           <div className="">
             <img src={imgObj.googleLogin} alt={'구글 로그인'} />
