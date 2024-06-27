@@ -16,7 +16,11 @@ const Join = () => {
   const [idSuccessMessage, setIdSuccessMessage] = useState('');
   const [pwFailMessage, setPwFailMessage] = useState('');
   const [pwSuccessMessage, setPwSuccessMessage] = useState('');
-
+  const [verifyMessage, setVerifyMessage] = useState(''); // 인증번호 발송 메세지
+  const [failVerifyMessage, setFailVerifyMessage] = useState(''); // 인증번호 전송버튼 오류시
+  const [failVerifyNumMessage, setFailVerifyNumMessage] = useState(''); // 인증번호 확인 오류시
+  const [verifyBtn, setVerifyBtn] = useState(false); // 인증번호 전송버튼 클릭체크
+  const [verifyNumBtn, setVerifyNumBtn] = useState(false); // 인증번호 확인 클릭체크
   const [joinInfo, setJoinInfo] = useState({
     login_id: '',
     password: '',
@@ -29,7 +33,7 @@ const Join = () => {
     email1: '',
     email2: '',
     info: '',
-    nickname: 'test',
+    // nickname: 'test',
   });
 
   const navigate = useNavigate();
@@ -67,7 +71,7 @@ const Join = () => {
       email1: '',
       email2: '',
       info: '',
-      nickname: '',
+      // nickname: '',
     };
 
     let entries = Object.entries(joinInfo);
@@ -90,10 +94,34 @@ const Join = () => {
     //   if (key != 'password_check')
     //     param[key] = val;
     // }
+    if (joinInfo.login_id === '' || joinInfo.login_id === null) {
+      setIdFailMessage('아이디를 입력해주세요.');
+      setIdSuccessMessage(null);
+      return false;
+    }
     if (joinInfo.password === '' || joinInfo.password === null) {
       setPwFailMessage('비밀번호를 입력해주세요.');
       setPwSuccessMessage(null);
       return false;
+    }
+    if (joinInfo.password_check === '' || joinInfo.password_check === null) {
+      setPwFailMessage('비밀번호 확인을 입력해주세요.');
+      setPwSuccessMessage(null);
+      return false;
+    }
+    if (joinInfo.name === '' || joinInfo.name === null) {
+      document.getElementById('join-info-name').style.border = '1px solid #ff8888';
+      return false;
+    } else {
+      document.getElementById('join-info-name').style.border = '1px solid #ffffff';
+    }
+    if (joinInfo.birth === '' || joinInfo.birth === null) {
+      document.getElementById('join-info-birth').style.border = '1px solid #ff8888';
+      return false;
+    } else if (joinInfo.birth.length !== 8) {
+      document.getElementById('join-info-birth').style.border = '1px solid #ff8888';
+    } else {
+      document.getElementById('join-info-birth').style.border = '1px solid #ffffff';
     }
 
     let { status, message } = await axios.post('/signup', param);
@@ -119,11 +147,42 @@ const Join = () => {
       setIdSuccessMessage(null);
     } else {
       setJoinInfo(e.target.value);
-      setIdSuccessMessage('사용가능한 아이디 입니다.');
+      setIdSuccessMessage(null);
       setIdFailMessage(null);
     }
   };
-  const idCheck = () => {};
+  const idCheck = async () => {
+    if (joinInfo.login_id === '' || joinInfo.login_id === null) {
+      setIdFailMessage('아이디를 입력해주세요.');
+      setIdSuccessMessage(null);
+      return false;
+    }
+    const idRegex = /^[a-zA-Z](?=.*\d)[a-zA-Z0-9]{6,}$/;
+    if (!idRegex.test(joinInfo.login_id)) {
+      setIdFailMessage('영문, 숫자가 포함된 7자리 이상의 아이디를 만들어 주세요.');
+      setIdSuccessMessage(null);
+      return false;
+    }
+    let loginParam = {
+      loginId: joinInfo.login_id,
+    };
+    await axios
+      .get(`/accounts/availability?loginId=${loginParam.loginId}`)
+      .then(function (response) {
+        // 성공 핸들링
+        if (response.data.possible === true) {
+          setIdSuccessMessage('사용가능한 아이디 입니다.');
+          setIdFailMessage(null);
+        } else {
+          setIdFailMessage('중복된 아이디입니다.');
+          setIdSuccessMessage(null);
+        }
+      })
+      .catch(function (error) {
+        // 에러 핸들링
+        console.log(error);
+      });
+  };
   const joinPwCheck = (e) => {
     // const pwRegex =  /^[a-zA-Z0-9](?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{6,}$/
     const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z0-9@$!%*#?&]{6,}$/;
@@ -150,7 +209,39 @@ const Join = () => {
       setJoinInfo({ ...joinInfo, birth: e.target.value });
     }
   };
-
+  const verifyTransmissionBtn = () => {
+    if (joinInfo.phone === '') {
+      setFailVerifyMessage('가입된 전화번호가 아닙니다. 다시 입력해 주세요.');
+      setVerifyMessage(null);
+      return false;
+    } else {
+      setVerifyMessage('인증번호가 오지 않나요?');
+      setFailVerifyMessage(null);
+      setVerifyBtn(true);
+    }
+  };
+  const verifyConfirmBtn = () => {
+    if (joinInfo.accreditNum === '') {
+      // 인증번호칸이 빈칸일 경우 + 인증번호가 틀릴시
+      setFailVerifyNumMessage('인증번호가 맞지 않습니다. 다시 입력해 주세요.');
+      return false;
+    } else {
+      setFailVerifyNumMessage(null);
+      setFailVerifyMessage(null);
+      setVerifyNumBtn(true);
+    }
+    // 인증번호가 맞을지
+    /*setIdFailVerifyNumMessage(null)
+        setIdFailVerifyMessage(null);
+        setIdVerifyNumBtn(true)
+        */
+  };
+  const verifyLengthChk = (e) => {
+    // 인증번호 8자리제한
+    if (e.target.value.length <= 4) {
+      setJoinInfo({ ...joinInfo, accreditNum: e.target.value });
+    }
+  };
   return (
     <div className={style['outer-container']}>
       <Nav />
@@ -217,8 +308,10 @@ const Join = () => {
             <div className={[style['join-form-item'], style['margin-top50']].join(' ')}>
               <div className={style['join-form-subitem2']}>
                 <input
+                  type={'text'}
                   value={joinInfo.name}
                   placeholder={'이름'}
+                  id={'join-info-name'}
                   onChange={(e) => setJoinInfo({ ...joinInfo, name: e.target.value })}
                 />
               </div>
@@ -230,6 +323,7 @@ const Join = () => {
                 <input
                   type={'number'}
                   placeholder={'생년월일(YYYYMMDD)'}
+                  id={'join-info-birth'}
                   value={joinInfo.birth}
                   onChange={joinBirthCheck}
                   maxLength={8}
@@ -250,6 +344,7 @@ const Join = () => {
                   placeholder={'통신사 선택'}
                   value={selectVal}
                   className={style['join-form-select']}
+                  id={'join-info-agency'}
                   onClick={() => {
                     setSelected(!selected);
                   }}
@@ -290,25 +385,38 @@ const Join = () => {
             {/* 아이템 */}
             <div className={style['join-form-item']}>
               <div className={style['join-form-subitem1']}>
-                <input value={joinInfo.phone} placeholder={'전화번호 입력'} />
-                <button className={style['join-check']}>인증번호 전송</button>
+                <input
+                  value={joinInfo.phone}
+                  placeholder={'전화번호 입력'}
+                  onChange={(e) => setJoinInfo({ ...joinInfo, phone: e.target.value })}
+                />
+                <button className={style['join-check']} onClick={verifyTransmissionBtn}>
+                  인증번호 전송
+                </button>
               </div>
             </div>
             {/* 아이템 */}
-            <div className={style['join-form-item']}>
-              <div className={style['join-form-subitem1']}>
-                <input value={joinInfo.accreditNum} placeholder={'인증번호 4자리 입력'} />
-                <button className={style['join-check']}>확인</button>
+            <div>
+              <div className={style['join-form-item']}>
+                <div className={style['join-form-subitem1']}>
+                  <input
+                    value={joinInfo.accreditNum}
+                    placeholder={'인증번호 4자리 입력'}
+                    type={'number'}
+                    onChange={(e) => verifyLengthChk(e)}
+                    maxLength={4}
+                  />
+                  <button className={style['join-check']} onClick={verifyConfirmBtn}>
+                    확인
+                  </button>
+                </div>
               </div>
+              <span className={style['verify-message']}>{verifyMessage}</span>
+              <span className={style['fail-verify-message']}>{failVerifyMessage}</span>
+              <span className={style['fail-verify-num-message']}>{failVerifyNumMessage}</span>
             </div>
             {/* 아이템 */}
             <div className={[style['join-form-item'], style['margin-top50']].join(' ')}>
-              <div className={style['join-form-subitem2']}>
-                <input value={joinInfo.address} placeholder={'주소'} />
-              </div>
-            </div>
-            {/* 아이템 */}
-            <div className={style['join-form-item']}>
               <div className={style['join-form-subitem3']}>
                 <input
                   value={joinInfo.email1}
@@ -333,6 +441,7 @@ const Join = () => {
                   rows="300"
                   placeholder={'학생 소개를 간단히 작성해주세요.'}
                   value={joinInfo.info}
+                  onChange={(e) => setJoinInfo({ ...joinInfo, info: e.target.value })}
                 ></textarea>
               </div>
             </div>
