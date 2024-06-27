@@ -74,7 +74,7 @@
   margin-top: 40px;
 }
 .profile-info-item1 {
-  width: 70%;
+  width: 75%;
   margin: 10px 0;
 }
 .profile-info-name span {
@@ -112,7 +112,7 @@
   transition: border 0.4s;
   padding: 1px 2px 1px 10px;
   color: #666666;
-  margin-left: 30px;
+  margin-left: 54px;
 }
 .profile-info-email input:focus {
   outline: none;
@@ -159,6 +159,9 @@
 .profile-info-address input:focus {
   outline: none;
   border: 1px solid #82d3ac;
+}
+.profile-info-activity {
+  float: right;
 }
 .profile-info-activity span {
   font-weight: bold;

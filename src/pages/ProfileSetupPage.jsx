@@ -84,13 +84,7 @@ const ProfileSetupPage = () => {
                   <span>보호가족</span>
                   <input type={'text'} />
                 </span>
-                <span className={style['profile-info-address']}>
-                  <span>주소</span>
-                  <input type={'text'} />
-                </span>
-              </div>
-              <div>
-                <div className={style['profile-info-activity']}>
+                <span className={style['profile-info-activity']}>
                   <span>활동 공개</span>
                   <input
                     type={'text'}
@@ -120,7 +114,7 @@ const ProfileSetupPage = () => {
                       </li>
                     </ul>
                   ) : null}
-                </div>
+                </span>
               </div>
               <div className={style['profile-info-item1']}>
                 <div className={style['profile-info-introduce']}>

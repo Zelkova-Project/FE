@@ -97,7 +97,7 @@
 .follow-btn-wrap {
   position: absolute;
   right: 0;
-  transform: translate(-100px, -80px);
+  transform: translate(-80px, -80px);
 }
 .unfollow-btn {
   width: 85px;
@@ -107,7 +107,6 @@
   color: black;
   border-radius: 10px;
   font-size: 14px;
-  margin-left: 45px;
   cursor: pointer;
 }
 .follow-btn {
@@ -118,7 +117,6 @@
   color: #ffffff;
   border-radius: 10px;
   font-size: 14px;
-  margin-left: 45px;
   cursor: pointer;
 }
 .profile-board {

@@ -43,9 +43,10 @@ const LoginPage = () => {
     const left = window.screenX + (window.outerWidth - width) / 2;
     const top = window.screenY + (window.outerHeight - height) / 2;
 
-    let _kakaowindow = window.open('/api/oauth2/authorization/kakao',
-      "kakako-",
-      `width=${width},height=${height},left=${left},top=${top}`
+    let _kakaowindow = window.open(
+      '/api/oauth2/authorization/kakao',
+      'kakako-',
+      `width=${width},height=${height},left=${left},top=${top}`,
     );
 
     intervalId.current = setInterval(() => {
@@ -53,7 +54,7 @@ const LoginPage = () => {
 
       const childcookie = _kakaowindow.document.cookie;
       const parentcookie = document.cookie;
-      
+
       const [_key1, val1] = childcookie.split('=');
       const [_key2, val2] = parentcookie.split('=');
 
@@ -61,14 +62,12 @@ const LoginPage = () => {
         navigate('/');
         _kakaowindow.close();
       }
-      
     }, 4000);
   };
 
   useEffect(() => {
     return () => clearInterval(intervalId.current);
-
-  })
+  });
 
   const imgObj = {
     googleLogin: require('../imgs/login/구글로그인.png'),
