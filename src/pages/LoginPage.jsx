@@ -14,7 +14,8 @@ const LoginPage = () => {
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [isNormalLogin, setIsNormalLogin] = useState(false);
-  const [loginInfo, setLoginInfo] = useState({ loginId: '', password: '' });
+  const [loginId, setLoginId] = useState('');
+  const [loginPw, setLoginPw] = useState('');
 
   const joinMember = async () => {
     let param = {
@@ -80,15 +81,15 @@ const LoginPage = () => {
   };
   const goNormalLogin = async () => {
     let formData = new FormData();
-    formData.append('loginId', loginInfo.loginId);
-    formData.append('password', loginInfo.password);
+    formData.append('loginId', loginId);
+    formData.append('password', loginPw);
 
     let { status, message, error } = await axios.post('/login', formData);
 
     if (!error) {
       navigate('/');
       setLogin(true);
-      setUserInfo(loginInfo);
+      setUserInfo(loginId);
     } else {
       let [key, val] = Object.entries(message)[0];
       let msgMap = {
@@ -145,7 +146,7 @@ const LoginPage = () => {
                   id={'user-id'}
                   className={'user-id'}
                   autoComplete={'off'}
-                  onChange={(e) => setLoginInfo({ ...loginInfo, loginId: e.target.value })}
+                  onChange={(e) => setLoginId(e.target.value)}
                   placeholder={'아이디'}
                 />
               </div>
@@ -157,7 +158,7 @@ const LoginPage = () => {
                     className={'user-pw'}
                     type="password"
                     onKeyDown={(e) => activeEnter(e)}
-                    onChange={(e) => setLoginInfo({ ...loginInfo, password: e.target.value })}
+                    onChange={(e) => setLoginPw(e.target.value)}
                     placeholder={'비밀번호'}
                   />
                 </div>

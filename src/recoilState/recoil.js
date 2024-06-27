@@ -30,6 +30,7 @@ const pageState = atom({
 const userInfoState = atom({
   key: 'user',
   default: {},
+  effects_UNSTABLE: [persistAtom],
 });
 
 const activeInfoState = atom({
