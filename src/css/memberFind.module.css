@@ -105,7 +105,7 @@
   position: absolute;
   font-size: 12px;
   margin-top: 5px;
-  transform: translateX(-175px);
+  transform: translateX(-180px);
 }
 .find-name {
   margin-top: 30px;
@@ -258,7 +258,18 @@
   color: #666666;
   margin-bottom: 40px;
 }
+.pw-modal-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #666666;
+  margin-bottom: 60px;
+}
 .modal-text1 {
+  color: #666666;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+.pw-modal-text1 {
   color: #666666;
   font-size: 15px;
   margin-bottom: 5px;
@@ -284,6 +295,16 @@
   cursor: pointer;
 }
 .modal-login {
+  width: 180px;
+  height: 40px;
+  margin-left: 2px;
+  border-radius: 10px;
+  background-color: #82d3ac;
+  border: 1px solid #82d3ac;
+  color: #ffffff;
+  cursor: pointer;
+}
+.pw-modal-login {
   width: 180px;
   height: 40px;
   margin-left: 2px;

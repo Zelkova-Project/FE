@@ -4,23 +4,30 @@ import Footer from '../components/Footer';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import axios from '../axios/axiosInstance';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 
 const Join = () => {
+  const intervalId = useRef(); // 소셜 로그인
+
   // 통신사 select
   const [selected, setSelected] = useState(false);
   const [selectVal, setSelectVal] = useState('');
+
+  // 아이디 중복체크 버튼
+  const [idCheckBtn, setIdCheckBtn] = useState(false);
 
   // 아이디,비번 체크메세지(성공,실패)
   const [idFailMessage, setIdFailMessage] = useState('');
   const [idSuccessMessage, setIdSuccessMessage] = useState('');
   const [pwFailMessage, setPwFailMessage] = useState('');
   const [pwSuccessMessage, setPwSuccessMessage] = useState('');
+  // 폰 인증
   const [verifyMessage, setVerifyMessage] = useState(''); // 인증번호 발송 메세지
   const [failVerifyMessage, setFailVerifyMessage] = useState(''); // 인증번호 전송버튼 오류시
   const [failVerifyNumMessage, setFailVerifyNumMessage] = useState(''); // 인증번호 확인 오류시
   const [verifyBtn, setVerifyBtn] = useState(false); // 인증번호 전송버튼 클릭체크
   const [verifyNumBtn, setVerifyNumBtn] = useState(false); // 인증번호 확인 클릭체크
+
   const [joinInfo, setJoinInfo] = useState({
     login_id: '',
     password: '',
@@ -43,16 +50,39 @@ const Join = () => {
     kakaoLoginIcon: require('../imgs/login/카카오로그인아이콘.png'),
     // select: require('/select.png'),
   };
-  let Rest_api_key = '41d2a43168a7edd9f941329667a65ef4';
-  let redirect_uri = 'http://localhost:3000/oauth';
-  let url = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`;
 
   // 카카오 로그인
-  const kakaoLogin = () => {
-    window.location.href = url;
-    const code = new URL(window.location.href).searchParams.get('code');
-    console.log('code : ', code);
+  const kakaoLogin = async () => {
+    const width = 500; // 팝업의 가로 길이: 500
+    const height = 640; // 팝업의 세로 길이 : 500
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
+
+    let _kakaowindow = window.open(
+      '/api/oauth2/authorization/kakao',
+      'kakako-',
+      `width=${width},height=${height},left=${left},top=${top}`,
+    );
+
+    intervalId.current = setInterval(() => {
+      if (!_kakaowindow?.document) return;
+
+      const childcookie = _kakaowindow.document.cookie;
+      const parentcookie = document.cookie;
+
+      const [_key1, val1] = childcookie.split('=');
+      const [_key2, val2] = parentcookie.split('=');
+
+      if (val1 == val2) {
+        navigate('/');
+        _kakaowindow.close();
+      }
+    }, 4000);
   };
+
+  useEffect(() => {
+    return () => clearInterval(intervalId.current);
+  });
 
   const goBack = () => {
     navigate(-1);
@@ -60,17 +90,15 @@ const Join = () => {
   //TODO: 유효성검사
   const goJoin = async () => {
     let param = {
-      login_id: '',
-      password: '',
-      password_check: '',
-      name: '',
-      birth: '',
-      agency: '',
-      phone: '',
-      accreditNum: '',
-      email1: '',
-      email2: '',
-      info: '',
+      login_id: joinInfo.login_id,
+      password: joinInfo.password,
+      name: joinInfo.name,
+      birth: joinInfo.birth,
+      // agency: '',  보류
+      // phone: '', 보류
+      // accreditNum: '', 보류
+      email: joinInfo.email1 + '@' + joinInfo.email2,
+      info: joinInfo.info,
       // nickname: '',
     };
 
@@ -99,6 +127,11 @@ const Join = () => {
       setIdSuccessMessage(null);
       return false;
     }
+    if (idCheckBtn === false) {
+      setIdFailMessage('아이디 중복확인을 해주세요.');
+      setIdSuccessMessage(null);
+      return false;
+    }
     if (joinInfo.password === '' || joinInfo.password === null) {
       setPwFailMessage('비밀번호를 입력해주세요.');
       setPwSuccessMessage(null);
@@ -110,18 +143,22 @@ const Join = () => {
       return false;
     }
     if (joinInfo.name === '' || joinInfo.name === null) {
-      document.getElementById('join-info-name').style.border = '1px solid #ff8888';
+      setFailVerifyMessage('개인 정보가 맞지 않습니다. 다시 입력해 주세요.');
       return false;
-    } else {
-      document.getElementById('join-info-name').style.border = '1px solid #ffffff';
     }
-    if (joinInfo.birth === '' || joinInfo.birth === null) {
-      document.getElementById('join-info-birth').style.border = '1px solid #ff8888';
+    if (joinInfo.birth === '' || joinInfo.birth === null || joinInfo.birth.length !== 8) {
+      setFailVerifyMessage('개인 정보가 맞지 않습니다. 다시 입력해 주세요.');
       return false;
-    } else if (joinInfo.birth.length !== 8) {
-      document.getElementById('join-info-birth').style.border = '1px solid #ff8888';
-    } else {
-      document.getElementById('join-info-birth').style.border = '1px solid #ffffff';
+    }
+    if (verifyBtn === false) {
+      setFailVerifyMessage('인증번호 전송 버튼을 눌러주세요.');
+      setVerifyMessage(null);
+      return false;
+    }
+    if (verifyNumBtn === false) {
+      setFailVerifyMessage('인증번호 확인 버튼을 눌러주세요.');
+      setVerifyMessage(null);
+      return false;
     }
 
     let { status, message } = await axios.post('/signup', param);
@@ -137,14 +174,21 @@ const Join = () => {
     setSelected(!selected);
     setJoinInfo({ ...joinInfo, agency: index });
   };
+
+  const joinIdInfo = (e) => {
+    setJoinInfo({ ...joinInfo, login_id: e.target.value });
+    setIdCheckBtn(false);
+  };
   const joinIdCheck = (e) => {
     const idRegex = /^[a-zA-Z](?=.*\d)[a-zA-Z0-9]{6,}$/;
     if (e.target.value === '') {
       setIdFailMessage('아이디를 입력해주세요.');
       setIdSuccessMessage(null);
+      return false;
     } else if (!idRegex.test(e.target.value)) {
       setIdFailMessage('영문, 숫자가 포함된 7자리 이상의 아이디를 만들어 주세요.');
       setIdSuccessMessage(null);
+      return false;
     } else {
       setJoinInfo(e.target.value);
       setIdSuccessMessage(null);
@@ -157,7 +201,7 @@ const Join = () => {
       setIdSuccessMessage(null);
       return false;
     }
-    const idRegex = /^[a-zA-Z](?=.*\d)[a-zA-Z0-9]{6,}$/;
+    const idRegex = /^[a-zA-Z](?=.*\d)[a-zA-Z0-9]{7,}$/;
     if (!idRegex.test(joinInfo.login_id)) {
       setIdFailMessage('영문, 숫자가 포함된 7자리 이상의 아이디를 만들어 주세요.');
       setIdSuccessMessage(null);
@@ -173,22 +217,30 @@ const Join = () => {
         if (response.data.possible === true) {
           setIdSuccessMessage('사용가능한 아이디 입니다.');
           setIdFailMessage(null);
+          setIdCheckBtn(true);
         } else {
           setIdFailMessage('중복된 아이디입니다.');
           setIdSuccessMessage(null);
+          return false;
         }
       })
       .catch(function (error) {
         // 에러 핸들링
         console.log(error);
-      });
+      })
+      .then(function (response) {});
   };
   const joinPwCheck = (e) => {
     // const pwRegex =  /^[a-zA-Z0-9](?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{6,}$/
-    const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z0-9@$!%*#?&]{6,}$/;
+    const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z0-9@$!%*#?&]{7,}$/;
     if (!pwRegex.test(e.target.value)) {
       setPwFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
       setPwSuccessMessage(null);
+      return false;
+    } else if (e.target.value !== joinInfo.password_check && joinInfo.password_check !== '') {
+      setPwFailMessage('비밀번호 확인이 일치하지 않습니다.');
+      setPwSuccessMessage(null);
+      return false;
     } else {
       setPwFailMessage(null);
       setPwSuccessMessage(null);
@@ -198,6 +250,7 @@ const Join = () => {
     if (e.target.value !== joinInfo.password) {
       setPwFailMessage('비밀번호 확인이 일치하지 않습니다.');
       setPwSuccessMessage(null);
+      return false;
     } else {
       setPwFailMessage(null);
       setPwSuccessMessage('사용가능한 비밀번호 입니다.');
@@ -221,9 +274,9 @@ const Join = () => {
     }
   };
   const verifyConfirmBtn = () => {
-    if (joinInfo.accreditNum === '') {
+    if (joinInfo.accreditNum === '' || joinInfo.accreditNum.length !== 4) {
       // 인증번호칸이 빈칸일 경우 + 인증번호가 틀릴시
-      setFailVerifyNumMessage('인증번호가 맞지 않습니다. 다시 입력해 주세요.');
+      setFailVerifyNumMessage('인증번호를 입력해주세요.');
       return false;
     } else {
       setFailVerifyNumMessage(null);
@@ -258,10 +311,11 @@ const Join = () => {
                 <input
                   value={joinInfo.login_id}
                   placeholder={'아이디'}
+                  autoComplete={'off'}
                   onChange={(e) => {
                     // setJoinInfo({...joinInfo, login_id: e.target.value});
                     joinIdCheck(e);
-                    setJoinInfo({ ...joinInfo, login_id: e.target.value });
+                    joinIdInfo(e);
                   }}
                 />
                 <button className={style['join-check']} onClick={idCheck}>
@@ -311,6 +365,7 @@ const Join = () => {
                   type={'text'}
                   value={joinInfo.name}
                   placeholder={'이름'}
+                  autoComplete={'off'}
                   id={'join-info-name'}
                   onChange={(e) => setJoinInfo({ ...joinInfo, name: e.target.value })}
                 />
@@ -324,6 +379,7 @@ const Join = () => {
                   type={'number'}
                   placeholder={'생년월일(YYYYMMDD)'}
                   id={'join-info-birth'}
+                  autoComplete={'off'}
                   value={joinInfo.birth}
                   onChange={joinBirthCheck}
                   maxLength={8}
@@ -343,6 +399,7 @@ const Join = () => {
                   type={'text'}
                   placeholder={'통신사 선택'}
                   value={selectVal}
+                  autoComplete={'off'}
                   className={style['join-form-select']}
                   id={'join-info-agency'}
                   onClick={() => {
@@ -388,6 +445,7 @@ const Join = () => {
                 <input
                   value={joinInfo.phone}
                   placeholder={'전화번호 입력'}
+                  autoComplete={'off'}
                   onChange={(e) => setJoinInfo({ ...joinInfo, phone: e.target.value })}
                 />
                 <button className={style['join-check']} onClick={verifyTransmissionBtn}>
@@ -403,6 +461,7 @@ const Join = () => {
                     value={joinInfo.accreditNum}
                     placeholder={'인증번호 4자리 입력'}
                     type={'number'}
+                    autoComplete={'off'}
                     onChange={(e) => verifyLengthChk(e)}
                     maxLength={4}
                   />
@@ -421,6 +480,7 @@ const Join = () => {
                 <input
                   value={joinInfo.email1}
                   type="email"
+                  autoComplete={'off'}
                   placeholder={'이메일 (선택사항)'}
                   onChange={(e) => setJoinInfo({ ...joinInfo, email1: e.target.value })}
                 />{' '}
@@ -428,6 +488,7 @@ const Join = () => {
                 <input
                   value={joinInfo.email2}
                   type="email"
+                  autoComplete={'off'}
                   placeholder={'이메일 (선택사항)'}
                   onChange={(e) => setJoinInfo({ ...joinInfo, email2: e.target.value })}
                 />
@@ -440,6 +501,7 @@ const Join = () => {
                   cols="30"
                   rows="300"
                   placeholder={'학생 소개를 간단히 작성해주세요.'}
+                  autoComplete={'off'}
                   value={joinInfo.info}
                   onChange={(e) => setJoinInfo({ ...joinInfo, info: e.target.value })}
                 ></textarea>
@@ -462,7 +524,11 @@ const Join = () => {
 
               <div className={style['social-join']}>
                 <div>
-                  <img src={imgObj.kakaoLoginIcon} onClick={kakaoLogin} alt={'카카오 로그인'} />
+                  <img
+                    src={imgObj.kakaoLoginIcon}
+                    onClick={() => kakaoLogin()}
+                    alt={'카카오 로그인'}
+                  />
                 </div>
                 <div>
                   <img src={imgObj.googleLogin} alt={'구글 로그인'} />
@@ -472,7 +538,7 @@ const Join = () => {
               <div className={style['join-options']}>
                 <ul className={style['options-ul']}>
                   <li>회원가입</li>
-                  <li onClick={() => navigate('/MemberFind')}>아이디 / 비밀번호 찾기</li>
+                  <li onClick={() => navigate('/MemberFind')}>아이디 찾기 / 비밀번호 바꾸기</li>
                   <li onClick={() => navigate('/chat')}>문의하기</li>
                 </ul>
               </div>

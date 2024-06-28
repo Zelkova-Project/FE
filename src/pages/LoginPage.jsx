@@ -39,7 +39,7 @@ const LoginPage = () => {
   // 카카오 로그인
   const kakaoLogin = async () => {
     const width = 500; // 팝업의 가로 길이: 500
-    const height = 400; // 팝업의 세로 길이 : 500
+    const height = 640; // 팝업의 세로 길이 : 500
     const left = window.screenX + (window.outerWidth - width) / 2;
     const top = window.screenY + (window.outerHeight - height) / 2;
 
@@ -189,7 +189,7 @@ const LoginPage = () => {
         <div className="login-options">
           <ul className="options-ul">
             <li onClick={() => navigate('/join')}>회원가입</li>
-            <li onClick={() => navigate('/MemberFind')}>아이디 / 비밀번호 찾기</li>
+            <li onClick={() => navigate('/MemberFind')}>아이디 찾기 / 비밀번호 바꾸기</li>
             <li onClick={() => navigate('/chat')}>문의하기</li>
           </ul>
         </div>

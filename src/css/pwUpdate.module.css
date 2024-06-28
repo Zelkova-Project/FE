@@ -1,100 +1,100 @@
 .pw-update-title {
-    color: #333333;
-    font-weight: bold;
-    text-align: left;
-    margin: 40px 0 30px 0;
-    font-size: 18px;
+  color: #333333;
+  font-weight: bold;
+  text-align: left;
+  margin: 40px 0 30px 0;
+  font-size: 18px;
 }
 .pw-update-form div:first-child {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .pw-update-form input {
-    font-family: inherit;
-    font-size: 16px;
-    border-radius: 8px;
-    border: 1px solid #f2f2f2;
-    /* border-color: #F2F2F2; */
-    width: 356px;
-    height: 40px;
-    transition: border 0.4s;
-    padding: 1px 2px 1px 10px;
+  font-family: inherit;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #f2f2f2;
+  /* border-color: #F2F2F2; */
+  width: 356px;
+  height: 40px;
+  transition: border 0.4s;
+  padding: 1px 2px 1px 10px;
 }
 .pw-update-form input::placeholder {
-    color: rgba(128, 128, 128, 0.6);
+  color: rgba(128, 128, 128, 0.6);
 }
 .pw-update-form input:focus {
-    outline: none;
-    border: 1px solid #4ebba0;
+  outline: none;
+  border: 1px solid #4ebba0;
 }
 .pw-update-btn {
-    border: none;
-    background: #82d3ac;
-    color: #ffffff;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 16px;
-    width: 370px;
-    height: 40px;
-    font-family: inherit;
-    cursor: pointer;
-    transform: translateY(100px);
+  border: none;
+  background: #82d3ac;
+  color: #ffffff;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  width: 370px;
+  height: 40px;
+  font-family: inherit;
+  cursor: pointer;
+  transform: translateY(100px);
 }
 
 .modal-wrap {
-    text-align: center;
-    font-family: 'PretendardVariable';
+  text-align: center;
+  font-family: 'PretendardVariable';
 }
 .modal-wrap .modal-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #666666;
-    margin-bottom: 40px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #666666;
+  margin-bottom: 40px;
 }
 .modal-wrap .modal-text1 {
-    color: #666666;
-    font-size: 15px;
-    margin-bottom: 5px;
+  color: #666666;
+  font-size: 15px;
+  margin-bottom: 5px;
 }
 .modal-wrap .modal-text2 {
-    color: #666666;
-    font-size: 15px;
+  color: #666666;
+  font-size: 15px;
 }
 .modal-wrap .modal-text2 span {
-    color: #82d3ac;
-    font-weight: 700;
+  color: #82d3ac;
+  font-weight: 700;
 }
 .modal-button-wrap {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 .modal-button-wrap .modal-close {
-    width: 180px;
-    height: 40px;
-    margin-right: 2px;
-    border-radius: 10px;
-    border: 1px solid #82d3ac;
-    background-color: #ffffff;
-    cursor: pointer;
+  width: 180px;
+  height: 40px;
+  margin-right: 2px;
+  border-radius: 10px;
+  border: 1px solid #82d3ac;
+  background-color: #ffffff;
+  cursor: pointer;
 }
 .modal-button-wrap .modal-login {
-    width: 180px;
-    height: 40px;
-    margin-left: 2px;
-    border-radius: 10px;
-    background-color: #82d3ac;
-    border: 1px solid #82d3ac;
-    color: #ffffff;
-    cursor: pointer;
+  width: 180px;
+  height: 40px;
+  margin-left: 2px;
+  border-radius: 10px;
+  background-color: #82d3ac;
+  border: 1px solid #82d3ac;
+  color: #ffffff;
+  cursor: pointer;
 }
 .success-message {
-    color: #7CA9ED;
-    position: absolute;
-    font-size: 12px;
-    margin: 4px 0 0 2px;
+  color: #7ca9ed;
+  position: absolute;
+  font-size: 12px;
+  margin: 4px 0 0 2px;
 }
 .fail-message {
-    color: #ff8888;
-    position: absolute;
-    font-size: 12px;
-    margin: 4px 0 0 2px;
+  color: #ff8888;
+  position: absolute;
+  font-size: 12px;
+  margin: 4px 0 0 2px;
 }
