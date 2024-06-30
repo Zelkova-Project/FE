@@ -88,9 +88,9 @@ const NoticeDetailPage = () => {
     </div>
   );
 
-  result.push(댓글);
-  result.push(댓글);
-  result.push(댓글);
+  // result.push(댓글);
+  // result.push(댓글);
+  // result.push(댓글);
 
   // state, hooks 영역끝
 
@@ -100,7 +100,7 @@ const NoticeDetailPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let { status, data, message } = await axios.get('/posts/' + id);
+        let { status, data, message } = await axios.get('/posts/detail/' + id);
         setPostDetail(data.post_info_response);
 
         setLoading(false);

@@ -26,7 +26,7 @@ const LoginPage = () => {
       email: 'ggggg@naver.com',
     };
     let { status } = await axios.post('/signup', param);
-    let { status2 } = await axios.get('/posts', {
+    let { status2 } = await axios.get('/posts/board', {
       page: 1,
       size: 10,
     });

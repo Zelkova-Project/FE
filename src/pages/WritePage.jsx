@@ -46,7 +46,7 @@ const WritePage = () => {
   };
 
   const getBoard = async () => {
-    let { status, data, message } = await axios.get('/posts?page=0&size=10');
+    let { status, data, message } = await axios.get('/posts/board?page=0&size=10');
     if (status != 200 && status != 201) {
       alert(message);
       return;
@@ -70,49 +70,11 @@ const WritePage = () => {
   };
 
   return (
-    // <div className="main-container">
-    //   <Nav />
-    //   <Section>
-    //     <div className="guide-img-container">
-    //       <div className="img-title">
-    //         {/* <h3>{subtit}</h3> */}
-    //       </div>
-    //       <img className="main-img" src={getMainImg()} alt="main-section"></img>
-
-    //       <div className="sub-nav-wrapper">
-    //         <div className="sub-nav">
-    //           <ul>
-    //             <li>
-    //               <span onClick={() => activeHandler(0)} className={navIdx == 0 ? 'active' : ''}>
-    //                 공지사항
-    //               </span>
-    //             </li>
-    //             <li>
-    //               <span
-    //                 onClick={() => activeHandler(1)}
-    //                 className={navIdx == 1 ? 'active-wide' : ''}
-    //               >
-    //                 가정통신문
-    //               </span>
-    //             </li>
-    //             <li>
-    //               <span onClick={() => activeHandler(2)} className={navIdx == 2 ? 'active' : ''}>
-    //                 채용안내
-    //               </span>
-    //             </li>
-    //           </ul>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </Section>
     <>
       {/* 글쓰기영역시작 */}
       <PageLayout pageName={activeInfo.activePage} bodySlot={<WriteBody />} />
       {/* 글쓰기영역끝 */}
     </>
-
-    // <Footer />
-    // </div>
   );
 };
 

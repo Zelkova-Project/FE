@@ -35,7 +35,7 @@ const Table = () => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          let { status, data, message } = await axios.get('/posts?page=0&size=10');
+          let { status, data, message } = await axios.get('/posts/board?page=0&size=10');
           setPostList(data.content);
           setLoading(false);
         } catch (error) {

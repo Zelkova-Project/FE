@@ -82,7 +82,7 @@ const WriteBody = () => {
   }, [activeInfo.activeIdx]);
 
   const getBoard = async () => {
-    let { status, data, message } = await axios.get('/posts?page=0&size=10');
+    let { status, data, message } = await axios.get('/posts/board?page=0&size=10');
     if (status != 200 && status != 201) {
       alert(message);
       return;
@@ -145,11 +145,6 @@ const WriteBody = () => {
           <div className="write-flexItem mt-50">
             <div className="write-textArea">
               <h3>내용작성</h3>
-              {/* <textarea
-                cols="40"
-                rows="40"
-                onChange={(e) => setPostInfo({ ...postInfo, content: e.target.value })}
-              ></textarea> */}
               <ReactQuill
                 style={{
                   width: '1080px',
