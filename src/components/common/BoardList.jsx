@@ -61,11 +61,12 @@ const BoardList = ({ boardList }) => {
     let result = [];
     // TODO: 글의 페이징만큼 만들어야함
     let dummyArr = Array.from({ length: 10 }, (_, idx) => idx + 1);
-    result = dummyArr.map((item) => {
+    result = dummyArr.map((item, idx) => {
       return (
         <li
           onClick={() => setActivePageNum(item)}
           className={activePageNum == item ? 'active' : ''}
+          key={idx}
         >
           {item}
         </li>

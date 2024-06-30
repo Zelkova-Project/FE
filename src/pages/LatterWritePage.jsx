@@ -72,36 +72,36 @@ const LatterWrite = () => {
           </div>
 
           <div className={style['write-item']}>
-              <div className={[style['write-txt'], style['activity-txt']].join(' ')}>
-                <h3>게시 여부</h3>
-                <input
-                  type={'text'}
-                  placeholder={'공개'}
-                  value={writeActivitySelectVal}
-                  autoComplete={'off'}
-                  className={style['activity-select']}
-                  onClick={() => {
-                    setWriteActivitySelected(!writeActivitySelected);
-                  }}
-                />
-                <img
-                  src={'/select.png'}
-                  alt={'select'}
-                  className={style['activity-select-img']}
-                  onClick={() => {
-                    setWriteActivitySelected(!writeActivitySelected);
-                  }}
-                />
-                {writeActivitySelected ? (
-                  <ul className={style['activity-option']}>
-                    <li className={style['option']} onClick={() => activitySelectValue('공개')}>
-                      공개
-                    </li>
-                    <li className={style['option']} onClick={() => activitySelectValue('비공개')}>
-                      비공개
-                    </li>
-                  </ul>
-                ) : null}
+            <div className={[style['write-txt'], style['activity-txt']].join(' ')}>
+              <h3>게시 여부</h3>
+              <input
+                type={'text'}
+                placeholder={'공개'}
+                value={writeActivitySelectVal}
+                autoComplete={'off'}
+                className={style['activity-select']}
+                onClick={() => {
+                  setWriteActivitySelected(!writeActivitySelected);
+                }}
+              />
+              <img
+                src={'/select.png'}
+                alt={'select'}
+                className={style['activity-select-img']}
+                onClick={() => {
+                  setWriteActivitySelected(!writeActivitySelected);
+                }}
+              />
+              {writeActivitySelected ? (
+                <ul className={style['activity-option']}>
+                  <li className={style['option']} onClick={() => activitySelectValue('공개')}>
+                    공개
+                  </li>
+                  <li className={style['option']} onClick={() => activitySelectValue('비공개')}>
+                    비공개
+                  </li>
+                </ul>
+              ) : null}
             </div>
             <div className={[style['write-txt'], style['ml-40']].join(' ')}>
               <label>

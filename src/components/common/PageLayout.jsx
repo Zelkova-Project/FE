@@ -24,6 +24,8 @@ const PageLayout = ({ pageName, bodySlot }) => {
     community: ['커뮤니티'],
   };
 
+  const activeClass = pageName == 'guide' ? 'active2' : 'active';
+
   let useTitleList = subTitle[activeInfo.activePage]; // 부모에서 사용하는 subtitle 리스트
 
   const settingActiveInfo = (idx) => {
@@ -40,7 +42,7 @@ const PageLayout = ({ pageName, bodySlot }) => {
       result.push(
         <li
           onClick={() => settingActiveInfo(idx)}
-          className={activeInfo.activeIdx == idx ? 'active2' : ''}
+          className={activeInfo.activeIdx == idx ? activeClass : ''}
           key={idx}
         >
           <span>{item}</span>

@@ -11,8 +11,8 @@ const PwUpdatePage = () => {
   const [pwCheckFailMessage, setPwCheckFailMessage] = useState(''); // 실패 메세지
   const [pwCheckModal, setPwCheckModal] = useState(false); // 비밀번호 변경 완료 모달
   const [pwCheckVal, setPwCheckVal] = useState({
-    pwInfo :'',
-    pwReInfo :''
+    pwInfo: '',
+    pwReInfo: '',
   });
 
   const pwCheckModalStyle = {

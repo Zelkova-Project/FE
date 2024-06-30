@@ -2,12 +2,13 @@ import '../css/nav.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-import { loginState } from '../recoilState/recoil';
+import { loginState, userInfoState } from '../recoilState/recoil';
 import { useRecoilState } from 'recoil';
 import React, { useState, useEffect } from 'react';
 
 const Nav = () => {
   const [login, setLogin] = useRecoilState(loginState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [isHovering, setIsHovering] = useState(false);
 
   const navigate = useNavigate();
@@ -82,7 +83,6 @@ const Nav = () => {
               <ul className={'menu-hover'}>
                 <li onClick={() => logoutHandler()}>로그아웃</li>
                 <li onClick={() => navigate('/LatterWrite')}>후기작성</li>
-
               </ul>
             </div>
           ) : null}
@@ -122,7 +122,7 @@ const Nav = () => {
           <li className={'profile'} onClick={() => navigate('/Profile')}>
             <label>
               <span>
-                <span className={'profile-txt'}>성한결</span>님
+                <span className={'profile-txt'}>{userInfo}</span>님
               </span>
               <div className={'profile-img'}>
                 <img src={'/default-profile-img.png'} alt={'프로필 사진'} />
