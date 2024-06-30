@@ -78,7 +78,9 @@
   font-size: 18px;
   font-weight: 500;
 }
-
+.notail-comment-list-item-main-area {
+  width: 1080px;
+}
 /* 댓글영역 - 작성 */
 .notail-write-area {
   margin-top: 20px;
@@ -92,6 +94,13 @@
 .notail-write-comment-input,
 .notail-write-comment-register-btn {
   margin-left: 10px;
+  cursor: pointer;
+}
+
+.notail-write-profile-img img {
+  width: 48px;
+  height: 48px;
+  border-radius: 30px;
 }
 
 .notail-write-comment-input {
@@ -126,6 +135,7 @@
   font-size: 16px;
   font-weight: 600;
   color: #fff;
+  cursor: pointer;
 }
 
 /* 댓글리스트영역 */
@@ -186,6 +196,12 @@
 
 .notail-comment-like-count p {
   color: #a6a6a6;
+}
+
+.notail-comment-list-item-profile img {
+  width: 48px;
+  height: 48px;
+  border-radius: 30px;
 }
 
 /* 이전글다음글 */

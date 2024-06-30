@@ -3,10 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from '../axios/axiosInstance';
 
+import { activeInfoState } from '../recoilState/recoil';
+import { useRecoilState } from 'recoil';
+
 const Table = () => {
   const [postList, setPostList] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const [activeInfo, setActiveInfo] = useRecoilState(activeInfoState);
 
   const tableComponent = () => {
     const makeTableTr = () => {
@@ -17,9 +22,7 @@ const Table = () => {
             <tr
               className="common-table-tr2"
               key={idx}
-              onClick={() =>
-                navigate(`/noticeDetail/${postList[idx].no}`, { state: postList[idx] })
-              }
+              onClick={() => navigate(`/detail/${activeInfo.activePage}/${postList[idx].no}`)}
             >
               <td>{postList[idx].no}</td>
               <td>{postList[idx].title}</td>

@@ -5,7 +5,7 @@ import ReactQuill from 'react-quill';
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { activeInfoState } from '../../recoilState/recoil';
+import { activeInfoState, userInfoState } from '../../recoilState/recoil';
 
 import subTitMap from '../common/data/subtitData';
 
@@ -16,6 +16,7 @@ import '../../css/write.css';
 const WriteBody = () => {
   const navigate = useNavigate();
   const [activeInfo, setActiveInfo] = useRecoilState(activeInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const [subtit, setSubtit] = useState('');
   const [writeInfo, setWriteInfo] = useState({});
@@ -88,8 +89,7 @@ const WriteBody = () => {
       return;
     }
     let postList = data.content;
-
-    navigate('/noticeDetail/' + postList[0].no);
+    navigate(`/detail/${activeInfo.activePage}/${postList[0].no}`);
   };
 
   const goWrite = async () => {
@@ -103,6 +103,13 @@ const WriteBody = () => {
 
     console.log(status);
     getBoard();
+  };
+
+  const setContent = (e) => {
+    setPostInfo({
+      ...postInfo,
+      content: e,
+    });
   };
 
   return (
@@ -120,7 +127,7 @@ const WriteBody = () => {
           <div className="write-flexItem">
             <div className="write-flexSub">
               <h3>작성자</h3>
-              <input></input>
+              <input value={userInfo} readOnly></input>
             </div>
             <div className="write-flexSub ml-40">
               <h3>작성일</h3>
@@ -152,7 +159,7 @@ const WriteBody = () => {
                   border: '1px solid #F2F2F2',
                   borderRadius: '8px',
                 }}
-                onChange={setValue}
+                onChange={(e) => setContent(e)}
                 modules={modules}
               />
             </div>

@@ -52,8 +52,7 @@ const WritePage = () => {
       return;
     }
     let postList = data.content;
-
-    navigate('/noticeDetail/' + postList[0].no);
+    navigate(`/detail/${activeInfo.pageName}/${postList[0].no}`);
   };
 
   const goWrite = async () => {

@@ -4,13 +4,14 @@ import Section from '../../components/Section';
 import Table from '../../components/Table';
 
 import { useNavigate } from 'react-router-dom';
-import { activeInfoState } from '../../recoilState/recoil';
+import { activeInfoState, userInfoState } from '../../recoilState/recoil';
 import { useRecoilValue } from 'recoil';
 
 import subTitMap from '../common/data/subtitData';
 
 const BoardList = ({ boardList }) => {
   const activeInfo = useRecoilValue(activeInfoState);
+  const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
 
   const imgObj = {
@@ -76,6 +77,15 @@ const BoardList = ({ boardList }) => {
     return result;
   };
 
+  const goWrite = () => {
+    if (Object.keys(userInfo).length == 0) {
+      alert('회원만 글쓰기 가능합니다.');
+      return;
+    }
+
+    navigate('/write');
+  };
+
   useEffect(() => {
     let _subtit = subTitMap[activeInfo.activePage][activeInfo.activePage];
     setActiveSubtit(_subtit);
@@ -131,7 +141,7 @@ const BoardList = ({ boardList }) => {
 
             {/* 글쓰기버튼 */}
             <div className="page-btn-write">
-              <button onClick={() => navigate('/write')}>글쓰기</button>
+              <button onClick={() => goWrite()}>글쓰기</button>
             </div>
           </div>
         </div>

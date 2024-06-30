@@ -19,6 +19,7 @@ const MemberFind = lazy(() => import('../pages/MemberFindPage'));
 const Profile = lazy(() => import('../pages/ProfilePage'));
 const ProfileSetup = lazy(() => import('../pages/ProfileSetupPage'));
 const Board = lazy(() => import('../components/common/BoardPage'));
+const BoardDetail = lazy(() => import('../components/common/BoardDetailPage'));
 const LatterWrite = lazy(() => import('../pages/LatterWritePage'));
 
 const root = createBrowserRouter([
@@ -155,6 +156,14 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <Board />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/detail/:boardName/:bid',
+    element: (
+      <Suspense fallback={Loading}>
+        <BoardDetail />
       </Suspense>
     ),
   },
