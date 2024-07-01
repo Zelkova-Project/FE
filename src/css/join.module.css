@@ -170,6 +170,11 @@
   border-radius: 8px;
   color: #ffffff;
 }
+.message {
+  min-width: 300px;
+  height: 10px;
+  position: absolute;
+}
 .verify-message {
   color: #a6a6a6;
   position: absolute;

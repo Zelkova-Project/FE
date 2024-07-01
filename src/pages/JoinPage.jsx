@@ -144,12 +144,54 @@ const Join = () => {
     }
     if (joinInfo.name === '' || joinInfo.name === null) {
       setFailVerifyMessage('개인 정보가 맞지 않습니다. 다시 입력해 주세요.');
+      document.getElementById('join-info-name').style.border='1px solid #ff8888';
+      setVerifyMessage(null);
       return false;
+    }else{
+      setFailVerifyMessage(null);
+      document.getElementById('join-info-name').style.border='1px solid #f2f2f2';
+      setVerifyMessage(null);
     }
     if (joinInfo.birth === '' || joinInfo.birth === null || joinInfo.birth.length !== 8) {
       setFailVerifyMessage('개인 정보가 맞지 않습니다. 다시 입력해 주세요.');
+      document.getElementById('join-info-birth').style.border='1px solid #ff8888';
+      setVerifyMessage(null);
       return false;
+    }else {
+      setFailVerifyMessage(null);
+      document.getElementById('join-info-birth').style.border='1px solid #f2f2f2';
+      setVerifyMessage(null);
     }
+    if (joinInfo.agency === '' || joinInfo.agency === null) {
+      setFailVerifyMessage('개인 정보가 맞지 않습니다. 다시 입력해 주세요.');
+      document.getElementById('join-info-agency').style.border = '1px solid #ff8888';
+      setVerifyMessage(null);
+      return false;
+    }else {
+      setFailVerifyMessage(null);
+      document.getElementById('join-info-agency').style.border = '1px solid #f2f2f2';
+      setVerifyMessage(null);
+    }
+    // if (joinInfo.phone === '' || joinInfo.phone === null) {
+    //   setFailVerifyMessage('가입된 전화번호가 아닙니다. 다시 입력해 주세요.');
+    //   document.getElementById('join-info-phone').style.border = '1px solid #ff8888';
+    //   setVerifyMessage(null);
+    //   return false;
+    // }else {
+    //   setFailVerifyMessage(null);
+    //   document.getElementById('join-info-phone').style.border = '1px solid #f2f2f2';
+    //   setVerifyMessage(null);
+    // }
+    // if (joinInfo.accreditNum === '' || joinInfo.accreditNum === null || joinInfo.accreditNum.length !== 4) {
+    //   setFailVerifyNumMessage('인증 번호가 맞지 않습니다. 다시 입력해 주세요.');
+    //   document.getElementById('accreditNum').style.border = '1px solid #ff8888';
+    //   setVerifyMessage(null);
+    //   return false;
+    // }else {
+    //   setFailVerifyNumMessage(null);
+    //   document.getElementById('accreditNum').style.border = '1px solid #f2f2f2';
+    //   setVerifyMessage(null);
+    // }
     if (verifyBtn === false) {
       setFailVerifyMessage('인증번호 전송 버튼을 눌러주세요.');
       setVerifyMessage(null);
@@ -163,7 +205,7 @@ const Join = () => {
 
     let { status, message } = await axios.post('/signup', param);
 
-    if (status == 200 || status == 201) {
+    if (status === 200 || status === 201) {
       navigate('/');
     } else {
       // alert(message);
@@ -197,12 +239,14 @@ const Join = () => {
   };
   const idCheck = async () => {
     if (joinInfo.login_id === '' || joinInfo.login_id === null) {
+      document.getElementById('join-info-id').style.border='1px solid #ff8888';
       setIdFailMessage('아이디를 입력해주세요.');
       setIdSuccessMessage(null);
       return false;
     }
-    const idRegex = /^[a-zA-Z](?=.*\d)[a-zA-Z0-9]{7,}$/;
+    const idRegex = /^[a-zA-Z](?=.*\d)[a-zA-Z0-9]{6,}$/;
     if (!idRegex.test(joinInfo.login_id)) {
+      document.getElementById('join-info-id').style.border='1px solid #ff8888';
       setIdFailMessage('영문, 숫자가 포함된 7자리 이상의 아이디를 만들어 주세요.');
       setIdSuccessMessage(null);
       return false;
@@ -210,48 +254,59 @@ const Join = () => {
     let loginParam = {
       loginId: joinInfo.login_id,
     };
-    await axios
-      .get(`/accounts/availability?loginId=${loginParam.loginId}`)
-      .then(function (response) {
+    const res = await axios.get(`/accounts/availability?loginId=${loginParam.loginId}`);
         // 성공 핸들링
-        if (response.data.possible === true) {
+      try {
+        if (res.data.possible === true) {
+          document.getElementById('join-info-id').style.border = '1px solid #f2f2f2';
           setIdSuccessMessage('사용가능한 아이디 입니다.');
           setIdFailMessage(null);
           setIdCheckBtn(true);
         } else {
+          document.getElementById('join-info-id').style.border = '1px solid #ff8888';
           setIdFailMessage('중복된 아이디입니다.');
           setIdSuccessMessage(null);
           return false;
         }
-      })
-      .catch(function (error) {
-        // 에러 핸들링
-        console.log(error);
-      })
-      .then(function (response) {});
+      }catch (error) {
+        console.log(error)
+      }
   };
   const joinPwCheck = (e) => {
     // const pwRegex =  /^[a-zA-Z0-9](?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{6,}$/
     const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z0-9@$!%*#?&]{7,}$/;
     if (!pwRegex.test(e.target.value)) {
+      document.getElementById('join-info-pw').style.border='1px solid #ff8888';
       setPwFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
       setPwSuccessMessage(null);
       return false;
     } else if (e.target.value !== joinInfo.password_check && joinInfo.password_check !== '') {
+      document.getElementById('join-info-pw').style.border='1px solid #ff8888';
       setPwFailMessage('비밀번호 확인이 일치하지 않습니다.');
       setPwSuccessMessage(null);
       return false;
-    } else {
+    } else if(e.target.value !== joinInfo.password_check && joinInfo.password_check === '') {
+      document.getElementById('join-info-pw').style.border='1px solid #f2f2f2';
       setPwFailMessage(null);
       setPwSuccessMessage(null);
+      return false
+    } else if(pwRegex.test(e.target.value) && e.target.value === joinInfo.password_check){
+      document.getElementById('join-info-pw').style.border='1px solid #f2f2f2';
+      document.getElementById('join-info-re-pw').style.border='1px solid #f2f2f2';
+      setPwFailMessage(null);
+      setPwSuccessMessage('사용가능한 비밀번호 입니다.');
+      setJoinInfo({ ...joinInfo, password: e.target.value });
     }
   };
   const joinPwReCheck = (e) => {
     if (e.target.value !== joinInfo.password) {
+      document.getElementById('join-info-re-pw').style.border='1px solid #ff8888';
       setPwFailMessage('비밀번호 확인이 일치하지 않습니다.');
       setPwSuccessMessage(null);
       return false;
     } else {
+      document.getElementById('join-info-pw').style.border='1px solid #f2f2f2';
+      document.getElementById('join-info-re-pw').style.border='1px solid #f2f2f2';
       setPwFailMessage(null);
       setPwSuccessMessage('사용가능한 비밀번호 입니다.');
     }
@@ -264,21 +319,28 @@ const Join = () => {
   };
   const verifyTransmissionBtn = () => {
     if (joinInfo.phone === '') {
+      document.getElementById('join-info-phone').style.border='1px solid #ff8888';
       setFailVerifyMessage('가입된 전화번호가 아닙니다. 다시 입력해 주세요.');
       setVerifyMessage(null);
       return false;
     } else {
+      document.getElementById('join-info-phone').style.border='1px solid #f2f2f2';
       setVerifyMessage('인증번호가 오지 않나요?');
       setFailVerifyMessage(null);
       setVerifyBtn(true);
     }
   };
   const verifyConfirmBtn = () => {
-    if (joinInfo.accreditNum === '' || joinInfo.accreditNum.length !== 4) {
+    if(verifyBtn === false) {
+      setFailVerifyMessage('인증 번호전송 버튼을 눌러주세요');
+    }else if (joinInfo.accreditNum === '' || joinInfo.accreditNum.length !== 4) {
       // 인증번호칸이 빈칸일 경우 + 인증번호가 틀릴시
-      setFailVerifyNumMessage('인증번호를 입력해주세요.');
+      setFailVerifyNumMessage('인증 번호가 맞지 않습니다. 다시 입력해 주세요.');
+      document.getElementById('accreditNum').style.border='1px solid #ff8888';
+      document.getElementById('accreditNum').focus();
       return false;
     } else {
+      document.getElementById('accreditNum').style.border='1px solid #f2f2f2';
       setFailVerifyNumMessage(null);
       setFailVerifyMessage(null);
       setVerifyNumBtn(true);
@@ -312,6 +374,7 @@ const Join = () => {
                   value={joinInfo.login_id}
                   placeholder={'아이디'}
                   autoComplete={'off'}
+                  id={'join-info-id'}
                   onChange={(e) => {
                     // setJoinInfo({...joinInfo, login_id: e.target.value});
                     joinIdCheck(e);
@@ -333,6 +396,7 @@ const Join = () => {
                 <input
                   value={joinInfo.password}
                   placeholder={'비밀번호'}
+                  id={'join-info-pw'}
                   type="password"
                   onChange={(e) => {
                     joinPwCheck(e);
@@ -348,6 +412,7 @@ const Join = () => {
                 <input
                   value={joinInfo.password_check}
                   placeholder={'비밀번호 확인'}
+                  id={'join-info-re-pw'}
                   type="password"
                   onChange={(e) => {
                     joinPwReCheck(e);
@@ -445,6 +510,7 @@ const Join = () => {
                 <input
                   value={joinInfo.phone}
                   placeholder={'전화번호 입력'}
+                  id={'join-info-phone'}
                   autoComplete={'off'}
                   onChange={(e) => setJoinInfo({ ...joinInfo, phone: e.target.value })}
                 />
@@ -461,6 +527,7 @@ const Join = () => {
                     value={joinInfo.accreditNum}
                     placeholder={'인증번호 4자리 입력'}
                     type={'number'}
+                    id={'accreditNum'}
                     autoComplete={'off'}
                     onChange={(e) => verifyLengthChk(e)}
                     maxLength={4}
@@ -470,9 +537,11 @@ const Join = () => {
                   </button>
                 </div>
               </div>
-              <span className={style['verify-message']}>{verifyMessage}</span>
-              <span className={style['fail-verify-message']}>{failVerifyMessage}</span>
-              <span className={style['fail-verify-num-message']}>{failVerifyNumMessage}</span>
+              <div className={style['message']}>
+                <span className={style['verify-message']}>{verifyMessage}</span>
+                <span className={style['fail-verify-message']}>{failVerifyMessage}</span>
+                <span className={style['fail-verify-num-message']}>{failVerifyNumMessage}</span>
+              </div>
             </div>
             {/* 아이템 */}
             <div className={[style['join-form-item'], style['margin-top50']].join(' ')}>
