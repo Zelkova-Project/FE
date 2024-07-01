@@ -189,7 +189,7 @@ const LoginPage = () => {
         <div className="login-options">
           <ul className="options-ul">
             <li onClick={() => navigate('/join')}>회원가입</li>
-            <li onClick={() => navigate('/MemberFind')}>아이디 찾기 / 비밀번호 바꾸기</li>
+            <li onClick={() => navigate('/memberFind')}>아이디 찾기 / 비밀번호 바꾸기</li>
             <li onClick={() => navigate('/chat')}>문의하기</li>
           </ul>
         </div>

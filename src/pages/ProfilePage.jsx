@@ -181,7 +181,7 @@ const ProfilePage = () => {
                   alt={'프로필사진'}
                 />
                 <div className={style['profile-setup']}>
-                  <img src={'setup.png'} alt={'설정'} onClick={() => navigate('/ProfileSetup')} />
+                  <img src={'setup.png'} alt={'설정'} onClick={() => navigate('/profileSetup')} />
                 </div>
               </div>
               <div className={style['profile-name']}>

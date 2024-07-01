@@ -128,7 +128,7 @@ const root = createBrowserRouter([
     ),
   },
   {
-    path: '/MemberFind',
+    path: '/memberFind',
     element: (
       <Suspense fallback={Loading}>
         <MemberFind />
@@ -136,7 +136,7 @@ const root = createBrowserRouter([
     ),
   },
   {
-    path: '/Profile',
+    path: '/profile',
     element: (
       <Suspense fallback={Loading}>
         <Profile />
@@ -144,7 +144,7 @@ const root = createBrowserRouter([
     ),
   },
   {
-    path: '/ProfileSetup',
+    path: '/profileSetup',
     element: (
       <Suspense fallback={Loading}>
         <ProfileSetup />
@@ -168,7 +168,7 @@ const root = createBrowserRouter([
     ),
   },
   {
-    path: '/LatterWrite',
+    path: '/latterWrite',
     element: (
       <Suspense fallback={Loading}>
         <LatterWrite />

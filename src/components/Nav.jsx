@@ -42,6 +42,7 @@ const Nav = () => {
     console.log('logoutHandler');
     localStorage.removeItem('loginMember');
     deleteCookie('X-XSRF-Token');
+    navigate('/')
     location.reload();
   };
 
@@ -82,7 +83,7 @@ const Nav = () => {
             <div className="login-menu">
               <ul className={'menu-hover'}>
                 <li onClick={() => logoutHandler()}>로그아웃</li>
-                <li onClick={() => navigate('/LatterWrite')}>후기작성</li>
+                <li onClick={() => navigate('/latterWrite')}>후기작성</li>
               </ul>
             </div>
           ) : null}
@@ -119,7 +120,7 @@ const Nav = () => {
             <a>로그인</a>
           </li>
         ) : (
-          <li className={'profile'} onClick={() => navigate('/Profile')}>
+          <li className={'profile'} onClick={() => navigate('/profile')}>
             <label>
               <span>
                 <span className={'profile-txt'}>{userInfo ? userInfo : '방문자'}</span>
