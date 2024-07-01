@@ -9,6 +9,8 @@ import '../../css/noticeDetail.css';
 
 import axios from '../../axios/axiosInstance';
 
+import * as DOMPurify from 'dompurify';
+
 const BoardDetailBody = () => {
   const { bid } = useParams();
   const navigate = useNavigate();
@@ -92,7 +94,19 @@ const BoardDetailBody = () => {
         <div className="notail-content-section">
           <div className="notail-content">
             <h2>{postDetail && postDetail.title}</h2>
-            <p>{postDetail && postDetail.content}</p>
+            <p>
+              {postDetail && (
+                <div
+                  style={{
+                    width: '60vw',
+                    whiteSpace: 'normal',
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(String(postDetail?.content)),
+                  }}
+                />
+              )}
+            </p>
           </div>
         </div>
 

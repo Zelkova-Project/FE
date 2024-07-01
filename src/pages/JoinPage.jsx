@@ -144,22 +144,22 @@ const Join = () => {
     }
     if (joinInfo.name === '' || joinInfo.name === null) {
       setFailVerifyMessage('개인 정보가 맞지 않습니다. 다시 입력해 주세요.');
-      document.getElementById('join-info-name').style.border='1px solid #ff8888';
+      document.getElementById('join-info-name').style.border = '1px solid #ff8888';
       setVerifyMessage(null);
       return false;
-    }else{
+    } else {
       setFailVerifyMessage(null);
-      document.getElementById('join-info-name').style.border='1px solid #f2f2f2';
+      document.getElementById('join-info-name').style.border = '1px solid #f2f2f2';
       setVerifyMessage(null);
     }
     if (joinInfo.birth === '' || joinInfo.birth === null || joinInfo.birth.length !== 8) {
       setFailVerifyMessage('개인 정보가 맞지 않습니다. 다시 입력해 주세요.');
-      document.getElementById('join-info-birth').style.border='1px solid #ff8888';
+      document.getElementById('join-info-birth').style.border = '1px solid #ff8888';
       setVerifyMessage(null);
       return false;
-    }else {
+    } else {
       setFailVerifyMessage(null);
-      document.getElementById('join-info-birth').style.border='1px solid #f2f2f2';
+      document.getElementById('join-info-birth').style.border = '1px solid #f2f2f2';
       setVerifyMessage(null);
     }
     if (joinInfo.agency === '' || joinInfo.agency === null) {
@@ -167,7 +167,7 @@ const Join = () => {
       document.getElementById('join-info-agency').style.border = '1px solid #ff8888';
       setVerifyMessage(null);
       return false;
-    }else {
+    } else {
       setFailVerifyMessage(null);
       document.getElementById('join-info-agency').style.border = '1px solid #f2f2f2';
       setVerifyMessage(null);
@@ -239,14 +239,14 @@ const Join = () => {
   };
   const idCheck = async () => {
     if (joinInfo.login_id === '' || joinInfo.login_id === null) {
-      document.getElementById('join-info-id').style.border='1px solid #ff8888';
+      document.getElementById('join-info-id').style.border = '1px solid #ff8888';
       setIdFailMessage('아이디를 입력해주세요.');
       setIdSuccessMessage(null);
       return false;
     }
     const idRegex = /^[a-zA-Z](?=.*\d)[a-zA-Z0-9]{6,}$/;
     if (!idRegex.test(joinInfo.login_id)) {
-      document.getElementById('join-info-id').style.border='1px solid #ff8888';
+      document.getElementById('join-info-id').style.border = '1px solid #ff8888';
       setIdFailMessage('영문, 숫자가 포함된 7자리 이상의 아이디를 만들어 주세요.');
       setIdSuccessMessage(null);
       return false;
@@ -255,44 +255,44 @@ const Join = () => {
       loginId: joinInfo.login_id,
     };
     const res = await axios.get(`/accounts/availability?loginId=${loginParam.loginId}`);
-        // 성공 핸들링
-      try {
-        if (res.data.possible === true) {
-          document.getElementById('join-info-id').style.border = '1px solid #f2f2f2';
-          setIdSuccessMessage('사용가능한 아이디 입니다.');
-          setIdFailMessage(null);
-          setIdCheckBtn(true);
-        } else {
-          document.getElementById('join-info-id').style.border = '1px solid #ff8888';
-          setIdFailMessage('중복된 아이디입니다.');
-          setIdSuccessMessage(null);
-          return false;
-        }
-      }catch (error) {
-        console.log(error)
+    // 성공 핸들링
+    try {
+      if (res.data.possible === true) {
+        document.getElementById('join-info-id').style.border = '1px solid #f2f2f2';
+        setIdSuccessMessage('사용가능한 아이디 입니다.');
+        setIdFailMessage(null);
+        setIdCheckBtn(true);
+      } else {
+        document.getElementById('join-info-id').style.border = '1px solid #ff8888';
+        setIdFailMessage('중복된 아이디입니다.');
+        setIdSuccessMessage(null);
+        return false;
       }
+    } catch (error) {
+      console.log(error);
+    }
   };
   const joinPwCheck = (e) => {
     // const pwRegex =  /^[a-zA-Z0-9](?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{6,}$/
     const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z0-9@$!%*#?&]{7,}$/;
     if (!pwRegex.test(e.target.value)) {
-      document.getElementById('join-info-pw').style.border='1px solid #ff8888';
+      document.getElementById('join-info-pw').style.border = '1px solid #ff8888';
       setPwFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
       setPwSuccessMessage(null);
       return false;
     } else if (e.target.value !== joinInfo.password_check && joinInfo.password_check !== '') {
-      document.getElementById('join-info-pw').style.border='1px solid #ff8888';
+      document.getElementById('join-info-pw').style.border = '1px solid #ff8888';
       setPwFailMessage('비밀번호 확인이 일치하지 않습니다.');
       setPwSuccessMessage(null);
       return false;
-    } else if(e.target.value !== joinInfo.password_check && joinInfo.password_check === '') {
-      document.getElementById('join-info-pw').style.border='1px solid #f2f2f2';
+    } else if (e.target.value !== joinInfo.password_check && joinInfo.password_check === '') {
+      document.getElementById('join-info-pw').style.border = '1px solid #f2f2f2';
       setPwFailMessage(null);
       setPwSuccessMessage(null);
-      return false
-    } else if(pwRegex.test(e.target.value) && e.target.value === joinInfo.password_check){
-      document.getElementById('join-info-pw').style.border='1px solid #f2f2f2';
-      document.getElementById('join-info-re-pw').style.border='1px solid #f2f2f2';
+      return false;
+    } else if (pwRegex.test(e.target.value) && e.target.value === joinInfo.password_check) {
+      document.getElementById('join-info-pw').style.border = '1px solid #f2f2f2';
+      document.getElementById('join-info-re-pw').style.border = '1px solid #f2f2f2';
       setPwFailMessage(null);
       setPwSuccessMessage('사용가능한 비밀번호 입니다.');
       setJoinInfo({ ...joinInfo, password: e.target.value });
@@ -300,13 +300,13 @@ const Join = () => {
   };
   const joinPwReCheck = (e) => {
     if (e.target.value !== joinInfo.password) {
-      document.getElementById('join-info-re-pw').style.border='1px solid #ff8888';
+      document.getElementById('join-info-re-pw').style.border = '1px solid #ff8888';
       setPwFailMessage('비밀번호 확인이 일치하지 않습니다.');
       setPwSuccessMessage(null);
       return false;
     } else {
-      document.getElementById('join-info-pw').style.border='1px solid #f2f2f2';
-      document.getElementById('join-info-re-pw').style.border='1px solid #f2f2f2';
+      document.getElementById('join-info-pw').style.border = '1px solid #f2f2f2';
+      document.getElementById('join-info-re-pw').style.border = '1px solid #f2f2f2';
       setPwFailMessage(null);
       setPwSuccessMessage('사용가능한 비밀번호 입니다.');
     }
@@ -319,28 +319,28 @@ const Join = () => {
   };
   const verifyTransmissionBtn = () => {
     if (joinInfo.phone === '') {
-      document.getElementById('join-info-phone').style.border='1px solid #ff8888';
+      document.getElementById('join-info-phone').style.border = '1px solid #ff8888';
       setFailVerifyMessage('가입된 전화번호가 아닙니다. 다시 입력해 주세요.');
       setVerifyMessage(null);
       return false;
     } else {
-      document.getElementById('join-info-phone').style.border='1px solid #f2f2f2';
+      document.getElementById('join-info-phone').style.border = '1px solid #f2f2f2';
       setVerifyMessage('인증번호가 오지 않나요?');
       setFailVerifyMessage(null);
       setVerifyBtn(true);
     }
   };
   const verifyConfirmBtn = () => {
-    if(verifyBtn === false) {
+    if (verifyBtn === false) {
       setFailVerifyMessage('인증 번호전송 버튼을 눌러주세요');
-    }else if (joinInfo.accreditNum === '' || joinInfo.accreditNum.length !== 4) {
+    } else if (joinInfo.accreditNum === '' || joinInfo.accreditNum.length !== 4) {
       // 인증번호칸이 빈칸일 경우 + 인증번호가 틀릴시
       setFailVerifyNumMessage('인증 번호가 맞지 않습니다. 다시 입력해 주세요.');
-      document.getElementById('accreditNum').style.border='1px solid #ff8888';
+      document.getElementById('accreditNum').style.border = '1px solid #ff8888';
       document.getElementById('accreditNum').focus();
       return false;
     } else {
-      document.getElementById('accreditNum').style.border='1px solid #f2f2f2';
+      document.getElementById('accreditNum').style.border = '1px solid #f2f2f2';
       setFailVerifyNumMessage(null);
       setFailVerifyMessage(null);
       setVerifyNumBtn(true);

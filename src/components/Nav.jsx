@@ -42,7 +42,7 @@ const Nav = () => {
     console.log('logoutHandler');
     localStorage.removeItem('loginMember');
     deleteCookie('X-XSRF-Token');
-    navigate('/')
+    navigate('/');
     location.reload();
   };
 

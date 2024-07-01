@@ -143,11 +143,9 @@ const CommunityBody = () => {
             </div>
 
             {/* 글쓰기버튼 */}
-            {isAdmin && (
-              <div className="page-btn-write">
-                <button onClick={() => navigate('/write')}>글쓰기</button>
-              </div>
-            )}
+            <div className="page-btn-write">
+              <button onClick={() => navigate('/write')}>글쓰기</button>
+            </div>
           </div>
         </div>
       </div>

@@ -39,7 +39,7 @@ const BoardList = ({ boardList }) => {
 
             <input placeholder="검색어를 입력해주세요" />
 
-            <button onClick={() => navigate('/write')}>검색</button>
+            <button>검색</button>
           </div>
         </div>
       </>
