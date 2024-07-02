@@ -1,7 +1,8 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import LoadingPage from '../components/Loading.jsx'
 
-const Loading = <div>Loading...</div>;
+const Loading = <LoadingPage/>;
 const Main = lazy(() => import('../pages/MainPage'));
 const Login = lazy(() => import('../pages/LoginPage'));
 const NoticeDetail = lazy(() => import('../pages/NoticeDetailPage'));
