@@ -332,7 +332,7 @@ const Join = () => {
       setVerifyMessage('인증번호가 오지 않나요?');
       setFailVerifyMessage(null);
       setVerifyBtn(true);
-      handleStart()
+      handleStart();
     }
   };
   const verifyConfirmBtn = () => {
@@ -347,7 +347,7 @@ const Join = () => {
     } else {
       document.getElementById('accreditNum').style.border = '1px solid #f2f2f2';
       setIsRunning(false);
-      document.getElementById('timer').style.display='none';
+      document.getElementById('timer').style.display = 'none';
       setFailVerifyNumMessage(null);
       setFailVerifyMessage(null);
       setVerifyNumBtn(true);
@@ -373,10 +373,10 @@ const Join = () => {
         if (seconds === 0) {
           setMinutes((prevMinutes) => prevMinutes - 1);
           setSeconds(59);
-        } else if(minutes === 0 && seconds === 1) {
+        } else if (minutes === 0 && seconds === 1) {
           setIsRunning(false);
-          document.getElementById('timer').style.display='none';
-        } else{
+          document.getElementById('timer').style.display = 'none';
+        } else {
           setSeconds((prevSeconds) => prevSeconds - 1);
         }
       }, 1000);
@@ -386,7 +386,7 @@ const Join = () => {
 
   const handleStart = () => {
     setIsRunning(true);
-    document.getElementById('timer').style.display='block';
+    document.getElementById('timer').style.display = 'block';
   };
 
   const handleReset = () => {

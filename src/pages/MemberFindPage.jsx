@@ -1,7 +1,7 @@
 import style from '../css/memberFind.module.css';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import axios from '../axios/axiosInstance';
 import React, { useEffect, useRef, useState } from 'react';
@@ -167,7 +167,7 @@ const MemberFindPage = () => {
       return false;
     } else {
       setIsIdRunning(false);
-      document.getElementById('id-timer').style.display='none';
+      document.getElementById('id-timer').style.display = 'none';
       document.getElementById('id-verify').style.border = '1px solid #f2f2f2';
       setIdFailVerifyNumMessage(null);
       setIdFailVerifyMessage(null);
@@ -246,7 +246,7 @@ const MemberFindPage = () => {
       return false;
     } else {
       setIsPwRunning(false);
-      document.getElementById('pw-timer').style.display='none';
+      document.getElementById('pw-timer').style.display = 'none';
       document.getElementById('pw-verify').style.border = '1px solid #f2f2f2';
       setPwFailVerifyNumMessage(null);
       setPwFailVerifyMessage(null);
@@ -327,10 +327,10 @@ const MemberFindPage = () => {
         if (idSeconds === 0) {
           setIdMinutes((prevIdMinutes) => prevIdMinutes - 1);
           setIdSeconds(59);
-        } else if(idMinutes === 0 && idSeconds === 1) {
+        } else if (idMinutes === 0 && idSeconds === 1) {
           setIsIdRunning(false);
-          document.getElementById('id-timer').style.display='none';
-        } else{
+          document.getElementById('id-timer').style.display = 'none';
+        } else {
           setIdSeconds((prevIdSeconds) => prevIdSeconds - 1);
         }
       }, 1000);
@@ -339,26 +339,26 @@ const MemberFindPage = () => {
   }, [isIdRunning, idSeconds]);
 
   useEffect(() => {
-      let interval;
-      if (isPwRunning) {
-        interval = setInterval(() => {
-          if (pwSeconds === 0) {
-            setPwMinutes((prevPwMinutes) => prevPwMinutes - 1);
-            setPwSeconds(59);
-          } else if(pwMinutes === 0 && pwSeconds === 1) {
-            setIsPwRunning(false);
-            document.getElementById('pw-timer').style.display='none';
-          } else{
-            setPwSeconds((prevPwSeconds) => prevPwSeconds - 1);
-          }
-        }, 1000);
-      }
-      return () => clearInterval(interval);
-    }, [isPwRunning, pwSeconds]);
+    let interval;
+    if (isPwRunning) {
+      interval = setInterval(() => {
+        if (pwSeconds === 0) {
+          setPwMinutes((prevPwMinutes) => prevPwMinutes - 1);
+          setPwSeconds(59);
+        } else if (pwMinutes === 0 && pwSeconds === 1) {
+          setIsPwRunning(false);
+          document.getElementById('pw-timer').style.display = 'none';
+        } else {
+          setPwSeconds((prevPwSeconds) => prevPwSeconds - 1);
+        }
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isPwRunning, pwSeconds]);
 
   const idTimerStart = () => {
     setIsIdRunning(true);
-    document.getElementById('id-timer').style.display='block';
+    document.getElementById('id-timer').style.display = 'block';
   };
 
   const idTimerReset = () => {
@@ -368,9 +368,9 @@ const MemberFindPage = () => {
     idTimerStart();
   };
   const pwTimerStart = () => {
-      setIsPwRunning(true);
-      document.getElementById('pw-timer').style.display='block';
-    };
+    setIsPwRunning(true);
+    document.getElementById('pw-timer').style.display = 'block';
+  };
 
   const pwTimerReset = () => {
     setIsPwRunning(false);
@@ -481,13 +481,13 @@ const MemberFindPage = () => {
             <div className={style['find-item1']}>
               <div className={style['find-sub-item2']}>
                 <input
-                    type={'number'}
-                    placeholder={'인증번호 4자리 입력'}
-                    autoComplete={'off'}
-                    onChange={(e) => idVerifyLengthChk(e)}
-                    id={'id-verify'}
-                    maxLength={4}
-                    value={idFindInfo.verify}
+                  type={'number'}
+                  placeholder={'인증번호 4자리 입력'}
+                  autoComplete={'off'}
+                  onChange={(e) => idVerifyLengthChk(e)}
+                  id={'id-verify'}
+                  maxLength={4}
+                  value={idFindInfo.verify}
                 />
                 <div className={style['id-timer']} id={'id-timer'}>
                   {idMinutes.toString().padStart(2, '0')}:{idSeconds.toString().padStart(2, '0')}
@@ -498,7 +498,9 @@ const MemberFindPage = () => {
               </div>
             </div>
           </div>
-          <span className={style['id-verify-message']} onClick={idTimerReset}>{idVerifyMessage}</span>
+          <span className={style['id-verify-message']} onClick={idTimerReset}>
+            {idVerifyMessage}
+          </span>
           <span className={style['id-fail-verify-message']}>{idFailVerifyMessage}</span>
           <span className={style['id-fail-verify-num-message']}>{idFailVerifyNumMessage}</span>
 
@@ -643,16 +645,17 @@ const MemberFindPage = () => {
                 <div className={style['find-item1']}>
                   <div className={style['find-sub-item2']}>
                     <input
-                        type={'number'}
-                        placeholder={'인증번호 4자리 입력'}
-                        autoComplete={'off'}
-                        id={'pw-verify'}
-                        onChange={(e) => pwVerifyLengthChk(e)}
-                        maxLength={4}
-                        value={pwFindInfo.verify}
+                      type={'number'}
+                      placeholder={'인증번호 4자리 입력'}
+                      autoComplete={'off'}
+                      id={'pw-verify'}
+                      onChange={(e) => pwVerifyLengthChk(e)}
+                      maxLength={4}
+                      value={pwFindInfo.verify}
                     />
                     <div className={style['pw-timer']} id={'pw-timer'}>
-                      {pwMinutes.toString().padStart(2, '0')}:{pwSeconds.toString().padStart(2, '0')}
+                      {pwMinutes.toString().padStart(2, '0')}:
+                      {pwSeconds.toString().padStart(2, '0')}
                     </div>
                     <button className={style['find-button']} onClick={pwVerifyConfirmBtn}>
                       확인
@@ -660,7 +663,9 @@ const MemberFindPage = () => {
                   </div>
                 </div>
               </div>
-              <span className={style['id-verify-message']} onClick={pwTimerReset}>{pwVerifyMessage}</span>
+              <span className={style['id-verify-message']} onClick={pwTimerReset}>
+                {pwVerifyMessage}
+              </span>
               <span className={style['id-fail-verify-message']}>{pwFailVerifyMessage}</span>
               <span className={style['id-fail-verify-num-message']}>{pwFailVerifyNumMessage}</span>
               <div className={style['find-btn-wrap']}>
@@ -670,7 +675,7 @@ const MemberFindPage = () => {
               </div>
             </div>
           ) : (
-              <PwUpdatePage />
+            <PwUpdatePage />
           )}
           <Modal isOpen={pwFindModalOpen} ariaHideApp={false} style={idModalStyle}>
             <div className={style['modal-wrap']}>
