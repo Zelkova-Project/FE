@@ -107,6 +107,20 @@
   margin-top: 5px;
   transform: translateX(-180px);
 }
+.id-timer {
+  position: absolute;
+  transform: translate(190px, -31px);
+  font-size: 14px;
+  color: #ff8888;
+  display: none;
+}
+.pw-timer {
+  position: absolute;
+  transform: translate(190px, -31px);
+  font-size: 14px;
+  color: #ff8888;
+  display: none;
+}
 .find-name {
   margin-top: 30px;
 }

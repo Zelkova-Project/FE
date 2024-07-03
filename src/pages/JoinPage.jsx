@@ -29,11 +29,9 @@ const Join = () => {
   const [verifyNumBtn, setVerifyNumBtn] = useState(false); // 인증번호 확인 클릭체크
 
   // 타이머
-  const [min, setMin] = useState(0);
-  const [sec, setSec] = useState(5);
-  const time = useRef(5); // useRef hook time 변수 생성, 초 단위로 5분
-  const timerId = useRef(null); // 간격 타이머의 Id 저장
-
+  const [minutes, setMinutes] = useState(1);
+  const [seconds, setSeconds] = useState(59);
+  const [isRunning, setIsRunning] = useState(false);
   const [joinInfo, setJoinInfo] = useState({
     login_id: '',
     password: '',
@@ -334,7 +332,7 @@ const Join = () => {
       setVerifyMessage('인증번호가 오지 않나요?');
       setFailVerifyMessage(null);
       setVerifyBtn(true);
-      startTimer();
+      handleStart()
     }
   };
   const verifyConfirmBtn = () => {
@@ -348,6 +346,8 @@ const Join = () => {
       return false;
     } else {
       document.getElementById('accreditNum').style.border = '1px solid #f2f2f2';
+      setIsRunning(false);
+      document.getElementById('timer').style.display='none';
       setFailVerifyNumMessage(null);
       setFailVerifyMessage(null);
       setVerifyNumBtn(true);
@@ -366,50 +366,35 @@ const Join = () => {
   };
 
   // 타이머
-  const startTimer = () => {
-    document.getElementById('timer').style.display = 'block';
-    timerId.current = setInterval(() => {
-      setMin(parseInt(time.current / 60));
-      setSec(time.current % 60);
-      time.current -= 1; // 남은 시간을 추적하기 위해 1씩 감소
-    }, 1000);
-    return () => clearInterval(timerId.current); // 컴포넌트가 마운트 해제될 때 간격을 지우기 위해 clearInterval 함수 반환
-  };
-
-  // 시간이 0에 도달했을 때 확인
-  // sec 상태 변수가 변경될 때마다 실행
   useEffect(() => {
-    if (time.current <= -1) {
-      // document.getElementById('timer').style.display='none';
-      clearInterval(timerId.current); // 간격지우고 콘솔에 메시지 기록
-      // 타임 아웃을 처리하기 위해 이벤트를 dispatch
+    let interval;
+    if (isRunning) {
+      interval = setInterval(() => {
+        if (seconds === 0) {
+          setMinutes((prevMinutes) => prevMinutes - 1);
+          setSeconds(59);
+        } else if(minutes === 0 && seconds === 1) {
+          setIsRunning(false);
+          document.getElementById('timer').style.display='none';
+        } else{
+          setSeconds((prevSeconds) => prevSeconds - 1);
+        }
+      }, 1000);
     }
-  }, [sec]);
-  const verifyMsg = () => {
-    setMin(0);
-    setSec(5);
-    timerId.current = setInterval(() => {
-      setMin(parseInt(time.current / 60));
-      setSec(time.current % 60);
-      time.current -= 1; // 남은 시간을 추적하기 위해 1씩 감소
-    }, 1000);
-    return () => clearInterval(timerId.current); // 컴포넌트가 마운트 해제될 때 간격을 지우기 위해 clearInterval 함수 반환
-  };
-  // stop 후 다시 시작
-  // const startTimer = () => {
-  //   time.current = min * 60 + sec;
-  //   timerId.current = setInterval(() => {
-  //     setMin(parseInt(time.current / 60));
-  //     setSec(time.current % 60);
-  //     time.current -= 1;
-  //   }, 1000);
-  // };
-  //
-  // // setInterval()를 멈추기 위한 clearInterval() 호출
-  // const stopTimer = () => {
-  //   clearInterval(timerId.current);
-  // };
+    return () => clearInterval(interval);
+  }, [isRunning, seconds]);
 
+  const handleStart = () => {
+    setIsRunning(true);
+    document.getElementById('timer').style.display='block';
+  };
+
+  const handleReset = () => {
+    setIsRunning(false);
+    setMinutes(1);
+    setSeconds(59);
+    handleStart();
+  };
   return (
     <div className={style['outer-container']}>
       <Nav />
@@ -505,12 +490,6 @@ const Join = () => {
               </div>
             </div>
             {/*아이템 */}
-            {/*<div className={style["join-form-item"]}>*/}
-            {/*  <div className={style["join-form-subitem2"]}>*/}
-            {/*    <input value={joinInfo.phone} placeholder={'전화번호'}/>*/}
-            {/*  </div>*/}
-            {/*</div>*/}
-            {/*아이템 */}
             <div className={style['join-form-item']}>
               <div className={style['join-form-subitem2']}>
                 <input
@@ -586,7 +565,7 @@ const Join = () => {
                     maxLength={4}
                   />
                   <div className={style['timer']} id={'timer'}>
-                    {min} : {sec}
+                    {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
                   </div>
                   <button className={style['join-check']} onClick={verifyConfirmBtn}>
                     확인
@@ -594,7 +573,7 @@ const Join = () => {
                 </div>
               </div>
               <div className={style['message']}>
-                <span className={style['verify-message']} onClick={verifyMsg}>
+                <span className={style['verify-message']} onClick={handleReset}>
                   {verifyMessage}
                 </span>
                 <span className={style['fail-verify-message']}>{failVerifyMessage}</span>
