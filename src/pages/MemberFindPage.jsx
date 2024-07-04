@@ -512,7 +512,7 @@ const MemberFindPage = () => {
           <Modal isOpen={idFindModalOpen} ariaHideApp={false} style={idModalStyle}>
             <div className={style['modal-wrap']}>
               <div className={style['modal-title']}>아이디 찾기</div>
-              <div className={style['modal-text1']}>성한결 님의 아이디는 </div>
+              <div className={style['modal-text1']}>{idFindInfo.name}님의 아이디는 </div>
               <div className={style['modal-text2']}>
                 <span>test11</span> 입니다.
               </div>
