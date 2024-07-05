@@ -8,8 +8,12 @@ const ProfileSetupPage = () => {
   const navigate = useNavigate();
 
   const [activitySelected, setActivitySelected] = useState(false); // 활동공개 창
-  const [activitySelectVal, setActivitySelectVal] = useState('공개'); // 활동공개 값
+  const [activitySelectVal, setActivitySelectVal] = useState('공개'); // 프로필 활동공개 값
   const [fileImgSelected, setFileImgSelected] = useState(null); // 프로필 이미지 변경
+  const [profileName, setProfileName] = useState(''); // 프로필 이름 값
+  const [profileEmail, setProfileEmail] = useState(''); // 프로필 이메일 값
+  const [profileFamily, setProfileFamily] = useState(''); // 프로필 보호가족 값
+  const [profileIntroduce, setProfileIntroduce] = useState(''); // 프로필 소개글 값
 
   const activitySelectValue = (index) => {
     setActivitySelectVal(index);
@@ -25,6 +29,33 @@ const ProfileSetupPage = () => {
       };
       reader.readAsDataURL(fileInput);
     }
+  };
+  const profileRegister = () => {
+    if (profileName === '' || profileName === null) {
+      document.getElementById('profile-name').style.border = '1px solid #ff8888';
+      return false;
+    } else {
+      document.getElementById('profile-name').style.border = '1px solid #f2f2f2';
+    }
+    if (profileEmail === '' || profileEmail === null) {
+      document.getElementById('profile-email').style.border = '1px solid #ff8888';
+      return false;
+    } else {
+      document.getElementById('profile-email').style.border = '1px solid #f2f2f2';
+    }
+    if (profileFamily === '' || profileFamily === null) {
+      document.getElementById('profile-family').style.border = '1px solid #ff8888';
+      return false;
+    } else {
+      document.getElementById('profile-family').style.border = '1px solid #f2f2f2';
+    }
+    if (profileIntroduce === '' || profileIntroduce === null) {
+      document.getElementById('profile-introduce').style.border = '1px solid #ff8888';
+      return false;
+    } else {
+      document.getElementById('profile-introduce').style.border = '1px solid #f2f2f2';
+    }
+    console.log('등록 성공');
   };
   return (
     <div>
@@ -72,30 +103,47 @@ const ProfileSetupPage = () => {
               <div className={style['profile-info-item1']}>
                 <span className={style['profile-info-name']}>
                   <span>이름</span>
-                  <input type={'text'} />
+                  <input
+                    type={'text'}
+                    id={'profile-name'}
+                    autoComplete={'off'}
+                    value={profileName}
+                    onChange={(e) => setProfileName(e.target.value.trim())}
+                  />
                 </span>
                 <span className={style['profile-info-email']}>
                   <span>이메일</span>
-                  <input type={'text'} />
+                  <input
+                    type={'text'}
+                    id={'profile-email'}
+                    value={profileEmail}
+                    autoComplete={'off'}
+                    onChange={(e) => setProfileEmail(e.target.value.trim())}
+                  />
                 </span>
               </div>
               <div className={style['profile-info-item1']}>
                 <span className={style['profile-info-family']}>
                   <span>보호가족</span>
-                  <input type={'text'} />
+                  <input
+                    type={'text'}
+                    id={'profile-family'}
+                    value={profileFamily}
+                    autoComplete={'off'}
+                    onChange={(e) => setProfileFamily(e.target.value.trim())}
+                  />
                 </span>
                 <span className={style['profile-info-activity']}>
                   <span>활동 공개</span>
                   <input
                     type={'text'}
-                    placeholder={'공개'}
-                    defaultValue={activitySelectVal}
+                    value={activitySelectVal}
                     autoComplete={'off'}
                     className={style['activity-select']}
                     onClick={() => {
                       setActivitySelected(!activitySelected);
                     }}
-                  ></input>
+                  />
                   <img
                     src={'/select.png'}
                     alt={'select'}
@@ -120,7 +168,11 @@ const ProfileSetupPage = () => {
                 <div className={style['profile-info-introduce']}>
                   <span>소개글 작성</span>
                   <div>
-                    <textarea className={style['introduce']}></textarea>
+                    <textarea
+                      className={style['introduce']}
+                      id={'profile-introduce'}
+                      onChange={(e) => setProfileIntroduce(e.target.value)}
+                    ></textarea>
                   </div>
                 </div>
               </div>
@@ -129,7 +181,9 @@ const ProfileSetupPage = () => {
               <button className={style['profile-cancel']} onClick={() => navigate(-1)}>
                 취소
               </button>
-              <button className={style['profile-register']}>등록</button>
+              <button className={style['profile-register']} onClick={profileRegister}>
+                등록
+              </button>
             </div>
           </div>
         </div>
