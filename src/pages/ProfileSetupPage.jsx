@@ -89,7 +89,7 @@ const ProfileSetupPage = () => {
                   <input
                     type={'text'}
                     placeholder={'공개'}
-                    value={activitySelectVal}
+                    defaultValue={activitySelectVal}
                     autoComplete={'off'}
                     className={style['activity-select']}
                     onClick={() => {
