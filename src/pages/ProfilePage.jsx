@@ -16,6 +16,7 @@ const ProfilePage = () => {
   const [followerModal, setFollowerModal] = useState(false); // 팔로워 모달
   const [reportCategory, setReportCategory] = useState('');
   const [reportCategoryText, setReportCategoryText] = useState('');
+  const [commentWriteTxt, setCommentWriteTxt] = useState('');
 
   const [reportAccept, setReportAccept] = useState('');
 
@@ -163,6 +164,17 @@ const ProfilePage = () => {
   };
   const followerRegster = () => {
     setFollowerModal(false);
+  };
+  const commentWrite = () => {
+    if (commentWriteTxt === '' || commentWriteTxt === null) {
+      document.getElementById('commentWriteTxt').style.border = '1px solid #ff8888';
+      setTimeout(function () {
+        document.getElementById('commentWriteTxt').style.border = '1px solid #f2f2f2';
+      }, 3000);
+      return false;
+    } else {
+      document.getElementById('commentWriteTxt').style.border = '1px solid #f2f2f2';
+    }
   };
   return (
     <div>
@@ -500,8 +512,15 @@ const ProfilePage = () => {
             <div className={style['profile-comment-insert']}>
               <label>
                 <div className={style['profile-comment-img']}></div>
-                <input type={'text'} placeholder={'댓글을 입력하세요.'} />
-                <button className={style['profile-comment-btn']}>작성</button>
+                <input
+                  type={'text'}
+                  placeholder={'댓글을 입력하세요.'}
+                  id={'commentWriteTxt'}
+                  onChange={(e) => setCommentWriteTxt(e.target.value)}
+                />
+                <button className={style['profile-comment-btn']} onClick={commentWrite}>
+                  작성
+                </button>
               </label>
             </div>
             <div className={style['profile-comment-list']}>
