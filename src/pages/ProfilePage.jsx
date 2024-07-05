@@ -141,8 +141,6 @@ const ProfilePage = () => {
     setReportCheckModal(false);
   };
   const goReportCause = () => {
-    console.log('reportCategory : ', reportCategory);
-    console.log('reportCategoryText : ', reportCategoryText);
     setReportFinishModal(true);
   };
   const goReportFinish = () => {
