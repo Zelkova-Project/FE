@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import style from '../css/latterwrite.module.css';
 import Section from '../components/Section';
 import Footer from '../components/Footer';
+import {useRecoilState} from "recoil";
+import {userInfoState} from "../recoilState/recoil";
+import Nav from "../components/Nav";
 
 const LatterWrite = () => {
   const navigate = useNavigate();
@@ -13,6 +16,9 @@ const LatterWrite = () => {
   const [writeActivitySelected, setWriteActivitySelected] = useState(false); // 활동공개 창
   const [writeActivitySelectVal, setWriteActivitySelectVal] = useState('공개'); // 활동공개 값
   const [writerFileName, setWriterFileName] = useState(''); // 활동공개 값
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [writeTitle, setWriteTitle] = useState(''); // 제목
+  const [writeContent, setWriteContent] = useState(''); // 내용
 
   const getDate = (date) => {
     let year = date.getFullYear() + '';
@@ -42,8 +48,23 @@ const LatterWrite = () => {
     let fileName = originFileName.split('/').pop().split('\\').pop();
     setWriterFileName(fileName);
   };
+  const setContent = (e) => {
+    setWriteContent({
+      content: e,
+    });
+  };
+  const goWrite = () => {
+    if(writeTitle === '' || writeTitle === null) {
+      document.getElementById('write-title').style.border = '1px solid #ff8888';
+      return false;
+    }else {
+      document.getElementById('write-title').style.border = '1px solid #f2f2f2';
+    }
+    alert('등록');
+  }
   return (
     <>
+      <Nav/>
       {/* 글쓰기영역시작 */}
       <Section>
         <div className={style['container']}>
@@ -53,14 +74,14 @@ const LatterWrite = () => {
           <div className={style['write-item']}>
             <label>
               <h3>제목</h3>
-              <input type={'text'}></input>
+              <input type={'text'} id={'write-title'} autoComplete={'off'} onChange={(e) => setWriteTitle(e.target.value)}></input>
             </label>
           </div>
           <div className={style['write-item']}>
             <div className={style['write-txt']}>
               <label>
                 <h3>작성자</h3>
-                <input type={'text'}></input>
+                <input type={'text'} value={userInfo} readOnly />
               </label>
             </div>
             <div className={[style['write-txt'], style['ml-40']].join(' ')}>
@@ -119,7 +140,7 @@ const LatterWrite = () => {
                   height: '400px',
                   border: '1px solid #F2F2F2',
                   borderRadius: '8px',
-                }}
+                }} onChange={(e) => setContent(e)}
               />
             </div>
           </div>
@@ -156,7 +177,7 @@ const LatterWrite = () => {
             <div className={style['write-submit-btn']}>
               <button onClick={() => navigate(-1)}>취소</button>
               <button>삭제</button>
-              <button>등록</button>
+              <button onClick={goWrite}>등록</button>
             </div>
           </div>
         </div>

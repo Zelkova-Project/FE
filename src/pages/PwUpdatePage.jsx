@@ -3,11 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from '../axios/axiosInstance';
 import React, { useEffect, useRef, useState } from 'react';
 import Modal from 'react-modal';
-import { useLocation } from 'react-router';
 
 const PwUpdatePage = () => {
   const navigate = useNavigate();
-  let location = useLocation();
   const [pwCheckSuccessMessage, setPwCheckSuccessMessage] = useState(''); // 성공 메세지
   const [pwCheckFailMessage, setPwCheckFailMessage] = useState(''); // 실패 메세지
   const [pwCheckModal, setPwCheckModal] = useState(false); // 비밀번호 변경 완료 모달
@@ -42,7 +40,7 @@ const PwUpdatePage = () => {
       setPwCheckSuccessMessage(null);
       return false;
     } else if (e.target.value !== pwCheckVal.pwReInfo && pwCheckVal.pwReInfo !== '') {
-      setPwCheckFailMessage('비밀번호 확인이 일치하지 않습니다.1');
+      setPwCheckFailMessage('비밀번호 확인이 일치하지 않습니다.');
       setPwCheckSuccessMessage(null);
       return false;
     } else {
@@ -53,7 +51,7 @@ const PwUpdatePage = () => {
   };
   const pwReCheck = (e) => {
     if (e.target.value !== pwCheckVal.pwInfo) {
-      setPwCheckFailMessage('비밀번호 확인이 일치하지 않습니다.2');
+      setPwCheckFailMessage('비밀번호 확인이 일치하지 않습니다.');
       setPwCheckSuccessMessage(null);
       return false;
     } else {
@@ -71,17 +69,17 @@ const PwUpdatePage = () => {
   const goPwCheck = () => {
     const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z0-9@$!%*#?&]{7,}$/;
     if (!pwRegex.test(pwCheckVal.pwInfo)) {
-      setPwCheckFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.1');
+      setPwCheckFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
       setPwCheckSuccessMessage(null);
       return false;
     }
     if (!pwRegex.test(pwCheckVal.pwReInfo)) {
-      setPwCheckFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.2');
+      setPwCheckFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
       setPwCheckSuccessMessage(null);
       return false;
     }
     if (pwCheckVal.pwInfo === '' || pwCheckVal.pwReInfo === '') {
-      setPwCheckFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.3');
+      setPwCheckFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
       setPwCheckSuccessMessage(null);
       return false;
     } else if (pwCheckVal.pwInfo !== pwCheckVal.pwReInfo) {
@@ -110,7 +108,7 @@ const PwUpdatePage = () => {
               value={pwCheckVal.pwInfo}
               onChange={(e) => {
                 pwCheck(e);
-                setPwCheckVal({ ...pwCheckVal, pwInfo: e.target.value });
+                setPwCheckVal({ ...pwCheckVal, pwInfo: e.target.value.trim() });
               }}
             />
           </div>
@@ -122,7 +120,7 @@ const PwUpdatePage = () => {
               onKeyDown={activeEnter}
               onChange={(e) => {
                 pwReCheck(e);
-                setPwCheckVal({ ...pwCheckVal, pwReInfo: e.target.value });
+                setPwCheckVal({ ...pwCheckVal, pwReInfo: e.target.value.trim() });
               }}
             />
           </div>

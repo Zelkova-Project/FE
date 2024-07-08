@@ -201,23 +201,23 @@ const ProfilePage = () => {
               </div>
               <div className={style['profile-follow']}>
                 <span className={style['follow']} onClick={() => setFollowModal(true)}>
-                  <span>1,234</span>
-                  <span>팔로우</span>
+                  <span>1,234명</span>
+                  <span>친구</span>
                 </span>
                 <span className={style['follower']} onClick={() => setFollowerModal(true)}>
-                  <span>1,234</span>
-                  <span>팔로워</span>
+                  <span>1,234명</span>
+                  <span>친한 친구</span>
                 </span>
               </div>
             </label>
             <div className={style['follow-btn-wrap']}>
               {follow ? (
                 <button className={style['unfollow-btn']} onClick={() => unFollow()}>
-                  팔로잉
+                  친구
                 </button>
               ) : (
                 <button className={style['follow-btn']} onClick={() => Follow()}>
-                  팔로우
+                  친구 맺기
                 </button>
               )}
             </div>

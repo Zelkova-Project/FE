@@ -401,7 +401,7 @@ const MemberFindPage = () => {
                   id={'id-name'}
                   autoComplete={'off'}
                   value={idFindInfo.name}
-                  onChange={(e) => setIdFindInfo({ ...idFindInfo, name: e.target.value })}
+                  onChange={(e) => setIdFindInfo({ ...idFindInfo, name: e.target.value.trim() })}
                 />
               </div>
             </div>
@@ -471,7 +471,7 @@ const MemberFindPage = () => {
                   autoComplete={'off'}
                   id={'id-phone'}
                   value={idFindInfo.phone}
-                  onChange={(e) => setIdFindInfo({ ...idFindInfo, phone: e.target.value })}
+                  onChange={(e) => setIdFindInfo({ ...idFindInfo, phone: e.target.value.trim() })}
                 />
                 <button className={style['find-button']} onClick={idVerifyTransmissionBtn}>
                   인증번호 전송
@@ -548,7 +548,7 @@ const MemberFindPage = () => {
                       autoComplete={'off'}
                       id={'pw-id'}
                       value={pwFindInfo.id}
-                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, id: e.target.value })}
+                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, id: e.target.value.trim() })}
                     />
                   </div>
                   <span className={style['fail-message']}>{pwIdFailMessage}</span>
@@ -562,7 +562,7 @@ const MemberFindPage = () => {
                       autoComplete={'off'}
                       className={style['find-name']}
                       value={pwFindInfo.name}
-                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, name: e.target.value })}
+                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, name: e.target.value.trim() })}
                     />
                   </div>
                 </div>
@@ -635,7 +635,7 @@ const MemberFindPage = () => {
                       id={'pw-phone'}
                       autoComplete={'off'}
                       value={pwFindInfo.phone}
-                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, phone: e.target.value })}
+                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, phone: e.target.value.trim() })}
                     />
                     <button className={style['find-button']} onClick={pwVerifyTransmissionBtn}>
                       인증번호 전송
