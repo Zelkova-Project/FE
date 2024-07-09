@@ -24,6 +24,7 @@
 
 .common-table .common-table-tr2 {
   border-bottom: 1px solid #eeeeee;
+  cursor: pointer;
 }
 
 .common-table .common-table-tr2 td {

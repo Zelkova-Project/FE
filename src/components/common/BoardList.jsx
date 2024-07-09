@@ -51,7 +51,7 @@ const BoardList = ({ boardList }) => {
     return (
       <>
         <div className="notice-flexitem">
-          <Table />
+          <Table activePageNum={ activePageNum } />
         </div>
       </>
     );
@@ -120,6 +120,7 @@ const BoardList = ({ boardList }) => {
             </div>
 
             {/* 페이지버튼 */}
+            {/* 1 2 3 4 5 6 7 8 9 10 */}
             <div className="page-btns-center">
               <ul>{makePagingDom()}</ul>
             </div>

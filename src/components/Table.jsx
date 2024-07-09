@@ -6,7 +6,7 @@ import axios from '../axios/axiosInstance';
 import { activeInfoState } from '../recoilState/recoil';
 import { useRecoilState } from 'recoil';
 
-const Table = () => {
+const Table = ({ activePageNum }) => {
   const [postList, setPostList] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const Table = () => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          let { status, data, message } = await axios.get('/posts/board?page=0&size=10');
+          let { status, data, message } = await axios.get(`/posts/board?page=${activePageNum - 1}&size=10`);
           setPostList(data.content);
           setLoading(false);
         } catch (error) {
@@ -48,7 +48,7 @@ const Table = () => {
       };
 
       fetchData();
-    }, []);
+    }, [activePageNum]);
 
     if (loading) {
       return <div>Loading...</div>;
