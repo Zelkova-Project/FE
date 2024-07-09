@@ -14,23 +14,23 @@ const transferObjToResponse = (responseObject) => {
   // Step 1: Stringify the object to a JSON string
   const jsonString = JSON.stringify(responseObject);
 
-// Step 2: Create a Blob from the JSON string
+  // Step 2: Create a Blob from the JSON string
   const blob = new Blob([jsonString], { type: 'application/json' });
   return new Response(blob, {
     status: 200,
     statusText: 'OK',
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   });
-}
+};
 
 async function cacheResponse(url, response) {
   const cache = await caches.open(CACHE_NAME);
   await cache.put(url, transferObjToResponse(response));
 
   const metadata = {
-    timestamp: Date.now()
+    timestamp: Date.now(),
   };
 
   const metadataResponse = new Response(JSON.stringify(metadata));
@@ -77,9 +77,8 @@ instance.interceptors.request.use(
     }
 
     if (cachedResponse) {
-      return Promise.reject({config, request:{}, response:cachedResponse, isCached:true});
+      return Promise.reject({ config, request: {}, response: cachedResponse, isCached: true });
     }
-
 
     return config;
   },
