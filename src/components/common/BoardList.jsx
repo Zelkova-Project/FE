@@ -51,7 +51,7 @@ const BoardList = ({ boardList }) => {
     return (
       <>
         <div className="notice-flexitem">
-          <Table activePageNum={ activePageNum } />
+          <Table activePageNum={activePageNum} />
         </div>
       </>
     );

@@ -38,7 +38,9 @@ const Table = ({ activePageNum }) => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          let { status, data, message } = await axios.get(`/posts/board?page=${activePageNum - 1}&size=10`);
+          let { status, data, message } = await axios.get(
+            `/posts/board?page=${activePageNum - 1}&size=10`,
+          );
           setPostList(data.content);
           setLoading(false);
         } catch (error) {

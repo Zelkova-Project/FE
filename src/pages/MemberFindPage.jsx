@@ -562,7 +562,9 @@ const MemberFindPage = () => {
                       autoComplete={'off'}
                       className={style['find-name']}
                       value={pwFindInfo.name}
-                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, name: e.target.value.trim() })}
+                      onChange={(e) =>
+                        setPwFindInfo({ ...pwFindInfo, name: e.target.value.trim() })
+                      }
                     />
                   </div>
                 </div>
@@ -635,7 +637,9 @@ const MemberFindPage = () => {
                       id={'pw-phone'}
                       autoComplete={'off'}
                       value={pwFindInfo.phone}
-                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, phone: e.target.value.trim() })}
+                      onChange={(e) =>
+                        setPwFindInfo({ ...pwFindInfo, phone: e.target.value.trim() })
+                      }
                     />
                     <button className={style['find-button']} onClick={pwVerifyTransmissionBtn}>
                       인증번호 전송

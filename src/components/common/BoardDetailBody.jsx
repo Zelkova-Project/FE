@@ -73,7 +73,7 @@ const BoardDetailBody = () => {
   const goPage = (url) => {
     setIsReload(!isReload);
     navigate(url);
-  }
+  };
 
   return (
     <>
@@ -190,53 +190,39 @@ const BoardDetailBody = () => {
         <div className="notail-prev-next-btn-section">
           <div className="notail-prev-btn">
             <ul onClick={() => goPage(`/detail/${activeInfo.activePage}/${postDetail.prev.no}`)}>
-              {
-                postDetail.prev ?
+              {postDetail.prev ? (
                 <>
-                  <li>{ postDetail.prev.no }</li>
-                  <li>{ postDetail.prev.title }</li>
+                  <li>{postDetail.prev.no}</li>
+                  <li>{postDetail.prev.title}</li>
                   <li>
-                    {
-                      postDetail &&postDetail.prev &&
-                      postDetail.prev.date_time.split('T')[0]
-                    }
+                    {postDetail && postDetail.prev && postDetail.prev.date_time.split('T')[0]}
                   </li>
                 </>
-                  
+              ) : (
                 // 글 없을 때 문구노출
-                : 
                 <>
-                  <li>
-                    이전 글 없습니다.
-                  </li>
-                </> 
-              }
+                  <li>이전 글 없습니다.</li>
+                </>
+              )}
             </ul>
           </div>
 
           <div className="notail-next-btn">
             <ul onClick={() => goPage(`/detail/${activeInfo.activePage}/${postDetail.next.no}`)}>
-              {
-                postDetail.next ?
+              {postDetail.next ? (
                 <>
-                  <li>{ postDetail.next.no }</li>
-                  <li>{ postDetail.next.title }</li>
+                  <li>{postDetail.next.no}</li>
+                  <li>{postDetail.next.title}</li>
                   <li>
-                    {
-                      postDetail && postDetail.next &&
-                      postDetail.next.date_time.split('T')[0]
-                    }
+                    {postDetail && postDetail.next && postDetail.next.date_time.split('T')[0]}
                   </li>
                 </>
-                  
+              ) : (
                 // 글 없을 때 문구노출
-                : 
                 <>
-                  <li>
-                    다음 글 없습니다.
-                  </li>
-                </> 
-              }
+                  <li>다음 글 없습니다.</li>
+                </>
+              )}
             </ul>
           </div>
         </div>

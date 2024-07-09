@@ -80,7 +80,7 @@
 .follow span:nth-child(2) {
   display: block;
   font-size: 14px;
-  color: #A6A6A6;
+  color: #a6a6a6;
 }
 .follower {
   display: inline-block;
@@ -94,9 +94,9 @@
 .follower span:nth-child(2) {
   display: block;
   font-size: 14px;
-  color: #A6A6A6;
+  color: #a6a6a6;
   letter-spacing: -1px;
-  word-spacing:-1px;
+  word-spacing: -1px;
 }
 .follow-btn-wrap {
   position: absolute;
@@ -297,10 +297,10 @@
   display: inline-block;
 }
 .profile-comment-list-like-img span {
-  color: #A6A6A6;
+  color: #a6a6a6;
 }
 .profile-comment-list-like img {
-  transform: translate(5px,0);
+  transform: translate(5px, 0);
   display: table-cell;
   vertical-align: middle;
   width: 25px;
