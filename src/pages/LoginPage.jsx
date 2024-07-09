@@ -142,10 +142,12 @@ const LoginPage = () => {
             <div className="login-form">
               <div className="login-form-id">
                 <input
+                  type={'text'}
                   id={'user-id'}
+                  value={loginId}
                   className={'user-id'}
                   autoComplete={'off'}
-                  onChange={(e) => setLoginId(e.target.value)}
+                  onChange={(e) => setLoginId(e.target.value.trim())}
                   placeholder={'아이디'}
                 />
               </div>
@@ -155,9 +157,10 @@ const LoginPage = () => {
                   <input
                     id="user-pw"
                     className={'user-pw'}
+                    value={loginPw}
                     type="password"
                     onKeyDown={(e) => activeEnter(e)}
-                    onChange={(e) => setLoginPw(e.target.value)}
+                    onChange={(e) => setLoginPw(e.target.value.trim())}
                     placeholder={'비밀번호'}
                   />
                 </div>

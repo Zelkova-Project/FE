@@ -1,7 +1,7 @@
 import style from '../css/memberFind.module.css';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import axios from '../axios/axiosInstance';
 import React, { useEffect, useRef, useState } from 'react';
@@ -33,7 +33,13 @@ const MemberFindPage = () => {
 
   const [idFindModalOpen, setIdFindModalOpen] = useState(false); // 아이디 찾기 모달
   const [pwFindModalOpen, setPwFindModalOpen] = useState(false); // 비밀번호 찾기 모달
-
+  // 타이머
+  const [idMinutes, setIdMinutes] = useState(1);
+  const [idSeconds, setIdSeconds] = useState(59);
+  const [isIdRunning, setIsIdRunning] = useState(false);
+  const [pwMinutes, setPwMinutes] = useState(1);
+  const [pwSeconds, setPwSeconds] = useState(59);
+  const [isPwRunning, setIsPwRunning] = useState(false);
   const [idFindInfo, setIdFindInfo] = useState({
     name: '',
     agency: '',
@@ -49,6 +55,7 @@ const MemberFindPage = () => {
     birth: '',
     verify: '',
   });
+  sessionStorage.setItem('name', pwFindInfo.name);
 
   const imgObj = {
     googleLogin: require('../imgs/login/구글로그인.png'),
@@ -140,21 +147,28 @@ const MemberFindPage = () => {
   };
   const idVerifyTransmissionBtn = () => {
     if (idFindInfo.phone === '') {
+      document.getElementById('id-phone').style.border = '1px solid #ff8888';
       setIdFailVerifyMessage('가입된 전화번호가 아닙니다. 다시 입력해 주세요.');
       setIdVerifyMessage(null);
       return false;
     } else {
+      document.getElementById('id-phone').style.border = '1px solid #f2f2f2';
       setIdVerifyMessage('인증번호가 오지 않나요?');
       setIdFailVerifyMessage(null);
       setIdVerifyBtn(true);
+      idTimerStart();
     }
   };
   const idVerifyConfirmBtn = () => {
     if (idFindInfo.verify === '' || idFindInfo.verify.length !== 4) {
       // 인증번호칸이 빈칸일 경우 + 인증번호가 틀릴시
+      document.getElementById('id-verify').style.border = '1px solid #ff8888';
       setIdFailVerifyNumMessage('인증번호가 맞지 않습니다. 다시 입력해 주세요.');
       return false;
     } else {
+      setIsIdRunning(false);
+      document.getElementById('id-timer').style.display = 'none';
+      document.getElementById('id-verify').style.border = '1px solid #f2f2f2';
       setIdFailVerifyNumMessage(null);
       setIdFailVerifyMessage(null);
       setIdVerifyNumBtn(true);
@@ -179,8 +193,16 @@ const MemberFindPage = () => {
       document.getElementById('id-agency').focus();
       return false;
     }
+    if (idFindInfo.phone === '') {
+      document.getElementById('id-phone').focus();
+      return false;
+    }
+    if (idFindInfo.verify === '') {
+      document.getElementById('id-verify').focus();
+      return false;
+    }
     if (idVerifyBtn === false) {
-      setIdFailVerifyMessage('가입된 전화번호가 아닙니다. 다시 입력해 주세요.');
+      setIdFailVerifyMessage('인증번호 전송 버튼을 눌러주세요.');
       return false;
     }
     if (idVerifyNumBtn === false) {
@@ -204,21 +226,28 @@ const MemberFindPage = () => {
   };
   const pwVerifyTransmissionBtn = () => {
     if (pwFindInfo.phone === '') {
+      document.getElementById('pw-phone').style.border = '1px solid #ff8888';
       setPwFailVerifyMessage('가입된 전화번호가 아닙니다. 다시 입력해 주세요.');
       setPwVerifyMessage(null);
       return false;
     } else {
+      document.getElementById('pw-phone').style.border = '1px solid #f2f2f2';
       setPwVerifyMessage('인증번호가 오지 않나요?');
       setPwFailVerifyMessage(null);
       setPwVerifyBtn(true);
+      pwTimerStart();
     }
   };
   const pwVerifyConfirmBtn = () => {
     if (pwFindInfo.verify === '' || pwFindInfo.verify.length !== 4) {
       // 인증번호칸이 빈칸일 경우 + 인증번호가 틀릴시
+      document.getElementById('pw-verify').style.border = '1px solid #ff8888';
       setPwFailVerifyNumMessage('인증번호가 맞지 않습니다. 다시 입력해 주세요.');
       return false;
     } else {
+      setIsPwRunning(false);
+      document.getElementById('pw-timer').style.display = 'none';
+      document.getElementById('pw-verify').style.border = '1px solid #f2f2f2';
       setPwFailVerifyNumMessage(null);
       setPwFailVerifyMessage(null);
       setPwVerifyNumBtn(true);
@@ -266,16 +295,90 @@ const MemberFindPage = () => {
       document.getElementById('pw-agency').focus();
       return false;
     }
-    if (pwVerifyBtn === false || pwVerifyNumBtn === false) {
-      setPwFailVerifyNumMessage('인증번호가 맞지 않습니다. 다시 입력해 주세요.');
+    if (pwFindInfo.phone === '') {
+      document.getElementById('pw-phone').focus();
       return false;
     }
-    setPwFindModalOpen(true);
+    if (pwFindInfo.verify === '') {
+      document.getElementById('pw-verify').focus();
+      return false;
+    }
+    if (pwVerifyBtn === false) {
+      setPwFailVerifyMessage('인증번호 전송 버튼을 눌러주세요.');
+      return false;
+    }
+    if (pwVerifyNumBtn === false) {
+      setPwFailVerifyNumMessage('인증번호가 맞지 않습니다. 다시 입력해 주세요.');
+      return false;
+    } else if (pwVerifyBtn === true && pwVerifyNumBtn === true) {
+      setPwFindModalOpen(true);
+    }
   };
   const modalPwUpdate = () => {
     setPwUpdate(true);
     setPwFindModalOpen(false);
   };
+
+  // 타이머
+  useEffect(() => {
+    let interval;
+    if (isIdRunning) {
+      interval = setInterval(() => {
+        if (idSeconds === 0) {
+          setIdMinutes((prevIdMinutes) => prevIdMinutes - 1);
+          setIdSeconds(59);
+        } else if (idMinutes === 0 && idSeconds === 1) {
+          setIsIdRunning(false);
+          document.getElementById('id-timer').style.display = 'none';
+        } else {
+          setIdSeconds((prevIdSeconds) => prevIdSeconds - 1);
+        }
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isIdRunning, idSeconds]);
+
+  useEffect(() => {
+    let interval;
+    if (isPwRunning) {
+      interval = setInterval(() => {
+        if (pwSeconds === 0) {
+          setPwMinutes((prevPwMinutes) => prevPwMinutes - 1);
+          setPwSeconds(59);
+        } else if (pwMinutes === 0 && pwSeconds === 1) {
+          setIsPwRunning(false);
+          document.getElementById('pw-timer').style.display = 'none';
+        } else {
+          setPwSeconds((prevPwSeconds) => prevPwSeconds - 1);
+        }
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isPwRunning, pwSeconds]);
+
+  const idTimerStart = () => {
+    setIsIdRunning(true);
+    document.getElementById('id-timer').style.display = 'block';
+  };
+
+  const idTimerReset = () => {
+    setIsIdRunning(false);
+    setIdMinutes(1);
+    setIdSeconds(59);
+    idTimerStart();
+  };
+  const pwTimerStart = () => {
+    setIsPwRunning(true);
+    document.getElementById('pw-timer').style.display = 'block';
+  };
+
+  const pwTimerReset = () => {
+    setIsPwRunning(false);
+    setPwMinutes(1);
+    setPwSeconds(59);
+    pwTimerStart();
+  };
+
   return (
     <div className={style['container']}>
       <Nav />
@@ -298,7 +401,7 @@ const MemberFindPage = () => {
                   id={'id-name'}
                   autoComplete={'off'}
                   value={idFindInfo.name}
-                  onChange={(e) => setIdFindInfo({ ...idFindInfo, name: e.target.value })}
+                  onChange={(e) => setIdFindInfo({ ...idFindInfo, name: e.target.value.trim() })}
                 />
               </div>
             </div>
@@ -366,8 +469,9 @@ const MemberFindPage = () => {
                   type={'text'}
                   placeholder={'전화번호 입력'}
                   autoComplete={'off'}
+                  id={'id-phone'}
                   value={idFindInfo.phone}
-                  onChange={(e) => setIdFindInfo({ ...idFindInfo, phone: e.target.value })}
+                  onChange={(e) => setIdFindInfo({ ...idFindInfo, phone: e.target.value.trim() })}
                 />
                 <button className={style['find-button']} onClick={idVerifyTransmissionBtn}>
                   인증번호 전송
@@ -381,16 +485,22 @@ const MemberFindPage = () => {
                   placeholder={'인증번호 4자리 입력'}
                   autoComplete={'off'}
                   onChange={(e) => idVerifyLengthChk(e)}
+                  id={'id-verify'}
                   maxLength={4}
                   value={idFindInfo.verify}
                 />
+                <div className={style['id-timer']} id={'id-timer'}>
+                  {idMinutes.toString().padStart(2, '0')}:{idSeconds.toString().padStart(2, '0')}
+                </div>
                 <button className={style['find-button']} onClick={idVerifyConfirmBtn}>
                   확인
                 </button>
               </div>
             </div>
           </div>
-          <span className={style['id-verify-message']}>{idVerifyMessage}</span>
+          <span className={style['id-verify-message']} onClick={idTimerReset}>
+            {idVerifyMessage}
+          </span>
           <span className={style['id-fail-verify-message']}>{idFailVerifyMessage}</span>
           <span className={style['id-fail-verify-num-message']}>{idFailVerifyNumMessage}</span>
 
@@ -402,7 +512,7 @@ const MemberFindPage = () => {
           <Modal isOpen={idFindModalOpen} ariaHideApp={false} style={idModalStyle}>
             <div className={style['modal-wrap']}>
               <div className={style['modal-title']}>아이디 찾기</div>
-              <div className={style['modal-text1']}>성한결 님의 아이디는 </div>
+              <div className={style['modal-text1']}>{idFindInfo.name}님의 아이디는 </div>
               <div className={style['modal-text2']}>
                 <span>test11</span> 입니다.
               </div>
@@ -438,7 +548,7 @@ const MemberFindPage = () => {
                       autoComplete={'off'}
                       id={'pw-id'}
                       value={pwFindInfo.id}
-                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, id: e.target.value })}
+                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, id: e.target.value.trim() })}
                     />
                   </div>
                   <span className={style['fail-message']}>{pwIdFailMessage}</span>
@@ -452,7 +562,9 @@ const MemberFindPage = () => {
                       autoComplete={'off'}
                       className={style['find-name']}
                       value={pwFindInfo.name}
-                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, name: e.target.value })}
+                      onChange={(e) =>
+                        setPwFindInfo({ ...pwFindInfo, name: e.target.value.trim() })
+                      }
                     />
                   </div>
                 </div>
@@ -522,9 +634,12 @@ const MemberFindPage = () => {
                     <input
                       type={'text'}
                       placeholder={'전화번호 입력'}
+                      id={'pw-phone'}
                       autoComplete={'off'}
                       value={pwFindInfo.phone}
-                      onChange={(e) => setPwFindInfo({ ...pwFindInfo, phone: e.target.value })}
+                      onChange={(e) =>
+                        setPwFindInfo({ ...pwFindInfo, phone: e.target.value.trim() })
+                      }
                     />
                     <button className={style['find-button']} onClick={pwVerifyTransmissionBtn}>
                       인증번호 전송
@@ -537,17 +652,24 @@ const MemberFindPage = () => {
                       type={'number'}
                       placeholder={'인증번호 4자리 입력'}
                       autoComplete={'off'}
+                      id={'pw-verify'}
                       onChange={(e) => pwVerifyLengthChk(e)}
                       maxLength={4}
                       value={pwFindInfo.verify}
                     />
+                    <div className={style['pw-timer']} id={'pw-timer'}>
+                      {pwMinutes.toString().padStart(2, '0')}:
+                      {pwSeconds.toString().padStart(2, '0')}
+                    </div>
                     <button className={style['find-button']} onClick={pwVerifyConfirmBtn}>
                       확인
                     </button>
                   </div>
                 </div>
               </div>
-              <span className={style['id-verify-message']}>{pwVerifyMessage}</span>
+              <span className={style['id-verify-message']} onClick={pwTimerReset}>
+                {pwVerifyMessage}
+              </span>
               <span className={style['id-fail-verify-message']}>{pwFailVerifyMessage}</span>
               <span className={style['id-fail-verify-num-message']}>{pwFailVerifyNumMessage}</span>
               <div className={style['find-btn-wrap']}>

@@ -28,6 +28,10 @@ const Join = () => {
   const [verifyBtn, setVerifyBtn] = useState(false); // 인증번호 전송버튼 클릭체크
   const [verifyNumBtn, setVerifyNumBtn] = useState(false); // 인증번호 확인 클릭체크
 
+  // 타이머
+  const [minutes, setMinutes] = useState(1);
+  const [seconds, setSeconds] = useState(59);
+  const [isRunning, setIsRunning] = useState(false);
   const [joinInfo, setJoinInfo] = useState({
     login_id: '',
     password: '',
@@ -122,7 +126,7 @@ const Join = () => {
     //   if (key != 'password_check')
     //     param[key] = val;
     // }
-    if (joinInfo.login_id === '' || joinInfo.login_id === null) {
+    if (joinInfo.login_id.trim() === '' || joinInfo.login_id.trim() === null) {
       setIdFailMessage('아이디를 입력해주세요.');
       setIdSuccessMessage(null);
       return false;
@@ -132,17 +136,17 @@ const Join = () => {
       setIdSuccessMessage(null);
       return false;
     }
-    if (joinInfo.password === '' || joinInfo.password === null) {
+    if (joinInfo.password.trim() === '' || joinInfo.password.trim() === null) {
       setPwFailMessage('비밀번호를 입력해주세요.');
       setPwSuccessMessage(null);
       return false;
     }
-    if (joinInfo.password_check === '' || joinInfo.password_check === null) {
+    if (joinInfo.password_check.trim() === '' || joinInfo.password_check.trim() === null) {
       setPwFailMessage('비밀번호 확인을 입력해주세요.');
       setPwSuccessMessage(null);
       return false;
     }
-    if (joinInfo.name === '' || joinInfo.name === null) {
+    if (joinInfo.name.trim() === '' || joinInfo.name.trim() === null) {
       setFailVerifyMessage('개인 정보가 맞지 않습니다. 다시 입력해 주세요.');
       document.getElementById('join-info-name').style.border = '1px solid #ff8888';
       setVerifyMessage(null);
@@ -218,16 +222,16 @@ const Join = () => {
   };
 
   const joinIdInfo = (e) => {
-    setJoinInfo({ ...joinInfo, login_id: e.target.value });
+    setJoinInfo({ ...joinInfo, login_id: e.target.value.trim() });
     setIdCheckBtn(false);
   };
   const joinIdCheck = (e) => {
     const idRegex = /^[a-zA-Z](?=.*\d)[a-zA-Z0-9]{6,}$/;
-    if (e.target.value === '') {
+    if (e.target.value.trim() === '') {
       setIdFailMessage('아이디를 입력해주세요.');
       setIdSuccessMessage(null);
       return false;
-    } else if (!idRegex.test(e.target.value)) {
+    } else if (!idRegex.test(e.target.value.trim())) {
       setIdFailMessage('영문, 숫자가 포함된 7자리 이상의 아이디를 만들어 주세요.');
       setIdSuccessMessage(null);
       return false;
@@ -238,7 +242,7 @@ const Join = () => {
     }
   };
   const idCheck = async () => {
-    if (joinInfo.login_id === '' || joinInfo.login_id === null) {
+    if (joinInfo.login_id.trim() === '' || joinInfo.login_id.trim() === null) {
       document.getElementById('join-info-id').style.border = '1px solid #ff8888';
       setIdFailMessage('아이디를 입력해주세요.');
       setIdSuccessMessage(null);
@@ -280,17 +284,26 @@ const Join = () => {
       setPwFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
       setPwSuccessMessage(null);
       return false;
-    } else if (e.target.value !== joinInfo.password_check && joinInfo.password_check !== '') {
+    } else if (
+      e.target.value.trim() !== joinInfo.password_check.trim() &&
+      joinInfo.password_check.trim() !== ''
+    ) {
       document.getElementById('join-info-pw').style.border = '1px solid #ff8888';
       setPwFailMessage('비밀번호 확인이 일치하지 않습니다.');
       setPwSuccessMessage(null);
       return false;
-    } else if (e.target.value !== joinInfo.password_check && joinInfo.password_check === '') {
+    } else if (
+      e.target.value.trim() !== joinInfo.password_check.trim() &&
+      joinInfo.password_check.trim() === ''
+    ) {
       document.getElementById('join-info-pw').style.border = '1px solid #f2f2f2';
       setPwFailMessage(null);
       setPwSuccessMessage(null);
       return false;
-    } else if (pwRegex.test(e.target.value) && e.target.value === joinInfo.password_check) {
+    } else if (
+      pwRegex.test(e.target.value) &&
+      e.target.value.trim() === joinInfo.password_check.trim()
+    ) {
       document.getElementById('join-info-pw').style.border = '1px solid #f2f2f2';
       document.getElementById('join-info-re-pw').style.border = '1px solid #f2f2f2';
       setPwFailMessage(null);
@@ -299,7 +312,13 @@ const Join = () => {
     }
   };
   const joinPwReCheck = (e) => {
-    if (e.target.value !== joinInfo.password) {
+    const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z0-9@$!%*#?&]{7,}$/;
+    if (!pwRegex.test(e.target.value)) {
+      document.getElementById('join-info-re-pw').style.border = '1px solid #ff8888';
+      setPwFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
+      setPwSuccessMessage(null);
+      return false;
+    } else if (e.target.value.trim() !== joinInfo.password.trim()) {
       document.getElementById('join-info-re-pw').style.border = '1px solid #ff8888';
       setPwFailMessage('비밀번호 확인이 일치하지 않습니다.');
       setPwSuccessMessage(null);
@@ -318,7 +337,7 @@ const Join = () => {
     }
   };
   const verifyTransmissionBtn = () => {
-    if (joinInfo.phone === '') {
+    if (joinInfo.phone.trim() === '') {
       document.getElementById('join-info-phone').style.border = '1px solid #ff8888';
       setFailVerifyMessage('가입된 전화번호가 아닙니다. 다시 입력해 주세요.');
       setVerifyMessage(null);
@@ -328,6 +347,7 @@ const Join = () => {
       setVerifyMessage('인증번호가 오지 않나요?');
       setFailVerifyMessage(null);
       setVerifyBtn(true);
+      handleStart();
     }
   };
   const verifyConfirmBtn = () => {
@@ -341,6 +361,8 @@ const Join = () => {
       return false;
     } else {
       document.getElementById('accreditNum').style.border = '1px solid #f2f2f2';
+      setIsRunning(false);
+      document.getElementById('timer').style.display = 'none';
       setFailVerifyNumMessage(null);
       setFailVerifyMessage(null);
       setVerifyNumBtn(true);
@@ -356,6 +378,37 @@ const Join = () => {
     if (e.target.value.length <= 4) {
       setJoinInfo({ ...joinInfo, accreditNum: e.target.value });
     }
+  };
+
+  // 타이머
+  useEffect(() => {
+    let interval;
+    if (isRunning) {
+      interval = setInterval(() => {
+        if (seconds === 0) {
+          setMinutes((prevMinutes) => prevMinutes - 1);
+          setSeconds(59);
+        } else if (minutes === 0 && seconds === 1) {
+          setIsRunning(false);
+          document.getElementById('timer').style.display = 'none';
+        } else {
+          setSeconds((prevSeconds) => prevSeconds - 1);
+        }
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isRunning, seconds]);
+
+  const handleStart = () => {
+    setIsRunning(true);
+    document.getElementById('timer').style.display = 'block';
+  };
+
+  const handleReset = () => {
+    setIsRunning(false);
+    setMinutes(1);
+    setSeconds(59);
+    handleStart();
   };
   return (
     <div className={style['outer-container']}>
@@ -400,7 +453,7 @@ const Join = () => {
                   type="password"
                   onChange={(e) => {
                     joinPwCheck(e);
-                    setJoinInfo({ ...joinInfo, password: e.target.value });
+                    setJoinInfo({ ...joinInfo, password: e.target.value.trim() });
                   }}
                 />
               </div>
@@ -416,7 +469,7 @@ const Join = () => {
                   type="password"
                   onChange={(e) => {
                     joinPwReCheck(e);
-                    setJoinInfo({ ...joinInfo, password_check: e.target.value });
+                    setJoinInfo({ ...joinInfo, password_check: e.target.value.trim() });
                   }}
                 />
               </div>
@@ -432,7 +485,7 @@ const Join = () => {
                   placeholder={'이름'}
                   autoComplete={'off'}
                   id={'join-info-name'}
-                  onChange={(e) => setJoinInfo({ ...joinInfo, name: e.target.value })}
+                  onChange={(e) => setJoinInfo({ ...joinInfo, name: e.target.value.trim() })}
                 />
               </div>
             </div>
@@ -451,12 +504,6 @@ const Join = () => {
                 />
               </div>
             </div>
-            {/*아이템 */}
-            {/*<div className={style["join-form-item"]}>*/}
-            {/*  <div className={style["join-form-subitem2"]}>*/}
-            {/*    <input value={joinInfo.phone} placeholder={'전화번호'}/>*/}
-            {/*  </div>*/}
-            {/*</div>*/}
             {/*아이템 */}
             <div className={style['join-form-item']}>
               <div className={style['join-form-subitem2']}>
@@ -512,9 +559,9 @@ const Join = () => {
                   placeholder={'전화번호 입력'}
                   id={'join-info-phone'}
                   autoComplete={'off'}
-                  onChange={(e) => setJoinInfo({ ...joinInfo, phone: e.target.value })}
+                  onChange={(e) => setJoinInfo({ ...joinInfo, phone: e.target.value.trim() })}
                 />
-                <button className={style['join-check']} onClick={verifyTransmissionBtn}>
+                <button className={style['join-check']} onClick={() => verifyTransmissionBtn()}>
                   인증번호 전송
                 </button>
               </div>
@@ -532,13 +579,18 @@ const Join = () => {
                     onChange={(e) => verifyLengthChk(e)}
                     maxLength={4}
                   />
+                  <div className={style['timer']} id={'timer'}>
+                    {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+                  </div>
                   <button className={style['join-check']} onClick={verifyConfirmBtn}>
                     확인
                   </button>
                 </div>
               </div>
               <div className={style['message']}>
-                <span className={style['verify-message']}>{verifyMessage}</span>
+                <span className={style['verify-message']} onClick={handleReset}>
+                  {verifyMessage}
+                </span>
                 <span className={style['fail-verify-message']}>{failVerifyMessage}</span>
                 <span className={style['fail-verify-num-message']}>{failVerifyNumMessage}</span>
               </div>
@@ -548,18 +600,18 @@ const Join = () => {
               <div className={style['join-form-subitem3']}>
                 <input
                   value={joinInfo.email1}
-                  type="email"
+                  type="text"
                   autoComplete={'off'}
                   placeholder={'이메일 (선택사항)'}
-                  onChange={(e) => setJoinInfo({ ...joinInfo, email1: e.target.value })}
-                />{' '}
-                @{' '}
+                  onChange={(e) => setJoinInfo({ ...joinInfo, email1: e.target.value.trim() })}
+                />
+                @
                 <input
                   value={joinInfo.email2}
-                  type="email"
+                  type="text"
                   autoComplete={'off'}
                   placeholder={'이메일 (선택사항)'}
-                  onChange={(e) => setJoinInfo({ ...joinInfo, email2: e.target.value })}
+                  onChange={(e) => setJoinInfo({ ...joinInfo, email2: e.target.value.trim() })}
                 />
               </div>
             </div>

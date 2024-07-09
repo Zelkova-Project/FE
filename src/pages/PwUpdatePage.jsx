@@ -6,10 +6,10 @@ import Modal from 'react-modal';
 
 const PwUpdatePage = () => {
   const navigate = useNavigate();
-
   const [pwCheckSuccessMessage, setPwCheckSuccessMessage] = useState(''); // 성공 메세지
   const [pwCheckFailMessage, setPwCheckFailMessage] = useState(''); // 실패 메세지
   const [pwCheckModal, setPwCheckModal] = useState(false); // 비밀번호 변경 완료 모달
+  const name1 = sessionStorage.getItem('name');
   const [pwCheckVal, setPwCheckVal] = useState({
     pwInfo: '',
     pwReInfo: '',
@@ -57,16 +57,27 @@ const PwUpdatePage = () => {
     } else {
       setPwCheckFailMessage(null);
       setPwCheckSuccessMessage('사용가능한 비밀번호 입니다.');
-      setPwCheckVal({ ...pwCheckVal, pwReInfo: e.target.value });
     }
   };
   const pwCheckModalClose = () => {
     setPwCheckModal(false);
   };
   const pwCheckModalLogin = () => {
+    sessionStorage.clear(); // 이름 세션 지우기
     navigate('/Login');
   };
   const goPwCheck = () => {
+    const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z0-9@$!%*#?&]{7,}$/;
+    if (!pwRegex.test(pwCheckVal.pwInfo)) {
+      setPwCheckFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
+      setPwCheckSuccessMessage(null);
+      return false;
+    }
+    if (!pwRegex.test(pwCheckVal.pwReInfo)) {
+      setPwCheckFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
+      setPwCheckSuccessMessage(null);
+      return false;
+    }
     if (pwCheckVal.pwInfo === '' || pwCheckVal.pwReInfo === '') {
       setPwCheckFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
       setPwCheckSuccessMessage(null);
@@ -78,7 +89,11 @@ const PwUpdatePage = () => {
     }
     setPwCheckModal(true);
   };
-
+  const activeEnter = (e) => {
+    if (e.key == 'Enter') {
+      goPwCheck();
+    }
+  };
   return (
     <>
       <div>
@@ -87,10 +102,27 @@ const PwUpdatePage = () => {
         </div>
         <div className={style['pw-update-form']}>
           <div>
-            <input type={'password'} placeholder={'비밀번호'} onChange={(e) => pwCheck(e)} />
+            <input
+              type={'password'}
+              placeholder={'비밀번호'}
+              value={pwCheckVal.pwInfo}
+              onChange={(e) => {
+                pwCheck(e);
+                setPwCheckVal({ ...pwCheckVal, pwInfo: e.target.value.trim() });
+              }}
+            />
           </div>
           <div>
-            <input type={'password'} placeholder={'비밀번호 확인'} onChange={(e) => pwReCheck(e)} />
+            <input
+              type={'password'}
+              placeholder={'비밀번호 확인'}
+              value={pwCheckVal.pwReInfo}
+              onKeyDown={activeEnter}
+              onChange={(e) => {
+                pwReCheck(e);
+                setPwCheckVal({ ...pwCheckVal, pwReInfo: e.target.value.trim() });
+              }}
+            />
           </div>
         </div>
         <div className={style['success-message']}>{pwCheckSuccessMessage}</div>
@@ -106,8 +138,8 @@ const PwUpdatePage = () => {
           <div className={style['modal-title']}>비밀번호 변경</div>
           <div className={style['modal-text1']}>비밀번호가 변경되었습니다.</div>
           <div className={style['modal-text2']}>
-            성한결님의 비밀번호는
-            <span> test11 </span> 입니다.
+            {name1}님의 비밀번호는
+            <span> {pwCheckVal.pwInfo} </span> 입니다.
           </div>
           <div className={style['modal-button-wrap']}>
             <button className={style['modal-close']} onClick={pwCheckModalClose}>

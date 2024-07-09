@@ -65,11 +65,12 @@
 }
 .profile-follow {
   margin-left: auto;
-  margin-right: 150px;
+  margin-right: 120px;
 }
 .follow {
   display: inline-block;
   margin-right: 30px;
+  text-align: center;
   cursor: pointer;
 }
 .follow span:nth-child(1) {
@@ -79,11 +80,12 @@
 .follow span:nth-child(2) {
   display: block;
   font-size: 14px;
-  padding-left: 3px;
+  color: #a6a6a6;
 }
 .follower {
   display: inline-block;
   cursor: pointer;
+  text-align: center;
 }
 .follower span:nth-child(1) {
   font-size: 18px;
@@ -92,12 +94,14 @@
 .follower span:nth-child(2) {
   display: block;
   font-size: 14px;
-  padding-left: 3px;
+  color: #a6a6a6;
+  letter-spacing: -1px;
+  word-spacing: -1px;
 }
 .follow-btn-wrap {
   position: absolute;
   right: 0;
-  transform: translate(-80px, -80px);
+  transform: translate(-60px, -80px);
 }
 .unfollow-btn {
   width: 85px;
@@ -287,15 +291,16 @@
   cursor: pointer;
 }
 .profile-comment-list-like {
-  transform: translate(50px, 20px);
+  transform: translate(70px, 28px);
 }
 .profile-comment-list-like-img {
   display: inline-block;
 }
 .profile-comment-list-like-img span {
+  color: #a6a6a6;
 }
 .profile-comment-list-like img {
-  transform: translateX(5px);
+  transform: translate(5px, 0);
   display: table-cell;
   vertical-align: middle;
   width: 25px;

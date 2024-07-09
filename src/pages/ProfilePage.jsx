@@ -16,6 +16,7 @@ const ProfilePage = () => {
   const [followerModal, setFollowerModal] = useState(false); // 팔로워 모달
   const [reportCategory, setReportCategory] = useState('');
   const [reportCategoryText, setReportCategoryText] = useState('');
+  const [commentWriteTxt, setCommentWriteTxt] = useState('');
 
   const [reportAccept, setReportAccept] = useState('');
 
@@ -141,8 +142,6 @@ const ProfilePage = () => {
     setReportCheckModal(false);
   };
   const goReportCause = () => {
-    console.log('reportCategory : ', reportCategory);
-    console.log('reportCategoryText : ', reportCategoryText);
     setReportFinishModal(true);
   };
   const goReportFinish = () => {
@@ -165,6 +164,17 @@ const ProfilePage = () => {
   };
   const followerRegster = () => {
     setFollowerModal(false);
+  };
+  const commentWrite = () => {
+    if (commentWriteTxt === '' || commentWriteTxt === null) {
+      document.getElementById('commentWriteTxt').style.border = '1px solid #ff8888';
+      setTimeout(function () {
+        document.getElementById('commentWriteTxt').style.border = '1px solid #f2f2f2';
+      }, 3000);
+      return false;
+    } else {
+      document.getElementById('commentWriteTxt').style.border = '1px solid #f2f2f2';
+    }
   };
   return (
     <div>
@@ -191,23 +201,23 @@ const ProfilePage = () => {
               </div>
               <div className={style['profile-follow']}>
                 <span className={style['follow']} onClick={() => setFollowModal(true)}>
-                  <span>1,234</span>
-                  <span>팔로우</span>
+                  <span>1,234명</span>
+                  <span>친구</span>
                 </span>
                 <span className={style['follower']} onClick={() => setFollowerModal(true)}>
-                  <span>1,234</span>
-                  <span>팔로워</span>
+                  <span>1,234명</span>
+                  <span>친한 친구</span>
                 </span>
               </div>
             </label>
             <div className={style['follow-btn-wrap']}>
               {follow ? (
                 <button className={style['unfollow-btn']} onClick={() => unFollow()}>
-                  팔로잉
+                  친구
                 </button>
               ) : (
                 <button className={style['follow-btn']} onClick={() => Follow()}>
-                  팔로우
+                  친구 맺기
                 </button>
               )}
             </div>
@@ -502,8 +512,15 @@ const ProfilePage = () => {
             <div className={style['profile-comment-insert']}>
               <label>
                 <div className={style['profile-comment-img']}></div>
-                <input type={'text'} placeholder={'댓글을 입력하세요.'} />
-                <button className={style['profile-comment-btn']}>작성</button>
+                <input
+                  type={'text'}
+                  placeholder={'댓글을 입력하세요.'}
+                  id={'commentWriteTxt'}
+                  onChange={(e) => setCommentWriteTxt(e.target.value)}
+                />
+                <button className={style['profile-comment-btn']} onClick={commentWrite}>
+                  작성
+                </button>
               </label>
             </div>
             <div className={style['profile-comment-list']}>

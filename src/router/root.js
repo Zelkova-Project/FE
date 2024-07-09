@@ -1,7 +1,8 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import LoadingPage from '../components/Loading.jsx';
 
-const Loading = <div>Loading...</div>;
+const Loading = <LoadingPage />;
 const Main = lazy(() => import('../pages/MainPage'));
 const Login = lazy(() => import('../pages/LoginPage'));
 const NoticeDetail = lazy(() => import('../pages/NoticeDetailPage'));
@@ -21,6 +22,7 @@ const ProfileSetup = lazy(() => import('../pages/ProfileSetupPage'));
 const Board = lazy(() => import('../components/common/BoardPage'));
 const BoardDetail = lazy(() => import('../components/common/BoardDetailPage'));
 const LatterWrite = lazy(() => import('../pages/LatterWritePage'));
+const NotFound = lazy(() => import('../pages/NotFound'));
 
 const root = createBrowserRouter([
   {
@@ -172,6 +174,14 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <LatterWrite />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/*',
+    element: (
+      <Suspense fallback={Loading}>
+        <NotFound />
       </Suspense>
     ),
   },

@@ -196,6 +196,13 @@
   transform: translateY(20px);
   margin: 2px;
 }
+.timer {
+  position: absolute;
+  transform: translate(265px, -31px);
+  font-size: 14px;
+  color: #ff8888;
+  display: none;
+}
 .join-check {
   width: 140px;
   border: 1px solid #72d5a6;
