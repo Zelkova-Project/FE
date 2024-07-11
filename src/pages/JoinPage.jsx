@@ -278,7 +278,7 @@ const Join = () => {
   };
   const joinPwCheck = (e) => {
     // const pwRegex =  /^[a-zA-Z0-9](?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{6,}$/
-    const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z0-9@$!%*#?&]{7,}$/;
+    const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*+#?&])[a-zA-Z0-9@$!%*+#?&]{7,}$/;
     if (!pwRegex.test(e.target.value)) {
       document.getElementById('join-info-pw').style.border = '1px solid #ff8888';
       setPwFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
@@ -312,7 +312,7 @@ const Join = () => {
     }
   };
   const joinPwReCheck = (e) => {
-    const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z0-9@$!%*#?&]{7,}$/;
+    const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*+#?&])[a-zA-Z0-9@$!%*+#?&]{7,}$/;
     if (!pwRegex.test(e.target.value)) {
       document.getElementById('join-info-re-pw').style.border = '1px solid #ff8888';
       setPwFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
