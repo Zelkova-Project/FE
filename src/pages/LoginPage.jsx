@@ -45,6 +45,7 @@ const LoginPage = () => {
 
     let _kakaowindow = window.open(
       '/api/oauth2/authorization/kakao',
+      // 'https://namu0005.or.kr/api/oauth2/authorization/kakao',
       'kakako-',
       `width=${width},height=${height},left=${left},top=${top}`,
     );
@@ -58,7 +59,8 @@ const LoginPage = () => {
       const [_key1, val1] = childcookie.split('=');
       const [_key2, val2] = parentcookie.split('=');
 
-      if (val1 == val2) {
+      if (val1 === val2) {
+        setLogin(true);
         navigate('/');
         _kakaowindow.close();
       }
