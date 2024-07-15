@@ -35,7 +35,7 @@ const Footer = () => {
               <li>
                 <div className="left-li">
                   <h4>이메일</h4>
-                  <p>이메일 입력 부탁드립니다</p>
+                  <p>skan0005@naver.com</p>
                 </div>
               </li>
             </ul>

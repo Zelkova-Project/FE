@@ -18,46 +18,43 @@ const Table = ({ activePageNum }) => {
       const result = [];
       for (let idx in postList) {
         result.push(
-          <tbody>
-            <tr
-              className="common-table-tr2"
-              key={idx}
-              onClick={() => navigate(`/detail/${activeInfo.activePage}/${postList[idx].no}`)}
-            >
-              <td>{postList[idx].no}</td>
-              <td>{postList[idx].title}</td>
-              <td>{postList[idx].date_time.split('T')[0]}</td>
-            </tr>
-          </tbody>,
+          <tr
+            className="common-table-tr2"
+            key={idx}
+            onClick={() => navigate(`/detail/${activeInfo.activePage}/${postList[idx].no}`)}
+          >
+            <td>{postList[idx].no}</td>
+            <td>{postList[idx].title}</td>
+            <td>{postList[idx].date_time.split('T')[0]}</td>
+          </tr>
         );
       }
-
       return result;
     };
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          let { status, data, message } = await axios.get(
-            `/posts/board?page=${activePageNum - 1}&size=10`,
-          );
-          setPostList(data.content);
-          setLoading(false);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          setLoading(false);
-        }
-      };
-
-      fetchData();
-    }, [activePageNum]);
-
     if (loading) {
-      return <div>Loading...</div>;
+      return <tr><td>Loading...</td></tr>;
     }
 
     return makeTableTr();
   };
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let { status, data, message } = await axios.get(
+          `/posts/board?page=${activePageNum - 1}&size=10`,
+        );
+        setPostList(data.content);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [activePageNum]);
 
   return (
     <div className="table-conatiner">
@@ -69,7 +66,9 @@ const Table = ({ activePageNum }) => {
             <th key={'date'}>Date</th>
           </tr>
         </thead>
-        {tableComponent()}
+        <tbody>
+          {tableComponent()}
+        </tbody>
       </table>
     </div>
   );
