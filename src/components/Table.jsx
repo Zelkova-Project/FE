@@ -33,12 +33,16 @@ const Table = ({ activePageNum }) => {
     };
 
     if (loading) {
-      return <tr><td>Loading...</td></tr>;
+      return (
+        <tr>
+          <td>Loading...</td>
+        </tr>
+      );
     }
 
     return makeTableTr();
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,9 +70,7 @@ const Table = ({ activePageNum }) => {
             <th key={'date'}>Date</th>
           </tr>
         </thead>
-        <tbody>
-          {tableComponent()}
-        </tbody>
+        <tbody>{tableComponent()}</tbody>
       </table>
     </div>
   );
