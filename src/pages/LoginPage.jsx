@@ -6,6 +6,8 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { loginState, userInfoState } from '../recoilState/recoil';
 
+import { getKakaoLoginLink } from '../api/kakaoAPi';
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useRecoilState(loginState);
@@ -36,6 +38,11 @@ const LoginPage = () => {
     navigate(`/normalLogin`);
   };
 
+  // 카카오 BE_r1 방식
+  const kakaoLoginR1 = () => {
+    location.href = getKakaoLoginLink();
+  }
+
   // 카카오 로그인
   const kakaoLogin = async () => {
     const width = 500; // 팝업의 가로 길이: 500
@@ -44,7 +51,8 @@ const LoginPage = () => {
     const top = window.screenY + (window.outerHeight - height) / 2;
 
     let _kakaowindow = window.open(
-      '/api/oauth2/authorization/kakao',
+      'localhost:8080/api/oauth2/authorization/kakao',
+      // '/api/oauth2/authorization/kakao',
       // 'https://namu0005.or.kr/api/oauth2/authorization/kakao',
       'kakako-',
       `width=${width},height=${height},left=${left},top=${top}`,
@@ -184,7 +192,10 @@ const LoginPage = () => {
 
         <div className="social-login">
           <div className="">
-            <img src={imgObj.kakaoLoginIcon} onClick={() => kakaoLogin()} alt={'카카오 로그인'} />
+            <Link to={getKakaoLoginLink()}>
+              {/* <img src={imgObj.kakaoLoginIcon} onClick={() => kakaoLogin()} alt={'카카오 로그인'} /> */}
+              <img src={imgObj.kakaoLoginIcon} alt={'카카오 로그인'} />
+            </Link>
           </div>
           <div className="">
             <img src={imgObj.googleLogin} alt={'구글 로그인'} />

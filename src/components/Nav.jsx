@@ -46,6 +46,10 @@ const Nav = () => {
     location.reload();
   };
 
+  useEffect(() => {
+    console.log('userInfo >>> ', userInfo);
+  }, [])
+
   // 호버시열리는영역
   const showExtraNav = () => {
     let result = '';
@@ -119,18 +123,18 @@ const Nav = () => {
           <li className={'li-login'} onClick={() => navHandler(5)}>
             <a>로그인</a>
           </li>
-        ) : (
+        ) : 
           <li className={'profile'} onClick={() => navigate('/profile')}>
             <label>
               <span>
-                <span className={'profile-txt'}>{userInfo ? userInfo : '방문자'}</span>
+                {/* <span className='profile-txt'>{userInfo ? userInfo : '방문자'}</span> */}
               </span>
               <div className={'profile-img'}>
                 <img src={'/default-profile-img.png'} alt={'프로필 사진'} />
               </div>
             </label>
           </li>
-        )}
+        }
       </ul>
 
       {showExtraNav()}
