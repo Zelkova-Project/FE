@@ -48,7 +48,7 @@ const Nav = () => {
 
   useEffect(() => {
     console.log('userInfo >>> ', userInfo);
-  }, [])
+  }, []);
 
   // 호버시열리는영역
   const showExtraNav = () => {
@@ -123,7 +123,7 @@ const Nav = () => {
           <li className={'li-login'} onClick={() => navHandler(5)}>
             <a>로그인</a>
           </li>
-        ) : 
+        ) : (
           <li className={'profile'} onClick={() => navigate('/profile')}>
             <label>
               <span>
@@ -134,7 +134,7 @@ const Nav = () => {
               </div>
             </label>
           </li>
-        }
+        )}
       </ul>
 
       {showExtraNav()}

@@ -1,21 +1,16 @@
-import { useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const KakaoRedirectPage = () => {
+  const [searchParam] = useSearchParams();
 
- const [searchParam] = useSearchParams();
+  const authCode = searchParam.get('code');
 
- const authCode = searchParam.get("code");
+  useEffect(() => {
+    console.log('authCode >>> ', authCode);
+  }, [authCode]);
 
- useEffect(() => { 
-  console.log('authCode >>> ', authCode);
- }, [authCode]);
-
- return (
-  <>
-  
-  </>
- )
-}
+  return <></>;
+};
 
 export default KakaoRedirectPage;

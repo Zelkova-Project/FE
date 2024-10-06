@@ -26,7 +26,7 @@ const Table = ({ activePageNum }) => {
             <td>{postList[idx].no}</td>
             <td>{postList[idx].title}</td>
             <td>{postList[idx].date_time.split('T')[0]}</td>
-          </tr>
+          </tr>,
         );
       }
       return result;

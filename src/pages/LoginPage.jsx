@@ -41,7 +41,7 @@ const LoginPage = () => {
   // 카카오 BE_r1 방식
   const kakaoLoginR1 = () => {
     location.href = getKakaoLoginLink();
-  }
+  };
 
   // 카카오 로그인
   const kakaoLogin = async () => {
