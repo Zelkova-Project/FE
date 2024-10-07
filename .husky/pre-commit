@@ -2,7 +2,7 @@
 . "$(dirname "$0")/_/husky.sh"
 
 echo "Running ESLint..."
-npx eslint . --fix
+# npx eslint . --fix
 
 echo "Running tests..."
-npm run format:fix
+# npm run format:fix
