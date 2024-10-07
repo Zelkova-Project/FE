@@ -18,19 +18,19 @@ const KakaoRedirectPage = () => {
   const authCode = searchParam.get('code');
 
   useEffect(() => {
-    getAccessToken(authCode).then(access_token => {
-      getMemberWithAccessToken(access_token).then(res => {
+    getAccessToken(authCode).then((access_token) => {
+      getMemberWithAccessToken(access_token).then((res) => {
         // 임시로 모두 main으로 처리
         if (res.isSocial) {
-          navigate("/");
+          navigate('/');
         } else {
-          navigate("/")
+          navigate('/');
         }
 
         setLogin(true);
         setUserInfo(res.data);
-      })
-    })
+      });
+    });
   }, [authCode]);
 
   return <></>;

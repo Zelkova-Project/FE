@@ -17,27 +17,26 @@ export const getKakaoLoginLink = () => {
 export const getAccessToken = async (authCode) => {
   const header = {
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  }
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
 
   const params = {
-    grant_type: "authorization_code",
+    grant_type: 'authorization_code',
     client_id: rest_api_key,
     redirect_uri: redirect_uri,
-    code: authCode
-  }
+    code: authCode,
+  };
 
   const res = await axios.post(access_token_url, params, header);
 
   const accessToken = res.data.access_token;
 
   return accessToken;
-}
-
+};
 
 export const getMemberWithAccessToken = async (accessToken) => {
   const res = await axios.get(`${serverURL}/member/kakao?accessToken=${accessToken}`);
-  
+
   return res;
-}
+};
