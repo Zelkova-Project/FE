@@ -126,9 +126,7 @@ const Nav = () => {
         ) : (
           <li className={'profile'} onClick={() => navigate('/profile')}>
             <label>
-              <span>
-                {/* <span className='profile-txt'>{userInfo ? userInfo : '방문자'}</span> */}
-              </span>
+              {userInfo.nickname}
               <div className={'profile-img'}>
                 <img src={'/default-profile-img.png'} alt={'프로필 사진'} />
               </div>
