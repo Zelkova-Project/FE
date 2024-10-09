@@ -126,7 +126,7 @@ const Nav = () => {
         ) : (
           <li className={'profile'} onClick={() => navigate('/profile')}>
             <label>
-              {/* {userInfo.nickname}/ */}
+              {userInfo && Object.keys(userInfo).length > 0 ? userInfo.nickname : ''}
               <div className={'profile-img'}>
                 <img src={'/default-profile-img.png'} alt={'프로필 사진'} />
               </div>
