@@ -1,7 +1,7 @@
 const serverURL = process.env.NODE_ENV == 'development' ? 'http://localhost:8080/api' : '/api';
 
 const rest_api_key = `41d2a43168a7edd9f941329667a65ef4`;
-const redirect_uri = process.env.NODE_ENV == 'development' ? 'http://localhost:3000/member/kakao' : 'http://49.247.174.209/member/kakao';
+const redirect_uri = process.env.NODE_ENV == 'development' ? 'http://localhost:3000/member/kakao' : 'https://namu0005.or.kr/member/kakao';
 
 const auth_code_path = 'https://kauth.kakao.com/oauth/authorize'; // 인가코드 주는 카카오서버주소
 const access_token_url = `https://kauth.kakao.com/oauth/token`; // 토큰 발급 URL
