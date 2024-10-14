@@ -67,7 +67,7 @@ instance.interceptors.response.use(
     // throw new Error('error가 떴음 ', error);
     const { response } = error;
     console.error('error ', error);
-
+    
     return { status: 404, error: error, message: response.data };
   },
 );

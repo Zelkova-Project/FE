@@ -34,9 +34,12 @@ const BoardDetailBody = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let { status, data, message } = await axios.get('/posts/detail/' + bid);
-        setPostDetail(data.post_info_response);
-        setCommentList(data.post_comment_responses);
+        let { status, data, message } = await axios.get('/board/' + bid);
+        // document.querySelector("#editor").innerHTML = data.content;
+        setPostDetail(data);
+
+        // setCommentList(data.post_comment_responses);
+
         setLoading(false);
         window.scrollTo(0, 400);
       } catch (error) {
@@ -106,6 +109,7 @@ const BoardDetailBody = () => {
                     width: '60vw',
                     whiteSpace: 'normal',
                   }}
+                  id="editor"
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(String(postDetail?.content)),
                   }}
@@ -118,7 +122,9 @@ const BoardDetailBody = () => {
         {/* 댓글영역 */}
         <div className="notail-comment-section">
           <div className="notail-comment-state">
-            <p>댓글 ({commentList.length})</p>
+            {/* 임시주석 */}
+            {/* <p>댓글 ({commentList.length})</p> */}
+            <p>댓글 1</p>
           </div>
           <div className="notail-write-area">
             <div className="notail-write-profile-img">

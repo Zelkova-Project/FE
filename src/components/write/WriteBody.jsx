@@ -22,15 +22,38 @@ const WriteBody = () => {
 
   const [subtit, setSubtit] = useState('');
   const [writeInfo, setWriteInfo] = useState({});
-
-
+  
   //custom editor 시작
-  const saveContent = () => {
+  const saveContent = async () => {
     const content = editorRef.current.innerHTML;
     const current = editorRef.current;
-    console.log(content);
-    console.log('current : ', current);
+
+    let nickname = userInfo?.nickname || '홍길동';
+    setPostInfo({...postInfo, content: current, writer: nickname});
+
+    let param = new FormData();
+    param.append('title', postInfo.title);
+    param.append('content', content);
+    param.append('writer', postInfo.writer);
+
+    let { status, data, message } = await axios.post('/board/', param);
   };
+
+  const base64ToBlob = (base64, mimeType) => {
+    // Remove the data URL prefix (optional, depending on the input)
+    let byteString = atob(base64.split(',')[1]);
+
+    // Create an array for binary data
+    let byteArray = new Uint8Array(byteString.length);
+
+    // Populate the array with the byte data
+    for (let i = 0; i < byteString.length; i++) {
+        byteArray[i] = byteString.charCodeAt(i);
+    }
+
+    // Convert the byteArray to a Blob
+    return new Blob([byteArray], { type: mimeType });
+}
 
   const handleImageUpload = (event) => {
     const fileName = event.target.files[0].name || '이미지';
@@ -40,7 +63,11 @@ const WriteBody = () => {
     if (file) {
         const reader = new FileReader();
         reader.onloadend = () => {
-            const img = `<img src="${reader.result}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
+            // URL로 임시노출 후 파일서버에 직접 저장하고 imgName 받아서 저장해야함
+            let blobData = base64ToBlob(reader.result, 'image/png');
+            let url = URL.createObjectURL(blobData);
+
+            const img = `<img src="${url}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
             document.getElementById('editor').innerHTML += img; 
         };
         reader.readAsDataURL(file);
@@ -99,7 +126,7 @@ const WriteBody = () => {
   const goWrite = async () => {
     let param = new FormData();
     param.append('title', postInfo.title);
-    param.append('content', postInfo.content);
+    param.append('content', JSON.stringify(postInfo.content));
     param.append('category', 'BOARD');
     param.append('visibility', 'PUBLIC');
 

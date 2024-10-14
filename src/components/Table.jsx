@@ -21,11 +21,13 @@ const Table = ({ activePageNum }) => {
           <tr
             className="common-table-tr2"
             key={idx}
-            onClick={() => navigate(`/detail/${activeInfo.activePage}/${postList[idx].no}`)}
+            onClick={() => navigate(`/detail/${activeInfo.activePage}/${postList[idx].bno}`)}
           >
             <td>{postList[idx].no}</td>
             <td>{postList[idx].title}</td>
-            <td>{postList[idx].date_time.split('T')[0]}</td>
+            {/* 임시주석 */}
+            {/* <td>{postList[idx].date_time.split('T')[0]}</td> */}
+            <td>{'2024-10-14'}</td>
           </tr>,
         );
       }
@@ -49,7 +51,7 @@ const Table = ({ activePageNum }) => {
         let { status, data, message } = await axios.get(
           `/board/list?page=${activePageNum}&size=10`,
         );
-        setPostList(data.content);
+        setPostList(data.dtoList);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
