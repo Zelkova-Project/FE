@@ -3,26 +3,31 @@ import axios from 'axios';
 const isDev = process.env.NODE_ENV == 'development';
 
 const instance = axios.create({
-  baseURL: isDev ? '/' : '/api/',
+  baseURL: isDev ? 'http://localhost:8080/api' : '/api',
   timeout: 1000,
 });
 
 const getToken = () => {
   let cookie = document.cookie;
   const [key, val] = cookie.split('=');
+
   return val;
 };
 
 instance.interceptors.request.use(
   (config) => {
-    const accessToken = getToken();
+    // as-is 주석 (BE_r1 미사용)
+    // const accessToken = getToken();
 
-    const inValidUrl = ['/login', '/signup'];
-    const is적용할Url = !inValidUrl.includes(config.url);
+    // const inValidUrl = ['/login', '/signup'];
+    // const is적용할Url = !inValidUrl.includes(config.url);
 
-    if (is적용할Url) {
-      config.headers['X-XSRF-Token'] = accessToken;
-    }
+    // if (is적용할Url) {
+    //   config.headers['X-XSRF-Token'] = accessToken;
+    // }
+
+    // to-be
+    config.headers['Authorization'] = 'Bearer ' + getToken();
 
     return config;
   },

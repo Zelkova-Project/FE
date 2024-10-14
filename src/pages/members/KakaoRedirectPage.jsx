@@ -20,6 +20,9 @@ const KakaoRedirectPage = () => {
   useEffect(() => {
     getAccessToken(authCode).then((access_token) => {
       getMemberWithAccessToken(access_token).then((res) => {
+      // 쿠키에 토큰 넣기
+      document.cookie = "accessToken=" + res.data.accessToken;
+
         // 임시로 모두 main으로 처리
         if (res.isSocial) {
           navigate('/');

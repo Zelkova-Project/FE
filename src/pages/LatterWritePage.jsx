@@ -1,5 +1,3 @@
-import ReactQuill from 'react-quill';
-
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import style from '../css/latterwrite.module.css';

@@ -47,7 +47,7 @@ const Table = ({ activePageNum }) => {
     const fetchData = async () => {
       try {
         let { status, data, message } = await axios.get(
-          `/posts/board?page=${activePageNum - 1}&size=10`,
+          `/board/list?page=${activePageNum}&size=10`,
         );
         setPostList(data.content);
         setLoading(false);
