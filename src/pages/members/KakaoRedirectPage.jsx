@@ -17,11 +17,24 @@ const KakaoRedirectPage = () => {
   const [searchParam] = useSearchParams();
   const authCode = searchParam.get('code');
 
+  const deleteAllCookies = () => {
+    const cookies = document.cookie.split(";"); // Get all cookies
+  
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i];
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.slice(0, eqPos) : cookie;
+  
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+    }
+  }
+
   useEffect(() => {
     getAccessToken(authCode).then((access_token) => {
       getMemberWithAccessToken(access_token).then((res) => {
-      // 쿠키에 토큰 넣기
-      document.cookie = "accessToken=" + res.data.accessToken;
+        deleteAllCookies();
+        // 쿠키에 토큰 넣기
+        document.cookie = "accessToken=" + res.data.accessToken + '; max-age=604800; path=/';
 
         // 임시로 모두 main으로 처리
         if (res.isSocial) {
