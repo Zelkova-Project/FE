@@ -102,6 +102,14 @@ const BoardDetailBody = () => {
         <div className="notail-content-section">
           <div className="notail-content">
             <h2>{postDetail && postDetail.title}</h2>
+            <div className='notail-files'>
+              <span>첨부파일</span>
+              <div className="notail-files-list">
+                <ul>
+                  <li>1234.pdf</li>
+                </ul>
+              </div>
+            </div>
             <p>
               {postDetail && (
                 <div

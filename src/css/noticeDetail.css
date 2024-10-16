@@ -49,7 +49,23 @@
   margin-bottom: 60px;
 }
 .notail-content {
+  position: relative;
   width: 1080px;
+}
+.notail-files {
+  position: relative;
+  cursor: pointer;
+  font-size: 14px;
+  position: absolute;
+  right: 4%;
+  top:40%;
+} 
+.notail-files-list {
+  position: absolute;
+  top: 30px;
+  right: 70px;
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 1px 12px 0 rgba(0,0,0,.06);
 }
 .notail-content h2 {
   padding-left: 20px;

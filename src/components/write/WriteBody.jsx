@@ -30,12 +30,11 @@ const WriteBody = () => {
 
     let nickname = userInfo?.nickname || '홍길동';
     setPostInfo({...postInfo, content: current, writer: nickname});
-
     let param = new FormData();
     param.append('title', postInfo.title);
     param.append('content', content);
     param.append('writer', postInfo.writer);
-    param.append('files', postInfo.files);
+    param.append('uploadFileNames', postInfo.uploadFileNames);
 
     let { status, data, message } = await axios.post('/board/', param);
 
@@ -58,6 +57,19 @@ const WriteBody = () => {
     return new Blob([byteArray], { type: mimeType });
 }
 
+  const uploadSingleFile = async (file) => {
+    let param = new FormData();
+    param.append('file', file);
+    const { error, status, data: fileName } = await axios.post('/files/upload', param);
+    
+    if (error) {
+      console.log('status > ', status);
+    }
+
+    setPostInfo({ ...postInfo, uploadFileNames: [fileName] });
+    return fileName;
+  }
+  
   const uploadSingleImage = async (files) => {
     const { error, status, data: imageName }= await axios.post('/image/', files);
     if (error) {
@@ -74,7 +86,16 @@ const WriteBody = () => {
     setFileNames([...fileNames, fileName]);
 
     const file = event.target.files[0];
-    setPostInfo({...postInfo, files: file});
+    console.log('file >>> ', file);
+    setPostInfo({ ...postInfo, files: file });
+    
+    if (!['image/png', 'image/jpg', 'image/jpeg'].includes(file?.type)) {
+      uploadSingleFile(file).then((res) => {
+        console.log('uploadSigleFile >>> ', res);
+      })
+      return;
+    }
+
     uploadSingleImage(event.target.files).then((res) => {
       const [uploadedImageName] = res.imageNames || [];
       const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
@@ -96,7 +117,7 @@ const WriteBody = () => {
     // }
   };
 
-  const triggerImageUpload = () => {
+  const triggerUpload = () => {
     document.querySelector("#fileInput").click();
   }
   //custom editor 끝
@@ -248,7 +269,7 @@ const WriteBody = () => {
 
             <div className="write-file-btns ml-20">
               <button>파일 삭제</button>
-              <button onClick={triggerImageUpload}>파일 추가</button>
+              <button onClick={triggerUpload}>파일 추가</button>
               <input type="file" id="fileInput" onChange={handleImageUpload} style={{display: 'none'}}/>
             </div>
           </div>
