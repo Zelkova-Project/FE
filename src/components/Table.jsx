@@ -23,7 +23,7 @@ const Table = ({ activePageNum }) => {
             key={idx}
             onClick={() => navigate(`/detail/${activeInfo.activePage}/${postList[idx].bno}`)}
           >
-            <td>{postList[idx].no}</td>
+            <td>{postList[idx].bno}</td>
             <td>{postList[idx].title}</td>
             {/* 임시주석 */}
             {/* <td>{postList[idx].date_time.split('T')[0]}</td> */}
