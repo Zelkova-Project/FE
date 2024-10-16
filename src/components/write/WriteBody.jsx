@@ -25,8 +25,6 @@ const WriteBody = () => {
   
   //custom editor 시작
   const saveContent = async () => {
-    const isDev = process.env.NODE_ENV == 'development';
-    
     const content = editorRef.current.innerHTML;
     const current = editorRef.current;
 
@@ -71,6 +69,7 @@ const WriteBody = () => {
   }
 
   const handleImageUpload = async (event) => {
+    const isDev = process.env.NODE_ENV == 'development';
     const fileName = event.target.files[0]?.name || '이미지';
     setFileNames([...fileNames, fileName]);
 
