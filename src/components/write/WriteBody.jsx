@@ -35,8 +35,11 @@ const WriteBody = () => {
     param.append('title', postInfo.title);
     param.append('content', content);
     param.append('writer', postInfo.writer);
+    param.append('files', postInfo.files);
 
     let { status, data, message } = await axios.post('/board/', param);
+
+    navigate(-1);
   };
 
   const base64ToBlob = (base64, mimeType) => {
@@ -55,23 +58,40 @@ const WriteBody = () => {
     return new Blob([byteArray], { type: mimeType });
 }
 
-  const handleImageUpload = (event) => {
-    const fileName = event.target.files[0].name || '이미지';
+  const uploadSingleImage = async (files) => {
+    const { error, status, data: imageName }= await axios.post('/image/', files);
+    if (error) {
+      console.error('status >>> ', status);
+      return;
+    }
+
+    return imageName;
+  }
+
+  const handleImageUpload = async (event) => {
+    const fileName = event.target.files[0]?.name || '이미지';
     setFileNames([...fileNames, fileName]);
 
     const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            // URL로 임시노출 후 파일서버에 직접 저장하고 imgName 받아서 저장해야함
-            let blobData = base64ToBlob(reader.result, 'image/png');
-            let url = URL.createObjectURL(blobData);
+    setPostInfo({...postInfo, files: file});
+    uploadSingleImage(event.target.files).then((res) => {
+      const [uploadedImageName] = res.imageNames || [];
+      const img = `<img src="http://localhost:8080/api/image/view/${uploadedImageName}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
+      document.getElementById('editor').innerHTML += img; 
+    })
 
-            const img = `<img src="${url}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
-            document.getElementById('editor').innerHTML += img; 
-        };
-        reader.readAsDataURL(file);
-    }
+    
+    // if (file) {
+    //     // 이미지만 등록하고 끝나고 이미지명 리턴받기
+    //     const reader = new FileReader();
+    //     reader.onloadend = async () => {
+    //         // URL로 임시노출 후 파일서버에 직접 저장하고 imgName 받아서 저장해야함
+    //         // let blobData = base64ToBlob(reader.result, 'image/png');
+    //         // let url = URL.createObjectURL(blobData);
+    //         console.log('...????');
+    //     };
+    //     reader.readAsDataURL(file);
+    // }
   };
 
   const triggerImageUpload = () => {
