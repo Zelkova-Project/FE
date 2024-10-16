@@ -25,6 +25,8 @@ const WriteBody = () => {
   
   //custom editor 시작
   const saveContent = async () => {
+    const isDev = process.env.NODE_ENV == 'development';
+    
     const content = editorRef.current.innerHTML;
     const current = editorRef.current;
 
@@ -76,7 +78,8 @@ const WriteBody = () => {
     setPostInfo({...postInfo, files: file});
     uploadSingleImage(event.target.files).then((res) => {
       const [uploadedImageName] = res.imageNames || [];
-      const img = `<img src="http://localhost:8080/api/image/view/${uploadedImageName}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
+      const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
+      const img = `<img src="${baseURL}/image/view/${uploadedImageName}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
       document.getElementById('editor').innerHTML += img; 
     })
 
