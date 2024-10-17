@@ -27,7 +27,11 @@ const Table = ({ activePageNum }) => {
             <td>{postList[idx].title}</td>
             {/* 임시주석 */}
             {/* <td>{postList[idx].date_time.split('T')[0]}</td> */}
-            <td>{'2024-10-14'}</td>
+            <td>
+              {
+                postList[idx].dueDate != null ? postList[idx].dueDate : '2024-10-14'
+              }
+            </td>
           </tr>,
         );
       }

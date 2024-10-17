@@ -15,6 +15,8 @@ const BoardDetailBody = () => {
   const { bid } = useParams();
   const navigate = useNavigate();
 
+  const SERVER_URL = process.env.NODE_ENV == 'development' ? 'http://localhost:8080/api' : '/api';
+
   const [postDetail, setPostDetail] = useState({});
   const [commentInfo, setCommentInfo] = useState('');
   const [isReload, setIsReload] = useState(false);
@@ -78,6 +80,21 @@ const BoardDetailBody = () => {
     navigate(url);
   };
 
+  const downloadPDF = (fileName) => {
+    fetch(`${SERVER_URL}/files/download/${fileName}`)
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName); // Set the file name
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch(error => console.error('Error downloading PDF:', error));
+  };
+
   return (
     <>
       {/* 디테일 영역 */}
@@ -90,9 +107,14 @@ const BoardDetailBody = () => {
                 <h3>{postDetail && postDetail.title}</h3>
               </li>
               <li>
-                <h3>
-                  {postDetail && postDetail?.date_time && postDetail?.date_time.split('T')[0]}
-                </h3>
+                <div>
+                  <span>
+                    {postDetail?.dueDate !=null && postDetail.dueDate}
+                  </span>
+                  <span>
+                    {postDetail.writer !=null && postDetail.writer == undefined ? '느티나무유저' : postDetail.writer}
+                  </span>
+                </div>
               </li>
             </ul>
           </div>
@@ -102,14 +124,26 @@ const BoardDetailBody = () => {
         <div className="notail-content-section">
           <div className="notail-content">
             <h2>{postDetail && postDetail.title}</h2>
-            <div className='notail-files'>
-              <span>첨부파일</span>
-              <div className="notail-files-list">
-                <ul>
-                  <li>1234.pdf</li>
-                </ul>
-              </div>
-            </div>
+            
+            {
+              postDetail?.uploadFileNames != null && (
+                <div className='notail-files'>
+                  <span>첨부파일</span>
+                  <div className="notail-files-list">
+                    <ul>
+                      {
+                        postDetail.uploadFileNames.map((fileName, idx) => (
+                          <li key={fileName + idx}>
+                            <button onClick={() => downloadPDF(fileName)}>{fileName}</button>
+                          </li>
+                        ))
+                      }
+                    </ul>
+                  </div>
+                </div>
+              )
+            }
+            
             <p>
               {postDetail && (
                 <div

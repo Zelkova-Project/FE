@@ -29,12 +29,19 @@ const WriteBody = () => {
     const current = editorRef.current;
 
     let nickname = userInfo?.nickname || '홍길동';
+    console.log('userInfo?.nickname > ', userInfo?.nickname);
+    
     setPostInfo({...postInfo, content: current, writer: nickname});
     let param = new FormData();
     param.append('title', postInfo.title);
     param.append('content', content);
-    param.append('writer', postInfo.writer);
-    param.append('uploadFileNames', postInfo.uploadFileNames);
+    param.append('writer', userInfo?.nickname);
+    param.append('dueDate', getDate(new Date()));
+
+    if (postInfo.uploadFileNames != null) {
+      param.append('uploadFileNames', postInfo.uploadFileNames);
+    }
+
 
     let { status, data, message } = await axios.post('/board/', param);
 
@@ -83,13 +90,14 @@ const WriteBody = () => {
   const handleImageUpload = async (event) => {
     const isDev = process.env.NODE_ENV == 'development';
     const fileName = event.target.files[0]?.name || '이미지';
-    setFileNames([...fileNames, fileName]);
 
     const file = event.target.files[0];
-    console.log('file >>> ', file);
     setPostInfo({ ...postInfo, files: file });
     
+    // 이미지가 아닐 경우 첨부파일에 들어감
     if (!['image/png', 'image/jpg', 'image/jpeg'].includes(file?.type)) {
+      setFileNames([...fileNames, fileName]);
+
       uploadSingleFile(file).then((res) => {
         console.log('uploadSigleFile >>> ', res);
       })
