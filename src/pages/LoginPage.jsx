@@ -126,9 +126,11 @@ const LoginPage = () => {
 
     const { data } = await axios.post('/member/login', formData);
     if (!data.ERROR) {
+      deleteAllCookies();
       navigate('/');
       setLogin(true);
       setUserInfo(data);
+      putCookie(data.accessToken);
     } else {
       // let [key, val] = Object.entries(message)[0];
       // let msgMap = {
