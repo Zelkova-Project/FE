@@ -1,4 +1,4 @@
-const serverURL = process.env.NODE_ENV == 'development' ? 'http://localhost:8080/api' : '/api';
+export const serverURL = process.env.NODE_ENV == 'development' ? 'http://localhost:8080/api' : '/api';
 
 const rest_api_key = `41d2a43168a7edd9f941329667a65ef4`;
 const redirect_uri = process.env.NODE_ENV == 'development' ? 'http://localhost:3000/member/kakao' : 'https://namu0005.or.kr/member/kakao';
