@@ -9,6 +9,8 @@ import subTitMap from '../common/data/subtitData';
 
 import Section from '../Section';
 
+import { transferWebp, sendWebp } from '../../utils/fileUtil';
+
 import '../../css/write.css';
 
 const WriteBody = () => {
@@ -78,13 +80,29 @@ const WriteBody = () => {
   }
   
   const uploadSingleImage = async (files) => {
-    const { error, status, data: imageName }= await axios.post('/image/', files);
+    const formData = new FormData();
+    formData.append("files", files);
+
+    const { error, status, data: imageName }= await axios.post('/image/', formData);
     if (error) {
       console.error('status >>> ', status);
       return;
     }
 
     return imageName;
+  }
+
+  const uploadSingleWebp = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file, 'image.webp');
+
+    const { error, status, data: webpName }= await axios.post('/image/webp/', formData);
+    if (error) {
+      console.error('### uploadSingleWebp');
+      return;
+    }
+
+    return webpName;
   }
 
   const handleImageUpload = async (event) => {
@@ -104,12 +122,23 @@ const WriteBody = () => {
       return;
     }
 
-    uploadSingleImage(event.target.files).then((res) => {
-      const [uploadedImageName] = res.imageNames || [];
+    // WEBP 테스트영역
+    const blobData = await transferWebp(file);
+
+    uploadSingleWebp(blobData).then((res) => {
+      const {uploadFileName = 'default.png'} = res;
       const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
-      const img = `<img src="${baseURL}/image/view/${uploadedImageName}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
+      const img = `<img src="${baseURL}/image/view/${uploadFileName}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
       document.getElementById('editor').innerHTML += img; 
     })
+
+    // WEBP 테스트영역
+    // uploadSingleImage(event.target.files).then((res) => {
+    //   const [uploadedImageName] = res.imageNames || [];
+    //   const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
+    //   const img = `<img src="${baseURL}/image/view/${uploadedImageName}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
+    //   document.getElementById('editor').innerHTML += img; 
+    // })
 
     
     // if (file) {
