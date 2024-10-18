@@ -69,15 +69,30 @@
   cursor: pointer;
   font-size: 14px;
   position: absolute;
-  right: 4%;
+  right: 2%;
   top:2%;
 } 
 .notail-files-list {
   position: absolute;
   top: 30px;
-  right: 70px;
-  border: 1px solid rgba(0,0,0,.06);
-  box-shadow: 0 1px 12px 0 rgba(0,0,0,.06);
+  right: 7%;
+  border: 1px solid rgba(0, 0, 0, .06);
+  border-radius: 6px;
+  box-shadow: 0 1px 12px 0 rgba(0, 0, 0, .06);
+  background-color: #fff;
+  box-sizing: border-box;
+  color: #000;
+}
+.notail-files-list ul {
+  padding: 0 15px;
+}
+.notail-files-list ul li{
+  height: 60px;
+  width: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #ddd5d54a;
 }
 .notail-content h2 {
   padding-left: 20px;
@@ -280,9 +295,9 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
+  gap:10px;
 }
-
-.notail-golist-btn button {
+.notail-golist-btn .listBtn {
   background: #82d3ac;
   width: 184px;
   height: 40px;
@@ -291,4 +306,15 @@
   color: #fff;
   border-radius: 8px;
   border: none;
+}
+
+.notail-golist-btn .delBtn {
+  background: #fff;
+  width: 184px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  border-radius: 8px;
+  border: 1px solid #82d3ac;
 }

@@ -97,11 +97,14 @@ select {
   width: 100%;
 }
 
+.write-file-list ul > .active{
+  background: #82d3ac33;
+}
+
 .write-file-list ul li h3 {
   border-radius: 6px;
   margin: 0;
   padding: 5px;
-  background: #82d3ac33;
   width: 828px;
 }
 

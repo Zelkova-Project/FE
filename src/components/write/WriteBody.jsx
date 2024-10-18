@@ -23,6 +23,7 @@ const WriteBody = () => {
   const editorRef = useRef(null);
 
   const [subtit, setSubtit] = useState('');
+  const [activeLoadedIdx, setActiveLoadedIdx] = useState(0);
   const [writeInfo, setWriteInfo] = useState({});
   
   //custom editor 시작
@@ -223,6 +224,25 @@ const WriteBody = () => {
     });
   };
 
+  const activeLoadedFile = (idx) => {
+    if (idx == activeLoadedIdx) {
+      setActiveLoadedIdx(-1);
+    } else {
+      setActiveLoadedIdx(idx);
+    }
+  }
+  
+  const deleteLoadedFile = () => {
+    if (activeLoadedIdx < 0) {
+      alert("파일을 선택해주세요");
+      return;
+    }
+    const selecteFileName = fileNames[activeLoadedIdx];
+    const filtered = fileNames.filter((_, itemIdx) => activeLoadedIdx != itemIdx);
+    setFileNames([...filtered]);
+    alert(`${selecteFileName} 파일 삭제`);
+  }
+
   return (
     <>
       {/* 글쓰기영역시작 */}
@@ -296,7 +316,11 @@ const WriteBody = () => {
                     </li>
                   </> :
                   fileNames.map((item, idx) => (
-                    <li key={item + idx}>
+                    <li 
+                      className={(activeLoadedIdx == idx ? 'active' : '')}
+                      key={item + idx} 
+                      onClick={() => activeLoadedFile(idx)}
+                    >
                       <h3>{item}</h3>
                     </li>
                   ))
@@ -305,7 +329,7 @@ const WriteBody = () => {
             </div>
 
             <div className="write-file-btns ml-20">
-              <button>파일 삭제</button>
+              <button onClick={() => deleteLoadedFile()}>파일 삭제</button>
               <button onClick={triggerUpload}>파일 추가</button>
               <input type="file" id="fileInput" onChange={handleImageUpload} style={{display: 'none'}}/>
             </div>
@@ -314,8 +338,8 @@ const WriteBody = () => {
           <div className="write-flexItem dja-center mt-50 mb-50">
             <div className="write-submit-btns">
               <button onClick={() => navigate(-1)}>취소</button>
-              <button>삭제</button>
               <button onClick={saveContent}>등록</button>
+              {/* <button>삭제</button> */}
             </div>
           </div>
         </div>
