@@ -55,7 +55,8 @@ const Table = ({ activePageNum }) => {
         let { status, data, message } = await axios.get(
           `/board/list?page=${activePageNum}&size=10`,
         );
-        setPostList(data.dtoList);
+        const filtered = data.dtoList.filter(item => !item.del); // soft delete로 인해 한번 걸러야함
+        setPostList(filtered);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
