@@ -8,9 +8,12 @@ import { loginState, userInfoState } from '../recoilState/recoil';
 
 import { getKakaoLoginLink } from '../api/kakaoAPi';
 
+import { deleteAllCookies, putCookie } from '../utils/loginUtil';
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useRecoilState(loginState);
+  const isDev = process.env.NODE_ENV == 'development';
 
   const intervalId = useRef();
 
@@ -76,8 +79,36 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
+    // 테스트코드 영역
+    const testLogin = async () => {
+      let formData = new FormData();
+      formData.append('username', 'user0@gmail.com');
+      formData.append('password', '0000');
+  
+      const { data } = await axios.post('/member/login', formData);
+      if (!data.ERROR) {
+        deleteAllCookies();
+
+        navigate('/');
+        setLogin(true);
+        setUserInfo(data);
+
+        putCookie(data.accessToken);
+      } else {
+        // let [key, val] = Object.entries(message)[0];
+        // let msgMap = {
+        //   NOT_EXIST_LOGIN_ID: '존재하지 않은 아이디입니다.',
+        //   WRONG_PASSWORD: '비밀번호가 맞지 않습니다.',
+        //   ACCOUNT_PROBLEM: '계정이 올바르지 않습니다.',
+        // };
+        alert(data.ERROR);
+      }
+    }
+
+    window.testLogin = testLogin;
+    // 테스트코드 영역
     return () => clearInterval(intervalId.current);
-  });
+  }, []);
 
   const imgObj = {
     googleLogin: require('../imgs/login/구글로그인.png'),
@@ -90,23 +121,22 @@ const LoginPage = () => {
   };
   const goNormalLogin = async () => {
     let formData = new FormData();
-    formData.append('loginId', loginId);
+    formData.append('username', loginId);
     formData.append('password', loginPw);
 
-    let { status, message, error } = await axios.post('/login', formData);
-
-    if (!error) {
+    const { data } = await axios.post('/member/login', formData);
+    if (!data.ERROR) {
       navigate('/');
       setLogin(true);
-      setUserInfo(loginId);
+      setUserInfo(data);
     } else {
-      let [key, val] = Object.entries(message)[0];
-      let msgMap = {
-        NOT_EXIST_LOGIN_ID: '존재하지 않은 아이디입니다.',
-        WRONG_PASSWORD: '비밀번호가 맞지 않습니다.',
-        ACCOUNT_PROBLEM: '계정이 올바르지 않습니다.',
-      };
-      alert(msgMap[val]);
+      // let [key, val] = Object.entries(message)[0];
+      // let msgMap = {
+      //   NOT_EXIST_LOGIN_ID: '존재하지 않은 아이디입니다.',
+      //   WRONG_PASSWORD: '비밀번호가 맞지 않습니다.',
+      //   ACCOUNT_PROBLEM: '계정이 올바르지 않습니다.',
+      // };
+      alert(data.ERROR);
     }
   };
   const activeEnter = (e) => {
