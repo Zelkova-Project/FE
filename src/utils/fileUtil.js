@@ -17,8 +17,8 @@ const transferWebp = async (file) => {
             img.src = e.target.result;
 
             img.onload = () => {
-                canvas.width = img.width / 3.5;
-                canvas.height = img.height / 3.5;
+                canvas.width = img.width;
+                canvas.height = img.height;
                 const ctx = canvas.getContext('2d');
 
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);

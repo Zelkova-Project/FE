@@ -146,8 +146,13 @@ select {
   height: 40px;
   border-radius: 5px;
 }
-.write-submit-btns button:nth-child(1),
-.write-submit-btns button:nth-child(2) {
+.write-submit-btns .register-btn {
+  background: #82d3ac;
+  font-family: 'PretendardVariable';
+  color: #fff;
+  border: none;
+}
+.write-submit-btns button:nth-child(1) {
   color: #666;
   font-family: 'PretendardVariable';
   border: 1px solid #82d3ac;

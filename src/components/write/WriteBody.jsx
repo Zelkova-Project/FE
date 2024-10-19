@@ -93,9 +93,13 @@ const WriteBody = () => {
     return imageName;
   }
 
-  const uploadSingleWebp = async (file) => {
+  const uploadWebp = async (files) => {
     const formData = new FormData();
-    formData.append('file', file, 'image.webp');
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i], 'image.webp');
+    }
+    // formData.append('file', file, 'image.webp');
 
     const { error, status, data: webpName }= await axios.post('/image/webp/', formData);
     if (error) {
@@ -106,53 +110,57 @@ const WriteBody = () => {
     return webpName;
   }
 
+  // * 이미지만 다중 가능
   const handleImageUpload = async (event) => {
     const isDev = process.env.NODE_ENV == 'development';
     const fileName = event.target.files[0]?.name || '이미지';
-
-    const file = event.target.files[0];
-    setPostInfo({ ...postInfo, files: file });
+    // const file = event.target.files[0];
+    const files = event.target.files;
+    setPostInfo({ ...postInfo, files: files });
     
-    // 이미지가 아닐 경우 첨부파일에 들어감
-    if (!['image/png', 'image/jpg', 'image/jpeg'].includes(file?.type)) {
-      setFileNames([...fileNames, fileName]);
+    let blobDataArr = [];
 
-      uploadSingleFile(file).then((res) => {
-        console.log('uploadSigleFile >>> ', res);
-      })
-      return;
+    for (let file of files) {
+      // 이미지가 아닐 경우 첨부파일에 들어감
+      if (!['image/png', 'image/jpg', 'image/jpeg'].includes(file?.type)) {
+        setFileNames([...fileNames, fileName]);
+
+        uploadSingleFile(file).then((res) => {
+          console.log('uploadSigleFile >>> ', res);
+        })
+        return;
+      }
+
+      // 이미지일 경우
+      // WEBP 테스트영역
+      const blobData = await transferWebp(file);
+      blobDataArr.push(blobData);
     }
 
-    // WEBP 테스트영역
-    const blobData = await transferWebp(file);
+    uploadWebp(blobDataArr).then((res) => {
+      for (let 파일명 of res) {
+        const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
 
-    uploadSingleWebp(blobData).then((res) => {
-      const {uploadFileName = 'default.png'} = res;
-      const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
-      const img = `<img src="${baseURL}/image/view/${uploadFileName}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
-      document.getElementById('editor').innerHTML += img; 
+        const img = 
+        `
+          <img 
+            src="${baseURL}/image/view/${파일명}" 
+            alt="Uploaded Image" 
+            style="
+              max-width: 100%; 
+              height: auto;
+              display: block;
+              margin: 0 auto;
+            " 
+          />
+          <br/>
+        `;        
+          
+        document.getElementById('editor').innerHTML += img; 
+      }
+      // 루핑 끝
     })
 
-    // WEBP 테스트영역
-    // uploadSingleImage(event.target.files).then((res) => {
-    //   const [uploadedImageName] = res.imageNames || [];
-    //   const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
-    //   const img = `<img src="${baseURL}/image/view/${uploadedImageName}" alt="Uploaded Image" style="max-width: 100%; height: auto;" />`;
-    //   document.getElementById('editor').innerHTML += img; 
-    // })
-
-    
-    // if (file) {
-    //     // 이미지만 등록하고 끝나고 이미지명 리턴받기
-    //     const reader = new FileReader();
-    //     reader.onloadend = async () => {
-    //         // URL로 임시노출 후 파일서버에 직접 저장하고 imgName 받아서 저장해야함
-    //         // let blobData = base64ToBlob(reader.result, 'image/png');
-    //         // let url = URL.createObjectURL(blobData);
-    //         console.log('...????');
-    //     };
-    //     reader.readAsDataURL(file);
-    // }
   };
 
   const triggerUpload = () => {
@@ -331,14 +339,14 @@ const WriteBody = () => {
             <div className="write-file-btns ml-20">
               <button onClick={() => deleteLoadedFile()}>파일 삭제</button>
               <button onClick={triggerUpload}>파일 추가</button>
-              <input type="file" id="fileInput" onChange={handleImageUpload} style={{display: 'none'}}/>
+              <input type="file" id="fileInput" multiple onChange={handleImageUpload} style={{display: 'none'}}/>
             </div>
           </div>
 
           <div className="write-flexItem dja-center mt-50 mb-50">
             <div className="write-submit-btns">
               <button onClick={() => navigate(-1)}>취소</button>
-              <button onClick={saveContent}>등록</button>
+              <button className='register-btn' onClick={saveContent}>등록</button>
               {/* <button>삭제</button> */}
             </div>
           </div>

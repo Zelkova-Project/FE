@@ -165,7 +165,6 @@ const BoardDetailBody = () => {
               {postDetail && (
                 <div
                   style={{
-                    width: '60vw',
                     whiteSpace: 'normal',
                   }}
                   id="editor"
