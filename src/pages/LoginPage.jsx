@@ -6,9 +6,14 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { loginState, userInfoState } from '../recoilState/recoil';
 
+import { getKakaoLoginLink } from '../api/kakaoAPi';
+
+import { deleteAllCookies, putCookie } from '../utils/loginUtil';
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useRecoilState(loginState);
+  const isDev = process.env.NODE_ENV == 'development';
 
   const intervalId = useRef();
 
@@ -36,6 +41,11 @@ const LoginPage = () => {
     navigate(`/normalLogin`);
   };
 
+  // 카카오 BE_r1 방식
+  const kakaoLoginR1 = () => {
+    location.href = getKakaoLoginLink();
+  };
+
   // 카카오 로그인
   const kakaoLogin = async () => {
     const width = 500; // 팝업의 가로 길이: 500
@@ -44,7 +54,8 @@ const LoginPage = () => {
     const top = window.screenY + (window.outerHeight - height) / 2;
 
     let _kakaowindow = window.open(
-      '/api/oauth2/authorization/kakao',
+      'localhost:8080/api/oauth2/authorization/kakao',
+      // '/api/oauth2/authorization/kakao',
       // 'https://namu0005.or.kr/api/oauth2/authorization/kakao',
       'kakako-',
       `width=${width},height=${height},left=${left},top=${top}`,
@@ -68,8 +79,36 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
+    // 테스트코드 영역
+    const testLogin = async () => {
+      let formData = new FormData();
+      formData.append('username', 'user0@gmail.com');
+      formData.append('password', '0000');
+  
+      const { data } = await axios.post('/member/login', formData);
+      if (!data.ERROR) {
+        deleteAllCookies();
+
+        navigate('/');
+        setLogin(true);
+        setUserInfo(data);
+
+        putCookie(data.accessToken);
+      } else {
+        // let [key, val] = Object.entries(message)[0];
+        // let msgMap = {
+        //   NOT_EXIST_LOGIN_ID: '존재하지 않은 아이디입니다.',
+        //   WRONG_PASSWORD: '비밀번호가 맞지 않습니다.',
+        //   ACCOUNT_PROBLEM: '계정이 올바르지 않습니다.',
+        // };
+        alert(data.ERROR);
+      }
+    }
+
+    window.testLogin = testLogin;
+    // 테스트코드 영역
     return () => clearInterval(intervalId.current);
-  });
+  }, []);
 
   const imgObj = {
     googleLogin: require('../imgs/login/구글로그인.png'),
@@ -82,23 +121,24 @@ const LoginPage = () => {
   };
   const goNormalLogin = async () => {
     let formData = new FormData();
-    formData.append('loginId', loginId);
+    formData.append('username', loginId);
     formData.append('password', loginPw);
 
-    let { status, message, error } = await axios.post('/login', formData);
-
-    if (!error) {
+    const { data } = await axios.post('/member/login', formData);
+    if (!data.ERROR) {
+      deleteAllCookies();
       navigate('/');
       setLogin(true);
-      setUserInfo(loginId);
+      setUserInfo(data);
+      putCookie(data.accessToken);
     } else {
-      let [key, val] = Object.entries(message)[0];
-      let msgMap = {
-        NOT_EXIST_LOGIN_ID: '존재하지 않은 아이디입니다.',
-        WRONG_PASSWORD: '비밀번호가 맞지 않습니다.',
-        ACCOUNT_PROBLEM: '계정이 올바르지 않습니다.',
-      };
-      alert(msgMap[val]);
+      // let [key, val] = Object.entries(message)[0];
+      // let msgMap = {
+      //   NOT_EXIST_LOGIN_ID: '존재하지 않은 아이디입니다.',
+      //   WRONG_PASSWORD: '비밀번호가 맞지 않습니다.',
+      //   ACCOUNT_PROBLEM: '계정이 올바르지 않습니다.',
+      // };
+      alert(data.ERROR);
     }
   };
   const activeEnter = (e) => {
@@ -184,7 +224,10 @@ const LoginPage = () => {
 
         <div className="social-login">
           <div className="">
-            <img src={imgObj.kakaoLoginIcon} onClick={() => kakaoLogin()} alt={'카카오 로그인'} />
+            <Link to={getKakaoLoginLink()}>
+              {/* <img src={imgObj.kakaoLoginIcon} onClick={() => kakaoLogin()} alt={'카카오 로그인'} /> */}
+              <img src={imgObj.kakaoLoginIcon} alt={'카카오 로그인'} />
+            </Link>
           </div>
           <div className="">
             <img src={imgObj.googleLogin} alt={'구글 로그인'} />

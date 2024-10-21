@@ -42,9 +42,14 @@ const Nav = () => {
     console.log('logoutHandler');
     localStorage.removeItem('loginMember');
     deleteCookie('X-XSRF-Token');
+    deleteCookie('accessToken');
     navigate('/');
     location.reload();
   };
+
+  useEffect(() => {
+    console.log('userInfo >>> ', userInfo);
+  }, []);
 
   // 호버시열리는영역
   const showExtraNav = () => {
@@ -122,9 +127,7 @@ const Nav = () => {
         ) : (
           <li className={'profile'} onClick={() => navigate('/profile')}>
             <label>
-              <span>
-                <span className={'profile-txt'}>{userInfo ? userInfo : '방문자'}</span>
-              </span>
+              {userInfo && Object.keys(userInfo).length > 0 ? userInfo.nickname : ''}
               <div className={'profile-img'}>
                 <img src={'/default-profile-img.png'} alt={'프로필 사진'} />
               </div>

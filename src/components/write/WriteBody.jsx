@@ -1,7 +1,5 @@
 import axios from '../../axios/axiosInstance';
 
-import ReactQuill from 'react-quill';
-
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -11,43 +9,165 @@ import subTitMap from '../common/data/subtitData';
 
 import Section from '../Section';
 
+import { transferWebp, sendWebp } from '../../utils/fileUtil';
+
 import '../../css/write.css';
 
 const WriteBody = () => {
   const navigate = useNavigate();
   const [activeInfo, setActiveInfo] = useRecoilState(activeInfoState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  
+  const [fileNames, setFileNames] = useState([]);
+
+  const editorRef = useRef(null);
 
   const [subtit, setSubtit] = useState('');
+  const [activeLoadedIdx, setActiveLoadedIdx] = useState(0);
   const [writeInfo, setWriteInfo] = useState({});
+  
+  //custom editor 시작
+  const saveContent = async () => {
+    const content = editorRef.current.innerHTML;
+    const current = editorRef.current;
 
-  // quil 시작
-  const [value, setValue] = useState('1234');
+    let nickname = userInfo?.nickname || '홍길동';
+    console.log('userInfo?.nickname > ', userInfo?.nickname);
+    
+    setPostInfo({...postInfo, content: current, writer: nickname});
+    let param = new FormData();
+    param.append('title', postInfo.title);
+    param.append('content', content);
+    param.append('writer', userInfo?.nickname);
+    param.append('dueDate', getDate(new Date()));
 
-  const modules = {
-    toolbar: {
-      container: [['image'], [{ header: [1, 2, 3, 4, 5, false] }], ['bold', 'underline']],
-    },
+    if (postInfo.uploadFileNames != null) {
+      param.append('uploadFileNames', postInfo.uploadFileNames);
+    }
+
+
+    let { status, data, message } = await axios.post('/board/', param);
+
+    navigate(-1);
   };
 
-  const imageHandler = () => {
-    const input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
-    input.click();
+  const base64ToBlob = (base64, mimeType) => {
+    // Remove the data URL prefix (optional, depending on the input)
+    let byteString = atob(base64.split(',')[1]);
 
-    input.onchange = async () => {
-      const file = input.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          console.log('이미지 >>> ', e.target.result);
-        };
-        reader.readAsDataURL(file);
+    // Create an array for binary data
+    let byteArray = new Uint8Array(byteString.length);
+
+    // Populate the array with the byte data
+    for (let i = 0; i < byteString.length; i++) {
+        byteArray[i] = byteString.charCodeAt(i);
+    }
+
+    // Convert the byteArray to a Blob
+    return new Blob([byteArray], { type: mimeType });
+}
+
+  const uploadSingleFile = async (file) => {
+    let param = new FormData();
+    param.append('file', file);
+    const { error, status, data: fileName } = await axios.post('/files/upload', param);
+    
+    if (error) {
+      console.log('status > ', status);
+    }
+
+    setPostInfo({ ...postInfo, uploadFileNames: [fileName] });
+    return fileName;
+  }
+  
+  const uploadSingleImage = async (files) => {
+    const formData = new FormData();
+    formData.append("files", files);
+
+    const { error, status, data: imageName }= await axios.post('/image/', formData);
+    if (error) {
+      console.error('status >>> ', status);
+      return;
+    }
+
+    return imageName;
+  }
+
+  const uploadWebp = async (files) => {
+    const formData = new FormData();
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i], 'image.webp');
+    }
+    // formData.append('file', file, 'image.webp');
+
+    const { error, status, data: webpName }= await axios.post('/image/webp/', formData);
+    if (error) {
+      console.error('### uploadSingleWebp');
+      return;
+    }
+
+    return webpName;
+  }
+
+  // * 이미지만 다중 가능
+  const handleImageUpload = async (event) => {
+    const isDev = process.env.NODE_ENV == 'development';
+    const fileName = event.target.files[0]?.name || '이미지';
+    // const file = event.target.files[0];
+    const files = event.target.files;
+    setPostInfo({ ...postInfo, files: files });
+    
+    let blobDataArr = [];
+
+    for (let file of files) {
+      // 이미지가 아닐 경우 첨부파일에 들어감
+      if (!['image/png', 'image/jpg', 'image/jpeg'].includes(file?.type)) {
+        setFileNames([...fileNames, fileName]);
+
+        uploadSingleFile(file).then((res) => {
+          console.log('uploadSigleFile >>> ', res);
+        })
+        return;
       }
-    };
+
+      // 이미지일 경우
+      // WEBP 테스트영역
+      const blobData = await transferWebp(file);
+      blobDataArr.push(blobData);
+    }
+
+    uploadWebp(blobDataArr).then((res) => {
+      for (let 파일명 of res) {
+        const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
+
+        const img = 
+        `
+          <img 
+            src="${baseURL}/image/view/${파일명}" 
+            alt="Uploaded Image" 
+            style="
+              max-width: 100%; 
+              height: auto;
+              display: block;
+              margin: 0 auto;
+            " 
+          />
+          <br/>
+        `;        
+          
+        document.getElementById('editor').innerHTML += img; 
+      }
+      // 루핑 끝
+    })
+
   };
-  // quil 끝
+
+  const triggerUpload = () => {
+    document.querySelector("#fileInput").click();
+  }
+  //custom editor 끝
+
 
   const [postInfo, setPostInfo] = useState({
     category: 'BOARD',
@@ -95,7 +215,7 @@ const WriteBody = () => {
   const goWrite = async () => {
     let param = new FormData();
     param.append('title', postInfo.title);
-    param.append('content', postInfo.content);
+    param.append('content', JSON.stringify(postInfo.content));
     param.append('category', 'BOARD');
     param.append('visibility', 'PUBLIC');
 
@@ -112,6 +232,25 @@ const WriteBody = () => {
     });
   };
 
+  const activeLoadedFile = (idx) => {
+    if (idx == activeLoadedIdx) {
+      setActiveLoadedIdx(-1);
+    } else {
+      setActiveLoadedIdx(idx);
+    }
+  }
+  
+  const deleteLoadedFile = () => {
+    if (activeLoadedIdx < 0) {
+      alert("파일을 선택해주세요");
+      return;
+    }
+    const selecteFileName = fileNames[activeLoadedIdx];
+    const filtered = fileNames.filter((_, itemIdx) => activeLoadedIdx != itemIdx);
+    setFileNames([...filtered]);
+    alert(`${selecteFileName} 파일 삭제`);
+  }
+
   return (
     <>
       {/* 글쓰기영역시작 */}
@@ -127,11 +266,13 @@ const WriteBody = () => {
           <div className="write-flexItem">
             <div className="write-flexSub">
               <h3>작성자</h3>
-              <input value={userInfo} readOnly></input>
+              <input value={userInfo?.nickname} readOnly></input>
             </div>
             <div className="write-flexSub ml-40">
               <h3>작성일</h3>
-              <input readOnly value={writeInfo.writeDate}></input>
+              {/* <input readOnly value={writeInfo.writeDate}></input> */}
+              {/* 빈값 넘어와서 임시처리 */}
+              <input readOnly value={'2024-10-14'}></input>
             </div>
           </div>
 
@@ -145,23 +286,26 @@ const WriteBody = () => {
             </div>
             <div className="write-flexSub ml-40">
               <h3>수정일</h3>
-              <input readOnly value={writeInfo.modifyDate}></input>
+              {/* <input readOnly value={writeInfo.modifyDate}></input> */}
+              {/* 빈값 넘어와서 임시처리 */}
+              <input readOnly value={'2024-10-14'}></input>
             </div>
           </div>
 
           <div className="write-flexItem mt-50">
             <div className="write-textArea">
               <h3>내용작성</h3>
-              <ReactQuill
+              <div
+                ref={editorRef}
+                className='write-body'
+                contentEditable
+                id="editor"
                 style={{
-                  width: '1080px',
-                  height: '400px',
-                  border: '1px solid #F2F2F2',
-                  borderRadius: '8px',
+                    border: '1px solid #ccc',
+                    padding: '10px',
+                    minHeight: '200px',
                 }}
-                onChange={(e) => setContent(e)}
-                modules={modules}
-              />
+               />
             </div>
           </div>
 
@@ -172,26 +316,38 @@ const WriteBody = () => {
 
             <div className="write-file-list ml-40">
               <ul>
-                <li>
-                  <h3>선택된 파일명</h3>
-                </li>
-                <li>
-                  <h3>선택된 파일명</h3>
-                </li>
+                {
+                  fileNames.length == 0 ?
+                  <>
+                    <li>
+                      <h3>선택된 파일명</h3>
+                    </li>
+                  </> :
+                  fileNames.map((item, idx) => (
+                    <li 
+                      className={(activeLoadedIdx == idx ? 'active' : '')}
+                      key={item + idx} 
+                      onClick={() => activeLoadedFile(idx)}
+                    >
+                      <h3>{item}</h3>
+                    </li>
+                  ))
+                }
               </ul>
             </div>
 
             <div className="write-file-btns ml-20">
-              <button>파일 삭제</button>
-              <button onClick={() => imageHandler()}>파일1 추가</button>
+              <button onClick={() => deleteLoadedFile()}>파일 삭제</button>
+              <button onClick={triggerUpload}>파일 추가</button>
+              <input type="file" id="fileInput" multiple onChange={handleImageUpload} style={{display: 'none'}}/>
             </div>
           </div>
 
           <div className="write-flexItem dja-center mt-50 mb-50">
             <div className="write-submit-btns">
               <button onClick={() => navigate(-1)}>취소</button>
-              <button>삭제</button>
-              <button onClick={() => goWrite()}>등록</button>
+              <button className='register-btn' onClick={saveContent}>등록</button>
+              {/* <button>삭제</button> */}
             </div>
           </div>
         </div>

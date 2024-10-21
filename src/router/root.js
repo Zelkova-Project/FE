@@ -22,6 +22,7 @@ const ProfileSetup = lazy(() => import('../pages/ProfileSetupPage'));
 const Board = lazy(() => import('../components/common/BoardPage'));
 const BoardDetail = lazy(() => import('../components/common/BoardDetailPage'));
 const LatterWrite = lazy(() => import('../pages/LatterWritePage'));
+const KakaoRedirectPage = lazy(() => import('../pages/members/KakaoRedirectPage.jsx'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 
 const root = createBrowserRouter([
@@ -174,6 +175,14 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <LatterWrite />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/member/kakao',
+    element: (
+      <Suspense fallback={Loading}>
+        <KakaoRedirectPage />
       </Suspense>
     ),
   },

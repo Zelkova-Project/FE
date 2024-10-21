@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 import { useRecoilState } from 'recoil';
-import { activeInfoState } from '../../recoilState/recoil';
+import { activeInfoState, userInfoState } from '../../recoilState/recoil';
 
 import '../../css/noticeDetail.css';
 
@@ -15,12 +15,16 @@ const BoardDetailBody = () => {
   const { bid } = useParams();
   const navigate = useNavigate();
 
+  const SERVER_URL = process.env.NODE_ENV == 'development' ? 'http://localhost:8080/api' : '/api';
+
   const [postDetail, setPostDetail] = useState({});
   const [commentInfo, setCommentInfo] = useState('');
+  const [isShowFile, setIsShowFile] = useState(false);
   const [isReload, setIsReload] = useState(false);
   const [commentList, setCommentList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeInfo, setActiveInfo] = useRecoilState(activeInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const imgObj = {
     comment: require('../../imgs/notice/notail-comment.png'),
@@ -34,9 +38,12 @@ const BoardDetailBody = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let { status, data, message } = await axios.get('/posts/detail/' + bid);
-        setPostDetail(data.post_info_response);
-        setCommentList(data.post_comment_responses);
+        let { status, data, message } = await axios.get('/board/' + bid);
+        // document.querySelector("#editor").innerHTML = data.content;
+        setPostDetail(data);
+
+        // setCommentList(data.post_comment_responses);
+
         setLoading(false);
         window.scrollTo(0, 400);
       } catch (error) {
@@ -75,6 +82,31 @@ const BoardDetailBody = () => {
     navigate(url);
   };
 
+  const goDownload = (fileName) => {
+    downloadPDF(fileName);
+  }
+
+  const downloadPDF = (fileName) => {
+    fetch(`${SERVER_URL}/files/download/${fileName}`)
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName); // Set the file name
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch(error => console.error('Error downloading PDF:', error));
+  };
+
+  const deleteBoard = async () => {
+    const res = await axios.delete(`/board/${postDetail.bno}`);
+    navigate(`/board/${activeInfo.activePage}`);
+    console.log('deleteBoard >>> ', res);
+  }
+
   return (
     <>
       {/* 디테일 영역 */}
@@ -87,9 +119,14 @@ const BoardDetailBody = () => {
                 <h3>{postDetail && postDetail.title}</h3>
               </li>
               <li>
-                <h3>
-                  {postDetail && postDetail?.date_time && postDetail?.date_time.split('T')[0]}
-                </h3>
+                <div>
+                  <span>
+                    {postDetail?.dueDate !=null && postDetail.dueDate}
+                  </span>
+                  <span>
+                    {postDetail.writer !=null && postDetail.writer == undefined ? '느티나무유저' : postDetail.writer}
+                  </span>
+                </div>
               </li>
             </ul>
           </div>
@@ -99,13 +136,38 @@ const BoardDetailBody = () => {
         <div className="notail-content-section">
           <div className="notail-content">
             <h2>{postDetail && postDetail.title}</h2>
+            {
+              postDetail?.uploadFileNames != null && postDetail.uploadFileNames.length > 0 && (
+                <div className='notail-files'>
+                  <span onClick={() => setIsShowFile(!isShowFile)}>첨부파일 모아보기</span>
+                  {
+                    isShowFile && 
+                    (
+                      <div className="notail-files-list">
+                        <ul>
+                          {
+                            postDetail.uploadFileNames.map((fileName, idx) => (
+                              <li key={fileName + idx}>
+                                {/* <button onClick={() => downloadPDF(fileName)}>{fileName}</button> */}
+                                <span onClick={() => goDownload(fileName)}>{fileName}</span>
+                              </li>
+                            ))
+                          }
+                        </ul>
+                      </div>
+                    )
+                  }
+                </div>
+              )
+            }
+            
             <p>
               {postDetail && (
                 <div
                   style={{
-                    width: '60vw',
                     whiteSpace: 'normal',
                   }}
+                  id="editor"
                   dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(String(postDetail?.content)),
                   }}
@@ -118,7 +180,9 @@ const BoardDetailBody = () => {
         {/* 댓글영역 */}
         <div className="notail-comment-section">
           <div className="notail-comment-state">
-            <p>댓글 ({commentList.length})</p>
+            {/* 임시주석 */}
+            {/* <p>댓글 ({commentList.length})</p> */}
+            <p>댓글 1</p>
           </div>
           <div className="notail-write-area">
             <div className="notail-write-profile-img">
@@ -229,7 +293,12 @@ const BoardDetailBody = () => {
 
         {/* 목록버튼 */}
         <div className="notail-golist-btn">
-          <button onClick={() => navigate(`/board/${activeInfo.activePage}`)}>목록</button>
+          {
+            userInfo.nickname == postDetail.writer && (
+              <button className='delBtn' onClick={() => deleteBoard()}>삭제</button>
+            )
+          }
+          <button className="listBtn" onClick={() => navigate(`/board/${activeInfo.activePage}`)}>목록</button>
         </div>
       </div>
     </>

@@ -21,12 +21,18 @@ const Table = ({ activePageNum }) => {
           <tr
             className="common-table-tr2"
             key={idx}
-            onClick={() => navigate(`/detail/${activeInfo.activePage}/${postList[idx].no}`)}
+            onClick={() => navigate(`/detail/${activeInfo.activePage}/${postList[idx].bno}`)}
           >
-            <td>{postList[idx].no}</td>
+            <td>{postList[idx].bno}</td>
             <td>{postList[idx].title}</td>
-            <td>{postList[idx].date_time.split('T')[0]}</td>
-          </tr>
+            {/* 임시주석 */}
+            {/* <td>{postList[idx].date_time.split('T')[0]}</td> */}
+            <td>
+              {
+                postList[idx].dueDate != null ? postList[idx].dueDate : '2024-10-14'
+              }
+            </td>
+          </tr>,
         );
       }
       return result;
@@ -47,9 +53,10 @@ const Table = ({ activePageNum }) => {
     const fetchData = async () => {
       try {
         let { status, data, message } = await axios.get(
-          `/posts/board?page=${activePageNum - 1}&size=10`,
+          `/board/list?page=${activePageNum}&size=10`,
         );
-        setPostList(data.content);
+        const filtered = data.dtoList.filter(item => !item.del); // soft delete로 인해 한번 걸러야함
+        setPostList(filtered);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
