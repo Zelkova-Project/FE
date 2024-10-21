@@ -12,7 +12,7 @@ import axios from '../../axios/axiosInstance';
 import * as DOMPurify from 'dompurify';
 
 const BoardDetailBody = () => {
-  const { bid } = useParams();
+  const { bno } = useParams();
   const navigate = useNavigate();
 
   const SERVER_URL = process.env.NODE_ENV == 'development' ? 'http://localhost:8080/api' : '/api';
@@ -38,11 +38,11 @@ const BoardDetailBody = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let { status, data, message } = await axios.get('/board/' + bid);
-        // document.querySelector("#editor").innerHTML = data.content;
+        let { status, data, message } = await axios.get('/board/' + bno);
+        const res = await axios.get('/comment/' + bno);
+        
         setPostDetail(data);
-
-        // setCommentList(data.post_comment_responses);
+        setCommentList(res.data);
 
         setLoading(false);
         window.scrollTo(0, 400);
@@ -59,10 +59,18 @@ const BoardDetailBody = () => {
   }
 
   const enrollComment = async () => {
-    let { status, data, message } = await axios.post('/comments', {
-      post_id: bid,
-      comment: commentInfo,
+    const nowtime = new Date();
+    const year = nowtime.getFullYear();
+    const month = nowtime.getMonth() + 1;
+    const date = nowtime.getDate();
+
+    let { status, data, message } = await axios.post('/comment/', {
+      bno: bno,
+      content: commentInfo,
+      dueDate: `${year}-${month}-${date}`,
+      writer: userInfo.nickname
     });
+
     setCommentInfo('');
     setIsReload(!isReload);
   };
@@ -182,7 +190,7 @@ const BoardDetailBody = () => {
           <div className="notail-comment-state">
             {/* 임시주석 */}
             {/* <p>댓글 ({commentList.length})</p> */}
-            <p>댓글 1</p>
+            <p>댓글 {commentList.length}</p>
           </div>
           <div className="notail-write-area">
             <div className="notail-write-profile-img">
@@ -218,17 +226,17 @@ const BoardDetailBody = () => {
                   <div className="notail-comment-list-item-main-area">
                     {/* 댓글이름 */}
                     <div className="notail-comment-item-name">
-                      <h3>{item.name}</h3>
+                      <h3>{item.writer}</h3>
                     </div>
 
                     {/* 댓글본문 */}
                     <div className="notail-comment-item-content">
-                      <p>{item.comment}</p>
+                      <p>{item.content}</p>
                     </div>
 
                     {/* 날짜,신고하기,답글달기 */}
                     <div className="notail-comment-item-details">
-                      <p>2024.12.13 목요일</p>
+                      <p>{item.dueDate}</p>
                       <p>신고하기</p>
                       <p>답글달기</p>
                     </div>
@@ -236,10 +244,10 @@ const BoardDetailBody = () => {
 
                   <div className="notail-comment-like">
                     <div className="notail-comment-like-icon">
-                      <img src={imgObj.notailLike}></img>
+                      <img src={imgObj.notailLike} style={{cursor:'pointer'}}/>
                     </div>
                     <div className="notail-comment-like-count">
-                      <p>1,234</p>
+                      <p style={{textAlign:'center'}}>{item.likes}</p>
                     </div>
                   </div>
                 </div>

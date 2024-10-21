@@ -163,7 +163,7 @@ const root = createBrowserRouter([
     ),
   },
   {
-    path: '/detail/:boardName/:bid',
+    path: '/detail/:boardName/:bno',
     element: (
       <Suspense fallback={Loading}>
         <BoardDetail />

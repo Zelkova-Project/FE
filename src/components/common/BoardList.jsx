@@ -131,10 +131,10 @@ const BoardList = ({ boardList }) => {
                 <ul>
                   <li>
                     <img src={imgObj.arrowRight}></img>
-                    <img className="all-right-btn" src={imgObj.arrowRight}></img>
                   </li>
                   <li>
                     <img src={imgObj.arrowRight}></img>
+                    <img className="all-right-btn" src={imgObj.arrowRight}></img>
                   </li>
                 </ul>
               </div>
