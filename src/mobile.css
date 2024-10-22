@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+@font-face {
+  font-family: 'PretendardVariable'; /* 사용할 폰트의 이름을 정의 */
+  src: url('./fonts/PretendardVariable.ttf'); /* 폰트 파일의 위치 */
+}
+
+::-webkit-scrollbar {
+  width: 4px; /* 세로축 스크롤바 폭 너비 */
+  height: 1px; /* 가로축 스크롤바 폭 너비 */
+} /* 스크롤바 막대 */
+::-webkit-scrollbar-thumb {
+  background: #82d3ac; /* 스크롤바 막대 색상 */
+  border-radius: 12px 12px 12px 12px;
+}
+
+/* 스크롤이 움직이는 뒷 배경 */
+::-webkit-scrollbar-track {
+  /* background: #d0d0d0;  */
+  /* 스크롤바 뒷 배경 색상 */
+}
