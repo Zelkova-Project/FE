@@ -16,6 +16,7 @@ const Write = lazy(() => import('../pages/WritePage'));
 const Community = lazy(() => import('../pages/CommunityPage'));
 const Support = lazy(() => import('../pages/SupportPage'));
 const Chat = lazy(() => import('../pages/ChatPage'));
+const TempChat = lazy(() => import('../pages/TempChat'));
 const MemberFind = lazy(() => import('../pages/MemberFindPage'));
 const Profile = lazy(() => import('../pages/ProfilePage'));
 const ProfileSetup = lazy(() => import('../pages/ProfileSetupPage'));
@@ -126,7 +127,7 @@ const root = createBrowserRouter([
     path: '/chat',
     element: (
       <Suspense fallback={Loading}>
-        <Chat />
+        <TempChat />
       </Suspense>
     ),
   },
