@@ -1,4 +1,6 @@
 // config-overrides.js
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const multipleEntry = require('react-app-rewire-multiple-entry')([
     {
@@ -38,6 +40,60 @@ const multipleEntry = require('react-app-rewire-multiple-entry')([
   module.exports = {
     webpack: function(config, env) {
       multipleEntry.addMultiEntry(config);
+
+      // ->> mobile로 열 때 활성화 시키기 시작
+      /**
+       * mobile 작업시 주석 풀고 
+       * 기본 url: localhost:3000/mo 
+       */
+
+/*
+      config.entry = path.resolve(__dirname, 'src/mobile.js');
+      
+      config.plugins = config.plugins.map((plugin) => {
+        if (plugin instanceof HtmlWebpackPlugin) {
+          return new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'public/mobile.html'), 
+            inject: true,
+          });
+        }
+        return plugin;
+      });
+*/
+
+      // ->> mobile로 열 때 활성화 시키기 끝
+
+
+
+
+      // test 미사용 
+      /*
+
+      config.entry = {
+        mobile: path.resolve(__dirname, 'src/mobile.js'),
+        pc: path.resolve(__dirname, 'src/index.js')
+      };
+
+      config.plugins = [];
+
+      config.plugins.push(
+        new HtmlWebpackPlugin({
+          template: path.resolve(__dirname, 'public/mobile.html'),
+          filename: 'mobile.html',
+          chunks: ['mobile'], // Use the mobile entry point
+          inject: true,
+        }),
+        new HtmlWebpackPlugin({
+          template: path.resolve(__dirname, 'public/index.html'),
+          filename: 'index.html',
+          chunks: ['index'], // Use the pc entry point
+          inject: true,
+        })
+      );
+      
+      */
+      // test 미사용 end
+
       return config;
     }
   };

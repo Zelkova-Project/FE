@@ -4,6 +4,8 @@ import './mobile.css';
 import MobileApp from './MobileApp';
 import reportWebVitals from './reportWebVitals';
 
+console.log('...>>> mobile entry point js file');
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
