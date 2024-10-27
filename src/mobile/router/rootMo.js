@@ -14,16 +14,14 @@ const root = createBrowserRouter([
         <Main />
       </Suspense>
     ),
-    children: [
-      {
-        path: '/test',
-        elements: (
-          <Suspense fallback={Loading}>
-            <Test />
-          </Suspense> 
-        )
-      }
-    ]
+  },
+  {
+    path: '/mo/test',
+    element: (
+      <Suspense fallback={Loading}>
+        <Test />
+      </Suspense>
+    ),
   },
 ]);
 
