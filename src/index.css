@@ -11,7 +11,7 @@ code {
 }
 @font-face {
   font-family: 'PretendardVariable'; /* 사용할 폰트의 이름을 정의 */
-  src: url('./fonts/PretendardVariable.ttf'); /* 폰트 파일의 위치 */
+  src: url('@/common/fonts/PretendardVariable.ttf'); /* 폰트 파일의 위치 */
 }
 
 ::-webkit-scrollbar {

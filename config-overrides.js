@@ -20,34 +20,26 @@ const multipleEntry = require('react-app-rewire-multiple-entry')([
       outPath: './mobile.html'
       // Visit: http[s]://localhost:3000/public/login.html
     },
-    // {
-    //   entry: 'src/entry/404.js',
-    //   template: 'public/404.html'
-      // if [outPath] is empty, calculated by `path.relative(process.cwd(), template)` --> `public/404.html`
-      // outPath: '/public/404.html'
-      // Visit: http[s]://localhost:3000/public/404.html
-    // },
-    // {
-    //   entry: 'src/entry/home.js'
-      // Default value: `public/index.html`
-      // template: 'public/index.html',
-      // Calculated by `path.relative(process.cwd(), template)` --> `public/index.html`
-      // outPath: '/public/index.html'
-      // Visit: http[s]://localhost:3000/public/index.html
-    // }
   ]);
   
   module.exports = {
     webpack: function(config, env) {
       multipleEntry.addMultiEntry(config);
+      
+      // 간접경로 사용을 피하기 위해 디렉토리 alias 설정
+      config.resolve.alias = {
+        ...(config.resolve.alias || {}),
+        '@': path.resolve(__dirname, 'src')
+      };
+    
 
-      // ->> mobile로 열 때 활성화 시키기 시작
       /**
-       * mobile 작업시 주석 풀고 
+       * *** start) 모바일 작업시 활성화 시키기 
        * 기본 url: localhost:3000/mo 
        */
 
-/*
+      /*
+      
       config.entry = path.resolve(__dirname, 'src/mobile.js');
       
       config.plugins = config.plugins.map((plugin) => {
@@ -60,40 +52,7 @@ const multipleEntry = require('react-app-rewire-multiple-entry')([
         return plugin;
       });
 */
-
-      // ->> mobile로 열 때 활성화 시키기 끝
-
-
-
-
-      // test 미사용 
-      /*
-
-      config.entry = {
-        mobile: path.resolve(__dirname, 'src/mobile.js'),
-        pc: path.resolve(__dirname, 'src/index.js')
-      };
-
-      config.plugins = [];
-
-      config.plugins.push(
-        new HtmlWebpackPlugin({
-          template: path.resolve(__dirname, 'public/mobile.html'),
-          filename: 'mobile.html',
-          chunks: ['mobile'], // Use the mobile entry point
-          inject: true,
-        }),
-        new HtmlWebpackPlugin({
-          template: path.resolve(__dirname, 'public/index.html'),
-          filename: 'index.html',
-          chunks: ['index'], // Use the pc entry point
-          inject: true,
-        })
-      );
-      
-      */
-      // test 미사용 end
-
+      // *** end) mobile로 열 때 활성화 시키기 
       return config;
     }
   };

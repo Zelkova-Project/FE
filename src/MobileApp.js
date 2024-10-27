@@ -1,6 +1,6 @@
 import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import rootMo from './router/rootMo';
+import rootMo from '@/mobile/router/rootMo';
 
 function MobileApp() {
   return (
