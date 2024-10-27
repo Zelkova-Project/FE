@@ -4,15 +4,26 @@ import LoadingPage from '@/pc/components/Loading.jsx';
 
 const Loading = <LoadingPage />;
 const Main = lazy(() => import('@/mobile/pages/MainPage'));
+const Test = lazy(() => import('@/mobile/pages/TestPage'));
 
 const root = createBrowserRouter([
   {
-    path: '',
+    path: '/mo',
     element: (
       <Suspense fallback={Loading}>
         <Main />
       </Suspense>
     ),
+    children: [
+      {
+        path: '/test',
+        elements: (
+          <Suspense fallback={Loading}>
+            <Test />
+          </Suspense> 
+        )
+      }
+    ]
   },
 ]);
 
