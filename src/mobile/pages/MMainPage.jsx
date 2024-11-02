@@ -33,7 +33,7 @@ const MMainPage = () => {
           {/*로그인*/}
           <div className="main-login">
             <div className={'normal-login'}>
-              <button className="normal-login-btn" onClick={() => navigate('/mo/login')}>
+              <button className="main-login-btn" onClick={() => navigate('/mo/login')}>
                 로그인
               </button>
             </div>

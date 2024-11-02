@@ -151,7 +151,7 @@ const LoginPage = () => {
     <div className="login-container">
       <div className="login-wrapper">
         <div className="img-box">
-          <img src="logo72.png" />
+          <img src="/logo72.png" />
         </div>
 
         {/* 초기로그인진입시작 */}

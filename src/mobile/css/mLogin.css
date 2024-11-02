@@ -177,6 +177,8 @@
 }
 
 .login-title {
+  user-select: none;
+  cursor: default;
   margin : 172px 15px 15px 15px;
   text-align: center;
   line-height: 1.5;
