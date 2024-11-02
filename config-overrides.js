@@ -38,8 +38,7 @@ const multipleEntry = require('react-app-rewire-multiple-entry')([
        * 기본 url: localhost:3000/mo 
        */
 
-      /*
-      
+
       config.entry = path.resolve(__dirname, 'src/mobile.js');
       
       config.plugins = config.plugins.map((plugin) => {
@@ -51,8 +50,8 @@ const multipleEntry = require('react-app-rewire-multiple-entry')([
         }
         return plugin;
       });
-*/
-      // *** end) mobile로 열 때 활성화 시키기 
+
+      // *** end) mobile로 열 때 활성화 시키기
       return config;
     }
   };
