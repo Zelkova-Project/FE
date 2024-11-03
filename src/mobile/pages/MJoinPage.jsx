@@ -480,6 +480,7 @@ const MLoginPage = () => {
                     setSelected(!selected);
                   }}
                 />
+                <br/>
                 <img
                   src={'/select.png'}
                   alt={'select'}
