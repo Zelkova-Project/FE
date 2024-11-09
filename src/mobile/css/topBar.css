@@ -1,0 +1,36 @@
+/*상단바css*/
+.top-bar {
+  margin-top: 44px;
+  font-family: 'PretendardVariable';
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  user-select: none;
+}
+
+.top-bar img {
+  width: 28px;
+  height: 28px;
+}
+
+.top-bar-left,
+.top-bar-right {
+  flex: 1;
+  margin: 15px;
+}
+
+.top-bar-left {
+  text-align: left;
+}
+
+.top-bar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* 화면의 정확한 중앙에 배치 */
+  text-align: center;
+}
+
+.top-bar-right {
+  text-align: right;
+}

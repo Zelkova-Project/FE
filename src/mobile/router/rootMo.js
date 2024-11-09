@@ -43,7 +43,7 @@ const root = createBrowserRouter([
     ),
   },
   {
-    path: '/mo/NotFound',
+    path: '/*',
     element: (
         <Suspense fallback={Loading}>
           <NotFound />

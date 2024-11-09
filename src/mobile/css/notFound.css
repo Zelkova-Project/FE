@@ -1,0 +1,41 @@
+.container {
+  margin-top: 180px;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  user-select: none;
+}
+
+.wrap {
+  display: flex;
+  align-items: center;
+}
+.error-img img {
+  width: 120px;
+  height: 120px;
+}
+.error-txt {
+}
+.error-txt div:nth-child(1) {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+.error-txt div:nth-child(2) {
+  color: #a6a6a6;
+  font-size: 14px;
+}
+.error-txt button:nth-child(3) {
+  margin-top: 150px;
+  background: #82d3ac;
+  font-family: 'PretendardVariable';
+  font-weight: 700;
+  font-size: 14px;
+  width: 343px;
+  height: 44px;
+  color: #ffffff;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
