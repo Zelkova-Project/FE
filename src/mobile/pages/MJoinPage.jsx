@@ -90,7 +90,24 @@ const MLoginPage = () => {
     navigate(-1);
   };
   const goJoin = async () => {
-    let param = {
+
+    const completePageInfo = {
+      mainMsg: '회원가입 끝!',
+      subMsg: `더불어 살아가는\n느티나무 복지관에 오신 것을 환영합니다.`,
+      buttonMsg: '프로필 만들기',
+      buttonURL: '/mo/profile/make',
+      subMovDisplayYn: true,
+      subMovMsg: '건너뛰기',
+      subMovURL: '/mo',
+    }
+
+    navigate('/mo/complete', { state: completePageInfo });
+    return;
+
+    // TODO : 유효성검사, 회원가입처리
+
+
+    /*let param = {
       login_id: joinInfo.login_id,
       password: joinInfo.password,
       name: joinInfo.name,
@@ -181,7 +198,7 @@ const MLoginPage = () => {
       navigate('/');
     } else {
       // alert(message);
-    }
+    }*/
   };
   const selectValue = (index) => {
     setSelectVal(index);
@@ -589,7 +606,7 @@ const MLoginPage = () => {
 
 
 
-
+          {/* TODO : 유효성검사기능, */ }
           <div className={'normal-join margin-top30'}>
             <button className="normal-join-btn" onClick={goJoin}>
               확인

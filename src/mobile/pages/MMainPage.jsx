@@ -53,7 +53,7 @@ const MMainPage = () => {
 
             <div className="login-options">
               <ul className="options-ul">
-                <li onClick={() => navigate('/mo/Join')}>회원가입</li>
+                <li onClick={() => navigate('/mo/join')}>회원가입</li>
                 <li onClick={() => navigate('/mo/memberFind')}>아이디 찾기 / 비밀번호 바꾸기</li>
                 <li onClick={() => navigate('/mo/chat')}>문의하기</li>
               </ul>

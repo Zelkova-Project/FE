@@ -5,6 +5,7 @@
   height: 100vh;
   text-align: center;
   user-select: none;
+  overflow: hidden;
 }
 
 .wrap {
