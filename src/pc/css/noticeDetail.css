@@ -124,6 +124,25 @@
 .notail-comment-list-item-main-area {
   width: 1080px;
 }
+.notail-comment-like-btn {
+  border: 0;
+  background-color: transparent;
+}
+.notail-comment-like-btn.nolike {
+  background-image: url('@/common/imgs/notice/notail-like.png');
+  width: 30px;
+	height: 30px;
+  background-repeat: no-repeat; /* 반복 여부와 반복 방향 */
+  background-position: center center;
+}
+.notail-comment-like-btn.like {
+  background-image: url('@/common/imgs/notice/notail-like-active.png');
+  width: 30px;
+	height: 30px;
+  background-size: 20px 17px;
+  background-repeat: no-repeat; /* 반복 여부와 반복 방향 */
+  background-position: center center;
+}
 /* 댓글영역 - 작성 */
 .notail-write-area {
   margin-top: 20px;
@@ -317,3 +336,4 @@
   border-radius: 8px;
   border: 1px solid #82d3ac;
 }
+

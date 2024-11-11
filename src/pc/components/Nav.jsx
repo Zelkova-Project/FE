@@ -117,7 +117,6 @@ const Nav = () => {
         <li onClick={() => navHandler(2)}>공지사항</li>
         <li onClick={() => navHandler(3)}>후원&자원봉사</li>
         <li onClick={() => navHandler(4)}>커뮤니티</li>
-        <li onClick={() => navigate('/chat')}>채팅테스트</li>
       </ul>
       <ul className={'menu-login'}>
         {!login ? (
@@ -141,3 +140,4 @@ const Nav = () => {
   );
 };
 export default Nav;
+

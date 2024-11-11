@@ -25,6 +25,7 @@ const BoardDetailBody = () => {
   const [loading, setLoading] = useState(true);
   const [activeInfo, setActiveInfo] = useRecoilState(activeInfoState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [commentLikedUserList, setCommentLikedUserList] = useState([]);
 
   const imgObj = {
     comment: require('@/common/imgs/notice/notail-comment.png'),
@@ -40,9 +41,11 @@ const BoardDetailBody = () => {
       try {
         let { status, data, message } = await axios.get('/board/' + bno);
         const res = await axios.get('/comment/' + bno);
+        const { data: list } = await axios.get('/comment/likedUserList/' + bno);
         
         setPostDetail(data);
         setCommentList(res.data);
+        setCommentLikedUserList(list);
 
         setLoading(false);
         window.scrollTo(0, 400);
@@ -56,6 +59,10 @@ const BoardDetailBody = () => {
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+
+  const getLikedUserList = async () => {
+    return await axios.get('/comment/likedUserList/' + bno);
   }
 
   const enrollComment = async () => {
@@ -112,8 +119,27 @@ const BoardDetailBody = () => {
   const deleteBoard = async () => {
     const res = await axios.delete(`/board/${postDetail.bno}`);
     navigate(`/board/${activeInfo.activePage}`);
-    console.log('deleteBoard >>> ', res);
   }
+
+  const likeComment = async (cInfo) => {
+    await axios.put(`/comment/like/${cInfo.cno}`);
+
+    const {data: list, message, error} = await getLikedUserList();
+    if (error) {
+      alert(message);
+      return;
+    }
+
+    setCommentLikedUserList(list);
+  }
+  
+  const isActiveLiked = (idx) => {
+    return commentLikedUserList[idx].includes(userInfo.email);
+  }
+
+   const getLikedCounts = (idx) => {
+     return commentLikedUserList[idx] && commentLikedUserList[idx].length;
+   }
 
   return (
     <>
@@ -214,10 +240,10 @@ const BoardDetailBody = () => {
           {/* 댓글리스트 */}
           <div className="notail-comment-list">
             {/* 댓글시작 */}
-            {commentList.map((item) => (
+            {commentList.map((item, idx) => (
               <>
                 {/* 댓글하나 시작 */}
-                <div className="notail-comment-list-item">
+                <div className="notail-comment-list-item" key={`${idx}-comment`}>
                   <div className="notail-comment-list-item-profile">
                     <img src={imgObj.defaultProfile}></img>
                   </div>
@@ -243,11 +269,11 @@ const BoardDetailBody = () => {
                   </div>
 
                   <div className="notail-comment-like">
-                    <div className="notail-comment-like-icon">
-                      <img src={imgObj.notailLike} style={{cursor:'pointer'}}/>
+                    <div className="notail-comment-like-icon" onClick={() => likeComment(item)}>
+                      <button className={`notail-comment-like-btn ${isActiveLiked(idx) ? 'like' : 'nolike'}`}/>
                     </div>
                     <div className="notail-comment-like-count">
-                      <p style={{textAlign:'center'}}>{item.likes}</p>
+                      <p style={{textAlign:'center'}}>{getLikedCounts(idx)}</p>
                     </div>
                   </div>
                 </div>
@@ -314,3 +340,4 @@ const BoardDetailBody = () => {
 };
 
 export default BoardDetailBody;
+
