@@ -67,7 +67,7 @@ const ChatPage = () => {
     client.connectHeaders = headers;
 
     client.webSocketFactory = function () {
-      return new SockJS('/ws-zelkova');
+         return new SockJS('wss://namu0005.or.kr/ws-zelkova');
     };
 
     client.onConnect = function (frame) {

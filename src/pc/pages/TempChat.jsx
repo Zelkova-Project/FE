@@ -1,31 +1,26 @@
-const { useEffect, useRef } = require("react");
-
-
 const TempChat = () => {
 
- useEffect(() => {
+ let url = process.env.NODE_ENV == 'development' 
+    ? 'http://localhost:8080/api/chat-websocket' 
+    : 'https://namu0005.or.kr/api/chat-websocket';
 
- }, []);
- var socket = new SockJS('http://localhost:8080/chat-websocket');
- var stompClient = Stomp.over(socket);
+ let socket = new SockJS(url);
+ let stompClient = Stomp.over(socket);
  
  stompClient.connect({}, function (frame) {
      console.log('Connected: ' + frame);
-
      stompClient.subscribe('/topic/messages', function (message) {
          showMessage(JSON.parse(message.body));
      });
  });
  function sendMessage() {
-  var messageContent = document.getElementById("message").value;
-  console.log('message ', messageContent);
+  let messageContent = document.getElementById("message").value;
   stompClient.send("/app/sendMessage", {}, JSON.stringify({'sender': 'User1', 'content': messageContent}));
 }
 
 function showMessage(message) {
- console.log('message ', message);
-  var chat = document.getElementById("chat");
-  var messageElement = document.createElement('p');
+  let chat = document.getElementById("chat");
+  let messageElement = document.createElement('p');
   messageElement.appendChild(document.createTextNode(message.sender + ": " + message.content));
   chat.appendChild(messageElement);
 }
