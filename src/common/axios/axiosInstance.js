@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getCookie, removeCookie, setCookie } from '@/common/utils/loginUtil';
 
 const isDev = process.env.NODE_ENV == 'development';
 
@@ -7,75 +8,83 @@ const instance = axios.create({
   timeout: 30000,
 });
 
-function getCookie(name) {
-  let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
+const beforeRequest = config => {
+  console.log('....>> before', config.url);
+
+  const memberInfo = getCookie('memberInfo');
+  
+  if (!config.url.includes('/login')) {
+    config.headers.Authorization = `Bearer ${memberInfo.accessToken}`;
+
+    if (!memberInfo) {
+      removeCookie('memberInfo');
+  
+      return Promise.reject({
+        response: {
+          data: {
+            error: 'REQUIRE_LOGIN'
+          }
+        }
+      })
+    }
+  }
+
+  return config;
 }
 
-instance.interceptors.request.use(
-  (config) => {
-    // as-is 주석 (BE_r1 미사용)
-    // const accessToken = getToken();
+const requestFail = (err) => {
+  removeCookie('memberInfo');
+  return Promise.reject(err);
+}
 
-    // const inValidUrl = ['/login', '/signup'];
-    // const is적용할Url = !inValidUrl.includes(config.url);
+const beforeResponse = async (res) => {
+  const isError = res.data.error == 'ERROR_ACCESS_TOKEN';
+  
+  if (isError) {
+    const memberInfo = getCookie('memberInfo');
 
-    // if (is적용할Url) {
-    //   config.headers['X-XSRF-Token'] = accessToken;
-    // }
+    const accessToken = memberInfo?.accessToken;
+    const refreshToken = memberInfo?.refreshToken;
 
-    // to-be
-    config.headers['Authorization'] = 'Bearer ' + getCookie('accessToken');
-
-    return config;
-  },
-  (error) => {
-    console.log(error);
-    return Promise.reject(error);
-  },
-);
-
-instance.interceptors.response.use(
-  (response) => {
-    if (response.status === 404) {
-      console.log('404 페이지로 넘어가야 함!');
+    if (!accessToken || !refreshToken)  {
+      removeCookie('memberInfo');
+            
+      return Promise.reject({
+        response: {
+          data: {
+            error: 'REQUIRE_LOGIN'
+          }
+        }
+      });
     }
 
-    return {
-      status: response.status,
-      error: false,
-      message: response.statusText,
-      data: response?.data ? response.data : data,
-    };
-  },
-  async (error) => {
-    // if (error.response?.status === 401) {
-    // if (isTokenExpired()) await tokenRefresh();
+    const res = await axios.get('/member/refresh', refreshToken);
+    const newAccessToken = res.data.accessToken;
+    const newRefreshToken = res.data.refreshToken;
 
-    // const accessToken = getToken();
+    memberInfo.accessToken = newAccessToken;
+    memberInfo.refreshToken = newRefreshToken;
+    
+    // react-cookie detect auto and change automatically?
 
-    // error.config.headers = {
-    //   'Content-Type': 'application/json',
-    //   Authorization: `Bearer ${accessToken}`,
-    // };
+    removeCookie('memberInfo');
+    setCookie('memberInfo', memberInfo, 1);
+  }
 
-    //   const response = await axios.request(error.config);
-    //   return response;
-    // }
-    // throw new Error('error가 떴음 ', error);
-    try {
-      const { response } = error;
-      console.error('error ', error);
-      
-      return { status: 404, error: error, message: response.data };
-    } catch(e) {
-      
-      console.error('error ', e);
-      return { status: 404, error: error, message: e };
-    }
-  },
-);
+  return {
+    status: res.status,
+    error: false,
+    message: res.statusText,
+    data: res?.data ? res.data : data,
+  };
+}
+
+const responseFail = err => {
+  return Promise.reject(err);
+}
+
+instance.interceptors.request.use(beforeRequest, requestFail);
+instance.interceptors.response.use(beforeResponse, responseFail);
 
 export default instance;
+

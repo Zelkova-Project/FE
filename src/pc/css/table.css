@@ -17,6 +17,10 @@
   padding: 10px;
 }
 .common-table .common-table-tr1 th:nth-child(3) {
+  padding: 10px;
+}
+
+.common-table .common-table-tr1 th:nth-child(4) {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   padding: 10px;
@@ -34,3 +38,4 @@
   font-weight: 400;
   font-size: 16px;
 }
+

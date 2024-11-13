@@ -1,6 +1,6 @@
 import '@/pc/css/nav.css';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import {getCookie} from '@/common/utils/loginUtil';
 
 import { loginState, userInfoState } from '@/common/recoilState/recoil';
 import { useRecoilState } from 'recoil';
@@ -49,6 +49,8 @@ const Nav = () => {
 
   useEffect(() => {
     console.log('userInfo >>> ', userInfo);
+    const memberInfo = getCookie('memberInfo');
+    if (!memberInfo) setUserInfo('');
   }, []);
 
   // 호버시열리는영역
@@ -142,5 +144,6 @@ const Nav = () => {
   );
 };
 export default Nav;
+
 
 

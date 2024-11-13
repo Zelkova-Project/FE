@@ -1,20 +1,37 @@
-const deleteAllCookies = () => {
-    const cookies = document.cookie.split(";"); // Get all cookies
+import { Cookies } from "react-cookie";
 
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i];
-        const eqPos = cookie.indexOf("=");
-        const name = eqPos > -1 ? cookie.slice(0, eqPos) : cookie;
+const cookie = new Cookies();
 
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-    }
+const setCookie = (name, value, days) => {
+  let expire = new Date();
+  const expire_days = expire.getUTCDate() + days;
+  expire.setUTCDate(expire_days);
+
+  cookie.set(name, value, expire);
 }
 
-const putCookie = (accessToken) => {
-    document.cookie = "accessToken=" + accessToken + '; max-age=604800; path=/';
+const getCookie = (name) => {
+  return cookie.get(name);
+}
+
+const removeCookie = (name, path = "/") => {
+  cookie.remove(name, { path });
+}
+
+const refreshToken = async (refreshToken) => {
+    let memberInfo = getCookie("memberInfo");
+
+    const res = await axios.get("/member/refresh", refreshToken);
+    memberInfo['accessToken'] = res.data.accessToken;
+    memberInfo['refreshToken'] = res.data.refreshToken;
+
+    setCookie(memberInfo);
 }
 
   export {
-    deleteAllCookies,
-    putCookie
+    refreshToken,
+    getCookie,
+    setCookie,
+    removeCookie
   }
+

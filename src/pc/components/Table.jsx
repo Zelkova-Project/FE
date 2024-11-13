@@ -24,6 +24,7 @@ const Table = ({ activePageNum }) => {
             onClick={() => navigate(`/detail/${activeInfo.activePage}/${postList[idx].bno}`)}
           >
             <td>{postList[idx].bno}</td>
+            <td>공지사항</td>
             <td>{postList[idx].title}</td>
             {/* 임시주석 */}
             {/* <td>{postList[idx].date_time.split('T')[0]}</td> */}
@@ -73,6 +74,7 @@ const Table = ({ activePageNum }) => {
         <thead>
           <tr className="common-table-tr1" key={'head'}>
             <th key={'no'}>No</th>
+            <th key={'category'}>구분</th>
             <th key={'title'}>Title</th>
             <th key={'date'}>Date</th>
           </tr>
@@ -84,3 +86,4 @@ const Table = ({ activePageNum }) => {
 };
 
 export default Table;
+

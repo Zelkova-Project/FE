@@ -25,24 +25,21 @@ const WriteBody = () => {
   const [subtit, setSubtit] = useState('');
   const [activeLoadedIdx, setActiveLoadedIdx] = useState(0);
   const [writeInfo, setWriteInfo] = useState({});
- 
-window.receiveDataFromFlutter = (data) => {
-	alert(data);
-}
-
+  
   //custom editor 시작
   const saveContent = async () => {
     const content = editorRef.current.innerHTML;
     const current = editorRef.current;
 
     let nickname = userInfo?.nickname || '홍길동';
-    console.log('userInfo?.nickname > ', userInfo?.nickname);
+
     
     setPostInfo({...postInfo, content: current, writer: nickname});
     let param = new FormData();
     param.append('title', postInfo.title);
     param.append('content', content);
     param.append('writer', userInfo?.nickname);
+    // param.append('category', postInfo.category);
     param.append('dueDate', getDate(new Date()));
 
     if (postInfo.uploadFileNames != null) {
@@ -282,10 +279,15 @@ window.receiveDataFromFlutter = (data) => {
 
           <div className="write-flexItem">
             <div className="write-flexSub">
-              <h3>게시 여부</h3>
-              <select>
-                <option>공개</option>
-                <option>비공개</option>
+              <h3>카테고리</h3>
+              <select
+               onChange={(e) => setPostInfo({...postInfo, category: e.target.value})} 
+              >
+                <option>공지사항</option>
+                <option>가정통신문</option>
+                <option>채용게시판</option>
+                <option>후원의손길</option>
+                <option>자원봉사</option>
               </select>
             </div>
             <div className="write-flexSub ml-40">
@@ -362,3 +364,4 @@ window.receiveDataFromFlutter = (data) => {
 };
 
 export default WriteBody;
+

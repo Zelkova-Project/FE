@@ -8,7 +8,7 @@ import { loginState, userInfoState } from '@/common/recoilState/recoil';
 
 import { getKakaoLoginLink } from '@/common/api/kakaoAPi';
 
-import { deleteAllCookies, putCookie } from '@/common/utils/loginUtil';
+import { removeCookie, setCookie } from '@/common/utils/loginUtil';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -84,16 +84,20 @@ const LoginPage = () => {
       let formData = new FormData();
       formData.append('username', 'user0@gmail.com');
       formData.append('password', '0000');
-  
+      console.log('ok?');
       const { data } = await axios.post('/member/login', formData);
       if (!data.ERROR) {
-        deleteAllCookies();
+        removeCookie('memberInfo');
 
         navigate('/');
         setLogin(true);
         setUserInfo(data);
+        
+        let memberInfo = {
+          ...data
+        };
 
-        putCookie(data.accessToken);
+        setCookie('memberInfo', memberInfo, 1);
       } else {
         // let [key, val] = Object.entries(message)[0];
         // let msgMap = {
@@ -126,11 +130,17 @@ const LoginPage = () => {
 
     const { data } = await axios.post('/member/login', formData);
     if (!data.ERROR) {
-      deleteAllCookies();
+      removeCookie('memberInfo');
+
       navigate('/');
       setLogin(true);
       setUserInfo(data);
-      putCookie(data.accessToken);
+
+      let memberInfo = {
+        ...data
+      };
+
+     setCookie('memberInfo', memberInfo, 1);
     } else {
       // let [key, val] = Object.entries(message)[0];
       // let msgMap = {
@@ -247,3 +257,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
