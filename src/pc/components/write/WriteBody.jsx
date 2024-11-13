@@ -25,7 +25,11 @@ const WriteBody = () => {
   const [subtit, setSubtit] = useState('');
   const [activeLoadedIdx, setActiveLoadedIdx] = useState(0);
   const [writeInfo, setWriteInfo] = useState({});
-  
+ 
+window.receiveDataFromFlutter = (data) => {
+	alert(data);
+}
+
   //custom editor 시작
   const saveContent = async () => {
     const content = editorRef.current.innerHTML;
