@@ -589,7 +589,7 @@ const MLoginPage = () => {
               </div>
             </div>
 
-            {/*인증번호*/}
+            {/*소개*/}
             <div className="join-form-item">
               <div className="join-form-subitem4">
                 <textarea

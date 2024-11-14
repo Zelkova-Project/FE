@@ -1,10 +1,9 @@
-import style from '@/mobile/css/mNotFound.css';
+import style from '@/mobile/css/mProfile.css';
 import style2 from '@/mobile/css/topBar.css';
 import { useNavigate } from 'react-router-dom';
 
 const MLoginPage = () => {
   const navigate = useNavigate();
-
     return (
         <>
           {/*상단바*/}

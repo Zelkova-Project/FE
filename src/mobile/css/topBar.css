@@ -1,11 +1,11 @@
 /*상단바css*/
 .top-bar {
-  margin-top: 44px;
+  padding-top: 44px;
   font-family: 'PretendardVariable';
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 18px;
+  font-size: 16px;
   user-select: none;
 }
 
@@ -27,8 +27,9 @@
 .top-bar-center {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%); /* 화면의 정확한 중앙에 배치 */
+  transform: translateX(-50%);
   text-align: center;
+  font-weight: 500;
 }
 
 .top-bar-right {

@@ -14,7 +14,6 @@
   align-items: center;
 }
 .complete-img img {
-  margin-top: 230px;
   width: 120px;
   height: 120px;
 }
@@ -48,7 +47,7 @@
 }
 
 .complete-txt div:nth-child(4) {
-  margin-top: 8px;
+  margin-top: 15px;
   color: #a6a6a6;
   font-size: 13px;
   text-decoration: underline;
