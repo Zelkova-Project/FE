@@ -9,6 +9,9 @@
   display: flex;
   flex-direction: column;
 }
+.notice-search-area button{
+  cursor: pointer;
+}
 .notice-search-area {
   display: flex;
   flex-direction: row;
@@ -192,3 +195,4 @@
   background: #fff;
   border-radius: 8px;
 }
+

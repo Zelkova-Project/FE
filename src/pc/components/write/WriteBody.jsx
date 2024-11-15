@@ -32,20 +32,19 @@ const WriteBody = () => {
     const current = editorRef.current;
 
     let nickname = userInfo?.nickname || '홍길동';
-
     
     setPostInfo({...postInfo, content: current, writer: nickname});
+    
     let param = new FormData();
     param.append('title', postInfo.title);
     param.append('content', content);
     param.append('writer', userInfo?.nickname);
-    // param.append('category', postInfo.category);
+    param.append('category', postInfo?.category);
     param.append('dueDate', getDate(new Date()));
 
     if (postInfo.uploadFileNames != null) {
       param.append('uploadFileNames', postInfo.uploadFileNames);
     }
-
 
     let { status, data, message } = await axios.post('/board/', param);
 
@@ -171,7 +170,7 @@ const WriteBody = () => {
 
 
   const [postInfo, setPostInfo] = useState({
-    category: 'BOARD',
+    category: '공지사항',
     visibility: 'PUBLIC',
     title: '테스트 제목',
     content: '테스트 내용',
@@ -279,15 +278,13 @@ const WriteBody = () => {
 
           <div className="write-flexItem">
             <div className="write-flexSub">
-              <h3>카테고리</h3>
-              <select
-               onChange={(e) => setPostInfo({...postInfo, category: e.target.value})} 
-              >
-                <option>공지사항</option>
-                <option>가정통신문</option>
-                <option>채용게시판</option>
-                <option>후원의손길</option>
-                <option>자원봉사</option>
+              <h3>게시 여부</h3>
+              <select onChange={(e) => setPostInfo({ ...postInfo, category: e.target.value })}>
+                <option value="공지사항" selected>공지사항</option>
+                <option value="가정통신문">가정통신문</option>
+                <option value="채용게시판">채용게시판</option>
+                <option value="후원의손길">후원의손길</option>
+                <option value="자유게시판">자유게시판</option>
               </select>
             </div>
             <div className="write-flexSub ml-40">

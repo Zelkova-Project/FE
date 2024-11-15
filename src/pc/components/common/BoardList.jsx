@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from '@/common/axios/axiosInstance';
 
 import Section from '@/pc/components/Section';
 import Table from '@/pc/components/Table';
@@ -19,7 +20,39 @@ const BoardList = ({ boardList }) => {
   };
 
   const [subtit, setActiveSubtit] = useState('');
+  const [activeSearchFlag, setActiveSearchFlag] = useState(-1);
   const [activePageNum, setActivePageNum] = useState(1);
+  const [postList, setPostList] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchOption, setSearchOption] = useState('title');
+  const [processing, setProcessing] = useState(false);
+
+  const getPostListByKeyword = (e) => {
+    if (e.key == 'Enter' || e == 'click') {
+      setProcessing(true);
+      setActiveSearchFlag(activeSearchFlag * -1);
+    }
+  }
+  
+  const fetchPostList = async () => {
+    try {
+      let { status, data, message } = await axios.get(
+        `/board/list?page=${activePageNum}&size=10&keyword=${searchKeyword}&searchOption=${searchOption}`,
+      );
+      const filtered = data.dtoList.filter(item => !item.del); // soft delete로 인해 한번 걸러야함
+      setPostList(filtered);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+
+    setTimeout(() => {
+      setProcessing(false);
+    }, 1000);
+  }
+
+  useEffect(() => {
+    fetchPostList();
+  }, [activePageNum, activeSearchFlag]);
 
   // 검색영역 돔 그리기
   const makeSearchingDom = () => {
@@ -31,15 +64,20 @@ const BoardList = ({ boardList }) => {
 
         <div className="notice-flexitem flexCenter">
           <div className="notice-search-area">
-            <select>
-              <option>제목</option>
-              <option>내용</option>
+            <select onChange={(e) => {setSearchOption(e.target.value)}}>
+              <option value="title">제목</option>
+              <option value="content">내용</option>
               {/* <option>1</option> */}
             </select>
 
-            <input placeholder="검색어를 입력해주세요" />
+            <input 
+              placeholder="검색어를 입력해주세요" 
+              onKeyDown={getPostListByKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+              disabled={processing}
+            />
 
-            <button>검색</button>
+            <button onClick={() => getPostListByKeyword('click')}>검색</button>
           </div>
         </div>
       </>
@@ -51,7 +89,7 @@ const BoardList = ({ boardList }) => {
     return (
       <>
         <div className="notice-flexitem">
-          <Table activePageNum={activePageNum} />
+          <Table postList={postList} />
         </div>
       </>
     );
@@ -142,7 +180,7 @@ const BoardList = ({ boardList }) => {
 
             {/* 글쓰기버튼 */}
             <div className="page-btn-write">
-              <button onClick={() => goWrite()}>글쓰기</button>
+              <button onClick={goWrite}>글쓰기</button>
             </div>
           </div>
         </div>
@@ -152,3 +190,4 @@ const BoardList = ({ boardList }) => {
 };
 
 export default BoardList;
+
