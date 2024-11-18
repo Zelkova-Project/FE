@@ -1,13 +1,14 @@
 import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import root from '@/pc/router/root';
+import rootMo from '@/mobile/router/rootMo';
 
-function App() {
+function MobileApp() {
   return (
     <RecoilRoot>
-      <RouterProvider router={root} />
+      <RouterProvider router={rootMo} />
     </RecoilRoot>
   );
 }
 
-export default App;
+export default MobileApp;
+

@@ -10,6 +10,7 @@
     "axios": "^1.7.2",
     "dompurify": "^3.1.5",
     "react": "^18.3.1",
+    "react-cookie": "^7.2.2",
     "react-dom": "^18.3.1",
     "react-kakao-maps-sdk": "^1.1.27",
     "react-modal": "^3.16.1",
@@ -22,9 +23,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "format": "prettier --check ./src",
     "format:fix": "prettier --write ./src",
@@ -50,7 +51,10 @@
   },
   "devDependencies": {
     "husky": "^9.0.11",
-    "prettier": "^3.3.0"
+    "prettier": "^3.3.0",
+    "react-app-rewire-multiple-entry": "^2.2.3",
+    "react-app-rewired": "^2.2.1"
   },
   "proxy": "http://49.247.174.109:8080"
 }
+
