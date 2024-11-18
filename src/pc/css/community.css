@@ -9,13 +9,21 @@
   display: flex;
   flex-direction: row;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .community-body-flex .flex-item {
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  flex: 1 1 calc(33.333% - 10px);  /*3개씩 배치*/
+  box-sizing: border-box; 
 }
+.community-body-flex .thumb-wrapper {
+  width: 255px;
+  height: 255px;
+}
+
 
 .community-body-flex .flex-item p {
   width: 231px;
@@ -27,3 +35,4 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+

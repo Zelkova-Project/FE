@@ -25,7 +25,14 @@ const WriteBody = () => {
   const [subtit, setSubtit] = useState('');
   const [activeLoadedIdx, setActiveLoadedIdx] = useState(0);
   const [writeInfo, setWriteInfo] = useState({});
-  
+  const [isMain, setIsMain] = useState(true);
+  const [postInfo, setPostInfo] = useState({
+      category: '공지사항',
+      visibility: 'PUBLIC',
+      title: '',
+      content: '',
+    });
+
   //custom editor 시작
   const saveContent = async () => {
     const content = editorRef.current.innerHTML;
@@ -46,7 +53,15 @@ const WriteBody = () => {
       param.append('uploadFileNames', postInfo.uploadFileNames);
     }
 
-    let { status, data, message } = await axios.post('/board/', param);
+    // if (!isMain) {
+    //   param.append('thumbImageName', postInfo.thumbImageName);
+    // }
+
+    // if (!postInfo.title || !postInfo.content) {
+    //   alert("제목, 내용이 모두 입력되어야 글쓰기가 가능합니다!");
+    // }
+
+    await axios.post('/board/', param);
 
     navigate(-1);
   };
@@ -70,6 +85,7 @@ const WriteBody = () => {
   const uploadSingleFile = async (file) => {
     let param = new FormData();
     param.append('file', file);
+
     const { error, status, data: fileName } = await axios.post('/files/upload', param);
     
     if (error) {
@@ -106,6 +122,15 @@ const WriteBody = () => {
       console.error('### uploadSingleWebp');
       return;
     }
+
+    if (isMain) {
+      setPostInfo({
+        ...postInfo,
+        thumbImageName: webpName
+      });
+      setIsMain(false);
+    }
+
 
     return webpName;
   }
@@ -167,14 +192,6 @@ const WriteBody = () => {
     document.querySelector("#fileInput").click();
   }
   //custom editor 끝
-
-
-  const [postInfo, setPostInfo] = useState({
-    category: '공지사항',
-    visibility: 'PUBLIC',
-    title: '테스트 제목',
-    content: '테스트 내용',
-  });
 
   const getDate = (date) => {
     let year = date.getFullYear() + '';
@@ -279,12 +296,13 @@ const WriteBody = () => {
           <div className="write-flexItem">
             <div className="write-flexSub">
               <h3>게시 여부</h3>
-              <select onChange={(e) => setPostInfo({ ...postInfo, category: e.target.value })}>
-                <option value="공지사항" selected>공지사항</option>
+              <select value={postInfo.category} onChange={(e) => setPostInfo({ ...postInfo, category: e.target.value })}>
+                <option value="공지사항">공지사항</option>
                 <option value="가정통신문">가정통신문</option>
                 <option value="채용게시판">채용게시판</option>
                 <option value="후원의손길">후원의손길</option>
                 <option value="자유게시판">자유게시판</option>
+                <option value="커뮤니티">커뮤니티</option>
               </select>
             </div>
             <div className="write-flexSub ml-40">
@@ -361,4 +379,5 @@ const WriteBody = () => {
 };
 
 export default WriteBody;
+
 

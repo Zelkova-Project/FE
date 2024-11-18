@@ -23,7 +23,11 @@ const Table = ({ postList }) => {
           >
             <td>{postList[idx].bno}</td>
             <td>{postList[idx].category}</td>
-            <td>{postList[idx].title}</td>
+            <td>
+              <span>
+                {postList[idx].title}
+              </span>
+            </td>
             <td>
               {
                 postList[idx].dueDate != null ? postList[idx].dueDate : '2024-10-14'
@@ -72,4 +76,5 @@ const Table = ({ postList }) => {
 };
 
 export default Table;
+
 

@@ -1,8 +1,9 @@
 import Section from '@/pc/components/Section';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userInfoState } from '@/common/recoilState/recoil';
 import { useRecoilState } from 'recoil';
+import axios from '@/common/axios/axiosInstance';
 
 const CommunityBody = () => {
   const navigate = useNavigate();
@@ -12,8 +13,14 @@ const CommunityBody = () => {
     arrowRight: require('@/common/imgs/notice/arrow-right.png'),
     communityImg1: require('@/common/imgs/community/community-example1.png'),
   };
-  const [activeIdx, setActiveIdx] = useState(1);
+  const [activePageNum, setActivePageNum] = useState(1);
+  const [postList, setPostList] = useState([]);
   const isAdmin = userInfo.loginId == 'admin';
+  const [searchOption, setSearchOption] = useState('title');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [processing, setProcessing] = useState(false);
+  const [activeSearchFlag, setActiveSearchFlag] = useState(-1);
+
 
   const makeCommunityGrid = () => {
     let comInfo = {
@@ -22,20 +29,62 @@ const CommunityBody = () => {
       content: '짤막한 글 내용이 들어갈 예정입니다. 짤막한 글이라 함은 이쯤에서 말줄임표를...',
     };
 
-    let dummyArr = [comInfo, comInfo, comInfo, comInfo];
     const result = [];
-    for (let idx in dummyArr) {
+    for (let idx in postList) {
       result.push(
         <div className="flex-item" key={idx} onClick={() => navigate(`/noticeDetail/${1}`)}>
-          <img src={dummyArr[idx].img}></img>
-          <h3>{dummyArr[idx].title}</h3>
-          <p>{dummyArr[idx].content}</p>
+          <div className='thumb-wrapper'>
+            <img src={postList[idx].thumbImageName}></img>
+          </div>
+          <h3>{postList[idx].title}</h3>
+          <h3>{postList[idx].writer}</h3>
+          <h3>{postList[idx].dueDate}</h3>
         </div>,
       );
     }
 
     return result;
   };
+
+  const getPostListByKeyword = (e) => {
+    if (e.key == 'Enter' || e == 'click') {
+      setProcessing(true);
+      setActiveSearchFlag(activeSearchFlag * -1);
+    }
+  }
+
+  const fetchPostList = async () => {
+    try {
+      let { status, data, message } = await axios.get(
+        `/board/list?page=${activePageNum}&size=10&keyword=${searchKeyword}&searchOption=${searchOption}&category=커뮤니티`,
+      );
+      const serverURL = process.env.NODE_ENV == 'development' ? 'http://localhost:8080/api' : '/api';
+
+      let filtered = data.dtoList.filter(item => !item.del); // soft delete로 인해 한번 걸러야함
+
+      filtered = filtered.map(post => {
+        if (!post.thumbImageName) {
+          post.thumbImageName = imgObj.communityImg1;
+        } else {
+          post.thumbImageName =`${serverURL}/image/view/${post.thumbImageName}`;
+        }
+        return post;
+      });
+
+      setPostList(filtered);
+      console.log('postList ', filtered)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+
+    setTimeout(() => {
+      setProcessing(false);
+    }, 1000);
+  }
+
+  useEffect(() => {
+    fetchPostList();
+  }, [activePageNum, activeSearchFlag]);
 
   return (
     <Section>
@@ -46,28 +95,25 @@ const CommunityBody = () => {
 
         <div className="notice-flexitem flexCenter">
           <div className="notice-search-area">
-            <select>
-              <option>제목</option>
-              <option>내용</option>
-              {/* <option>1</option> */}
+          <select onChange={(e) => {setSearchOption(e.target.value)}}>
+              <option value="title">제목</option>
+              <option value="content">내용</option>
             </select>
 
-            <input placeholder="검색어를 입력해주세요" />
+            <input 
+              placeholder="검색어를 입력해주세요" 
+              onKeyDown={getPostListByKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+              disabled={processing}
+            />
 
-            <button onClick={() => handlerRouting('write')}>검색</button>
+            <button onClick={() => getPostListByKeyword('click')}>검색</button>
+
           </div>
         </div>
 
         {/* 사진시작 */}
         <div className="community-body-flex">
-          <div className="flex-row">
-            {/* 요소 for looping */}
-            {makeCommunityGrid()}
-          </div>
-          <div className="flex-row">
-            {/* 요소 for looping */}
-            {makeCommunityGrid()}
-          </div>
           <div className="flex-row">
             {/* 요소 for looping */}
             {makeCommunityGrid()}
@@ -94,36 +140,17 @@ const CommunityBody = () => {
             {/* 페이지버튼 */}
             <div className="page-btns-center">
               <ul>
-                <li onClick={() => setActiveIdx(1)} className={activeIdx == 1 ? 'active' : ''}>
-                  1
-                </li>
-                <li onClick={() => setActiveIdx(2)} className={activeIdx == 2 ? 'active' : ''}>
-                  2
-                </li>
-                <li onClick={() => setActiveIdx(3)} className={activeIdx == 3 ? 'active' : ''}>
-                  3
-                </li>
-                <li onClick={() => setActiveIdx(4)} className={activeIdx == 4 ? 'active' : ''}>
-                  4
-                </li>
-                <li onClick={() => setActiveIdx(5)} className={activeIdx == 5 ? 'active' : ''}>
-                  5
-                </li>
-                <li onClick={() => setActiveIdx(6)} className={activeIdx == 6 ? 'active' : ''}>
-                  6
-                </li>
-                <li onClick={() => setActiveIdx(7)} className={activeIdx == 7 ? 'active' : ''}>
-                  7
-                </li>
-                <li onClick={() => setActiveIdx(8)} className={activeIdx == 8 ? 'active' : ''}>
-                  8
-                </li>
-                <li onClick={() => setActiveIdx(9)} className={activeIdx == 9 ? 'active' : ''}>
-                  9
-                </li>
-                <li onClick={() => setActiveIdx(10)} className={activeIdx == 10 ? 'active' : ''}>
-                  10
-                </li>
+                {
+                  [1,2,3,4,5,6,7,8,9,10].map((item, index) => (
+                    <li 
+                      key={index}
+                      className={item == activePageNum ? 'active' : ''}
+                      onClick={() => setActivePageNum(item)}
+                    >
+                      {item}
+                    </li>    
+                  ))
+                }
               </ul>
             </div>
 
@@ -154,3 +181,4 @@ const CommunityBody = () => {
 };
 
 export default CommunityBody;
+

@@ -25,7 +25,6 @@ const transferWebp = async (file) => {
 
                 canvas.toBlob((blob) => {
                     blobData = blob;
-                    console.log('inside >> ');
                     res();
                 }, "image/webp", 0.8);
             }
@@ -54,3 +53,4 @@ export {
     transferWebp,
     sendWebp
 }
+
