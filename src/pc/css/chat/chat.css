@@ -257,3 +257,72 @@
   /* background: #d0d0d0;  */
   /* 스크롤바 뒷 배경 색상 */
 }
+
+
+/* renew */
+.chatlist-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  width: 500px;
+  margin: 0 auto;
+}
+
+.chat-tab {
+  display: flex;
+  width: 100%;
+}
+.chat-tab .tab-item:hover {
+  background-color: #a9fad3;
+}
+.chat-tab .tab-item {
+  width: 100%;
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+.chat-content {
+  width: 100%;
+}
+
+.chatlist-container ul {
+  margin: 0;
+  padding: 0;
+}
+.chatlist-container ul li {
+  list-style: none;
+  background-color: #82d3ac;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #6aa689;
+  padding: 20px;
+}
+
+.chat-content input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.chat-content button:hover {
+  color: rgb(94, 94, 94);
+  background-color: #a9fad3;
+  border-radius: 10px;
+}
+
+.chat-content button {
+    margin-top: 10px;
+    background: none;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 20px;
+}
