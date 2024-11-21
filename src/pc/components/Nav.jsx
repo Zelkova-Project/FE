@@ -10,9 +10,9 @@ const Nav = () => {
   const [login, setLogin] = useRecoilState(loginState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [isHovering, setIsHovering] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
 
   const navigate = useNavigate();
-
   let logo = require('@/common/imgs/logo.png');
   let hoverImg = require('@/common/imgs/nav/nav-hover.png');
   // test
@@ -48,10 +48,8 @@ const Nav = () => {
   };
 
   useEffect(() => {
-    console.log('userInfo >>> ', userInfo);
-    const memberInfo = getCookie('memberInfo');
-    if (!memberInfo) setUserInfo('');
-  }, []);
+    setIsLogged(userInfo?.accessToken);
+  }, [userInfo]);
 
   // 호버시열리는영역
   const showExtraNav = () => {
@@ -86,7 +84,7 @@ const Nav = () => {
             </ul>
           </div>
           {/* 로그인 호버 메뉴 */}
-          {login ? (
+          {isLogged ? (
             <div className="login-menu">
               <ul className={'menu-hover'}>
                 <li onClick={() => logoutHandler()}>로그아웃</li>
@@ -123,14 +121,14 @@ const Nav = () => {
 
       </ul>
       <ul className={'menu-login'}>
-        {!login ? (
+        {!isLogged  ? (
           <li className={'li-login'} onClick={() => navHandler(5)}>
             <a>로그인</a>
           </li>
         ) : (
           <li className={'profile'} onClick={() => navigate('/profile')}>
             <label>
-              {userInfo && Object.keys(userInfo).length > 0 ? userInfo.nickname : ''}
+              {isLogged ? userInfo.nickname : ''}
               <div className={'profile-img'}>
                 <img src={'/default-profile-img.png'} alt={'프로필 사진'} />
               </div>
@@ -144,6 +142,7 @@ const Nav = () => {
   );
 };
 export default Nav;
+
 
 
 

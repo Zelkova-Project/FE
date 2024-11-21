@@ -9,13 +9,8 @@ const instance = axios.create({
 });
 
 const beforeRequest = config => {
-  console.log('....>> before', config.url);
-
   const memberInfo = getCookie('memberInfo');
-  
-  if (!config.url.includes('/login')) {
-    config.headers.Authorization = `Bearer ${memberInfo.accessToken}`;
-
+  if (!config.url.includes('/login') && !config.url.includes('/board')) {
     if (!memberInfo) {
       removeCookie('memberInfo');
   
@@ -27,6 +22,8 @@ const beforeRequest = config => {
         }
       })
     }
+
+    config.headers.Authorization = `Bearer ${memberInfo.accessToken}`;
   }
 
   return config;
@@ -38,7 +35,11 @@ const requestFail = (err) => {
 }
 
 const beforeResponse = async (res) => {
-  const isError = res.data.error == 'ERROR_ACCESS_TOKEN';
+  const errorCode = ['ERROR_ACCESS_TOKEN', 'ERROR_LOGIN'];
+  const isError = errorCode.includes(res.data.error);
+  
+  // 파라미터로 받는 res가 isError 블럭 안에서는 작동이 안되는 현상...
+  let res1 = res;
   
   if (isError) {
     const memberInfo = getCookie('memberInfo');
@@ -48,13 +49,11 @@ const beforeResponse = async (res) => {
 
     if (!accessToken || !refreshToken)  {
       removeCookie('memberInfo');
-            
+      
+      let errMsg = res1.data.error;
+
       return Promise.reject({
-        response: {
-          data: {
-            error: 'REQUIRE_LOGIN'
-          }
-        }
+        message: errMsg
       });
     }
 
@@ -80,11 +79,15 @@ const beforeResponse = async (res) => {
 }
 
 const responseFail = err => {
-  return Promise.reject(err);
+  return Promise.reject({
+    error: true,
+    data: err
+  });
 }
 
 instance.interceptors.request.use(beforeRequest, requestFail);
 instance.interceptors.response.use(beforeResponse, responseFail);
 
 export default instance;
+
 

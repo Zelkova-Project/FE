@@ -128,8 +128,17 @@ const LoginPage = () => {
     formData.append('username', loginId);
     formData.append('password', loginPw);
 
-    const { data } = await axios.post('/member/login', formData);
-    if (!data.ERROR) {
+    const res = await axios.post('/member/login', formData)
+      .catch(e => {
+        return {
+          data: {
+            error: true,
+            message: e.message
+          }
+        }
+      });
+      console.log(res)
+    if (!res.data.error) {
       removeCookie('memberInfo');
 
       navigate('/');
@@ -142,13 +151,7 @@ const LoginPage = () => {
 
      setCookie('memberInfo', memberInfo, 1);
     } else {
-      // let [key, val] = Object.entries(message)[0];
-      // let msgMap = {
-      //   NOT_EXIST_LOGIN_ID: '존재하지 않은 아이디입니다.',
-      //   WRONG_PASSWORD: '비밀번호가 맞지 않습니다.',
-      //   ACCOUNT_PROBLEM: '계정이 올바르지 않습니다.',
-      // };
-      alert(data.ERROR);
+      alert(res.data.message);
     }
   };
   const activeEnter = (e) => {
@@ -218,7 +221,7 @@ const LoginPage = () => {
                 </div>
               </div>
               <div className={'normal-login'}>
-                <button className="normal-login-btn" onClick={() => goNormalLogin()}>
+                <button className="normal-login-btn" onClick={goNormalLogin}>
                   로그인
                 </button>
               </div>
@@ -257,4 +260,5 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
 
