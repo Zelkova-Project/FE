@@ -22,6 +22,7 @@ const BoardList = ({ boardList }) => {
   const [subtit, setActiveSubtit] = useState('');
   const [activeSearchFlag, setActiveSearchFlag] = useState(-1);
   const [activePageNum, setActivePageNum] = useState(1);
+  const [pageList, setPageList] = useState([]);
   const [postList, setPostList] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchOption, setSearchOption] = useState('title');
@@ -41,6 +42,7 @@ const BoardList = ({ boardList }) => {
       );
       const filtered = data.dtoList.filter(item => !item.del); // soft delete로 인해 한번 걸러야함
       setPostList(filtered);
+      setPageList(data.pageNumList);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -67,7 +69,6 @@ const BoardList = ({ boardList }) => {
             <select onChange={(e) => {setSearchOption(e.target.value)}}>
               <option value="title">제목</option>
               <option value="content">내용</option>
-              {/* <option>1</option> */}
             </select>
 
             <input 
@@ -98,9 +99,7 @@ const BoardList = ({ boardList }) => {
   // 페이징 영역 돔 그리기
   const makePagingDom = () => {
     let result = [];
-    // TODO: 글의 페이징만큼 만들어야함
-    let dummyArr = Array.from({ length: 10 }, (_, idx) => idx + 1);
-    result = dummyArr.map((item, idx) => {
+    result = pageList.map((item, idx) => {
       return (
         <li
           onClick={() => setActivePageNum(item)}
@@ -190,4 +189,5 @@ const BoardList = ({ boardList }) => {
 };
 
 export default BoardList;
+
 

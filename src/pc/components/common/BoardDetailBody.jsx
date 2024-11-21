@@ -71,6 +71,11 @@ const BoardDetailBody = () => {
     const month = nowtime.getMonth() + 1;
     const date = nowtime.getDate();
 
+    if (!commentInfo) {
+      alert("댓글을 입력해주세요");
+      return;
+    }
+
     let { status, data, message } = await axios.post('/comment/', {
       bno: bno,
       content: commentInfo,
@@ -150,7 +155,7 @@ const BoardDetailBody = () => {
           <div className="notail-subtit">
             <ul className="notail-subtit-ul">
               <li>
-                <h3>{postDetail && postDetail.title}</h3>
+                <h3 className='textellipsis'>{postDetail && postDetail.title}</h3>
               </li>
               <li>
                 <div>
@@ -169,7 +174,7 @@ const BoardDetailBody = () => {
         {/* 제목,본문 영역 */}
         <div className="notail-content-section">
           <div className="notail-content">
-            <h2>{postDetail && postDetail.title}</h2>
+            <h2 className='textellipsis'>{postDetail && postDetail.title}</h2>
             {
               postDetail?.uploadFileNames != null && postDetail.uploadFileNames.length > 0 && (
                 <div className='notail-files'>
@@ -230,6 +235,7 @@ const BoardDetailBody = () => {
                 value={commentInfo}
                 onChange={(e) => inputComment(e)}
                 onKeyDown={(e) => entering(e)}
+                autoComplete="off"
               ></input>
             </div>
             <div className="notail-write-comment-register-btn">
@@ -285,7 +291,7 @@ const BoardDetailBody = () => {
         </div>
 
         {/* 이전글 다음글 영역 */}
-        <div className="notail-prev-next-btn-section">
+        {/* <div className="notail-prev-next-btn-section">
           <div className="notail-prev-btn">
             <ul onClick={() => goPage(`/detail/${activeInfo.activePage}/${postDetail.prev.no}`)}>
               {postDetail.prev ? (
@@ -323,7 +329,7 @@ const BoardDetailBody = () => {
               )}
             </ul>
           </div>
-        </div>
+        </div> */}
 
         {/* 목록버튼 */}
         <div className="notail-golist-btn">
@@ -340,4 +346,5 @@ const BoardDetailBody = () => {
 };
 
 export default BoardDetailBody;
+
 

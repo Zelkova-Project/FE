@@ -337,3 +337,10 @@
   border: 1px solid #82d3ac;
 }
 
+.textellipsis {
+  width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}

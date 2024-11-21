@@ -9,14 +9,13 @@ import '@/pc/css/community.css';
 import '@/pc/css/guide.css';
 
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const CommunityPage = () => {
   const navigate = useNavigate();
   const imgObj = {
     main: require('@/common/imgs/community/community-main.png'),
   };
-
-  let activeComp = {};
 
   return (
     <div className="main-container">
@@ -38,3 +37,4 @@ const CommunityPage = () => {
 };
 
 export default CommunityPage;
+

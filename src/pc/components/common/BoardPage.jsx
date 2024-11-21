@@ -3,7 +3,6 @@ import { activeInfoState } from '@/common/recoilState/recoil';
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { useLocation, useParams } from 'react-router';
-import axios from '@/common/axios/axiosInstance';
 
 import PageLayout from '@/pc/components/common/PageLayout';
 import BoardList from '@/pc/components/common/BoardList';
@@ -61,3 +60,4 @@ const BoardPage = () => {
 };
 
 export default BoardPage;
+
