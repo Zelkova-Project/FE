@@ -1,6 +1,6 @@
 import '@/pc/css/nav.css';
 import { useNavigate } from 'react-router-dom';
-import {getCookie} from '@/common/utils/loginUtil';
+import {getCookie, removeCookie} from '@/common/utils/loginUtil';
 
 import { loginState, userInfoState } from '@/common/recoilState/recoil';
 import { useRecoilState } from 'recoil';
@@ -39,10 +39,8 @@ const Nav = () => {
   };
 
   const logoutHandler = () => {
-    console.log('logoutHandler');
-    localStorage.removeItem('loginMember');
-    deleteCookie('X-XSRF-Token');
-    deleteCookie('accessToken');
+    setUserInfo('');
+    removeCookie('memberInfo');
     navigate('/');
     location.reload();
   };
@@ -142,6 +140,7 @@ const Nav = () => {
   );
 };
 export default Nav;
+
 
 
 

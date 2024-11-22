@@ -10,6 +10,7 @@ import '@/pc/css/noticeDetail.css';
 import axios from '@/common/axios/axiosInstance';
 
 import * as DOMPurify from 'dompurify';
+import { getCookie } from '../../../common/utils/loginUtil';
 
 const BoardDetailBody = () => {
   const { bno } = useParams();
@@ -40,11 +41,12 @@ const BoardDetailBody = () => {
     const fetchData = async () => {
       try {
         let { status, data, message } = await axios.get('/board/' + bno);
-        const res = await axios.get('/comment/' + bno);
-        const { data: list } = await axios.get('/comment/likedUserList/' + bno);
-        
         setPostDetail(data);
+
+        const res = await axios.get('/comment/' + bno);
         setCommentList(res.data);
+
+        const { data: list } = await axios.get('/comment/likedUserList/' + bno).catch(e => console.log('e ', e));
         setCommentLikedUserList(list);
 
         setLoading(false);
@@ -122,9 +124,17 @@ const BoardDetailBody = () => {
   }
 
   const likeComment = async (cInfo) => {
+    let memberInfo = getCookie('memberInfo');
+    
+    if (Reflect.ownKeys(memberInfo || {}).length == 0) {
+      alert("로그인 후 가능합니다");
+      return;
+    }
+
     await axios.put(`/comment/like/${cInfo.cno}`);
 
-    const {data: list, message, error} = await getLikedUserList();
+    const {data: list, message, error} = await getLikedUserList().catch(e => console.log('error in detailbody >>> ', e));
+
     if (error) {
       alert(message);
       return;
@@ -340,5 +350,6 @@ const BoardDetailBody = () => {
 };
 
 export default BoardDetailBody;
+
 
 
