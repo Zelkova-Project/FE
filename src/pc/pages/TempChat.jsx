@@ -1,35 +1,47 @@
+import { useEffect, useState } from 'react';
+import '@/pc/css/chat/chat.css';
+import { useNavigate } from 'react-router-dom';
+
+
 const TempChat = () => {
 
- let url = process.env.NODE_ENV == 'development' 
-    ? 'http://localhost:8080/api/chat-websocket' 
-    : 'https://namu0005.or.kr/api/chat-websocket';
+  const [showRoom, setShowRoom] = useState(true)
+  const [roomName, setRoomName] = useState('')
+  const navigate = useNavigate();
 
- let socket = new SockJS(url);
- let stompClient = Stomp.over(socket);
- 
- stompClient.connect({}, function (frame) {
-     console.log('Connected: ' + frame);
-     stompClient.subscribe('/topic/messages', function (message) {
-         showMessage(JSON.parse(message.body));
-     });
- });
- function sendMessage() {
-  let messageContent = document.getElementById("message").value;
-  stompClient.send("/app/sendMessage", {}, JSON.stringify({'sender': 'User1', 'content': messageContent}));
-}
 
-function showMessage(message) {
-  let chat = document.getElementById("chat");
-  let messageElement = document.createElement('p');
-  messageElement.appendChild(document.createTextNode(message.sender + ": " + message.content));
-  chat.appendChild(messageElement);
-}
+  const moveChatRoom = () => {
+    navigate(`/chatroom/${roomName}`);
+  }
 
  return (
-  <div id="chat">
-   <input type="text" id="message"/>
-   <button onClick={() => sendMessage()}>전송</button>
-  </div>
+   <div className="chatlist-container">
+     <div className="chat-tab">
+      <div className="tab-item" onClick={() => setShowRoom(!showRoom)}>
+        <strong>방만들기</strong>   
+       </div>
+      <div className="tab-item" onClick={() => setShowRoom(!showRoom)}>
+        <strong>방 목록</strong>   
+      </div>
+     </div> 
+     
+     <div className="chat-content">
+       {
+         showRoom ? (
+           <>
+            <input type="text" onChange={(e) => setRoomName(e.target.value)}/>
+            <button onClick={moveChatRoom}>방 만들기</button>
+           </>
+         ) : (
+             <ul>
+               <li>방제1</li>
+               <li>방제1</li>
+               <li>방제1</li>
+             </ul>
+         )
+      }  
+     </div>
+   </div>
  )
 }
 

@@ -25,6 +25,7 @@ const BoardDetail = lazy(() => import('@/pc/components/common/BoardDetailPage'))
 const LatterWrite = lazy(() => import('@/pc/pages/LatterWritePage'));
 const KakaoRedirectPage = lazy(() => import('@/pc/pages/members/KakaoRedirectPage.jsx'));
 const NotFound = lazy(() => import('@/pc/pages/NotFound'));
+import ChatListPage from '../pages/ChatListPage';
 
 const root = createBrowserRouter([
   {
@@ -192,6 +193,14 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={Loading}>
         <NotFound />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/chatroom/:roomName',
+    element: (
+      <Suspense fallback={Loading}>
+        <ChatListPage />
       </Suspense>
     ),
   },
