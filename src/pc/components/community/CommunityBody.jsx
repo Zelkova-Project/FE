@@ -15,6 +15,7 @@ const CommunityBody = () => {
   };
   const [activePageNum, setActivePageNum] = useState(1);
   const [postList, setPostList] = useState([]);
+  const [pageNumList, setPageNumList] = useState([]);
   const isAdmin = userInfo.loginId == 'admin';
   const [searchOption, setSearchOption] = useState('title');
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -56,7 +57,7 @@ const CommunityBody = () => {
   const fetchPostList = async () => {
     try {
       let { status, data, message } = await axios.get(
-        `/board/list?page=${activePageNum}&size=10&keyword=${searchKeyword}&searchOption=${searchOption}&category=커뮤니티`,
+        `/board/list?page=${activePageNum}&size=9&keyword=${searchKeyword}&searchOption=${searchOption}&category=커뮤니티`,
       );
       const serverURL = process.env.NODE_ENV == 'development' ? 'http://localhost:8080/api' : '/api';
 
@@ -71,8 +72,8 @@ const CommunityBody = () => {
         return post;
       });
 
+      setPageNumList(data.pageNumList);
       setPostList(filtered);
-      console.log('postList ', filtered)
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -141,7 +142,7 @@ const CommunityBody = () => {
             <div className="page-btns-center">
               <ul>
                 {
-                  [1,2,3,4,5,6,7,8,9,10].map((item, index) => (
+                  pageNumList.map((item, index) => (
                     <li 
                       key={index}
                       className={item == activePageNum ? 'active' : ''}
@@ -181,4 +182,5 @@ const CommunityBody = () => {
 };
 
 export default CommunityBody;
+
 
