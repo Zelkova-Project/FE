@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import './mobile.css';
+import MobileApp from './MobileApp';
 import reportWebVitals from './reportWebVitals';
 
-console.log('...>>> pc entry point ::: index.js');
+console.log('...>>> mobile entry point js file');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
-    <App />
+    <MobileApp />
   </>,
 );
 
