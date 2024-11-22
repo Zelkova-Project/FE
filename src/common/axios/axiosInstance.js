@@ -10,7 +10,7 @@ const instance = axios.create({
 
 const beforeRequest = config => {
   const memberInfo = getCookie('memberInfo');
-  if (!config.url.includes('/login') && !config.url.includes('/board')) {
+  if (!config.url.includes('/login') && !config.url.includes('/board') && !config.url.includes('/comment')) {
     if (!memberInfo) {
       removeCookie('memberInfo');
   
@@ -89,5 +89,6 @@ instance.interceptors.request.use(beforeRequest, requestFail);
 instance.interceptors.response.use(beforeResponse, responseFail);
 
 export default instance;
+
 
 

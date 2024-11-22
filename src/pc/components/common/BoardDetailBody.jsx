@@ -39,12 +39,12 @@ const BoardDetailBody = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let { status, data, message } = await axios.get('/board/' + bno);
-        const res = await axios.get('/comment/' + bno);
-        const { data: list } = await axios.get('/comment/likedUserList/' + bno);
-        
+        let {data} = await axios.get('/board/' + bno);
+
+        const {data: commentData} = await axios.get('/comment/' + bno);
+        const { c_data: list } = await axios.get('/comment/likedUserList/' + bno).catch(e => console.log('error ', e));
         setPostDetail(data);
-        setCommentList(res.data);
+        setCommentList(commentData);
         setCommentLikedUserList(list);
 
         setLoading(false);
@@ -346,5 +346,6 @@ const BoardDetailBody = () => {
 };
 
 export default BoardDetailBody;
+
 
 

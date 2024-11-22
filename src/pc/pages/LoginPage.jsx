@@ -143,10 +143,10 @@ const LoginPage = () => {
 
       navigate('/');
       setLogin(true);
-      setUserInfo(data);
+      setUserInfo(res.data);
 
       let memberInfo = {
-        ...data
+        ...res.data
       };
 
      setCookie('memberInfo', memberInfo, 1);
@@ -260,5 +260,6 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
 
 
