@@ -31,6 +31,7 @@ const WriteBody = () => {
       visibility: 'PUBLIC',
       title: '',
       content: '',
+      thumbImageName: ''
     });
 
   //custom editor 시작
@@ -51,6 +52,10 @@ const WriteBody = () => {
 
     if (postInfo.uploadFileNames != null) {
       param.append('uploadFileNames', postInfo.uploadFileNames);
+    }
+    
+    if (postInfo.thumbImageName) {
+      param.append('thumbImageName', postInfo.thumbImageName);
     }
 
     // if (!isMain) {
@@ -379,5 +384,6 @@ const WriteBody = () => {
 };
 
 export default WriteBody;
+
 
 
