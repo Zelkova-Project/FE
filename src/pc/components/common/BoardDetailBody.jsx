@@ -37,25 +37,50 @@ const BoardDetailBody = () => {
     defaultProfile: require('@/common/imgs/default-profile-img-2.png'),
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let { status, data, message } = await axios.get('/board/' + bno);
-        setPostDetail(data);
+  const getLikedUserList = async () => {
+    return await axios.get('/comment/likedUserList/' + bno);
+  }
 
-        const res = await axios.get('/comment/' + bno);
-        setCommentList(res.data);
+  const getCommentList = async () => {
+    return await axios.get('/comment/' + bno);
+  }
 
-        const { data: list } = await axios.get('/comment/likedUserList/' + bno).catch(e => console.log('e ', e));
-        setCommentLikedUserList(list);
+  const manipulateCommentInfo = async ([likedInfo, commentInfo]) => {
+    console.log('likedInfo ', likedInfo);
+    console.log('commentInfo ', commentInfo);
+    let likedList = likedInfo?.data ?? [];
+    let commentList = commentInfo.data ?? [];
 
-        setLoading(false);
-        window.scrollTo(0, 400);
-      } catch (error) {
-        setLoading(false);
+    commentList = commentList.map((item, idx) => {
+      return {
+        ...item,
       }
-    };
+    });
 
+    setCommentList(commentList);
+    setCommentLikedUserList(likedList);
+  }
+
+  const fetchData = async () => {
+    try {
+      let { status, data, message } = await axios.get('/board/' + bno);
+      setPostDetail(data);
+
+      const res = await Promise.all([
+        getLikedUserList(),
+        getCommentList()
+      ]);
+
+      await manipulateCommentInfo(res);
+
+      setLoading(false);
+      window.scrollTo(0, 400);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, [isReload]);
 
@@ -63,11 +88,11 @@ const BoardDetailBody = () => {
     return <div>Loading...</div>;
   }
 
-  const getLikedUserList = async () => {
-    return await axios.get('/comment/likedUserList/' + bno);
-  }
-
   const enrollComment = async () => {
+    if (!commentInfo || commentInfo.trim() == '') {
+      alert('댓글을 입력해주세요!');
+      return;
+    }
     const nowtime = new Date();
     const year = nowtime.getFullYear();
     const month = nowtime.getMonth() + 1;
@@ -119,7 +144,15 @@ const BoardDetailBody = () => {
   };
 
   const deleteBoard = async () => {
+    const 게시글삭제원해 = confirm("정말 게시글을 삭제하시겠습니까?");
+
+    if (!게시글삭제원해) {
+      return;
+    }
+
     const res = await axios.delete(`/board/${postDetail.bno}`);
+    alert("삭제되었습니다!");
+
     navigate(`/board/${activeInfo.activePage}`);
   }
 
@@ -133,7 +166,7 @@ const BoardDetailBody = () => {
 
     await axios.put(`/comment/like/${cInfo.cno}`);
 
-    const {data: list, message, error} = await getLikedUserList().catch(e => console.log('error in detailbody >>> ', e));
+    const {data: list, message, error} = await getLikedUserList();
 
     if (error) {
       alert(message);
@@ -144,11 +177,67 @@ const BoardDetailBody = () => {
   }
   
   const isActiveLiked = (idx) => {
+    if (isNaN(idx)) return false;
     return commentLikedUserList[idx].includes(userInfo.email);
   }
 
    const getLikedCounts = (idx) => {
      return commentLikedUserList[idx] && commentLikedUserList[idx].length;
+   }
+
+   const delComment= async (cno) => {
+    const 삭제원해 = confirm('댓글을 정말 삭제하시겠습니까? ');
+    if (!삭제원해) return;
+
+
+    const res = await axios.delete(`/comment/${cno}`);
+    if (res.data?.result) {
+      alert(res.data?.result);
+    }
+
+    fetchData();
+   }
+
+   const CommentItem = ({item, idx}) => {
+    return (
+      <>
+        {/* 댓글하나 시작 */}
+        <div className="notail-comment-list-item" key={`${idx}-comment`}>
+          <div className="notail-comment-list-item-profile">
+            <img src={imgObj.defaultProfile}></img>
+          </div>
+
+          {/* 댓글 중 중간 영역 */}
+          <div className="notail-comment-list-item-main-area">
+            {/* 댓글이름 */}
+            <div className="notail-comment-item-name">
+              <h3>{item.writer}</h3>
+            </div>
+
+            {/* 댓글본문 */}
+            <div className="notail-comment-item-content">
+              <p>{item.content}</p>
+            </div>
+
+            {/* 날짜,신고하기,답글달기 */}
+            <div className="notail-comment-item-details">
+              <p>{item.dueDate}</p>
+              <p>수정하기</p>
+              <p onClick={() => delComment(item.cno)}>삭제하기</p>
+            </div>
+          </div>
+
+          <div className="notail-comment-like">
+            <div className="notail-comment-like-icon" onClick={() => likeComment(item)}>
+              <button className={`notail-comment-like-btn ${isActiveLiked(idx) ? 'like' : 'nolike'}`}/>
+            </div>
+            <div className="notail-comment-like-count">
+              <p style={{textAlign:'center'}}>{getLikedCounts(idx)}</p>
+            </div>
+          </div>
+        </div>
+      </>
+    )
    }
 
   return (
@@ -238,6 +327,7 @@ const BoardDetailBody = () => {
                 id="commentInput"
                 placeholder="댓글을 입력하세요"
                 value={commentInfo}
+                autoComplete={'off'}
                 onChange={(e) => inputComment(e)}
                 onKeyDown={(e) => entering(e)}
               ></input>
@@ -251,43 +341,7 @@ const BoardDetailBody = () => {
           <div className="notail-comment-list">
             {/* 댓글시작 */}
             {commentList.map((item, idx) => (
-              <>
-                {/* 댓글하나 시작 */}
-                <div className="notail-comment-list-item" key={`${idx}-comment`}>
-                  <div className="notail-comment-list-item-profile">
-                    <img src={imgObj.defaultProfile}></img>
-                  </div>
-
-                  {/* 댓글 중 중간 영역 */}
-                  <div className="notail-comment-list-item-main-area">
-                    {/* 댓글이름 */}
-                    <div className="notail-comment-item-name">
-                      <h3>{item.writer}</h3>
-                    </div>
-
-                    {/* 댓글본문 */}
-                    <div className="notail-comment-item-content">
-                      <p>{item.content}</p>
-                    </div>
-
-                    {/* 날짜,신고하기,답글달기 */}
-                    <div className="notail-comment-item-details">
-                      <p>{item.dueDate}</p>
-                      <p>신고하기</p>
-                      <p>답글달기</p>
-                    </div>
-                  </div>
-
-                  <div className="notail-comment-like">
-                    <div className="notail-comment-like-icon" onClick={() => likeComment(item)}>
-                      <button className={`notail-comment-like-btn ${isActiveLiked(idx) ? 'like' : 'nolike'}`}/>
-                    </div>
-                    <div className="notail-comment-like-count">
-                      <p style={{textAlign:'center'}}>{getLikedCounts(idx)}</p>
-                    </div>
-                  </div>
-                </div>
-              </>
+              <CommentItem key={item.cno} item={item} idx={idx}/>
             ))}
             {/* 댓글끝 */}
             {/* {result} */}
@@ -295,7 +349,7 @@ const BoardDetailBody = () => {
         </div>
 
         {/* 이전글 다음글 영역 */}
-        <div className="notail-prev-next-btn-section">
+        {/* <div className="notail-prev-next-btn-section">
           <div className="notail-prev-btn">
             <ul onClick={() => goPage(`/detail/${activeInfo.activePage}/${postDetail.prev.no}`)}>
               {postDetail.prev ? (
@@ -333,7 +387,7 @@ const BoardDetailBody = () => {
               )}
             </ul>
           </div>
-        </div>
+        </div> */}
 
         {/* 목록버튼 */}
         <div className="notail-golist-btn">
@@ -350,6 +404,7 @@ const BoardDetailBody = () => {
 };
 
 export default BoardDetailBody;
+
 
 
 

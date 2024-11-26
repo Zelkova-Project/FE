@@ -84,8 +84,7 @@ const LoginPage = () => {
       let formData = new FormData();
       formData.append('username', 'user0@gmail.com');
       formData.append('password', '0000');
-      console.log('ok?');
-      const { data } = await axios.post('/member/login', formData);
+      const data  = await axios.post('/member/login', formData);
       if (!data.ERROR) {
         removeCookie('memberInfo');
 
@@ -260,6 +259,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
 
 
 
