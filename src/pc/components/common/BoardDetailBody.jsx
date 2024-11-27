@@ -249,7 +249,9 @@ const BoardDetailBody = () => {
           <div className="notail-subtit">
             <ul className="notail-subtit-ul">
               <li>
-                <h3>{postDetail && postDetail.title}</h3>
+                <h3 className='textellipsis'>
+                  {postDetail && postDetail.title}
+                </h3>
               </li>
               <li>
                 <div>
@@ -268,7 +270,9 @@ const BoardDetailBody = () => {
         {/* 제목,본문 영역 */}
         <div className="notail-content-section">
           <div className="notail-content">
-            <h2>{postDetail && postDetail.title}</h2>
+            <h2 className='textellipsis'>
+              {postDetail && postDetail.title}
+            </h2>
             {
               postDetail?.uploadFileNames != null && postDetail.uploadFileNames.length > 0 && (
                 <div className='notail-files'>
@@ -404,6 +408,7 @@ const BoardDetailBody = () => {
 };
 
 export default BoardDetailBody;
+
 
 
 
