@@ -15,6 +15,7 @@
     "react-kakao-maps-sdk": "^1.1.27",
     "react-modal": "^3.16.1",
     "react-quill": "^2.0.0",
+    "react-router": "^7.0.1",
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
     "recoil": "^0.7.7",
@@ -57,4 +58,3 @@
   },
   "proxy": "http://49.247.174.109:8080"
 }
-
