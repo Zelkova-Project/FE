@@ -12,6 +12,7 @@
 }
 .main-img {
   filter: brightness(50%);
+  height: 90%;
 }
 .section-img-container {
   display: flex;
@@ -52,12 +53,13 @@
   border-radius: 10px;
 }
 .main-img1 {
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
-    url('/public/middle-section.png');
+  background-size: cover;
+  background: linear-gradient(-270deg, rgba(255, 255, 255, 0.6) 10%, rgba(255, 255, 255, 0) 113%), url('/public/image03.jpg'), center;
 }
 .main-img2 {
-  background: linear-gradient(-270deg, rgba(255, 255, 255, 0.9) 10%, rgba(255, 255, 255, 0) 113%),
-    url('/public/middle-section2.png');
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0) 70%),
+    url('/public/image10.jpg'), center;
+  background-size: cover;
 }
 .img-subtit {
   position: absolute;
@@ -70,7 +72,7 @@
 }
 .img-subtit p {
   font-size: 16px;
-  color: #666;
+  color: #666666;
 }
 
 .set2-setting {
@@ -90,27 +92,35 @@
 
 .이용안내-img1 {
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
-    url('/public/이용시간.png') !important;
+    url('/public/배경꽃2.jpg');
+  background-size: cover !important;
+
 }
 .이용안내-img2 {
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
-    url('/public/이용금액.png') !important;
+    url('/public/image04.jpg') ;
+  background-size: cover !important;
+
 }
 .이용안내-img3 {
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
-    url('/public/이용절차.png') !important;
+    url('/public/image07.jpg');
+  background-size: cover !important;
 }
 .시설안내-img1 {
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
-    url('/public/시설1.png') !important;
+  background: linear-gradient(50deg, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0) 70%),
+    url('/public/image09.jpg') ;
+  background-size: cover !important;
 }
 .시설안내-img2 {
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
-    url('/public/시설2.png') !important;
+  background: linear-gradient(50deg, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0) 70%),
+    url('/public/image06.jpg') ;
+  background-size: cover !important;
 }
 .시설안내-img3 {
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%),
-    url('/public/시설3.png') !important;
+  background: linear-gradient(50deg, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0) 70%),
+    url('/public/image01.jpg');
+  background-size: cover !important;
 }
 
 .map {

@@ -1,9 +1,9 @@
 const imgMap = {
   guide: {
-    이용안내: require('@/common/imgs/guide/이용안내.png'),
-    시설안내: require('@/common/imgs/guide/시설안내main.png'),
-    오시는길: require('@/common/imgs/guide/오시는길main.png'),
-    조직도: require('@/common/imgs/notice/채용안내main.png'),
+    이용안내: require('@/common/imgs/guide/이용안내main.jpg'),
+    시설안내: require('@/common/imgs/guide/시설안내,main.jpg'),
+    오시는길: require('@/common/imgs/guide/오시는길main.jpg'),
+    조직도: require('@/common/imgs/guide/조직도main.jpg'),
   },
   notice: {
     notice: require('@/common/imgs/notice/notice-main.png'),
