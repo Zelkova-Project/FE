@@ -239,6 +239,7 @@
   font-size: 12px;
   font-weight: 400;
   color: #a6a6a6;
+  cursor: pointer;
 }
 .notail-comment-like {
   height: auto;
@@ -344,3 +345,4 @@
   text-overflow: ellipsis;
   display: block;
 }
+

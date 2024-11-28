@@ -5,7 +5,7 @@
   text-align: center;
 }
 .notice-outer-container {
-  font-family: Pretendard;
+  font-family: 'PretendardVariable';
   display: flex;
   flex-direction: column;
 }

@@ -14,7 +14,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useRecoilState(loginState);
   const isDev = process.env.NODE_ENV == 'development';
-
+//test
   const intervalId = useRef();
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -84,8 +84,7 @@ const LoginPage = () => {
       let formData = new FormData();
       formData.append('username', 'user0@gmail.com');
       formData.append('password', '0000');
-      console.log('ok?');
-      const { data } = await axios.post('/member/login', formData);
+      const data  = await axios.post('/member/login', formData);
       if (!data.ERROR) {
         removeCookie('memberInfo');
 
@@ -143,10 +142,10 @@ const LoginPage = () => {
 
       navigate('/');
       setLogin(true);
-      setUserInfo(data);
+      setUserInfo(res.data);
 
       let memberInfo = {
-        ...data
+        ...res.data
       };
 
      setCookie('memberInfo', memberInfo, 1);
@@ -260,5 +259,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+
 
 

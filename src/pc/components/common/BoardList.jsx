@@ -36,15 +36,16 @@ const BoardList = ({ boardList }) => {
   }
   
   const fetchPostList = async () => {
-    try {
-      let { status, data, message } = await axios.get(
-        `/board/list?page=${activePageNum}&size=10&keyword=${searchKeyword}&searchOption=${searchOption}`,
-      );
-      const filtered = data.dtoList.filter(item => !item.del); // soft delete로 인해 한번 걸러야함
-      setPostList(filtered);
-      setPageList(data.pageNumList);
-    } catch (error) {
+    let { status, data, message } = await axios.get(
+      `/board/list?page=${activePageNum}&size=10&keyword=${searchKeyword}&searchOption=${searchOption}`,
+    );
+    const filtered = data.dtoList.filter(item => !item.del); // soft delete로 인해 한번 걸러야함
+    setPostList(filtered);
+    setPageList(data.pageNumList);
+
+    if (status != 200) {
       console.error('Error fetching data:', error);
+      return;
     }
 
     setTimeout(() => {
@@ -189,5 +190,6 @@ const BoardList = ({ boardList }) => {
 };
 
 export default BoardList;
+
 
 

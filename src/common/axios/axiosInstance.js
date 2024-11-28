@@ -10,10 +10,16 @@ const instance = axios.create({
 
 const beforeRequest = config => {
   const memberInfo = getCookie('memberInfo');
-  if (!config.url.includes('/login') && !config.url.includes('/board')) {
-    if (!memberInfo) {
-      removeCookie('memberInfo');
   
+  const commentRegexp = /^\/comment\/\d+$/;
+
+  if (
+      !config.url.includes('/login') 
+        && !config.url.includes('/board') 
+        && !config.url.includes('/likedUserList') 
+        && !commentRegexp.test(config.url)
+    ) {
+    if (!memberInfo) {
       return Promise.reject({
         response: {
           data: {
@@ -35,9 +41,12 @@ const requestFail = (err) => {
 }
 
 const beforeResponse = async (res) => {
-  const errorCode = ['ERROR_ACCESS_TOKEN', 'ERROR_LOGIN'];
-  const isError = errorCode.includes(res.data.error);
-  
+  let isError = res.status != 200;
+  const EXCEPT_URL = ['/image/webp/', '/login'];
+
+  if (EXCEPT_URL.includes(res?.config.url)) {
+    return res;
+  }
   // 파라미터로 받는 res가 isError 블럭 안에서는 작동이 안되는 현상...
   let res1 = res;
   
@@ -71,10 +80,8 @@ const beforeResponse = async (res) => {
   }
 
   return {
-    status: res.status,
-    error: false,
-    message: res.statusText,
-    data: res?.data ? res.data : data,
+    ...res.data,
+    isError: res.status != 200
   };
 }
 
@@ -89,5 +96,8 @@ instance.interceptors.request.use(beforeRequest, requestFail);
 instance.interceptors.response.use(beforeResponse, responseFail);
 
 export default instance;
+
+
+
 
 

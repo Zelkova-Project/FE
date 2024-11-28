@@ -31,6 +31,7 @@ const WriteBody = () => {
       visibility: 'PUBLIC',
       title: '',
       content: '',
+      thumbImageName: ''
     });
 
   //custom editor 시작
@@ -52,35 +53,20 @@ const WriteBody = () => {
     if (postInfo.uploadFileNames != null) {
       param.append('uploadFileNames', postInfo.uploadFileNames);
     }
+    
+    if (postInfo.thumbImageName) {
+      param.append('thumbImageName', postInfo.thumbImageName);
+    }
 
-    // if (!isMain) {
-    //   param.append('thumbImageName', postInfo.thumbImageName);
-    // }
-
-    // if (!postInfo.title || !postInfo.content) {
-    //   alert("제목, 내용이 모두 입력되어야 글쓰기가 가능합니다!");
-    // }
+    if (!postInfo.title || !content) {
+      alert("제목, 내용이 모두 입력되어야 글쓰기가 가능합니다!");
+      return;
+    }
 
     await axios.post('/board/', param);
 
     navigate(-1);
   };
-
-  const base64ToBlob = (base64, mimeType) => {
-    // Remove the data URL prefix (optional, depending on the input)
-    let byteString = atob(base64.split(',')[1]);
-
-    // Create an array for binary data
-    let byteArray = new Uint8Array(byteString.length);
-
-    // Populate the array with the byte data
-    for (let i = 0; i < byteString.length; i++) {
-        byteArray[i] = byteString.charCodeAt(i);
-    }
-
-    // Convert the byteArray to a Blob
-    return new Blob([byteArray], { type: mimeType });
-}
 
   const uploadSingleFile = async (file) => {
     let param = new FormData();
@@ -101,6 +87,7 @@ const WriteBody = () => {
     formData.append("files", files);
 
     const { error, status, data: imageName }= await axios.post('/image/', formData);
+
     if (error) {
       console.error('status >>> ', status);
       return;
@@ -117,8 +104,8 @@ const WriteBody = () => {
     }
     // formData.append('file', file, 'image.webp');
 
-    const { error, status, data: webpName }= await axios.post('/image/webp/', formData);
-    if (error) {
+    const { isError, status, data: webpName }= await axios.post('/image/webp/', formData);
+    if (isError) {
       console.error('### uploadSingleWebp');
       return;
     }
@@ -162,29 +149,54 @@ const WriteBody = () => {
       blobDataArr.push(blobData);
     }
 
-    uploadWebp(blobDataArr).then((res) => {
-      for (let 파일명 of res) {
-        const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
+    const res = await uploadWebp(blobDataArr);
 
-        const img = 
-        `
-          <img 
-            src="${baseURL}/image/view/${파일명}" 
-            alt="Uploaded Image" 
-            style="
-              max-width: 100%; 
-              height: auto;
-              display: block;
-              margin: 0 auto;
-            " 
-          />
-          <br/>
-        `;        
+    for (let 파일명 of res) {
+      const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
+
+      const img = 
+      `
+        <img 
+          src="${baseURL}/image/view/${파일명}" 
+          alt="Uploaded Image" 
+          style="
+            max-width: 100%; 
+            height: auto;
+            display: block;
+            margin: 0 auto;
+          " 
+        />
+        <br/>
+      `;        
+        
+      document.getElementById('editor').innerHTML += img; 
+    }
+
+
+    // uploadWebp(blobDataArr).then((res) => {
+    //   console.log('uploadWEb ', res);
+    //   for (let 파일명 of res) {
+    //     const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
+
+    //     const img = 
+    //     `
+    //       <img 
+    //         src="${baseURL}/image/view/${파일명}" 
+    //         alt="Uploaded Image" 
+    //         style="
+    //           max-width: 100%; 
+    //           height: auto;
+    //           display: block;
+    //           margin: 0 auto;
+    //         " 
+    //       />
+    //       <br/>
+    //     `;        
           
-        document.getElementById('editor').innerHTML += img; 
-      }
-      // 루핑 끝
-    })
+    //     document.getElementById('editor').innerHTML += img; 
+    //   }
+    //   // 루핑 끝
+    // })
 
   };
 
@@ -219,35 +231,6 @@ const WriteBody = () => {
     setSubtit(subtitle);
   }, [activeInfo.activeIdx]);
 
-  const getBoard = async () => {
-    let { status, data, message } = await axios.get('/posts/board?page=0&size=10');
-    if (status != 200 && status != 201) {
-      alert(message);
-      return;
-    }
-    let postList = data.content;
-    navigate(`/detail/${activeInfo.activePage}/${postList[0].no}`);
-  };
-
-  const goWrite = async () => {
-    let param = new FormData();
-    param.append('title', postInfo.title);
-    param.append('content', JSON.stringify(postInfo.content));
-    param.append('category', 'BOARD');
-    param.append('visibility', 'PUBLIC');
-
-    let { status } = await axios.post('/posts', param);
-
-    console.log(status);
-    getBoard();
-  };
-
-  const setContent = (e) => {
-    setPostInfo({
-      ...postInfo,
-      content: e,
-    });
-  };
 
   const activeLoadedFile = (idx) => {
     if (idx == activeLoadedIdx) {
@@ -258,14 +241,28 @@ const WriteBody = () => {
   }
   
   const deleteLoadedFile = () => {
+    if (fileNames.length == 0) {
+      alert('파일을 추가해주세요');
+      return;
+    }
+
     if (activeLoadedIdx < 0) {
       alert("파일을 선택해주세요");
       return;
     }
     const selecteFileName = fileNames[activeLoadedIdx];
+    const 파일삭제원해 = confirm(`[${selecteFileName}] 파일을 정말 삭제하시겠습니까?`);
+    if (!파일삭제원해) {
+      return;
+    }
+
     const filtered = fileNames.filter((_, itemIdx) => activeLoadedIdx != itemIdx);
     setFileNames([...filtered]);
     alert(`${selecteFileName} 파일 삭제`);
+  }
+
+  const test = (e) => {
+    console.log('test >>> ', e);
   }
 
   return (
@@ -321,6 +318,7 @@ const WriteBody = () => {
                 className='write-body'
                 contentEditable
                 id="editor"
+                onInput={(e) => test(e)}
                 style={{
                     border: '1px solid #ccc',
                     padding: '10px',
@@ -379,5 +377,8 @@ const WriteBody = () => {
 };
 
 export default WriteBody;
+
+
+
 
 
