@@ -1,6 +1,6 @@
 import Section from '@/pc/components/Section';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { userInfoState } from '@/common/recoilState/recoil';
 import { useRecoilState } from 'recoil';
 import axios from '@/common/axios/axiosInstance';

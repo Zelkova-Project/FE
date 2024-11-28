@@ -1,4 +1,4 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router";
 import React from "react";
 import '@/mobile/css/mLogin.css';
 import '@/mobile/css/mMain.css';

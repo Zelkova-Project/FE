@@ -1,5 +1,5 @@
 import { useLocation, useParams } from 'react-router';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import React, { useState, useEffect } from 'react';
 
 import { useRecoilState } from 'recoil';
@@ -9,7 +9,7 @@ import '@/pc/css/noticeDetail.css';
 
 import axios from '@/common/axios/axiosInstance';
 
-import * as DOMPurify from 'dompurify';
+import DOMPurify from 'dompurify';
 import { getCookie } from '../../../common/utils/loginUtil';
 
 const BoardDetailBody = () => {

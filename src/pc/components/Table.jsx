@@ -1,5 +1,5 @@
 import '@/pc/css/table.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import React, { useState, useEffect } from 'react';
 
 import { activeInfoState } from '@/common/recoilState/recoil';

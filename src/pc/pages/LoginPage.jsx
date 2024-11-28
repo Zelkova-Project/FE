@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import '@/pc/css/login.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import axios from '@/common/axios/axiosInstance';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';

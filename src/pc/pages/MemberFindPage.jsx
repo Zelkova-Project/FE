@@ -1,7 +1,7 @@
 import style from '@/pc/css/memberFind.module.css';
 import Nav from '@/pc/components/Nav';
 import Footer from '@/pc/components/Footer';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import Modal from 'react-modal';
 import axios from '@/common/axios/axiosInstance';
 import React, { useEffect, useRef, useState } from 'react';

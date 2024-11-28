@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import style from '@/pc/css/latterwrite.module.css';
 import Section from '@/pc/components/Section';
 import Footer from '@/pc/components/Footer';
