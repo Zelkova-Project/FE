@@ -4,14 +4,19 @@ import Section from '@/pc/components/Section';
 import Kakao from '@/pc/components/Kakao';
 import '@/pc/css/main.css';
 import '@/common/fonts/font.css';
+  const imgObj = {
+    메인이미지: require('@/common/imgs/main/main-img.jpg'),
+  };
 
 const MainPage = () => {
+
+
   return (
     <div className="main-container">
       <Nav />
 
       <Section isMain={true}>
-        <img className="main-img wd100 " src="guide/main-img.jpg" alt="main-section"></img>
+        <img className="main-img wd100 " src={imgObj.메인이미지} alt="main-section"></img>
       </Section>
 
       <Section>
