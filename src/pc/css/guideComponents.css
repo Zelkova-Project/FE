@@ -1,69 +1,17 @@
 .guide2-container {
   font-family: 'PretendardVariable';
   display: flex;
-  flex-direction: column;
-  /*align-items: center;*/
+  flex-direction: row;
   gap: 30px;
-
 }
 .guide2-innerContainer {
   display: flex;
   flex-direction: column;
-  /*flex-direction: row;*/
 }
-.guide2-1img {
-  width: 900px;
+.guide2-flexItem {
+  width: 255px;
   height: 310px;
-  display: flex;
-  margin: 0 auto;
-
 }
-.guide2-2img {
-  width: 900px;
-  height: 310px;
-  display: flex;
-  margin: 40px auto 0 auto;
-}
-.guide2-3img {
-  width: 700px;
-  height: 500px;
-  display: flex;
-  margin: 30px auto 0 auto;
-}
-.guide2-innerContainer p {
-  font-size: 20px;
-  color: #888888;
-  line-height: 1.4;
-
-}
-.guide2-innerContainer:nth-child(2) p {
-  letter-spacing: 1.5px;
-  line-height: 1.5;
-}
-.guide-sub1 {
-  color: #ffc1c8;
-  margin-bottom: 20px;
-}
-.guide-sub1 span {
-  margin-right: 30px;
-}
-
-.guide-sub2 {
-  color: #a6bc00;
-  margin-bottom: 20px;
-}
-.guide-sub2 span {
-  margin-right: 30px;
-}
-
-.guide-sub3 {
-  color: #5733b1;
-  margin-bottom: 20px;
-}
-.guide-sub3 span {
-  margin-right: 30px;
-}
-
 
 #map {
   border-top-left-radius: 20px;

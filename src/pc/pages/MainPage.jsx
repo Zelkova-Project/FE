@@ -11,7 +11,7 @@ const MainPage = () => {
       <Nav />
 
       <Section isMain={true}>
-        <img className="main-img" src="guide/main-img.jpg" alt="main-section"></img>
+        <img className="main-img" src="main-section.png" alt="main-section"></img>
       </Section>
 
       <Section>
@@ -87,8 +87,8 @@ const MainPage = () => {
           <ul className="set3-gap">
             <li>
               <div className="img-subtit set3-top">
-                <span>시설소개</span>
-                <p>느티나무 복지관에 대하여 소개합니다.</p>
+                <span>이용시간</span>
+                <p>느티나무 복지관의 이용시간에 대해 안내드립니다.</p>
               </div>
               <div className="img-container1 set3-setting 시설안내-img1">
                 {/* <img src="middle-section.png" alt="main-section"></img> */}
@@ -96,8 +96,8 @@ const MainPage = () => {
             </li>
             <li>
               <div className="img-subtit set3-top">
-                <span>시설현황</span>
-                <p>느티나무 복지관의 직원 및 시설을 안내해드립니다.</p>
+                <span>이용금액</span>
+                <p>느티나무 복지관의 이용 금액에 대해 안내드립니다.</p>
               </div>
               <div className="img-container2 set3-setting 시설안내-img2">
                 {/* <img src="middle-section2.png" alt="main-section"></img> */}
@@ -105,8 +105,8 @@ const MainPage = () => {
             </li>
             <li>
               <div className="img-subtit set3-top">
-                <span>실내모습&프로그램</span>
-                <p>느티나무 복지관의 실내모습과 프로그램에 대하여 안내해드립니다,.</p>
+                <span>이용절차&구비서류</span>
+                <p>느티나무 복지관을 이용하기 위한 절차와 구비하실 서류를 안내드립니다.</p>
               </div>
               <div className="img-container2 set3-setting 시설안내-img3">
                 {/* <img src="middle-section2.png" alt="main-section"></img> */}

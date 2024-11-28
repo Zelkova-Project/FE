@@ -5,7 +5,7 @@ const Guide1 = () => {
     <div>
       <Section>
         <div>
-          <h5 className="guide-subtit">이용안내</h5>
+          <h5 className="guide-subtit">공지사항</h5>
         </div>
         <div className="section-img-container">
           <ul>
@@ -27,7 +27,7 @@ const Guide1 = () => {
                 <p>
                   사무실 031-796-0005
                   <br />
-                  skan0005@naver.com
+                  이메일 (이메일주소 입력바랍니다)
                 </p>
               </div>
               <div className="img-container2 guide-img2 set2-setting">
@@ -60,22 +60,22 @@ const Guide1 = () => {
               <tr>
                 <td>토요일</td>
                 <td>오전 9:00 ~ 오후 18:00</td>
-                <td>30,000원</td>
+                <td>15,000원</td>
               </tr>
               <tr>
                 <td>1일</td>
                 <td>24시간</td>
-                <td>20,000원</td>
+                <td>15,000원</td>
               </tr>
               <tr>
                 <td>1개월</td>
                 <td>주간 및 야간</td>
-                <td>180,000원</td>
+                <td>15,000원</td>
               </tr>
               <tr>
                 <td>1개월(거주)</td>
                 <td>월-금 오전 09:00 ~ 오후 18:00</td>
-                <td>250,000원</td>
+                <td>15,000원</td>
               </tr>
             </tbody>
           </table>
