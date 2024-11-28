@@ -1,5 +1,4 @@
 import { Suspense, lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
 import LoadingPage from '@/pc/components/Loading.jsx';
 
 const Loading = <LoadingPage />;
@@ -25,11 +24,20 @@ const BoardDetail = lazy(() => import('@/pc/components/common/BoardDetailPage'))
 const LatterWrite = lazy(() => import('@/pc/pages/LatterWritePage'));
 const KakaoRedirectPage = lazy(() => import('@/pc/pages/members/KakaoRedirectPage.jsx'));
 const NotFound = lazy(() => import('@/pc/pages/NotFound'));
+const MoMain = lazy(() => import('@/mobile/pages/MMainPage')); /*메인페이지*/
 import ChatListPage from '../pages/ChatListPage';
 
-const root = createBrowserRouter([
+const root = [
   {
-    path: '',
+    path: '/mo',
+    element: (
+      <Suspense fallback={Loading}>
+        <MoMain />
+      </Suspense>
+    ),
+  },  
+  {
+    path: '/',
     element: (
       <Suspense fallback={Loading}>
         <Main />
@@ -204,6 +212,7 @@ const root = createBrowserRouter([
       </Suspense>
     ),
   },
-]);
+];
 
 export default root;
+

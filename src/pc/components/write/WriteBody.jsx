@@ -241,11 +241,21 @@ const WriteBody = () => {
   }
   
   const deleteLoadedFile = () => {
+    if (fileNames.length == 0) {
+      alert('파일을 추가해주세요');
+      return;
+    }
+
     if (activeLoadedIdx < 0) {
       alert("파일을 선택해주세요");
       return;
     }
     const selecteFileName = fileNames[activeLoadedIdx];
+    const 파일삭제원해 = confirm(`[${selecteFileName}] 파일을 정말 삭제하시겠습니까?`);
+    if (!파일삭제원해) {
+      return;
+    }
+
     const filtered = fileNames.filter((_, itemIdx) => activeLoadedIdx != itemIdx);
     setFileNames([...filtered]);
     alert(`${selecteFileName} 파일 삭제`);
@@ -367,6 +377,7 @@ const WriteBody = () => {
 };
 
 export default WriteBody;
+
 
 
 
