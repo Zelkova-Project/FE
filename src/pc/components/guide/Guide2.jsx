@@ -2,6 +2,13 @@ import Section from '@/pc/components/Section';
 import '@/pc/css/guideComponents.css';
 
 const Guide2 = () => {
+  const imgObj = {
+    시설안내sub1: require('@/common/imgs/guide/시설안내sub1.jpg'),
+    시설안내sub2: require('@/common/imgs/guide/시설안내sub2.jpg'),
+    시설안내sub3: require('@/common/imgs/guide/시설안내sub3.jpg'),
+    시설안내sub4: require('@/common/imgs/guide/시설안내sub4.jpg')
+  };
+
   return (
     <div>
       <Section>
@@ -11,7 +18,7 @@ const Guide2 = () => {
         <div className="guide2-container">
           <div className="guide2-innerContainer">
             <div className="guide2-flexItem">
-              <img src="guide/시설안내sub1.jpg" className={"guide2-1img"}/>
+              <img src={ imgObj.시설안내sub1 } className={"guide2-1img"}/>
               <div className="guide2-innerFlexItem">
                 <h2>시설 소개</h2>
                 <p>
@@ -69,14 +76,14 @@ const Guide2 = () => {
                   <div>다. 시설안내 : 남 ․ 여자 숙소(샤워실, 화장실), 거실, 탕비실,  주방, 사무실, 물품보관소</div>
                 </p>
               </div>
-              <img src="guide/시설안내sub2.jpg" className={"guide2-2img"}/>
+              <img src={imgObj.시설안내sub2} className={"guide2-2img"}/>
             </div>
           </div>
           <div className="guide2-innerContainer">
           <div className="guide2-flexItem">
             <div className="guide2-innerFlexItem">
               <h2>실내모습</h2>
-              <img src="guide/시설안내sub3.jpg" className={"guide2-3img"}/>
+              <img src={imgObj.시설안내sub3} className={"guide2-3img"}/>
             </div>
           </div>
           </div>
@@ -84,7 +91,7 @@ const Guide2 = () => {
             <div className="guide2-flexItem">
               <div className="guide2-innerFlexItem">
                 <h2>프로그램</h2>
-                <img src="guide/시설안내sub4.jpg" className={"guide2-2img"}/>
+                <img src={imgObj.시설안내sub4} className={"guide2-2img"}/>
 
               </div>
             </div>
