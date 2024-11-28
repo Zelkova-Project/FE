@@ -11,7 +11,7 @@ const MainPage = () => {
       <Nav />
 
       <Section isMain={true}>
-        <img className="main-img" src="guide/main-img.jpg" alt="main-section"></img>
+        <img className="main-img wd100 " src="guide/main-img.jpg" alt="main-section"></img>
       </Section>
 
       <Section>
