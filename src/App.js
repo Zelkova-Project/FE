@@ -6,8 +6,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 function App() {
   const routes = createBrowserRouter([
-    ...root,
-    ...rootMo
+    ...root
   ]);
 
   return (
@@ -18,4 +17,5 @@ function App() {
 }
 
 export default App;
+
 
