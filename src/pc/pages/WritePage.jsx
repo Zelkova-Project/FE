@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import { navIdxState, activeInfoState } from '@/common/recoilState/recoil';
 import { useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import '@/pc/css/write.css';
 

@@ -12,7 +12,7 @@ import '@/pc/css/nav.css';
 import '@/pc/css/notice.css';
 import '@/common/fonts/font.css';
 import axios from '@/common/axios/axiosInstance';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const NoticeDetailPage = () => {
   const navigate = useNavigate();

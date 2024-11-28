@@ -10,14 +10,11 @@ import '@/pc/css/nav.css';
 import '@/pc/css/notice.css';
 import '@/common/fonts/font.css';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 import Write from './WritePage';
 import NoticeBoardPage from './NoticeBoardPage';
-import NoticeDetailPage from './NoticeDetailPage';
 
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from '@/common/axios/axiosInstance';
+import { useNavigate, useParams } from 'react-router';
 
 const NoticePage = () => {
   window.scrollTo(0, 0);

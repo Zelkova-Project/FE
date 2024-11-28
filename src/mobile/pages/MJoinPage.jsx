@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import style from '@/mobile/css/mJoin.css';
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 const MJoinPage = () => {
 

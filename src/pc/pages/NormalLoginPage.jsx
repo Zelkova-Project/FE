@@ -1,7 +1,7 @@
 import style from '@/pc/css/join.module.css';
 import Nav from '@/pc/components/Nav';
 import Footer from '@/pc/components/Footer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import axios from 'axios';
 import { loginState } from '@/common/recoilState/recoil';

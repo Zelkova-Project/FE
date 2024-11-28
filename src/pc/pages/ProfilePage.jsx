@@ -3,7 +3,7 @@ import Footer from '@/pc/components/Footer';
 import style from '@/pc/css/profile.module.css';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const ProfilePage = () => {
   const navigate = useNavigate();

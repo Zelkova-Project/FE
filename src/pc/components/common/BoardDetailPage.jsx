@@ -10,9 +10,7 @@ import '@/common/fonts/font.css';
 import React, { useState, useEffect } from 'react';
 import { activeInfoState } from '@/common/recoilState/recoil';
 import { useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
 import { useLocation, useParams } from 'react-router';
-import axios from '@/common/axios/axiosInstance';
 
 const BoardDetailPage = () => {
   const { pathname } = useLocation();

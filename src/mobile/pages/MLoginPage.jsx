@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import '@/mobile/css/mLogin.css';
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 import axios from '@/common/axios/axiosInstance';
 import { loginState, userInfoState } from '@/common/recoilState/recoil';
 import {useRecoilState} from "recoil";

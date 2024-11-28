@@ -8,8 +8,7 @@ import '@/pc/css/notice.css';
 import '@/pc/css/community.css';
 import '@/pc/css/guide.css';
 
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 const CommunityPage = () => {
   const navigate = useNavigate();

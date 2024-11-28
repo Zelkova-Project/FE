@@ -1,7 +1,7 @@
 import axios from '@/common/axios/axiosInstance';
 
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useRecoilState } from 'recoil';
 import { activeInfoState, userInfoState } from '@/common/recoilState/recoil';
 

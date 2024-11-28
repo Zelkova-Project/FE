@@ -1,6 +1,5 @@
 import style from '@/pc/css/pwUpdate.module.css';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from '@/common/axios/axiosInstance';
+import { useNavigate, useParams } from 'react-router';
 import React, { useEffect, useRef, useState } from 'react';
 import Modal from 'react-modal';
 

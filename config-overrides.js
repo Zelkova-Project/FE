@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 /***
  * * CRA로 만들어서 entry point 한개
@@ -31,7 +32,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     webpack: function(config, env) {
-      // * HtmlWebpackPlugin으로 멀티 엔트리 만들어서, multipleEntry 주석처리 (20241128)
+      // ! webpack을 사용하는 이유는 react-app-rewire-multiple-entry가 webpack을 다루기 때문임..
+
+      config.entry = {
+        main: './src/index.js',  
+        mobile: './src/mobile.js' 
+      },
+      config.output = {
+        filename: '[name].js',
+        path: path.resolve(__dirname, 'build')
+      };
+
+      // * deprecated) HtmlWebpackPlugin으로 멀티 엔트리 만들어서, multipleEntry 주석처리 (20241128)
       // multipleEntry.addMultiEntry(config); 
       
       // * 간접경로 사용을 피하기 위해 디렉토리 alias 설정
@@ -56,10 +68,17 @@ module.exports = {
           template: path.resolve(__dirname, 'public/mobile.html'), 
           filename: 'mobile.html',           
           chunks: ['mobile'],                
-        })
+        }),
+        new CleanWebpackPlugin({
+          cleanOnceBeforeBuildPatterns: [
+              '**/*',
+              path.join(process.cwd(), 'build/')
+          ]
+      })
       );
 
       return config;
     }
   };
+
 

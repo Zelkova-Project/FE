@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '@/pc/css/chat/chat.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 
 const TempChat = () => {
