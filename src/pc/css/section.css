@@ -12,7 +12,6 @@
 }
 .main-img {
   filter: brightness(50%);
-  height: 90%;
 }
 .section-img-container {
   display: flex;
