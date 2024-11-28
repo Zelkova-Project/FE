@@ -2,7 +2,7 @@ import Nav from '@/pc/components/Nav';
 import Footer from '@/pc/components/Footer';
 import style from '@/pc/css/profileSetup.module.css';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const ProfileSetupPage = () => {
   const navigate = useNavigate();

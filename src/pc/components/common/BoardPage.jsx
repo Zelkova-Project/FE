@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { activeInfoState } from '@/common/recoilState/recoil';
 import { useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useLocation, useParams } from 'react-router';
 
 import PageLayout from '@/pc/components/common/PageLayout';

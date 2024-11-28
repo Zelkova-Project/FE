@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router';
 
 import { getAccessToken, getMemberWithAccessToken } from '@/common/api/kakaoAPi';
-
-import { useNavigate } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
 import { loginState, userInfoState } from '@/common/recoilState/recoil';

@@ -1,7 +1,7 @@
 import style from '@/pc/css/join.module.css';
 import Nav from '@/pc/components/Nav';
 import Footer from '@/pc/components/Footer';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 
 import axios from '@/common/axios/axiosInstance';
 import React, { useEffect, useState, useCallback, useRef } from 'react';

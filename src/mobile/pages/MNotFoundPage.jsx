@@ -1,5 +1,5 @@
 import style from '@/mobile/css/notFound.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const MLoginPage = () => {
   const navigate = useNavigate();

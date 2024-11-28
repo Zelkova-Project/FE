@@ -4,7 +4,7 @@ import axios from '@/common/axios/axiosInstance';
 import Section from '@/pc/components/Section';
 import Table from '@/pc/components/Table';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { activeInfoState, userInfoState } from '@/common/recoilState/recoil';
 import { useRecoilValue } from 'recoil';
 

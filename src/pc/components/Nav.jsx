@@ -1,5 +1,5 @@
 import '@/pc/css/nav.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import {getCookie, removeCookie} from '@/common/utils/loginUtil';
 
 import { loginState, userInfoState } from '@/common/recoilState/recoil';
