@@ -1,5 +1,4 @@
 import { Suspense, lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
 import LoadingPage from '@/pc/components/Loading.jsx';
 
 const Loading = <LoadingPage />;
@@ -9,7 +8,7 @@ const Join = lazy(() => import('@/mobile/pages/MJoinPage')); /*회원가입페�
 const NotFound = lazy(() => import('@/mobile/pages/MNotFoundPage')); /*애러페이지*/
 const Test = lazy(() => import('@/mobile/pages/TestPage'));
 
-const root = createBrowserRouter([
+const root = [
   {
     path: '/mo',
     element: (
@@ -50,7 +49,8 @@ const root = createBrowserRouter([
         </Suspense>
     ),
   },
-]);
+];
 
 export default root;
+
 
