@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
     "husky": "^9.0.11",
     "prettier": "^3.3.0",
     "react-app-rewire-multiple-entry": "^2.2.3",
