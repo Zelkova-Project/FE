@@ -1,4 +1,4 @@
-import axios from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
@@ -14,6 +14,7 @@ import { transferWebp, sendWebp } from '@/common/utils/fileUtil';
 import '@/pc/css/write.css';
 
 const WriteBody = () => {
+  const axios = useAxiosInsance();
   const navigate = useNavigate();
   const [activeInfo, setActiveInfo] = useRecoilState(activeInfoState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -377,6 +378,7 @@ const WriteBody = () => {
 };
 
 export default WriteBody;
+
 
 
 
