@@ -14,7 +14,12 @@ const Nav = () => {
   const navigate = useNavigate();
   let logo = require('@/common/imgs/logo.png');
   let hoverImg = require('@/common/imgs/nav/nav-hover.png');
-  // test
+
+
+  const imgObj = {
+    profileImg: require('@/common/imgs/default-profile-img.png'),
+  }
+
   const navigator = [
     '/',
     '/guide',
@@ -117,7 +122,7 @@ const Nav = () => {
             <label>
               {isLogged ? userInfo.nickname : ''}
               <div className={'profile-img'}>
-                <img src={'/default-profile-img.png'} alt={'프로필 사진'} />
+                <img src={imgObj.profileImg} alt={'프로필 사진'} />
               </div>
             </label>
           </li>
@@ -129,6 +134,7 @@ const Nav = () => {
   );
 };
 export default Nav;
+
 
 
 
