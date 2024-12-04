@@ -7,13 +7,12 @@ import { activeInfoState, userInfoState } from '@/common/recoilState/recoil';
 
 import '@/pc/css/noticeDetail.css';
 
-import useAxiosInsance from '@/common/axios/axiosInstance';
+import axios from '@/common/axios/axiosInstance';
 
 import DOMPurify from 'dompurify';
 import { getCookie } from '../../../common/utils/loginUtil';
 
 const BoardDetailBody = () => {
-  const axios = useAxiosInsance();
   const { bno } = useParams();
   const navigate = useNavigate();
 
@@ -96,8 +95,11 @@ const BoardDetailBody = () => {
     }
     const nowtime = new Date();
     const year = nowtime.getFullYear();
-    const month = nowtime.getMonth() + 1;
-    const date = nowtime.getDate();
+    let month = nowtime.getMonth() + 1;
+    let date = nowtime.getDate();
+
+    month = month < 10 ? '0' + month : month;
+    date = date < 10? '0' + date : date;
 
     let { status, data, message } = await axios.post('/comment/', {
       bno: bno,
