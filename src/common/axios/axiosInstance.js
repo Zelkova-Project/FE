@@ -43,7 +43,7 @@ const useAxiosInsance = () => {
   }
   
   const beforeResponse = async (res) => {
-    let isError = res.status != 200;
+    let isError = !!res.data?.error;
     const EXCEPT_URL = ['/image/webp/', '/login'];
   
     if (EXCEPT_URL.includes(res?.config.url)) {
@@ -104,3 +104,4 @@ const useAxiosInsance = () => {
 }
 
 export default useAxiosInsance;
+

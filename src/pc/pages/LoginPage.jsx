@@ -125,17 +125,25 @@ const LoginPage = () => {
     setIsNormalLogin(param);
   };
   const goNormalLogin = async () => {
+    if (!loginId || !loginPw) {
+      alert("아이디, 비밀번호를 모두 입력해주세요");
+      return;
+    }
+
     let formData = new FormData();
     formData.append('username', loginId);
     formData.append('password', loginPw);
-
-    const res = await axios.post('/member/login', formData);
     
-    if (!res.isError) {
-      navigate('/');
-    } else {
-      alert(res.data.message);
+    let res;
+    try {
+      res = await axios.post('/member/login', formData);
+    } catch (error) {
+      console.error('error >>> ', error);
+      alert(error?.message ?? '로그인 에러');
+      return;
     }
+
+    navigate('/');
 
     let memberInfo = {
       ...res
@@ -249,6 +257,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
 
 
 
