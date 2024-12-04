@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 
 import Section from '@/pc/components/Section';
 import Table from '@/pc/components/Table';
@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil';
 import subTitMap from '@/pc/components/common/data/subtitData';
 
 const BoardList = ({ boardList }) => {
+  const axios = useAxiosInsance();
   const activeInfo = useRecoilValue(activeInfoState);
   const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
@@ -190,6 +191,7 @@ const BoardList = ({ boardList }) => {
 };
 
 export default BoardList;
+
 
 
 

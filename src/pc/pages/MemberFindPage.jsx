@@ -3,11 +3,12 @@ import Nav from '@/pc/components/Nav';
 import Footer from '@/pc/components/Footer';
 import { Link, useNavigate } from 'react-router';
 import Modal from 'react-modal';
-import axios from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 import React, { useEffect, useRef, useState } from 'react';
 import PwUpdatePage from './PwUpdatePage';
 
 const MemberFindPage = () => {
+  const axios = useAxiosInsance();
   const navigate = useNavigate();
   const intervalId = useRef(); // 소셜 로그인
 
@@ -723,3 +724,4 @@ const MemberFindPage = () => {
   );
 };
 export default MemberFindPage;
+

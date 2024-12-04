@@ -1,384 +1,677 @@
-import axios from '@/common/axios/axiosInstance';
+import style from '@/pc/css/join.module.css';
+import Nav from '@/pc/components/Nav';
+import Footer from '@/pc/components/Footer';
+import { useNavigate, useParams } from 'react-router';
 
-import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router';
-import { useRecoilState } from 'recoil';
-import { activeInfoState, userInfoState } from '@/common/recoilState/recoil';
+import useAxiosInsance from '@/common/axios/axiosInstance';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 
-import subTitMap from '@/pc/components/common/data/subtitData';
+const Join = () => {
+  const axios = useAxiosInsance();
+  const intervalId = useRef(); // 소셜 로그인
 
-import Section from '@/pc/components/Section';
+  // 통신사 select
+  const [selected, setSelected] = useState(false);
+  const [selectVal, setSelectVal] = useState('');
 
-import { transferWebp, sendWebp } from '@/common/utils/fileUtil';
+  // 아이디 중복체크 버튼
+  const [idCheckBtn, setIdCheckBtn] = useState(false);
 
-import '@/pc/css/write.css';
+  // 아이디,비번 체크메세지(성공,실패)
+  const [idFailMessage, setIdFailMessage] = useState('');
+  const [idSuccessMessage, setIdSuccessMessage] = useState('');
+  const [pwFailMessage, setPwFailMessage] = useState('');
+  const [pwSuccessMessage, setPwSuccessMessage] = useState('');
+  // 폰 인증
+  const [verifyMessage, setVerifyMessage] = useState(''); // 인증번호 발송 메세지
+  const [failVerifyMessage, setFailVerifyMessage] = useState(''); // 인증번호 전송버튼 오류시
+  const [failVerifyNumMessage, setFailVerifyNumMessage] = useState(''); // 인증번호 확인 오류시
+  const [verifyBtn, setVerifyBtn] = useState(false); // 인증번호 전송버튼 클릭체크
+  const [verifyNumBtn, setVerifyNumBtn] = useState(false); // 인증번호 확인 클릭체크
 
-const WriteBody = () => {
+  // 타이머
+  const [minutes, setMinutes] = useState(1);
+  const [seconds, setSeconds] = useState(59);
+  const [isRunning, setIsRunning] = useState(false);
+  const [joinInfo, setJoinInfo] = useState({
+    login_id: '',
+    password: '',
+    password_check: '',
+    name: '',
+    birth: '',
+    agency: '',
+    phone: '',
+    accreditNum: '',
+    email1: '',
+    email2: '',
+    info: '',
+    // nickname: 'test',
+  });
+
   const navigate = useNavigate();
-  const [activeInfo, setActiveInfo] = useRecoilState(activeInfoState);
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  
-  const [fileNames, setFileNames] = useState([]);
+  const imgObj = {
+    googleLogin: require('@/common/imgs/login/구글로그인.png'),
+    kakaoLogin: require('@/common/imgs/login/카카오로그인.png'),
+    kakaoLoginIcon: require('@/common/imgs/login/카카오로그인아이콘.png'),
+    // select: require('/select.png'),
+  };
 
-  const editorRef = useRef(null);
+  // 카카오 로그인
+  const kakaoLogin = async () => {
+    const width = 500; // 팝업의 가로 길이: 500
+    const height = 640; // 팝업의 세로 길이 : 500
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
 
-  const [subtit, setSubtit] = useState('');
-  const [activeLoadedIdx, setActiveLoadedIdx] = useState(0);
-  const [writeInfo, setWriteInfo] = useState({});
-  const [isMain, setIsMain] = useState(true);
-  const [postInfo, setPostInfo] = useState({
-      category: '공지사항',
-      visibility: 'PUBLIC',
-      title: '',
-      content: '',
-      thumbImageName: ''
-    });
+    let _kakaowindow = window.open(
+      '/api/oauth2/authorization/kakao',
+      'kakako-',
+      `width=${width},height=${height},left=${left},top=${top}`,
+    );
 
-  //custom editor 시작
-  const saveContent = async () => {
-    const content = editorRef.current.innerHTML;
-    const current = editorRef.current;
+    intervalId.current = setInterval(() => {
+      if (!_kakaowindow?.document) return;
 
-    let nickname = userInfo?.nickname || '홍길동';
-    
-    setPostInfo({...postInfo, content: current, writer: nickname});
-    
-    let param = new FormData();
-    param.append('title', postInfo.title);
-    param.append('content', content);
-    param.append('writer', userInfo?.nickname);
-    param.append('category', postInfo?.category);
-    param.append('dueDate', getDate(new Date()));
+      const childcookie = _kakaowindow.document.cookie;
+      const parentcookie = document.cookie;
 
-    if (postInfo.uploadFileNames != null) {
-      param.append('uploadFileNames', postInfo.uploadFileNames);
-    }
-    
-    if (postInfo.thumbImageName) {
-      param.append('thumbImageName', postInfo.thumbImageName);
-    }
+      const [_key1, val1] = childcookie.split('=');
+      const [_key2, val2] = parentcookie.split('=');
 
-    if (!postInfo.title || !content) {
-      alert("제목, 내용이 모두 입력되어야 글쓰기가 가능합니다!");
-      return;
-    }
+      if (val1 == val2) {
+        navigate('/');
+        _kakaowindow.close();
+      }
+    }, 4000);
+  };
 
-    await axios.post('/board/', param);
+  useEffect(() => {
+    return () => clearInterval(intervalId.current);
+  });
 
+  const goBack = () => {
     navigate(-1);
   };
+  //TODO: 유효성검사
+  const goJoin = async () => {
+    let param = {
+      login_id: joinInfo.login_id,
+      password: joinInfo.password,
+      name: joinInfo.name,
+      birth: joinInfo.birth,
+      // agency: '',  보류
+      // phone: '', 보류
+      // accreditNum: '', 보류
+      email: joinInfo.email1 + '@' + joinInfo.email2,
+      info: joinInfo.info,
+      // nickname: '',
+    };
 
-  const uploadSingleFile = async (file) => {
-    let param = new FormData();
-    param.append('file', file);
+    let entries = Object.entries(joinInfo);
 
-    const { error, status, data: fileName } = await axios.post('/files/upload', param);
-    
-    if (error) {
-      console.log('status > ', status);
-    }
+    let msgMap = {
+      login_id: '아이디가 비었습니다.',
+      password: '비밀번호가 비었습니다.',
+      name: '이름이 비었습니다.',
+      nickname: '닉네임이 비었습니다.',
+      email1: '이메일이 비었습니다.',
+    };
 
-    setPostInfo({ ...postInfo, uploadFileNames: [fileName] });
-    return fileName;
-  }
-  
-  const uploadSingleImage = async (files) => {
-    const formData = new FormData();
-    formData.append("files", files);
-
-    const { error, status, data: imageName }= await axios.post('/image/', formData);
-
-    if (error) {
-      console.error('status >>> ', status);
-      return;
-    }
-
-    return imageName;
-  }
-
-  const uploadWebp = async (files) => {
-    const formData = new FormData();
-
-    for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i], 'image.webp');
-    }
-    // formData.append('file', file, 'image.webp');
-
-    const { isError, status, data: webpName }= await axios.post('/image/webp/', formData);
-    if (isError) {
-      console.error('### uploadSingleWebp');
-      return;
-    }
-
-    if (isMain) {
-      setPostInfo({
-        ...postInfo,
-        thumbImageName: webpName
-      });
-      setIsMain(false);
-    }
-
-
-    return webpName;
-  }
-
-  // * 이미지만 다중 가능
-  const handleImageUpload = async (event) => {
-    const isDev = process.env.NODE_ENV == 'development';
-    const fileName = event.target.files[0]?.name || '이미지';
-    // const file = event.target.files[0];
-    const files = event.target.files;
-    setPostInfo({ ...postInfo, files: files });
-    
-    let blobDataArr = [];
-
-    for (let file of files) {
-      // 이미지가 아닐 경우 첨부파일에 들어감
-      if (!['image/png', 'image/jpg', 'image/jpeg'].includes(file?.type)) {
-        setFileNames([...fileNames, fileName]);
-
-        uploadSingleFile(file).then((res) => {
-          console.log('uploadSigleFile >>> ', res);
-        })
-        return;
-      }
-
-      // 이미지일 경우
-      // WEBP 테스트영역
-      const blobData = await transferWebp(file);
-      blobDataArr.push(blobData);
-    }
-
-    const res = await uploadWebp(blobDataArr);
-
-    for (let 파일명 of res) {
-      const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
-
-      const img = 
-      `
-        <img 
-          src="${baseURL}/image/view/${파일명}" 
-          alt="Uploaded Image" 
-          style="
-            max-width: 100%; 
-            height: auto;
-            display: block;
-            margin: 0 auto;
-          " 
-        />
-        <br/>
-      `;        
-        
-      document.getElementById('editor').innerHTML += img; 
-    }
-
-
-    // uploadWebp(blobDataArr).then((res) => {
-    //   console.log('uploadWEb ', res);
-    //   for (let 파일명 of res) {
-    //     const baseURL = isDev ? 'http://localhost:8080/api' : '/api';
-
-    //     const img = 
-    //     `
-    //       <img 
-    //         src="${baseURL}/image/view/${파일명}" 
-    //         alt="Uploaded Image" 
-    //         style="
-    //           max-width: 100%; 
-    //           height: auto;
-    //           display: block;
-    //           margin: 0 auto;
-    //         " 
-    //       />
-    //       <br/>
-    //     `;        
-          
-    //     document.getElementById('editor').innerHTML += img; 
+    // for (let entry of entries) {
+    //   let [key, val] = entry;
+    //   if (!val) {
+    //     // alert(`${msgMap[key]}`);
+    //     return;
     //   }
-    //   // 루핑 끝
-    // })
-
-  };
-
-  const triggerUpload = () => {
-    document.querySelector("#fileInput").click();
-  }
-  //custom editor 끝
-
-  const getDate = (date) => {
-    let year = date.getFullYear() + '';
-    let month = date.getMonth() + 1 + '';
-
-    if (month < 10) month = '0' + month;
-
-    let day = date.getDate() + '';
-
-    if (day < 10) day = '0' + day;
-    return year + '-' + month + '-' + day;
-  };
-
-  useEffect(() => {
-    setWriteInfo({
-      ...writeInfo,
-      modifyDate: getDate(new Date()),
-      writeDate: getDate(new Date()),
-    });
-  }, []);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    let subtitle = subTitMap[activeInfo.activePage][activeInfo.activeIdx];
-    setSubtit(subtitle);
-  }, [activeInfo.activeIdx]);
-
-
-  const activeLoadedFile = (idx) => {
-    if (idx == activeLoadedIdx) {
-      setActiveLoadedIdx(-1);
+    //
+    //   if (key != 'password_check')
+    //     param[key] = val;
+    // }
+    if (joinInfo.login_id.trim() === '' || joinInfo.login_id.trim() === null) {
+      setIdFailMessage('아이디를 입력해주세요.');
+      setIdSuccessMessage(null);
+      return false;
+    }
+    if (idCheckBtn === false) {
+      setIdFailMessage('아이디 중복확인을 해주세요.');
+      setIdSuccessMessage(null);
+      return false;
+    }
+    if (joinInfo.password.trim() === '' || joinInfo.password.trim() === null) {
+      setPwFailMessage('비밀번호를 입력해주세요.');
+      setPwSuccessMessage(null);
+      return false;
+    }
+    if (joinInfo.password_check.trim() === '' || joinInfo.password_check.trim() === null) {
+      setPwFailMessage('비밀번호 확인을 입력해주세요.');
+      setPwSuccessMessage(null);
+      return false;
+    }
+    if (joinInfo.name.trim() === '' || joinInfo.name.trim() === null) {
+      setFailVerifyMessage('개인 정보가 맞지 않습니다. 다시 입력해 주세요.');
+      document.getElementById('join-info-name').style.border = '1px solid #ff8888';
+      setVerifyMessage(null);
+      return false;
     } else {
-      setActiveLoadedIdx(idx);
+      setFailVerifyMessage(null);
+      document.getElementById('join-info-name').style.border = '1px solid #f2f2f2';
+      setVerifyMessage(null);
     }
-  }
-  
-  const deleteLoadedFile = () => {
-    if (fileNames.length == 0) {
-      alert('파일을 추가해주세요');
-      return;
+    if (joinInfo.birth === '' || joinInfo.birth === null || joinInfo.birth.length !== 8) {
+      setFailVerifyMessage('개인 정보가 맞지 않습니다. 다시 입력해 주세요.');
+      document.getElementById('join-info-birth').style.border = '1px solid #ff8888';
+      setVerifyMessage(null);
+      return false;
+    } else {
+      setFailVerifyMessage(null);
+      document.getElementById('join-info-birth').style.border = '1px solid #f2f2f2';
+      setVerifyMessage(null);
+    }
+    if (joinInfo.agency === '' || joinInfo.agency === null) {
+      setFailVerifyMessage('개인 정보가 맞지 않습니다. 다시 입력해 주세요.');
+      document.getElementById('join-info-agency').style.border = '1px solid #ff8888';
+      setVerifyMessage(null);
+      return false;
+    } else {
+      setFailVerifyMessage(null);
+      document.getElementById('join-info-agency').style.border = '1px solid #f2f2f2';
+      setVerifyMessage(null);
+    }
+    // if (joinInfo.phone === '' || joinInfo.phone === null) {
+    //   setFailVerifyMessage('가입된 전화번호가 아닙니다. 다시 입력해 주세요.');
+    //   document.getElementById('join-info-phone').style.border = '1px solid #ff8888';
+    //   setVerifyMessage(null);
+    //   return false;
+    // }else {
+    //   setFailVerifyMessage(null);
+    //   document.getElementById('join-info-phone').style.border = '1px solid #f2f2f2';
+    //   setVerifyMessage(null);
+    // }
+    // if (joinInfo.accreditNum === '' || joinInfo.accreditNum === null || joinInfo.accreditNum.length !== 4) {
+    //   setFailVerifyNumMessage('인증 번호가 맞지 않습니다. 다시 입력해 주세요.');
+    //   document.getElementById('accreditNum').style.border = '1px solid #ff8888';
+    //   setVerifyMessage(null);
+    //   return false;
+    // }else {
+    //   setFailVerifyNumMessage(null);
+    //   document.getElementById('accreditNum').style.border = '1px solid #f2f2f2';
+    //   setVerifyMessage(null);
+    // }
+    if (verifyBtn === false) {
+      setFailVerifyMessage('인증번호 전송 버튼을 눌러주세요.');
+      setVerifyMessage(null);
+      return false;
+    }
+    if (verifyNumBtn === false) {
+      setFailVerifyMessage('인증번호 확인 버튼을 눌러주세요.');
+      setVerifyMessage(null);
+      return false;
     }
 
-    if (activeLoadedIdx < 0) {
-      alert("파일을 선택해주세요");
-      return;
+    let { status, message } = await axios.post('/signup', param);
+
+    if (status === 200 || status === 201) {
+      navigate('/');
+    } else {
+      // alert(message);
     }
-    const selecteFileName = fileNames[activeLoadedIdx];
-    const 파일삭제원해 = confirm(`[${selecteFileName}] 파일을 정말 삭제하시겠습니까?`);
-    if (!파일삭제원해) {
-      return;
+  };
+  const selectValue = (index) => {
+    setSelectVal(index);
+    setSelected(!selected);
+    setJoinInfo({ ...joinInfo, agency: index });
+  };
+
+  const joinIdInfo = (e) => {
+    setJoinInfo({ ...joinInfo, login_id: e.target.value.trim() });
+    setIdCheckBtn(false);
+  };
+  const joinIdCheck = (e) => {
+    const idRegex = /^[a-zA-Z](?=.*\d)[a-zA-Z0-9]{6,}$/;
+    if (e.target.value.trim() === '') {
+      setIdFailMessage('아이디를 입력해주세요.');
+      setIdSuccessMessage(null);
+      return false;
+    } else if (!idRegex.test(e.target.value.trim())) {
+      setIdFailMessage('영문, 숫자가 포함된 7자리 이상의 아이디를 만들어 주세요.');
+      setIdSuccessMessage(null);
+      return false;
+    } else {
+      setJoinInfo(e.target.value);
+      setIdSuccessMessage(null);
+      setIdFailMessage(null);
     }
+  };
+  const idCheck = async () => {
+    if (joinInfo.login_id.trim() === '' || joinInfo.login_id.trim() === null) {
+      document.getElementById('join-info-id').style.border = '1px solid #ff8888';
+      setIdFailMessage('아이디를 입력해주세요.');
+      setIdSuccessMessage(null);
+      return false;
+    }
+    const idRegex = /^[a-zA-Z](?=.*\d)[a-zA-Z0-9]{6,}$/;
+    if (!idRegex.test(joinInfo.login_id)) {
+      document.getElementById('join-info-id').style.border = '1px solid #ff8888';
+      setIdFailMessage('영문, 숫자가 포함된 7자리 이상의 아이디를 만들어 주세요.');
+      setIdSuccessMessage(null);
+      return false;
+    }
+    let loginParam = {
+      loginId: joinInfo.login_id,
+    };
+    const res = await axios.get(`/accounts/availability?loginId=${loginParam.loginId}`);
+    // 성공 핸들링
+    try {
+      if (res.data.possible === true) {
+        document.getElementById('join-info-id').style.border = '1px solid #f2f2f2';
+        setIdSuccessMessage('사용가능한 아이디 입니다.');
+        setIdFailMessage(null);
+        setIdCheckBtn(true);
+      } else {
+        document.getElementById('join-info-id').style.border = '1px solid #ff8888';
+        setIdFailMessage('중복된 아이디입니다.');
+        setIdSuccessMessage(null);
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const joinPwCheck = (e) => {
+    // const pwRegex =  /^[a-zA-Z0-9](?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{6,}$/
+    const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*+#?&])[a-zA-Z0-9@$!%*+#?&]{7,}$/;
+    if (!pwRegex.test(e.target.value)) {
+      document.getElementById('join-info-pw').style.border = '1px solid #ff8888';
+      setPwFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
+      setPwSuccessMessage(null);
+      return false;
+    } else if (
+      e.target.value.trim() !== joinInfo.password_check.trim() &&
+      joinInfo.password_check.trim() !== ''
+    ) {
+      document.getElementById('join-info-pw').style.border = '1px solid #ff8888';
+      setPwFailMessage('비밀번호 확인이 일치하지 않습니다.');
+      setPwSuccessMessage(null);
+      return false;
+    } else if (
+      e.target.value.trim() !== joinInfo.password_check.trim() &&
+      joinInfo.password_check.trim() === ''
+    ) {
+      document.getElementById('join-info-pw').style.border = '1px solid #f2f2f2';
+      setPwFailMessage(null);
+      setPwSuccessMessage(null);
+      return false;
+    } else if (
+      pwRegex.test(e.target.value) &&
+      e.target.value.trim() === joinInfo.password_check.trim()
+    ) {
+      document.getElementById('join-info-pw').style.border = '1px solid #f2f2f2';
+      document.getElementById('join-info-re-pw').style.border = '1px solid #f2f2f2';
+      setPwFailMessage(null);
+      setPwSuccessMessage('사용가능한 비밀번호 입니다.');
+      setJoinInfo({ ...joinInfo, password: e.target.value });
+    }
+  };
+  const joinPwReCheck = (e) => {
+    const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*+#?&])[a-zA-Z0-9@$!%*+#?&]{7,}$/;
+    if (!pwRegex.test(e.target.value)) {
+      document.getElementById('join-info-re-pw').style.border = '1px solid #ff8888';
+      setPwFailMessage('영문,숫자,특수기호가 포함된 7자리 이상의 비밀번호를 만들어 주세요.');
+      setPwSuccessMessage(null);
+      return false;
+    } else if (e.target.value.trim() !== joinInfo.password.trim()) {
+      document.getElementById('join-info-re-pw').style.border = '1px solid #ff8888';
+      setPwFailMessage('비밀번호 확인이 일치하지 않습니다.');
+      setPwSuccessMessage(null);
+      return false;
+    } else {
+      document.getElementById('join-info-pw').style.border = '1px solid #f2f2f2';
+      document.getElementById('join-info-re-pw').style.border = '1px solid #f2f2f2';
+      setPwFailMessage(null);
+      setPwSuccessMessage('사용가능한 비밀번호 입니다.');
+    }
+  };
+  const joinBirthCheck = (e) => {
+    // 입력 값이 8자를 초과하지 않도록 제한
+    if (e.target.value.length <= 8) {
+      setJoinInfo({ ...joinInfo, birth: e.target.value });
+    }
+  };
+  const verifyTransmissionBtn = () => {
+    if (joinInfo.phone.trim() === '') {
+      document.getElementById('join-info-phone').style.border = '1px solid #ff8888';
+      setFailVerifyMessage('가입된 전화번호가 아닙니다. 다시 입력해 주세요.');
+      setVerifyMessage(null);
+      return false;
+    } else {
+      document.getElementById('join-info-phone').style.border = '1px solid #f2f2f2';
+      setVerifyMessage('인증번호가 오지 않나요?');
+      setFailVerifyMessage(null);
+      setVerifyBtn(true);
+      handleStart();
+    }
+  };
+  const verifyConfirmBtn = () => {
+    if (verifyBtn === false) {
+      setFailVerifyMessage('인증 번호전송 버튼을 눌러주세요');
+    } else if (joinInfo.accreditNum === '' || joinInfo.accreditNum.length !== 4) {
+      // 인증번호칸이 빈칸일 경우 + 인증번호가 틀릴시
+      setFailVerifyNumMessage('인증 번호가 맞지 않습니다. 다시 입력해 주세요.');
+      document.getElementById('accreditNum').style.border = '1px solid #ff8888';
+      document.getElementById('accreditNum').focus();
+      return false;
+    } else {
+      document.getElementById('accreditNum').style.border = '1px solid #f2f2f2';
+      setIsRunning(false);
+      document.getElementById('timer').style.display = 'none';
+      setFailVerifyNumMessage(null);
+      setFailVerifyMessage(null);
+      setVerifyNumBtn(true);
+    }
+    // 인증번호가 맞을지
+    /*setIdFailVerifyNumMessage(null)
+        setIdFailVerifyMessage(null);
+        setIdVerifyNumBtn(true)
+        */
+  };
+  const verifyLengthChk = (e) => {
+    // 인증번호 8자리제한
+    if (e.target.value.length <= 4) {
+      setJoinInfo({ ...joinInfo, accreditNum: e.target.value });
+    }
+  };
 
-    const filtered = fileNames.filter((_, itemIdx) => activeLoadedIdx != itemIdx);
-    setFileNames([...filtered]);
-    alert(`${selecteFileName} 파일 삭제`);
-  }
+  // 타이머
+  useEffect(() => {
+    let interval;
+    if (isRunning) {
+      interval = setInterval(() => {
+        if (seconds === 0) {
+          setMinutes((prevMinutes) => prevMinutes - 1);
+          setSeconds(59);
+        } else if (minutes === 0 && seconds === 1) {
+          setIsRunning(false);
+          document.getElementById('timer').style.display = 'none';
+        } else {
+          setSeconds((prevSeconds) => prevSeconds - 1);
+        }
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isRunning, seconds]);
 
-  const test = (e) => {
-    console.log('test >>> ', e);
-  }
+  const handleStart = () => {
+    setIsRunning(true);
+    document.getElementById('timer').style.display = 'block';
+  };
 
+  const handleReset = () => {
+    setIsRunning(false);
+    setMinutes(1);
+    setSeconds(59);
+    handleStart();
+  };
   return (
-    <>
-      {/* 글쓰기영역시작 */}
-      <Section>
-        <div className="write-outer-container">
-          <div className="write-flexitem">
-            <h5 className="write-subtit">{subtit} 등록 및 수정</h5>
-          </div>
-          <div className="write-flexItem">
-            <h3>제목</h3>
-            <input onChange={(e) => setPostInfo({ ...postInfo, title: e.target.value })}></input>
-          </div>
-          <div className="write-flexItem">
-            <div className="write-flexSub">
-              <h3>작성자</h3>
-              <input value={userInfo?.nickname} readOnly></input>
-            </div>
-            <div className="write-flexSub ml-40">
-              <h3>작성일</h3>
-              {/* <input readOnly value={writeInfo.writeDate}></input> */}
-              {/* 빈값 넘어와서 임시처리 */}
-              <input readOnly value={'2024-10-14'}></input>
-            </div>
+    <div className={style['outer-container']}>
+      <Nav />
+      <div className={style['form-container']}>
+        <div className={style['inner-container']}>
+          <div className={style['form-title']}>
+            <h4 className={style['join-title']}>회원가입</h4>
           </div>
 
-          <div className="write-flexItem">
-            <div className="write-flexSub">
-              <h3>게시 여부</h3>
-              <select value={postInfo.category} onChange={(e) => setPostInfo({ ...postInfo, category: e.target.value })}>
-                <option value="공지사항">공지사항</option>
-                <option value="가정통신문">가정통신문</option>
-                <option value="채용게시판">채용게시판</option>
-                <option value="후원의손길">후원의손길</option>
-                <option value="자유게시판">자유게시판</option>
-                <option value="커뮤니티">커뮤니티</option>
-              </select>
+          <div className={style['join-form-wrapper']}>
+            {/* 아이템 */}
+            <div className={style['join-form-item']}>
+              <div className={style['join-form-subitem1']}>
+                <input
+                  value={joinInfo.login_id}
+                  placeholder={'아이디'}
+                  autoComplete={'off'}
+                  id={'join-info-id'}
+                  onChange={(e) => {
+                    // setJoinInfo({...joinInfo, login_id: e.target.value});
+                    joinIdCheck(e);
+                    joinIdInfo(e);
+                  }}
+                />
+                <button className={style['join-check']} onClick={idCheck}>
+                  중복확인
+                </button>
+              </div>
             </div>
-            <div className="write-flexSub ml-40">
-              <h3>수정일</h3>
-              {/* <input readOnly value={writeInfo.modifyDate}></input> */}
-              {/* 빈값 넘어와서 임시처리 */}
-              <input readOnly value={'2024-10-14'}></input>
-            </div>
-          </div>
+            <span className={style['id-fail-message']}>{idFailMessage}</span>
+            <span className={style['id-success-message']}>{idSuccessMessage}</span>
+            {/*<span className={style['regex-message']}>{idBlankMessage}</span>*/}
 
-          <div className="write-flexItem mt-50">
-            <div className="write-textArea">
-              <h3>내용작성</h3>
-              <div
-                ref={editorRef}
-                className='write-body'
-                contentEditable
-                id="editor"
-                onInput={(e) => test(e)}
-                style={{
-                    border: '1px solid #ccc',
-                    padding: '10px',
-                    minHeight: '200px',
-                }}
-               />
-            </div>
-          </div>
-
-          <div className="write-flexItem mt-50">
-            <div className="write-flexSub">
-              <h3>첨부파일</h3>
+            {/* 아이템 */}
+            <div className={[style['join-form-item'], style['margin-top30']].join(' ')}>
+              <div className={style['join-form-subitem2']}>
+                <input
+                  value={joinInfo.password}
+                  placeholder={'비밀번호'}
+                  id={'join-info-pw'}
+                  type="password"
+                  onChange={(e) => {
+                    joinPwCheck(e);
+                    setJoinInfo({ ...joinInfo, password: e.target.value.trim() });
+                  }}
+                />
+              </div>
             </div>
 
-            <div className="write-file-list ml-40">
-              <ul>
-                {
-                  fileNames.length == 0 ?
-                  <>
-                    <li>
-                      <h3>선택된 파일명</h3>
+            {/* 아이템 */}
+            <div className={style['join-form-item']}>
+              <div className={style['join-form-subitem2']}>
+                <input
+                  value={joinInfo.password_check}
+                  placeholder={'비밀번호 확인'}
+                  id={'join-info-re-pw'}
+                  type="password"
+                  onChange={(e) => {
+                    joinPwReCheck(e);
+                    setJoinInfo({ ...joinInfo, password_check: e.target.value.trim() });
+                  }}
+                />
+              </div>
+              <span className={style['pw-fail-message']}>{pwFailMessage}</span>
+              <span className={style['pw-success-message']}>{pwSuccessMessage}</span>
+            </div>
+            {/* 아이템 */}
+            <div className={[style['join-form-item'], style['margin-top50']].join(' ')}>
+              <div className={style['join-form-subitem2']}>
+                <input
+                  type={'text'}
+                  value={joinInfo.name}
+                  placeholder={'이름'}
+                  autoComplete={'off'}
+                  id={'join-info-name'}
+                  onChange={(e) => setJoinInfo({ ...joinInfo, name: e.target.value.trim() })}
+                />
+              </div>
+            </div>
+
+            {/*아이템 */}
+            <div className={style['join-form-item']}>
+              <div className={style['join-form-subitem2']}>
+                <input
+                  type={'number'}
+                  placeholder={'생년월일(YYYYMMDD)'}
+                  id={'join-info-birth'}
+                  autoComplete={'off'}
+                  value={joinInfo.birth}
+                  onChange={joinBirthCheck}
+                  maxLength={8}
+                />
+              </div>
+            </div>
+            {/*아이템 */}
+            <div className={style['join-form-item']}>
+              <div className={style['join-form-subitem2']}>
+                <input
+                  type={'text'}
+                  placeholder={'통신사 선택'}
+                  value={selectVal}
+                  autoComplete={'off'}
+                  className={style['join-form-select']}
+                  id={'join-info-agency'}
+                  onClick={() => {
+                    setSelected(!selected);
+                  }}
+                ></input>
+                <img
+                  src={'/select.png'}
+                  alt={'select'}
+                  className={style['join-form-select-img']}
+                  onClick={() => {
+                    setSelected(!selected);
+                  }}
+                />
+                {selected ? (
+                  <ul className={style['join-form-option']}>
+                    <li className={style['option']} onClick={() => selectValue('SKT')}>
+                      SKT
                     </li>
-                  </> :
-                  fileNames.map((item, idx) => (
-                    <li 
-                      className={(activeLoadedIdx == idx ? 'active' : '')}
-                      key={item + idx} 
-                      onClick={() => activeLoadedFile(idx)}
-                    >
-                      <h3>{item}</h3>
+                    <li className={style['option']} onClick={() => selectValue('KT')}>
+                      KT
                     </li>
-                  ))
-                }
-              </ul>
+                    <li className={style['option']} onClick={() => selectValue('LG U+')}>
+                      LG U+
+                    </li>
+                    <li className={style['option']} onClick={() => selectValue('SKT 알뜰폰')}>
+                      SKT 알뜰폰
+                    </li>
+                    <li className={style['option']} onClick={() => selectValue('KT 알뜰폰')}>
+                      KT 알뜰폰
+                    </li>
+                    <li className={style['option']} onClick={() => selectValue('LG U+ 알뜰폰')}>
+                      LG U+ 알뜰폰
+                    </li>
+                  </ul>
+                ) : null}
+              </div>
             </div>
 
-            <div className="write-file-btns ml-20">
-              <button onClick={() => deleteLoadedFile()}>파일 삭제</button>
-              <button onClick={triggerUpload}>파일 추가</button>
-              <input type="file" id="fileInput" multiple onChange={handleImageUpload} style={{display: 'none'}}/>
+            {/* 아이템 */}
+            <div className={style['join-form-item']}>
+              <div className={style['join-form-subitem1']}>
+                <input
+                  value={joinInfo.phone}
+                  placeholder={'전화번호 입력'}
+                  id={'join-info-phone'}
+                  autoComplete={'off'}
+                  onChange={(e) => setJoinInfo({ ...joinInfo, phone: e.target.value.trim() })}
+                />
+                <button className={style['join-check']} onClick={() => verifyTransmissionBtn()}>
+                  인증번호 전송
+                </button>
+              </div>
             </div>
-          </div>
+            {/* 아이템 */}
+            <div>
+              <div className={style['join-form-item']}>
+                <div className={style['join-form-subitem1']}>
+                  <input
+                    value={joinInfo.accreditNum}
+                    placeholder={'인증번호 4자리 입력'}
+                    type={'number'}
+                    id={'accreditNum'}
+                    autoComplete={'off'}
+                    onChange={(e) => verifyLengthChk(e)}
+                    maxLength={4}
+                  />
+                  <div className={style['timer']} id={'timer'}>
+                    {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+                  </div>
+                  <button className={style['join-check']} onClick={verifyConfirmBtn}>
+                    확인
+                  </button>
+                </div>
+              </div>
+              <div className={style['message']}>
+                <span className={style['verify-message']} onClick={handleReset}>
+                  {verifyMessage}
+                </span>
+                <span className={style['fail-verify-message']}>{failVerifyMessage}</span>
+                <span className={style['fail-verify-num-message']}>{failVerifyNumMessage}</span>
+              </div>
+            </div>
+            {/* 아이템 */}
+            <div className={[style['join-form-item'], style['margin-top50']].join(' ')}>
+              <div className={style['join-form-subitem3']}>
+                <input
+                  value={joinInfo.email1}
+                  type="text"
+                  autoComplete={'off'}
+                  placeholder={'이메일 (선택사항)'}
+                  onChange={(e) => setJoinInfo({ ...joinInfo, email1: e.target.value.trim() })}
+                />
+                @
+                <input
+                  value={joinInfo.email2}
+                  type="text"
+                  autoComplete={'off'}
+                  placeholder={'이메일 (선택사항)'}
+                  onChange={(e) => setJoinInfo({ ...joinInfo, email2: e.target.value.trim() })}
+                />
+              </div>
+            </div>
+            {/* 아이템 */}
+            <div className={style['join-form-item']}>
+              <div className={style['join-form-subitem4']}>
+                <textarea
+                  cols="30"
+                  rows="300"
+                  placeholder={'학생 소개를 간단히 작성해주세요.'}
+                  autoComplete={'off'}
+                  value={joinInfo.info}
+                  onChange={(e) => setJoinInfo({ ...joinInfo, info: e.target.value })}
+                ></textarea>
+              </div>
+            </div>
 
-          <div className="write-flexItem dja-center mt-50 mb-50">
-            <div className="write-submit-btns">
-              <button onClick={() => navigate(-1)}>취소</button>
-              <button className='register-btn' onClick={saveContent}>등록</button>
-              {/* <button>삭제</button> */}
+            {/* 버튼들 */}
+            <div className={style['join-btns-wrapper']}>
+              {/*<button className="cancel-join-btn" onClick={goBack}>*/}
+              {/*  취소*/}
+              {/*</button>*/}
+              <button className={style['join-btn']} onClick={goJoin}>
+                확인
+              </button>
+            </div>
+            <div className={style['other-join-form']}>
+              <div className={style['other-join']}>
+                <p>다른 방법으로 로그인</p>
+              </div>
+
+              <div className={style['social-join']}>
+                <div>
+                  <img
+                    src={imgObj.kakaoLoginIcon}
+                    onClick={() => kakaoLogin()}
+                    alt={'카카오 로그인'}
+                  />
+                </div>
+                <div>
+                  <img src={imgObj.googleLogin} alt={'구글 로그인'} />
+                </div>
+              </div>
+
+              <div className={style['join-options']}>
+                <ul className={style['options-ul']}>
+                  <li>회원가입</li>
+                  <li onClick={() => navigate('/memberFind')}>아이디 찾기 / 비밀번호 바꾸기</li>
+                  <li onClick={() => navigate('/chat')}>문의하기</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </Section>
-      {/* 글쓰기영역끝 */}
-    </>
+      </div>
+      <Footer />
+    </div>
   );
 };
 
-export default WriteBody;
-
-
-
-
+export default Join;
 
