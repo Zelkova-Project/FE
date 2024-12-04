@@ -117,6 +117,7 @@ const LoginPage = () => {
     googleLogin: require('@/common/imgs/login/구글로그인.png'),
     kakaoLogin: require('@/common/imgs/login/카카오로그인.png'),
     kakaoLoginIcon: require('@/common/imgs/login/카카오로그인아이콘.png'),
+    logo: require('@/common/imgs/logo72.png')
   };
 
   const dynamicHandler = (param) => {
@@ -127,31 +128,19 @@ const LoginPage = () => {
     formData.append('username', loginId);
     formData.append('password', loginPw);
 
-    const res = await axios.post('/member/login', formData)
-      .catch(e => {
-        return {
-          data: {
-            error: true,
-            message: e.message
-          }
-        }
-      });
-      console.log(res)
-    if (!res.data.error) {
-      removeCookie('memberInfo');
-
+    const res = await axios.post('/member/login', formData);
+    
+    if (!res.isError) {
       navigate('/');
-      setLogin(true);
-      setUserInfo(res.data);
-
-      let memberInfo = {
-        ...res.data
-      };
-
-     setCookie('memberInfo', memberInfo, 1);
     } else {
       alert(res.data.message);
     }
+
+    let memberInfo = {
+      ...res
+    };
+
+    setUserInfo(memberInfo);
   };
   const activeEnter = (e) => {
     if (e.key == 'Enter') {
@@ -163,7 +152,7 @@ const LoginPage = () => {
     <div className="login-container">
       <div className="login-wrapper">
         <div className="img-box">
-          <img src="logo72.png" />
+          <img src={imgObj.logo} />
         </div>
 
         {/* 초기로그인진입시작 */}
@@ -259,6 +248,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
 
 
 

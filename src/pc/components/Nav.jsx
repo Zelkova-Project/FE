@@ -7,7 +7,6 @@ import { useRecoilState } from 'recoil';
 import React, { useState, useEffect } from 'react';
 
 const Nav = () => {
-  const [login, setLogin] = useRecoilState(loginState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [isHovering, setIsHovering] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
@@ -25,29 +24,19 @@ const Nav = () => {
     '/login',
   ];
 
+  useEffect(() => {
+    setIsLogged(userInfo?.accessToken);
+  }, [userInfo]);
+
   const navHandler = (idx) => {
     navigate(navigator[idx]);
   };
 
-  const loginHandler = () => {
-    console.log('loginHandler');
-    navigate('/login');
-  };
-
-  const deleteCookie = (cookieKey) => {
-    document.cookie = cookieKey + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-  };
-
   const logoutHandler = () => {
     setUserInfo('');
-    removeCookie('memberInfo');
     navigate('/');
     location.reload();
   };
-
-  useEffect(() => {
-    setIsLogged(userInfo?.accessToken);
-  }, [userInfo]);
 
   // 호버시열리는영역
   const showExtraNav = () => {
@@ -140,6 +129,7 @@ const Nav = () => {
   );
 };
 export default Nav;
+
 
 
 
