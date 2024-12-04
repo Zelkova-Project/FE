@@ -4,12 +4,9 @@ import { useNavigate, useSearchParams } from 'react-router';
 import { getAccessToken, getMemberWithAccessToken } from '@/common/api/kakaoAPi';
 
 import { useRecoilState } from 'recoil';
-import { loginState, userInfoState } from '@/common/recoilState/recoil';
-
-import { removeCookie, setCookie } from '@/common/utils/loginUtil';
+import { userInfoState } from '@/common/recoilState/recoil';
 
 const KakaoRedirectPage = () => {
-  const [login, setLogin] = useRecoilState(loginState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const navigate = useNavigate();
@@ -20,14 +17,13 @@ const KakaoRedirectPage = () => {
   useEffect(() => {
     getAccessToken(authCode).then((access_token) => {
       getMemberWithAccessToken(access_token).then((res) => {
-        removeCookie('memberInfo');
+        setUserInfo('');
 
         let memberInfo = {
           ...res.data
         }
 
-        // 쿠키에 토큰 넣기
-        setCookie('memberInfo', memberInfo, 1);
+        setUserInfo(memberInfo.data);
 
         // 임시로 모두 main으로 처리
         if (res.isSocial) {
@@ -35,9 +31,6 @@ const KakaoRedirectPage = () => {
         } else {
           navigate('/');
         }
-
-        setLogin(true);
-        setUserInfo(memberInfo);
         
       });
     });
@@ -47,4 +40,5 @@ const KakaoRedirectPage = () => {
 };
 
 export default KakaoRedirectPage;
+
 
