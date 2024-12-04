@@ -7,12 +7,13 @@ import { activeInfoState, userInfoState } from '@/common/recoilState/recoil';
 
 import '@/pc/css/noticeDetail.css';
 
-import axios from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 
 import DOMPurify from 'dompurify';
 import { getCookie } from '../../../common/utils/loginUtil';
 
 const BoardDetailBody = () => {
+  const axios = useAxiosInsance();
   const { bno } = useParams();
   const navigate = useNavigate();
 
@@ -100,6 +101,8 @@ const BoardDetailBody = () => {
 
     month = month < 10 ? '0' + month : month;
     date = date < 10? '0' + date : date;
+    
+    console.log('axios >>>> ', axios)
 
     let { status, data, message } = await axios.post('/comment/', {
       bno: bno,
@@ -411,6 +414,7 @@ const BoardDetailBody = () => {
 };
 
 export default BoardDetailBody;
+
 
 
 
