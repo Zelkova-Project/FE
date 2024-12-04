@@ -11,10 +11,11 @@ import '@/pc/css/guide.css';
 import '@/pc/css/nav.css';
 import '@/pc/css/notice.css';
 import '@/common/fonts/font.css';
-import axios from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 import { useNavigate } from 'react-router';
 
 const NoticeDetailPage = () => {
+  const axios = useAxiosInsance();
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -276,3 +277,4 @@ const NoticeDetailPage = () => {
 };
 
 export default NoticeDetailPage;
+

@@ -3,10 +3,11 @@ import Nav from '@/pc/components/Nav';
 import Footer from '@/pc/components/Footer';
 import { useNavigate, useParams } from 'react-router';
 
-import axios from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 
 const Join = () => {
+  const axios = useAxiosInsance();
   const intervalId = useRef(); // 소셜 로그인
 
   // 통신사 select
@@ -673,3 +674,4 @@ const Join = () => {
 };
 
 export default Join;
+

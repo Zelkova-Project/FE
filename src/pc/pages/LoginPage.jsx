@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import '@/pc/css/login.css';
 import { useNavigate, useParams } from 'react-router';
-import axios from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { loginState, userInfoState } from '@/common/recoilState/recoil';
@@ -11,6 +11,7 @@ import { getKakaoLoginLink } from '@/common/api/kakaoAPi';
 import { removeCookie, setCookie } from '@/common/utils/loginUtil';
 
 const LoginPage = () => {
+  const axios = useAxiosInsance();
   const navigate = useNavigate();
   const [login, setLogin] = useRecoilState(loginState);
   const isDev = process.env.NODE_ENV == 'development';
@@ -248,6 +249,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
 
 
 

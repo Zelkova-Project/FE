@@ -7,12 +7,13 @@ import { activeInfoState, userInfoState } from '@/common/recoilState/recoil';
 
 import '@/pc/css/noticeDetail.css';
 
-import axios from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 
 import DOMPurify from 'dompurify';
 import { getCookie } from '../../../common/utils/loginUtil';
 
 const BoardDetailBody = () => {
+  const axios = useAxiosInsance();
   const { bno } = useParams();
   const navigate = useNavigate();
 
@@ -408,6 +409,7 @@ const BoardDetailBody = () => {
 };
 
 export default BoardDetailBody;
+
 
 
 

@@ -1,4 +1,4 @@
-import axios from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 import React, { useEffect, useState } from 'react';
 
 import { navIdxState, activeInfoState } from '@/common/recoilState/recoil';
@@ -11,6 +11,7 @@ import PageLayout from '@/pc/components/common/PageLayout';
 import WriteBody from '@/pc/components/write/WriteBody';
 
 const WritePage = () => {
+  const axios = useAxiosInsance();
   const navigate = useNavigate();
   const [navIdx, setNavIdx] = useRecoilState(navIdxState);
 
@@ -78,3 +79,4 @@ const WritePage = () => {
 };
 
 export default WritePage;
+

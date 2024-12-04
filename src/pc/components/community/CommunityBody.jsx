@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { userInfoState } from '@/common/recoilState/recoil';
 import { useRecoilState } from 'recoil';
-import axios from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 
 const CommunityBody = () => {
+  const axios = useAxiosInsance();
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
@@ -182,5 +183,6 @@ const CommunityBody = () => {
 };
 
 export default CommunityBody;
+
 
 

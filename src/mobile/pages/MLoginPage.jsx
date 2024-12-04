@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 import '@/mobile/css/mLogin.css';
 import {useNavigate} from "react-router";
-import axios from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 import { loginState, userInfoState } from '@/common/recoilState/recoil';
 import {useRecoilState} from "recoil";
 
 const MLoginPage = () => {
+  const axios = useAxiosInsance();
+
   const navigate = useNavigate();
 
   const [login, setLogin] = useRecoilState(loginState);
@@ -136,3 +138,4 @@ const MLoginPage = () => {
 }
 
 export default MLoginPage;
+
