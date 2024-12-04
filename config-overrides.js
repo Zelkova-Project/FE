@@ -61,7 +61,8 @@ module.exports = {
           inject: true,
           template: path.resolve(__dirname, 'public/index.html'), 
           filename: 'index.html',          
-          chunks: ['main'],                
+          chunks: ['main'],       
+          favicon: './public/favicon.ico', // Ensure favicon is included here
         }),
         new HtmlWebpackPlugin({
           inject: true,
@@ -80,5 +81,6 @@ module.exports = {
       return config;
     }
   };
+
 
 
