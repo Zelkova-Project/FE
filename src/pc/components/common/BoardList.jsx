@@ -37,8 +37,10 @@ const BoardList = ({ boardList }) => {
   }
   
   const fetchPostList = async () => {
+    let subtitle = subTitMap[activeInfo.activePage][activeInfo.activeIdx];
+
     let { status, data, message } = await axios.get(
-      `/board/list?page=${activePageNum}&size=10&keyword=${searchKeyword}&searchOption=${searchOption}`,
+      `/board/list?page=${activePageNum}&size=10&keyword=${searchKeyword}&searchOption=${searchOption}&category=${subtitle}`,
     );
     const filtered = data.dtoList.filter(item => !item.del); // soft delete로 인해 한번 걸러야함
     setPostList(filtered);
@@ -55,8 +57,12 @@ const BoardList = ({ boardList }) => {
   }
 
   useEffect(() => {
-    fetchPostList();
-  }, [activePageNum, activeSearchFlag]);
+    const timeout = setTimeout(() => {
+      fetchPostList();
+    }, 100); // Delay to ensure all updates are complete
+    
+    return () => clearTimeout(timeout);
+  }, [activePageNum, activeSearchFlag, activeInfo.activeIdx, activeInfo.activePage]);
 
   // 검색영역 돔 그리기
   const makeSearchingDom = () => {
@@ -191,6 +197,7 @@ const BoardList = ({ boardList }) => {
 };
 
 export default BoardList;
+
 
 
 
