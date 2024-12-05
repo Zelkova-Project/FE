@@ -15,10 +15,13 @@ const transferWebp = async (file) => {
         reader.onload = (e) => {
             let img = new Image();
             img.src = e.target.result;
+            
+            let scale = Math.min(1, 800 / img.width);
 
             img.onload = () => {
-                canvas.width = img.width;
-                canvas.height = img.height;
+                canvas.width = img.width * scale;
+                canvas.height = img.height * scale;
+                
                 const ctx = canvas.getContext('2d');
 
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -53,4 +56,5 @@ export {
     transferWebp,
     sendWebp
 }
+
 
