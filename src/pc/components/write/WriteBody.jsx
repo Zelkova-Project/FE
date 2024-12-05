@@ -166,6 +166,7 @@ const WriteBody = () => {
             display: block;
             margin: 0 auto;
           " 
+          loading="lazy"
         />
         <br/>
       `;        
@@ -363,6 +364,7 @@ const WriteBody = () => {
 };
 
 export default WriteBody;
+
 
 
 
