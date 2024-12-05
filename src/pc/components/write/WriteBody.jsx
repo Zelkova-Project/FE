@@ -230,6 +230,11 @@ const WriteBody = () => {
     window.scrollTo(0, 0);
     let subtitle = subTitMap[activeInfo.activePage][activeInfo.activeIdx];
     setSubtit(subtitle);
+
+    setPostInfo({
+      ...postInfo,
+      category: subtitle
+    });
   }, [activeInfo.activeIdx]);
 
 
@@ -287,27 +292,7 @@ const WriteBody = () => {
               <h3>작성일</h3>
               {/* <input readOnly value={writeInfo.writeDate}></input> */}
               {/* 빈값 넘어와서 임시처리 */}
-              <input readOnly value={'2024-10-14'}></input>
-            </div>
-          </div>
-
-          <div className="write-flexItem">
-            <div className="write-flexSub">
-              <h3>게시 여부</h3>
-              <select value={postInfo.category} onChange={(e) => setPostInfo({ ...postInfo, category: e.target.value })}>
-                <option value="공지사항">공지사항</option>
-                <option value="가정통신문">가정통신문</option>
-                <option value="채용게시판">채용게시판</option>
-                <option value="후원의손길">후원의손길</option>
-                <option value="자유게시판">자유게시판</option>
-                <option value="커뮤니티">커뮤니티</option>
-              </select>
-            </div>
-            <div className="write-flexSub ml-40">
-              <h3>수정일</h3>
-              {/* <input readOnly value={writeInfo.modifyDate}></input> */}
-              {/* 빈값 넘어와서 임시처리 */}
-              <input readOnly value={'2024-10-14'}></input>
+              <input readOnly value={new Date().toISOString().split('T')[0]}></input>
             </div>
           </div>
 
@@ -378,6 +363,7 @@ const WriteBody = () => {
 };
 
 export default WriteBody;
+
 
 
 

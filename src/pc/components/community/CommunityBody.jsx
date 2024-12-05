@@ -34,14 +34,14 @@ const CommunityBody = () => {
     const result = [];
     for (let idx in postList) {
       result.push(
-        <div className="flex-item" key={idx} onClick={() => navigate(`/noticeDetail/${1}`)}>
-          <div className='thumb-wrapper'>
+        <div className="flex-item" key={idx}>
+          <div className='thumb-wrapper' onClick={() => navigate(`/noticeDetail/${1}`)}>
             <img src={postList[idx].thumbImageName}></img>
           </div>
           <h3>{postList[idx].title}</h3>
           <h3>{postList[idx].writer}</h3>
           <h3>{postList[idx].dueDate}</h3>
-        </div>,
+        </div>
       );
     }
 
@@ -183,6 +183,7 @@ const CommunityBody = () => {
 };
 
 export default CommunityBody;
+
 
 
 
