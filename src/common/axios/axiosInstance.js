@@ -62,7 +62,7 @@ const useAxiosInsance = () => {
         refreshToken        
       });
   
-      if (!accessToken || !refreshToken)  {
+      if (!accessToken && !refreshToken)  {
          setUserInfo('');
         
         let errMsg = res1.data.error;
@@ -71,8 +71,13 @@ const useAxiosInsance = () => {
           message: errMsg
         });
       }
-  
-      const res = await axios.get('/member/refresh', refreshToken);
+      const url = isDev ? 'http://localhost:8080/api' : '/api';
+      const headers = {
+        headers: {
+          Authorization: accessToken
+        }
+      };
+      const res = await axios.post(`${url}/member/refresh`, refreshToken, headers);
       const newAccessToken = res.data.accessToken;
       const newRefreshToken = res.data.refreshToken;
       
@@ -104,4 +109,5 @@ const useAxiosInsance = () => {
 }
 
 export default useAxiosInsance;
+
 
