@@ -18,6 +18,9 @@
   flex: 1 1 calc(33.333% - 10px);  /*3개씩 배치*/
   box-sizing: border-box; 
 }
+.community-body-flex .flex-item div{
+  cursor: pointer;
+}
 .community-body-flex .thumb-wrapper {
   cursor: pointer;
   width: 255px;
@@ -35,5 +38,6 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 
 
