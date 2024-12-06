@@ -1,4 +1,6 @@
 body {
+    overflow: hidden;
+    height: 100%;
     background-color: #fdfcf8;
 }
 .top-bar{
@@ -6,11 +8,10 @@ body {
     background-color: #ffffff;
 }
 .container {
-    border-top-left-radius: 30px;  /* 왼쪽 상단 모서리 둥글게 */
-    border-top-right-radius: 30px; /* 오른쪽 상단 모서리 둥글게 */
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
     background-color: #ffffff;
     margin-top: 100px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -138,11 +139,12 @@ body {
     justify-content: space-between;
     width: 140%;
 }
+
 .profile-img-div,
 .profile-btn {
     width: 45%;
     height: 50px;
-    margin: 10px 20px 18px;
+    margin: 10px 20px;
 }
 .profile-img-div {
     position: relative;

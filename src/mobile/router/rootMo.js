@@ -7,6 +7,7 @@ const Main = lazy(() => import('@/mobile/pages/MMainPage')); /*메인페이지*/
 const Login = lazy(() => import('@/mobile/pages/MLoginPage')); /*로그인페이지*/
 const Join = lazy(() => import('@/mobile/pages/MJoinPage')); /*회원가입페이지*/
 const MakeProfile = lazy(() => import('@/mobile/pages/MMakeProfilePage')); /*프로필 만들기*/
+const MemberFind = lazy(() => import('@/mobile/pages/MMemberFindPage')); /*아이디/비밀번호 찾기*/
 const Complete= lazy(() => import('@/mobile/pages/MCompletePage')); /*완료페이지*/
 const NotFound = lazy(() => import('@/mobile/pages/MNotFoundPage')); /*애러페이지*/
 const Test = lazy(() => import('@/mobile/pages/TestPage'));
@@ -53,10 +54,26 @@ const root = createBrowserRouter([
     ),
   },
   {
-    path: '/mo/profile/make',
+    path: '/mo/profile/update',
     element: (
       <Suspense fallback={Loading}>
         <MakeProfile />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/mo/memberFind',
+    element: (
+      <Suspense fallback={Loading}>
+        <MemberFind />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/mo/memberFind/:paramFindType',
+    element: (
+      <Suspense fallback={Loading}>
+        <MemberFind />
       </Suspense>
     ),
   },

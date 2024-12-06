@@ -95,7 +95,7 @@ const MLoginPage = () => {
       mainMsg: '회원가입 끝!',
       subMsg: `더불어 살아가는\n느티나무 복지관에 오신 것을 환영합니다.`,
       buttonMsg: '프로필 만들기',
-      buttonURL: '/mo/profile/make',
+      buttonURL: '/mo/profile/update',
       subMovDisplayYn: true,
       subMovMsg: '건너뛰기',
       subMovURL: '/mo',
@@ -631,7 +631,7 @@ const MLoginPage = () => {
 
           <div className="login-options">
             <ul className="options-ul">
-              <li onClick={() => navigate('/mo/memberFind')}>아이디 찾기 / 비밀번호 바꾸기</li>
+              <li onClick={() => navigate('/mo/memberFind/id')}>아이디 찾기 / 비밀번호 바꾸기</li>
               <li onClick={() => navigate('/mo/chat')}>문의하기</li>
             </ul>
           </div>
