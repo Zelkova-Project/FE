@@ -38,9 +38,11 @@ const CommunityBody = () => {
           <div className='thumb-wrapper' onClick={() => navigate(`/noticeDetail/${1}`)}>
             <img src={postList[idx].thumbImageName}></img>
           </div>
-          <h3>{postList[idx].title}</h3>
-          <h3>{postList[idx].writer}</h3>
-          <h3>{postList[idx].dueDate}</h3>
+          <div onClick={() => navigate(`/noticeDetail/${1}`)}>
+            <h3>{postList[idx].title}</h3>
+            <h3>{postList[idx].writer}</h3>
+            <h3>{postList[idx].dueDate}</h3>
+          </div>
         </div>
       );
     }
@@ -97,7 +99,7 @@ const CommunityBody = () => {
 
         <div className="notice-flexitem flexCenter">
           <div className="notice-search-area">
-          <select onChange={(e) => {setSearchOption(e.target.value)}}>
+           <select onChange={(e) => {setSearchOption(e.target.value)}}>
               <option value="title">제목</option>
               <option value="content">내용</option>
             </select>
@@ -110,7 +112,6 @@ const CommunityBody = () => {
             />
 
             <button onClick={() => getPostListByKeyword('click')}>검색</button>
-
           </div>
         </div>
 
@@ -183,6 +184,7 @@ const CommunityBody = () => {
 };
 
 export default CommunityBody;
+
 
 
 
