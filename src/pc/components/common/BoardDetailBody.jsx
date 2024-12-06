@@ -163,9 +163,7 @@ const BoardDetailBody = () => {
   }
 
   const likeComment = async (cInfo) => {
-    let memberInfo = getCookie('memberInfo');
-    
-    if (Reflect.ownKeys(memberInfo || {}).length == 0) {
+    if (!userInfo?.accessToken) {
       alert("로그인 후 가능합니다");
       return;
     }
@@ -414,6 +412,7 @@ const BoardDetailBody = () => {
 };
 
 export default BoardDetailBody;
+
 
 
 
