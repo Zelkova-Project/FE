@@ -226,8 +226,15 @@ const BoardDetailBody = () => {
             {/* 날짜,신고하기,답글달기 */}
             <div className="notail-comment-item-details">
               <p>{item.dueDate}</p>
-              <p>수정하기</p>
-              <p onClick={() => delComment(item.cno)}>삭제하기</p>
+              {
+                (userInfo?.nickname || '') == item.writer ?
+                <>
+                  <p>수정하기</p>
+                  <p onClick={() => delComment(item.cno)}>삭제하기</p>
+                </>
+                : ''
+              }
+              
             </div>
           </div>
 
@@ -412,6 +419,7 @@ const BoardDetailBody = () => {
 };
 
 export default BoardDetailBody;
+
 
 
 
