@@ -16,9 +16,9 @@ const transferWebp = async (file) => {
             let img = new Image();
             img.src = e.target.result;
             
-            let scale = Math.min(1, 800 / img.width);
-
             img.onload = () => {
+                let scale = Math.min(1, 800 / img.width);
+            
                 canvas.width = img.width * scale;
                 canvas.height = img.height * scale;
                 
@@ -56,5 +56,6 @@ export {
     transferWebp,
     sendWebp
 }
+
 
 
