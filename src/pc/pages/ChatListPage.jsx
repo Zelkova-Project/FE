@@ -20,9 +20,12 @@ const ChatListPage = () => {
  let stompClient = Stomp.over(socket);
 
   stompClient.connect({}, function (frame) {
-      stompClient.subscribe(`/topic/${roomName}`, function (message) {
+    stompClient.subscribe(`/topic/${roomName}`, function (message) {
+      console.log('subscribe의 콜백 메소드 내부임!! ', message.body);
           showMessage(JSON.parse(message.body));
       });
+
+    stompClient.send('/app/joinChatRoom', {}, roomName);
   });
 
   function sendMessage() {
