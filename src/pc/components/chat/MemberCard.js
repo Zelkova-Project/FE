@@ -1,6 +1,8 @@
 import '@/pc/css/chat/chat.css';
 
-const MemberCard = () => {
+const MemberCard = ({room}) => {
+  console.log('room ', room);
+
   const imgObj = {
     profile: require('@/common/imgs/notice/notail-comment.png'),
   };
@@ -12,11 +14,11 @@ const MemberCard = () => {
       </div>
       <div className="member-card-right">
         <div className="member-card-right-top">
-          <h4>성한결</h4>
+          <h4>{room}</h4>
           <p>5분 전</p>
         </div>
         <div className="member-card-right-bottom">
-          <p>Lorem ipsum dolor sit amet, consectetur</p>
+          <p>클릭하여 방에 입장하세요</p>
         </div>
       </div>
     </div>

@@ -7,14 +7,36 @@ import OtherMessage from '@/pc/components/chat/OtherMessage';
 import MyMessage from '@/pc/components/chat/MyMessage';
 import { useEffect, useState } from 'react';
 
-import * as SockJS from 'sockjs-client';
-import * as StompJs from '@stomp/stompjs';
-import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 
+import { useRecoilState } from 'recoil';
+
+import { userInfoState } from '@/common/recoilState/recoil';
+import ChatMakeRoomModal from './ChatMakeRoomModal';
 const ChatPage = () => {
-  const [chatClient, setChatClient] = useState(null);
-  const [message, setMessage] = useState('');
-  const [isConnected, setIsConnected] = useState(false);
+
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+  let url = process.env.NODE_ENV == 'development'
+    ? 'http://localhost:8080/api/chat-websocket'
+    : 'https://namu0005.or.kr/api/chat-websocket';
+
+  let socket = new SockJS(url);
+  let stompClient = Stomp.over(socket);
+
+  const [showRoom, setShowRoom] = useState(false)
+  const [roomName, setRoomName] = useState("");
+  const [newMessage, setNewMessage] = useState("");
+  const [textMessage, setTextMessage] = useState("");
+  const [rooms, setRooms] = useState([]);
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [chattings, setChattings] = useState([]);
+
+
+
+  const navigate = useNavigate();
+  const axios = useAxiosInsance();
 
   const imgObj = {
     comment: require('@/common/imgs/chat/comment.png'),
@@ -24,156 +46,147 @@ const ChatPage = () => {
     chatCopy: require('@/common/imgs/chat/chat-send-msg.png'),
   };
 
-  const getToken = () => {
-    let cookie = document.cookie;
-    const [key, val] = cookie.split('=');
-    return val;
-  };
+  useEffect(() => {
+    getShowRoom();
+  }, []);
 
-  // TODO: csrfToken 없을 때 방어코드 추가
-  const generateRandomString = (csrfToken) => {
-    const randomUUID = uuidv4();
-    let secretString = '';
+  useEffect(() => {
+    const height = document.querySelector(".chatting-msg-container-wrapper").scrollHeight;
+    document.querySelector(".chatting-msg-container-wrapper").scrollTop = height;
+  }, [chattings]);
 
-    for (let i = 0; i < csrfToken.length; i++) {
-      const targetChar = csrfToken.charCodeAt(i);
-      const randomChar = randomUUID.charCodeAt(i);
-      const xorChar = targetChar ^ randomChar;
-      secretString += String.fromCharCode(xorChar);
-    }
+  useEffect(() => {
+    console.log('roomName useEffect! ', roomName);
+    if (!roomName) return;
 
-    return randomUUID + secretString;
-  };
+    stompClient.connect({}, function (frame) {
+      stompClient.subscribe(`/topic/${roomName}`, function (message) {
+        console.log('subscribe의 콜백 메소드 내부임!! ', message.body);
+        setNewMessage(message)
+      });
 
-  const headers = {
-    'X-XSRF-TOKEN': btoa(generateRandomString(getToken())),
-  };
-
-  const apiPrefix = process.env.NODE_ENV == 'development' ? '' : '/api';
-
-  const URL = apiPrefix + '/zelkova/user/queue/message';
-  const MSG_URL = apiPrefix + '/zelkova/message';
-
-  const connectHandler = () => {
-    const client = new StompJs.Client({
-      debug: function (str) {
-        console.log(str);
-      },
-      reconnectDelay: 500000,
-      heartbeatIncoming: 400000,
-      heartbeatOutgoing: 400000,
+      stompClient.send('/app/joinChatRoom', {}, roomName);
     });
 
-    client.connectHeaders = headers;
+  }, [roomName]);
 
-    client.webSocketFactory = function () {
-         return new SockJS('wss://namu0005.or.kr/ws-zelkova');
-    };
-
-    client.onConnect = function (frame) {
-      client.subscribe(URL, (message) => {
-        console.log('메세지 >>> ', message);
-      });
-      setIsConnected(true);
-    };
-
-    client.onDisconnect = () => {
-      console.log('>>> 연결해제 ');
-      setIsConnected(false);
-    };
-
-    client.onStompError = function (frame) {
-      console.log('Broker reported error: ' + frame.headers['message']);
-      console.log('Additional details: ' + frame.body);
-    };
-
-    client.activate();
-
-    setChatClient(client); // local 전역으로 사용
-  };
-
-  // textarea에 엔터클릭이벤트 안됨
-  // 전송 버튼 클릭하여 전송 해야됨
-  const sendMessage = (e) => {
-    console.log('>>> 메세지전송시작');
-    console.log('>>> 클라이언트 : ', chatClient);
-    console.log('>>> 연결유무 : ', isConnected);
-    console.log('>>> 전송URL : ', URL);
-
-    let chatParam = {
-      chatroom_id: null,
-      receiver_id: 1,
-      message: message, // useState로 관리함. textArea에 넣은 메세지 전송됨
-    };
-
-    if (chatClient && isConnected) {
-      chatClient.publish({
-        destination: MSG_URL, // 렌더링시작지점에 상수선언됨
-        body: JSON.stringify(chatParam),
-      });
-
-      console.log('>>> 보낸메세지 : ', message);
-      setMessage(''); // 보내고 비워줌
-    }
-  };
-
-  // rendering 시작 후 실행
   useEffect(() => {
-    console.log('>>> 토큰 : ', getToken());
+    if (!newMessage.body) return;
 
-    connectHandler();
+    showMessage(JSON.parse(newMessage.body));
+  }, [newMessage]);
 
-    // beforeDestory chatclient 있으면 제거해주기
-    return () => {
-      if (chatClient) {
-        console.log('클라이언트 존재함 >>> 삭제 진행 >>>> ');
-        chatClient.deactivate();
+  const goToRoom = (방제) => {
+    console.log('*** 방제 ', 방제);
+    setChattings([]);
+    setRoomName(방제);
+  }
+
+  const moveChatRoom = () => {
+    navigate(`/chatroom/${roomName}`);
+  }
+
+  const getShowRoom = async () => {
+    setShowRoom(!showRoom);
+    const res = await axios.get('/chat/rooms');
+
+    if (!res.isError) {
+      delete res.isError;
+    }
+
+    const roomsInfo = Object.entries(res);
+    let roomsArr = roomsInfo.map(([_, roomName]) => roomName);
+
+    if (roomsArr[0] == '') roomsArr = [];
+
+    setRooms(roomsArr);
+  }
+
+  const sendMessage = () => {
+    stompClient.send(`/app/deliver`, {}, JSON.stringify({ 'sender': (userInfo.nickname || '홍길동'), 'content': textMessage, 'roomName': roomName }));
+
+    setTextMessage('');
+    document.getElementById("message").value = '';
+  }
+
+  const entering = (e) => {
+    const isEnter = e.key == 'Enter';
+
+    if (isEnter) {
+      sendMessage();
+    }
+  }
+
+  const showMessage = (message) => {
+    const isJoined = Array.isArray(message);
+
+    if (isJoined) {
+      for (let info of message) {
+        drawChatDom(JSON.parse(info));
       }
-    };
-  }, []);
+    } else {
+      drawChatDom(message);
+    }
+
+  }
+
+  const drawChatDom = (message) => {
+    console.log('message > ', message)
+
+    const isMine = message.sender == userInfo?.nickname || '';
+
+    if (isMine) {
+      setChattings((prevChattings) => [...prevChattings, <MyMessage chat={message} key={prevChattings.length} />]);
+    } else {
+      setChattings((prevChattings) => [...prevChattings, <OtherMessage chat={message} key={prevChattings.length} />]);
+    }
+
+  }
+
+  const showModal = () => {
+    setIsShowModal(true);
+  }
 
   return (
     <div className="main-container">
+      {
+        isShowModal
+          ? <ChatMakeRoomModal setRoomName={setRoomName} setIsShowModal={setIsShowModal} setRooms={setRooms} />
+          : <></>
+      }
+
+
       <Nav />
 
       <Section>
         <div className="chatting-entire-container">
           <div className="chatting-list-container">
             <div className="chatting-list-tit">
-              <h3>채팅 목록</h3>
+              <h3>채팅방 목록</h3>
               <div className="chatting-list-members-icons">
-                <img src={imgObj.comment}></img>
-                <img src={imgObj.chatting}></img>
+                <img
+                  onClick={showModal}
+                  src={imgObj.comment}
+                />
+                <img src={imgObj.chatting} />
               </div>
             </div>
             <div className="chatting-list-members">
-              <MemberCard />
-              <MemberCard />
-              <MemberCard />
-              <MemberCard />
-              <MemberCard />
-              <MemberCard />
-              <MemberCard />
-              <MemberCard />
-              <MemberCard />
-              <MemberCard />
-              <MemberCard />
-              <MemberCard />
-              <MemberCard />
-              {/* <div className='chatting-list-member-card'>
-            <div className='member-card-left'>
-              <img src={imgObj.profile}></img>
-            </div>
-            <div className='member-card-right'>
-              <div className='member-card-right-top'>
-                <h4>성한결</h4>
-                <p>5분 전</p>
-              </div>
-              <div className='member-card-right-bottom'>
-                <p>Lorem ipsum dolor sit amet, consectetur</p>
-              </div>
-            </div>
-          </div> */}
+              {
+                (rooms || []).length > 0 ?
+                  rooms.map(room => (
+                    <div
+                      onClick={() => goToRoom(room)}
+                    >
+                      <MemberCard
+                        room={room}
+                        key={room}
+                      />
+                    </div>
+                  ))
+                  :
+                  '방을 만들어주세요'
+              }
             </div>
           </div>
 
@@ -181,7 +194,7 @@ const ChatPage = () => {
             <div className="chatting-msg-opposite-info">
               <div className="user-info">
                 <img src={imgObj.profile} />
-                <p>성한결</p>
+                <p>방제: {roomName}</p>
               </div>
               <div className="user-info-more">
                 <img src={imgObj.more}></img>
@@ -189,27 +202,25 @@ const ChatPage = () => {
             </div>
 
             <div className="chatting-msg-container-wrapper">
-              {/* <OtherMessage/>
-              <MyMessage/>
-              <OtherMessage/>
-              <MyMessage/>
-              <OtherMessage/>
-              <MyMessage/>
-              <OtherMessage/>
-              <OtherMessage/>
-              <OtherMessage/> */}
+              {
+                roomName ?
+                  chattings
+                  : '채팅방을 선택해주세요'
+              }
             </div>
             <div className="chatting-msg-send-container">
               <div className="chatting-msg-send-content">
                 <textarea
                   placeholder="내용을 입력해주세요"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  autoComplete='off'
+                  id='message'
+                  onChange={(e) => setTextMessage(e.target.value)}
+                  onKeyDown={(e) => entering(e)}
                 ></textarea>
                 <img src={imgObj.chatCopy} />
               </div>
               <div className="chatting-msg-send-btn">
-                <button onClick={(e) => sendMessage(e)}>전송</button>
+                <button onClick={() => sendMessage()}>전송</button>
               </div>
             </div>
           </div>

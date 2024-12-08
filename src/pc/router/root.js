@@ -212,6 +212,14 @@ const root = [
       </Suspense>
     ),
   },
+  {
+    path: '/testchat',
+    element: (
+      <Suspense fallback={Loading}>
+        <Chat />
+      </Suspense>
+    ),
+  },
 ];
 
 export default root;

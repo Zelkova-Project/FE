@@ -137,7 +137,6 @@
 
 .chatting-other-msg-card {
   width: 328px;
-  height: 83px;
   display: flex;
   flex-direction: row;
   margin: 10px 0 35px 10px;
@@ -169,14 +168,18 @@
   color: #333;
   padding: 10px;
 }
+.chatting-my-msg-card-container {
+  width: 100%;
+}
+.chatting-my-msg-card-container .chatting-my-msg-card{
+  margin-left: auto;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
 
 .chatting-my-msg-card {
-  float: right;
-  margin-right: 10px;
+  margin-top: 10px;
   width: 276px;
-  height: 58px;
-  margin-right: 12px;
-  margin-bottom: 35px;
 }
 .my-msg-card-right-content {
   border-radius: 14px 4px 14px 14px;
@@ -342,4 +345,40 @@
   border: 1px solid #a9fad3 dotted;
   background-color: none;
   margin-left:30px;
+}
+
+.chat-makeroom-container.show {
+  display: block;
+}
+
+.chat-makeroom-container {
+  display: none;
+  z-index: 999999;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+  
+}
+.chat-makeroom-content {
+  background-color: #fff;
+  border-radius: 10px;
+  margin: 15% auto; /* Center the modal */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be any size */
+  max-width: 500px; /* Maximum width */
+  text-align: center;
+  height: 300px;
+  width: 600px;
+}
+
+.chat-makeroom-content ul li {
+  font-weight: 600;
+  margin-right: auto;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }

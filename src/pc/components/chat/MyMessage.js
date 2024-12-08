@@ -1,10 +1,12 @@
 import '@/pc/css/chat/chat.css';
 
-const MyMessage = () => {
+const MyMessage = ({chat}) => {
   return (
-    <div className="chatting-my-msg-card">
-      <div className="my-msg-card-right-content">
-        <p>Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet</p>
+    <div className='chatting-my-msg-card-container'>
+      <div className="chatting-my-msg-card">
+        <div className="my-msg-card-right-content">
+          <p>{chat.content}</p>
+        </div>
       </div>
     </div>
   );
