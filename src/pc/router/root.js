@@ -133,7 +133,7 @@ const root = [
     ),
   },
   {
-    path: '/chat',
+    path: '/testchat',
     element: (
       <Suspense fallback={Loading}>
         <TempChat />
@@ -204,6 +204,7 @@ const root = [
       </Suspense>
     ),
   },
+  // deprecated: 삭제 예정입니다
   {
     path: '/chatroom/:roomName',
     element: (
@@ -213,7 +214,7 @@ const root = [
     ),
   },
   {
-    path: '/testchat',
+    path: '/chat',
     element: (
       <Suspense fallback={Loading}>
         <Chat />
@@ -223,4 +224,5 @@ const root = [
 ];
 
 export default root;
+
 

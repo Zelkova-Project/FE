@@ -177,6 +177,7 @@ const ChatPage = () => {
                   rooms.map(room => (
                     <div
                       onClick={() => goToRoom(room)}
+                      key={room}
                     >
                       <MemberCard
                         room={room}
@@ -233,3 +234,4 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
+
