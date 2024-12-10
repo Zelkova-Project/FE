@@ -28,7 +28,8 @@ const BoardList = ({ boardList }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchOption, setSearchOption] = useState('title');
   const [processing, setProcessing] = useState(false);
-
+  
+  // 광클 prevent
   const getPostListByKeyword = (e) => {
     if (e.key == 'Enter' || e == 'click') {
       setProcessing(true);
@@ -36,6 +37,7 @@ const BoardList = ({ boardList }) => {
     }
   }
   
+  // 검색리스트 조회
   const fetchPostList = async () => {
     let subtitle = subTitMap[activeInfo.activePage][activeInfo.activeIdx];
 
@@ -57,12 +59,23 @@ const BoardList = ({ boardList }) => {
   }
 
   useEffect(() => {
+    setSearchKeyword('');
+  }, [activeInfo.activeIdx, activeInfo.activePage]);
+
+  // 페이지 전환시 연속동작을 막음. 키워드 초기화
+  useEffect(() => {
     const timeout = setTimeout(() => {
       fetchPostList();
-    }, 100); // Delay to ensure all updates are complete
+    }, 100);
     
     return () => clearTimeout(timeout);
   }, [activePageNum, activeSearchFlag, activeInfo.activeIdx, activeInfo.activePage]);
+
+  // 페이지 전환시. 메인사진에 노출할 페이지명 변경
+  useEffect(() => {
+    let _subtit = subTitMap[activeInfo.activePage][activeInfo.activePage];
+    setActiveSubtit(_subtit);
+  }, [activeInfo.activeIdx]);
 
   // 검색영역 돔 그리기
   const makeSearchingDom = () => {
@@ -82,6 +95,7 @@ const BoardList = ({ boardList }) => {
             <input 
               placeholder="검색어를 입력해주세요" 
               onKeyDown={getPostListByKeyword}
+              value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
               disabled={processing}
             />
@@ -130,11 +144,6 @@ const BoardList = ({ boardList }) => {
 
     navigate('/write');
   };
-
-  useEffect(() => {
-    let _subtit = subTitMap[activeInfo.activePage][activeInfo.activePage];
-    setActiveSubtit(_subtit);
-  }, [activeInfo.activeIdx]);
 
   return (
     <Section>
@@ -197,6 +206,7 @@ const BoardList = ({ boardList }) => {
 };
 
 export default BoardList;
+
 
 
 
