@@ -1,4 +1,4 @@
-import useAxiosInsance from '@/common/axios/axiosInstance';
+oimport useAxiosInsance from '@/common/axios/axiosInstance';
 
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
@@ -268,10 +268,6 @@ const WriteBody = () => {
     alert(`${selecteFileName} 파일 삭제`);
   }
 
-  const test = (e) => {
-    console.log('test >>> ', e);
-  }
-
   return (
     <>
       {/* 글쓰기영역시작 */}
@@ -305,7 +301,6 @@ const WriteBody = () => {
                 className='write-body'
                 contentEditable
                 id="editor"
-                onInput={(e) => test(e)}
                 style={{
                     border: '1px solid #ccc',
                     padding: '10px',
@@ -364,6 +359,7 @@ const WriteBody = () => {
 };
 
 export default WriteBody;
+
 
 
 

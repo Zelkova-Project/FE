@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import useAxiosInsance from '@/common/axios/axiosInstance';
 
 import Section from '@/pc/components/Section';
@@ -23,40 +23,12 @@ const BoardList = ({ boardList }) => {
   const [subtit, setActiveSubtit] = useState('');
   const [activeSearchFlag, setActiveSearchFlag] = useState(-1);
   const [activePageNum, setActivePageNum] = useState(1);
+  const [pageInfo, setPageInfo] = useState([]);
   const [pageList, setPageList] = useState([]);
   const [postList, setPostList] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchOption, setSearchOption] = useState('title');
   const [processing, setProcessing] = useState(false);
-  
-  // 광클 prevent
-  const getPostListByKeyword = (e) => {
-    if (e.key == 'Enter' || e == 'click') {
-      setProcessing(true);
-      setActiveSearchFlag(activeSearchFlag * -1);
-    }
-  }
-  
-  // 검색리스트 조회
-  const fetchPostList = async () => {
-    let subtitle = subTitMap[activeInfo.activePage][activeInfo.activeIdx];
-
-    let { status, data, message } = await axios.get(
-      `/board/list?page=${activePageNum}&size=10&keyword=${searchKeyword}&searchOption=${searchOption}&category=${subtitle}`,
-    );
-    const filtered = data.dtoList.filter(item => !item.del); // soft delete로 인해 한번 걸러야함
-    setPostList(filtered);
-    setPageList(data.pageNumList);
-
-    if (status != 200) {
-      console.error('Error fetching data:', error);
-      return;
-    }
-
-    setTimeout(() => {
-      setProcessing(false);
-    }, 1000);
-  }
 
   useEffect(() => {
     setSearchKeyword('');
@@ -76,6 +48,45 @@ const BoardList = ({ boardList }) => {
     let _subtit = subTitMap[activeInfo.activePage][activeInfo.activePage];
     setActiveSubtit(_subtit);
   }, [activeInfo.activeIdx]);
+
+  // 광클 prevent
+  const getPostListByKeyword = (e) => {
+    if (e.key == 'Enter' || e == 'click') {
+      setProcessing(true);
+      setActiveSearchFlag(activeSearchFlag * -1);
+    }
+  }
+  
+  // 검색리스트 조회
+  const fetchPostList = async () => {
+    let subtitle = subTitMap[activeInfo.activePage][activeInfo.activeIdx];
+
+    let { status, data, message } = await axios.get(
+      `/board/list?page=${activePageNum}&size=10&keyword=${searchKeyword}&searchOption=${searchOption}&category=${subtitle}`,
+    );
+    const filtered = data.dtoList.filter(item => !item.del); // soft delete로 인해 한번 걸러야함
+    setPostList(filtered);
+    setPageList(data.pageNumList);
+
+    setPageInfo({
+      prev: data.prev,
+      next: data.next,
+      totalCount: data.totalCount,
+      prevPage: data.prevPage,
+      nextPage: data.nextPage,
+      totalPage: data.totalPage,
+      current: data.current
+    });
+      
+    if (status != 200) {
+      console.error('Error fetching data:', error);
+      return;
+    }
+
+    setTimeout(() => {
+      setProcessing(false);
+    }, 1000);
+  }
 
   // 검색영역 돔 그리기
   const makeSearchingDom = () => {
@@ -119,7 +130,7 @@ const BoardList = ({ boardList }) => {
   };
 
   // 페이징 영역 돔 그리기
-  const makePagingDom = () => {
+  const makePagingDom = useMemo(() => {
     let result = [];
     result = pageList.map((item, idx) => {
       return (
@@ -134,7 +145,7 @@ const BoardList = ({ boardList }) => {
     });
 
     return result;
-  };
+  }, [pageList]);
 
   const goWrite = () => {
     if (Object.keys(userInfo).length == 0) {
@@ -144,6 +155,18 @@ const BoardList = ({ boardList }) => {
 
     navigate('/write');
   };
+
+  const goNextPage = () => {
+    if (pageInfo.next) {
+      setActivePageNum(pageList.at(-1) + 1);
+    }
+  }
+
+  const goPrevPage = () => {
+    if (pageInfo.prev) {
+      setActivePageNum(pageList.at(0) - 1);
+    }
+  }
 
   return (
     <Section>
@@ -161,36 +184,42 @@ const BoardList = ({ boardList }) => {
             {/* 왼쪽버튼 */}
             <div className="page-btns-left dja-center">
               <div className="page-all-left">
-                <ul>
-                  <li>
-                    <img src={imgObj.arrowRight}></img>
-                    <img className="all-left-btn" src={imgObj.arrowRight}></img>
-                  </li>
-                  <li>
-                    <img src={imgObj.arrowRight}></img>
-                  </li>
-                </ul>
+                {
+                  pageInfo.left && 
+                  <ul>
+                    <li>
+                      <img src={imgObj.arrowRight} onClick={goPrevPage}></img>
+                      <img className="all-left-btn" src={imgObj.arrowRight}></img>
+                    </li>
+                    {/* <li>
+                      <img src={imgObj.arrowRight}></img>
+                    </li> */}
+                  </ul>
+                }
               </div>
             </div>
 
             {/* 페이지버튼 */}
             {/* 1 2 3 4 5 6 7 8 9 10 */}
             <div className="page-btns-center">
-              <ul>{makePagingDom()}</ul>
+              <ul>{makePagingDom}</ul>
             </div>
 
             {/* 오른쪽버튼 */}
             <div className="page-btns-right dja-center">
               <div className="page-all-right">
-                <ul>
-                  <li>
-                    <img src={imgObj.arrowRight}></img>
-                  </li>
-                  <li>
-                    <img src={imgObj.arrowRight}></img>
-                    <img className="all-right-btn" src={imgObj.arrowRight}></img>
-                  </li>
-                </ul>
+                {
+                  pageInfo.next && 
+                  <ul>
+                    <li>
+                      <img src={imgObj.arrowRight} onClick={goNextPage}></img>
+                    </li>
+                    {/* <li>
+                      <img src={imgObj.arrowRight}></img>
+                      <img className="all-right-btn" src={imgObj.arrowRight}></img>
+                    </li> */}
+                  </ul>
+                }
               </div>
             </div>
 
@@ -206,6 +235,7 @@ const BoardList = ({ boardList }) => {
 };
 
 export default BoardList;
+
 
 
 
