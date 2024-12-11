@@ -1,4 +1,4 @@
-oimport useAxiosInsance from '@/common/axios/axiosInstance';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
