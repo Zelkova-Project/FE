@@ -36,9 +36,10 @@
 }
 
 .common-table .common-table-tr2 td span {
-  width: 260px;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
 }
+

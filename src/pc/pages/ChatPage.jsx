@@ -74,7 +74,7 @@ const ChatPage = () => {
 
   const handleMessage = useCallback((newMessage) => {
     console.log('handle Message ', newMessage);
-    setNewMessage((prevMsg) => [...prevMsg, newMessage]);
+    setNewMessage(newMessage);
   }, []);
 
   const goToRoom = (방제) => {
@@ -244,5 +244,6 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
+
 
 
