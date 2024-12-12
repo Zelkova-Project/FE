@@ -185,15 +185,15 @@ const BoardList = ({ boardList }) => {
             <div className="page-btns-left dja-center">
               <div className="page-all-left">
                 {
-                  pageInfo.left && 
+                  pageInfo.prev && 
                   <ul>
-                    <li>
+                    {/* <li>
                       <img src={imgObj.arrowRight} onClick={goPrevPage}></img>
                       <img className="all-left-btn" src={imgObj.arrowRight}></img>
-                    </li>
-                    {/* <li>
-                      <img src={imgObj.arrowRight}></img>
                     </li> */}
+                    <li>
+                      <img src={imgObj.arrowRight} onClick={goPrevPage}></img>
+                    </li>
                   </ul>
                 }
               </div>
@@ -235,6 +235,7 @@ const BoardList = ({ boardList }) => {
 };
 
 export default BoardList;
+
 
 
 
