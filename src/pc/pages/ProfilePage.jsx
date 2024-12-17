@@ -4,9 +4,12 @@ import style from '@/pc/css/profile.module.css';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
+  const axios = useAxiosInsance();
+
 
   const [boardReport, setBoardReport] = useState(false);
   const [reportCheckModal, setReportCheckModal] = useState(false); // 신고하기 모달
@@ -17,6 +20,8 @@ const ProfilePage = () => {
   const [reportCategory, setReportCategory] = useState('');
   const [reportCategoryText, setReportCategoryText] = useState('');
   const [commentWriteTxt, setCommentWriteTxt] = useState('');
+  const [profileImageName, setProfileImageName] = useState(''); // 프로필 이미지 값
+  const [imageUrl, setImageUrl] = useState(''); // 프로필 prefix 경로 값
 
   const [reportAccept, setReportAccept] = useState('');
 
@@ -116,6 +121,19 @@ const ProfilePage = () => {
       overflow: 'auto',
     },
   };
+  
+  useEffect(() => {
+    axios.get("/profile/getProfile").then(({status, data}) => {
+      if (status != 200) console.error("error !! ", this);
+
+      const imageName = data?.profileImageName || '';
+      setProfileImageName(imageName);
+
+      const SERVER_URL = process.env.NODE_ENV == 'development' ? 'http://localhost:8080/api' : '/api';
+      setImageUrl(SERVER_URL + "/image/view/");
+    })
+  }, []);
+
   const goReportCheck = () => {
     setBoardReport(false);
     setReportCauseModal(true);
@@ -187,7 +205,7 @@ const ProfilePage = () => {
               <div className={style['profile-my-img']}>
                 <img
                   className={style['default-profile-img']}
-                  src={'/default-profile-img.png'}
+                  src={profileImageName ? imageUrl + profileImageName : '/default-profile-img.png'}
                   alt={'프로필사진'}
                 />
                 <div className={style['profile-setup']}>
@@ -624,3 +642,4 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
