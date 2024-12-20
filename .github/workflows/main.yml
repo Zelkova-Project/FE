@@ -1,0 +1,27 @@
+name: when push main, merge bugfix
+on:
+  push:
+    branches: 
+      - main
+jobs:
+  DeployTomhoon:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Let's connect ssh
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME}}
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          script_stop: true
+          script: |
+            cd ~/../FE
+            git checkout main
+            git pull
+            git checkout bugfix
+            git merge --no-ff main -m "Merge branch 'main' into bugfix"
+            git add .
+            git commit -m "merge main into bugfix by gitAction"
+            git push 
+            
+
