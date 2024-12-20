@@ -20,8 +20,6 @@ jobs:
             git pull
             git checkout bugfix
             git merge --no-ff main -m "Merge branch 'main' into bugfix"
-            git add .
-            git commit -m "merge main into bugfix by gitAction"
-            git push 
+            git push
             
 
