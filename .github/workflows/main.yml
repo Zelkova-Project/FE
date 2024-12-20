@@ -22,4 +22,16 @@ jobs:
             git merge --no-ff main -m "Merge branch 'main' into bugfix"
             git push
             
+      - name: Notify Discord on Success
+        if: success() # Only run this step if the previous steps succeeded
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d '{"content": "✅ main브랜치 bugfix에 최신화 완료!"}' \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}
 
+      - name: Notify Discord on Failure
+        if: failure() # Only run this step if the previous steps failed
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d '{"content": "❌ main브랜치 bugfix에 최신화 실패"}' \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}
