@@ -15,7 +15,12 @@ jobs:
           password: ${{ secrets.REMOTE_PASSWORD }}
           script_stop: true
           script: |
-            echo "TOMHOON HELLO"
-            cd ~/../
-            ls
+            cd ~/../FE
+            git pull
+            git checkout bugfix
+            git merge --no-ff main
+            git add .
+            git commit -m "merge main into bugfix"
+            git push 
             
+
