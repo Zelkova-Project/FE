@@ -15,4 +15,7 @@ jobs:
           password: ${{ secrets.REMOTE_PASSWORD }}
           script_stop: true
           script: |
-            echo "TOMHOON HELLO"
+            ECHO "TOMHOON HELLO"
+            cd ~/../
+            ls
+            
