@@ -16,11 +16,12 @@ jobs:
           script_stop: true
           script: |
             cd ~/../FE
+            git checkout main
             git pull
             git checkout bugfix
             git merge --no-ff main
             git add .
-            git commit -m "merge main into bugfix"
+            git commit -m "merge main into bugfix by gitAction"
             git push 
             
 
