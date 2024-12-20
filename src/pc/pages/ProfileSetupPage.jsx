@@ -2,11 +2,17 @@ import Nav from '@/pc/components/Nav';
 import Footer from '@/pc/components/Footer';
 import style from '@/pc/css/profileSetup.module.css';
 import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { userInfoState } from '@/common/recoilState/recoil';
 import { useNavigate } from 'react-router';
+import { transferWebp } from '@/common/utils/fileUtil';
+import useAxiosInsance from '@/common/axios/axiosInstance';
 
 const ProfileSetupPage = () => {
   const navigate = useNavigate();
+  const axios = useAxiosInsance();
 
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [activitySelected, setActivitySelected] = useState(false); // 활동공개 창
   const [activitySelectVal, setActivitySelectVal] = useState('공개'); // 프로필 활동공개 값
   const [fileImgSelected, setFileImgSelected] = useState(null); // 프로필 이미지 변경
@@ -14,48 +20,70 @@ const ProfileSetupPage = () => {
   const [profileEmail, setProfileEmail] = useState(''); // 프로필 이메일 값
   const [profileFamily, setProfileFamily] = useState(''); // 프로필 보호가족 값
   const [profileIntroduce, setProfileIntroduce] = useState(''); // 프로필 소개글 값
+  const [profileImageName, setProfileImageName] = useState(''); // 프로필 이미지 값
+  const [imageUrl, setImageUrl] = useState(''); // 프로필 prefix 경로 값
 
-  const activitySelectValue = (index) => {
-    setActivitySelectVal(index);
-    setActivitySelected(!activitySelected);
-  };
-  const fileImg = (event) => {
-    // 프로필 이미지 변경
-    const fileInput = event.target.files[0];
-    if (fileInput) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setFileImgSelected(e.target.result);
-      };
-      reader.readAsDataURL(fileInput);
+  useEffect(() => {
+    axios.get("/profile/getProfile").then(({status, data}) => {
+      if (status != 200) console.error("error !! ", this);
+
+      const imageName = data?.profileImageName || '';
+      setProfileImageName(imageName);
+    })
+
+    const SERVER_URL = process.env.NODE_ENV == 'development' ? 'http://localhost:8080/api' : '/api';
+    setImageUrl(SERVER_URL + "/image/view/");
+  }, []);
+
+  // 이미지 업로드 단계 (2 - 부분)
+  const uploadWebp = async (file) => {
+    const formData = new FormData();
+
+    formData.append('files', file, 'image.webp');
+    
+    const { isError, status, data: webpName }= await axios.post('/image/webp/', formData);
+    
+    if (isError) {
+      console.error('### uploadSingleWebp');
+      return;
     }
+
+    return webpName;
+  }
+  // 이미지 업로드 단계 (1 - 전체)
+  const fileImg = async (event) => {
+    const file = event.target.files[0];
+    const fileName = file?.name || '프로필사진';
+
+    const blobData = await transferWebp(file, true);
+    const webpName = await uploadWebp(blobData);
+
+    setProfileImageName(webpName[0]);
   };
+
+  // 이미지 업로드 (3 - post 정보저장)
+  const goSaveProfileImage = async () => {
+    const param = {
+      profileImageName
+    }
+    const res = await axios.post('/profile/saveProfileImage', param);
+    if (res.status != 200) console.error('error : ', this);
+  }
+
   const profileRegister = () => {
-    if (profileName === '' || profileName === null) {
-      document.getElementById('profile-name').style.border = '1px solid #ff8888';
-      return false;
-    } else {
-      document.getElementById('profile-name').style.border = '1px solid #f2f2f2';
-    }
-    if (profileEmail === '' || profileEmail === null) {
-      document.getElementById('profile-email').style.border = '1px solid #ff8888';
-      return false;
-    } else {
-      document.getElementById('profile-email').style.border = '1px solid #f2f2f2';
-    }
-    if (profileFamily === '' || profileFamily === null) {
-      document.getElementById('profile-family').style.border = '1px solid #ff8888';
-      return false;
-    } else {
-      document.getElementById('profile-family').style.border = '1px solid #f2f2f2';
-    }
-    if (profileIntroduce === '' || profileIntroduce === null) {
-      document.getElementById('profile-introduce').style.border = '1px solid #ff8888';
-      return false;
-    } else {
-      document.getElementById('profile-introduce').style.border = '1px solid #f2f2f2';
-    }
-    console.log('등록 성공');
+    // if (profileIntroduce === '' || profileIntroduce === null) {
+    //   document.getElementById('profile-introduce').style.border = '1px solid #ff8888';
+    //   return false;
+    // } else {
+    //   document.getElementById('profile-introduce').style.border = '1px solid #f2f2f2';
+    // }
+    const 저장원해 = confirm('정말 저장하시겠습니까?');
+    
+    if (저장원해) {
+      goSaveProfileImage();
+      navigate('/profile');
+    } 
+
   };
   return (
     <div>
@@ -77,7 +105,7 @@ const ProfileSetupPage = () => {
                 {fileImgSelected === null ? (
                   <img
                     className={style['default-profile-img']}
-                    src={'/default-profile-img.png'}
+                    src={profileImageName ? imageUrl + profileImageName : '/default-profile-img.png'}
                     alt={'프로필 사진 변경'}
                     title={'프로필 사진 변경'}
                   />
@@ -100,70 +128,6 @@ const ProfileSetupPage = () => {
               </div>
             </label>
             <div className={style['profile-info-input']}>
-              <div className={style['profile-info-item1']}>
-                <span className={style['profile-info-name']}>
-                  <span>이름</span>
-                  <input
-                    type={'text'}
-                    id={'profile-name'}
-                    autoComplete={'off'}
-                    value={profileName}
-                    onChange={(e) => setProfileName(e.target.value.trim())}
-                  />
-                </span>
-                <span className={style['profile-info-email']}>
-                  <span>이메일</span>
-                  <input
-                    type={'text'}
-                    id={'profile-email'}
-                    value={profileEmail}
-                    autoComplete={'off'}
-                    onChange={(e) => setProfileEmail(e.target.value.trim())}
-                  />
-                </span>
-              </div>
-              <div className={style['profile-info-item1']}>
-                <span className={style['profile-info-family']}>
-                  <span>보호가족</span>
-                  <input
-                    type={'text'}
-                    id={'profile-family'}
-                    value={profileFamily}
-                    autoComplete={'off'}
-                    onChange={(e) => setProfileFamily(e.target.value.trim())}
-                  />
-                </span>
-                <span className={style['profile-info-activity']}>
-                  <span>활동 공개</span>
-                  <input
-                    type={'text'}
-                    value={activitySelectVal}
-                    autoComplete={'off'}
-                    className={style['activity-select']}
-                    onClick={() => {
-                      setActivitySelected(!activitySelected);
-                    }}
-                  />
-                  <img
-                    src={'/select.png'}
-                    alt={'select'}
-                    className={style['activity-select-img']}
-                    onClick={() => {
-                      setActivitySelected(!activitySelected);
-                    }}
-                  />
-                  {activitySelected ? (
-                    <ul className={style['activity-option']}>
-                      <li className={style['option']} onClick={() => activitySelectValue('공개')}>
-                        공개
-                      </li>
-                      <li className={style['option']} onClick={() => activitySelectValue('비공개')}>
-                        비공개
-                      </li>
-                    </ul>
-                  ) : null}
-                </span>
-              </div>
               <div className={style['profile-info-item1']}>
                 <div className={style['profile-info-introduce']}>
                   <span>소개글 작성</span>
@@ -194,3 +158,4 @@ const ProfileSetupPage = () => {
 };
 
 export default ProfileSetupPage;
+

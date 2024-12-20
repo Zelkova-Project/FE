@@ -20,7 +20,7 @@ const ChatMakeRoomModal = ({ setIsShowModal, setRoomName, setRooms }) => {
 
   setIsShowModal(false);
   setRoomName(roomTitle);
-  setRooms((prev) => [...prev, roomTitle]);
+  setRooms((prev, idx) => [...prev, {roomName: roomTitle, id: idx}]);
  }
 
  return (

@@ -3,7 +3,9 @@
 // png, jpeg -> webp (용량 축소를 위해)
 
 
-const transferWebp = async (file) => {
+const transferWebp = async (file, isProfile = false) => {
+    const maxScale = isProfile ? 120 : 800;
+
     let blobData = '';
 
     const reader = new FileReader();
@@ -17,10 +19,11 @@ const transferWebp = async (file) => {
             img.src = e.target.result;
             
             img.onload = () => {
-                let scale = Math.min(1, 800 / img.width);
-            
-                canvas.width = img.width * scale;
-                canvas.height = img.height * scale;
+                let widthScale = Math.min(1, maxScale / img.width);
+                let heightScale = Math.min(1, maxScale / img.height);
+
+                canvas.width = img.width * widthScale;
+                canvas.height = img.height * heightScale;
                 
                 const ctx = canvas.getContext('2d');
 
@@ -56,6 +59,7 @@ export {
     transferWebp,
     sendWebp
 }
+
 
 
 

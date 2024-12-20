@@ -1,32 +1,27 @@
-name: Hello World
+name: when push main, merge bugfix
 on:
   push:
-    branches: ['main']
+    branches: 
+      - main
 jobs:
-  deploy:
+  DeployTomhoon:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20,x]
-
     steps:
-      - uses: actions/checkout@v3.3.0
-
-      - name: execute remote ssh
-        uses: appleboy/ssh-action@master
+      - name: Let's connect ssh
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.REMOTE_SSH_HOST }}
-          username: ${{ secrets.REMOTE_SSH_USERNAME }}
-          key: ${{ secrets.REMOTE_SSH_KEY }}
-          port: ${{ secrets.REMOTE_SSH_PORT }}
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME}}
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          script_stop: true
           script: |
-            pwd
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
-            cd /zelkova-front/FE
-            nvm install 20
-            nvm use 20
-            pwd
-            npm run build
-  
+            cd ~/../FE
+            git checkout main
+            git pull
+            git checkout bugfix
+            git merge --no-ff main -m "Merge branch 'main' into bugfix"
+            git add .
+            git commit -m "merge main into bugfix by gitAction"
+            git push 
+            
+

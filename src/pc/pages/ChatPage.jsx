@@ -1,11 +1,10 @@
 import Nav from '@/pc/components/Nav';
-import Footer from '@/pc/components/Footer';
 import Section from '@/pc/components/Section';
 import '@/pc/css/chat/chat.css';
 import MemberCard from '@/pc/components/chat/MemberCard';
 import OtherMessage from '@/pc/components/chat/OtherMessage';
 import MyMessage from '@/pc/components/chat/MyMessage';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 
 import { useNavigate } from 'react-router';
 import useAxiosInsance from '@/common/axios/axiosInstance';
@@ -15,7 +14,7 @@ import { useRecoilState } from 'recoil';
 import { userInfoState } from '@/common/recoilState/recoil';
 import ChatMakeRoomModal from './ChatMakeRoomModal';
 const ChatPage = () => {
-
+  
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   let url = process.env.NODE_ENV == 'development'
@@ -32,8 +31,6 @@ const ChatPage = () => {
   const [rooms, setRooms] = useState([]);
   const [isShowModal, setIsShowModal] = useState(false);
   const [chattings, setChattings] = useState([]);
-
-
 
   const navigate = useNavigate();
   const axios = useAxiosInsance();
@@ -56,13 +53,12 @@ const ChatPage = () => {
   }, [chattings]);
 
   useEffect(() => {
-    console.log('roomName useEffect! ', roomName);
     if (!roomName) return;
 
     stompClient.connect({}, function (frame) {
       stompClient.subscribe(`/topic/${roomName}`, function (message) {
         console.log('subscribe의 콜백 메소드 내부임!! ', message.body);
-        setNewMessage(message)
+        handleMessage(message);
       });
 
       stompClient.send('/app/joinChatRoom', {}, roomName);
@@ -76,8 +72,12 @@ const ChatPage = () => {
     showMessage(JSON.parse(newMessage.body));
   }, [newMessage]);
 
+  const handleMessage = useCallback((newMessage) => {
+    console.log('handle Message ', newMessage);
+    setNewMessage(newMessage);
+  }, []);
+
   const goToRoom = (방제) => {
-    console.log('*** 방제 ', 방제);
     setChattings([]);
     setRoomName(방제);
   }
@@ -95,12 +95,39 @@ const ChatPage = () => {
     }
 
     const roomsInfo = Object.entries(res);
-    let roomsArr = roomsInfo.map(([_, roomName]) => roomName);
+    let roomsArr = roomsInfo.map(([idx, roomName]) => {
+      return {
+        roomName, 
+        id: idx
+      }
+    });
 
     if (roomsArr[0] == '') roomsArr = [];
 
     setRooms(roomsArr);
   }
+
+  const MessageItem = React.memo(({ room }) => {
+    return (
+      <MemberCard
+        room={room}
+      />
+    )
+  });
+
+  const renderRooms = useMemo(() => 
+    rooms?.length > 0 ?
+      rooms.map(room => (
+        <div
+          onClick={() => goToRoom(room.roomName)}
+          key={room.id}
+        >
+          <MessageItem room={room.roomName}/>
+        </div>
+      ))
+      :
+      '방을 만들어주세요' 
+  , [rooms]);
 
   const sendMessage = () => {
     stompClient.send(`/app/deliver`, {}, JSON.stringify({ 'sender': (userInfo.nickname || '홍길동'), 'content': textMessage, 'roomName': roomName }));
@@ -131,8 +158,6 @@ const ChatPage = () => {
   }
 
   const drawChatDom = (message) => {
-    console.log('message > ', message)
-
     const isMine = message.sender == userInfo?.nickname || '';
 
     if (isMine) {
@@ -154,8 +179,6 @@ const ChatPage = () => {
           ? <ChatMakeRoomModal setRoomName={setRoomName} setIsShowModal={setIsShowModal} setRooms={setRooms} />
           : <></>
       }
-
-
       <Nav />
 
       <Section>
@@ -173,19 +196,7 @@ const ChatPage = () => {
             </div>
             <div className="chatting-list-members">
               {
-                (rooms || []).length > 0 ?
-                  rooms.map(room => (
-                    <div
-                      onClick={() => goToRoom(room)}
-                    >
-                      <MemberCard
-                        room={room}
-                        key={room}
-                      />
-                    </div>
-                  ))
-                  :
-                  '방을 만들어주세요'
+                renderRooms
               }
             </div>
           </div>
@@ -233,3 +244,6 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
+
+
+
