@@ -94,10 +94,12 @@ const ChatPage = () => {
       delete res.isError;
     }
 
-    const roomsInfo = Object.entries(res);
-    let roomsArr = roomsInfo.map(([idx, roomName]) => {
+    const list = Object.values(res);
+
+    let roomsArr = list.map(({방제, 유저리스트}, idx) => {
       return {
-        roomName, 
+        roomName: 방제,
+        유저리스트, 
         id: idx
       }
     });
@@ -115,18 +117,18 @@ const ChatPage = () => {
     )
   });
 
-  const renderRooms = useMemo(() => 
+  const renderRooms = useMemo(() => (
     rooms?.length > 0 ?
-      rooms.map(room => (
+      rooms.map(방정보 => (
         <div
-          onClick={() => goToRoom(room.roomName)}
-          key={room.id}
+          onClick={() => goToRoom(방정보.roomName)}
+          key={방정보.id} 
         >
-          <MessageItem room={room.roomName}/>
+          <MessageItem room={방정보.roomName}/>
         </div>
       ))
       :
-      '방을 만들어주세요' 
+      '방을 만들어주세요' )
   , [rooms]);
 
   const sendMessage = () => {
@@ -244,6 +246,7 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
+
 
 
 
