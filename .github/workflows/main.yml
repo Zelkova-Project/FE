@@ -21,7 +21,6 @@ jobs:
             git checkout bugfix
             git merge --no-ff main -m "Merge branch 'main' into bugfix"
             git push
-
             git checkout main
             pwd
             node -v
