@@ -151,8 +151,8 @@
 /* 오른쪽 버튼 */
 
 .page-all-right ul li:nth-child(1) {
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 .page-all-right ul li:nth-child(2) {
   border-top-right-radius: 8px;
