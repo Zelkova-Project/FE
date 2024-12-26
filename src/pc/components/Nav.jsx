@@ -31,6 +31,12 @@ const Nav = () => {
 
   useEffect(() => {
     setIsLogged(userInfo?.accessToken);
+    if (!userInfo.profileImageName) {
+      setUserInfo({
+        ...userInfo,
+        profileImageName: imgObj.profileImg
+      })
+    }
   }, [userInfo]);
 
   const navHandler = (idx) => {
@@ -122,7 +128,7 @@ const Nav = () => {
             <label>
               {isLogged ? userInfo.nickname : ''}
               <div className={'profile-img'}>
-                <img src={imgObj.profileImg} alt={'프로필 사진'} />
+                <img src={userInfo.profileImageName} alt={'프로필 사진'} />
               </div>
             </label>
           </li>
@@ -134,6 +140,7 @@ const Nav = () => {
   );
 };
 export default Nav;
+
 
 
 
