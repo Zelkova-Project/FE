@@ -21,9 +21,9 @@ jobs:
             git checkout bugfix
             git merge --no-ff main -m "Merge branch 'main' into bugfix"
             git push
-
             git checkout main
-            npm run build
+            pwd
+            node -v
             
       - name: Notify Discord on Success
         if: success() # Only run this step if the previous steps succeeded
