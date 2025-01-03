@@ -174,3 +174,23 @@
   border: none;
   cursor: pointer;
 }
+
+/*------------------------------------------- 모바일 웹 -------------------------------------------*/
+
+@media (max-width: 600px) {
+
+  .login-container {
+    font-family: 'PretendardVariable';
+    background: white;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .login-wrapper {
+    width: 420px;
+    height: 489px;
+    box-shadow: none;
+  }
+}
